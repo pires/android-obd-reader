@@ -1,0 +1,12 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+android-obd-reader is a simple android app that will connect to a bluetooth Elm327 OBD reader and reader live data.  It also has the option to upload data.
+
+
+= Details =
+
+This was built as an experiment into gathering weather data from a vehicle.  It's my first android app so it's probably pretty rough around the edges.
+
+Ideally I would like to see this split into a obd reader library that doesn't have to run on a phone or over bluetooth.
