@@ -1,0 +1,7 @@
+= Getting Started =
+
+*Setup Android SDK, Eclipse and ADT for Eclipse
+*Check out the project from svn
+*Import the project to Eclipse
+*???
+*Profit
