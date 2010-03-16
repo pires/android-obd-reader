@@ -35,7 +35,6 @@ public class ObdReaderService extends Service {
 	private PendingIntent contentIntent = null;
 
 	public void onCreate() {
-		ExceptionHandler.register(this,"http://www.whidbeycleaning.com/droid/server.php");
 		super.onCreate();
 		notifyMan = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		context = getApplicationContext();

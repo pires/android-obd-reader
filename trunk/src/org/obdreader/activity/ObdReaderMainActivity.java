@@ -49,7 +49,6 @@ public class ObdReaderMainActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ExceptionHandler.register(this,"http://www.whidbeycleaning.com/droid/server.php");
         setContentView(R.layout.main);
         handler = new Handler();
         serviceIntent = new Intent(this, ObdReaderService.class);
