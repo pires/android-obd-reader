@@ -1,0 +1,20 @@
+
+= Compatible Hardware =
+
+== Bluetooth Readers ==
+
+This has been tested with one bluetooth Elm327 OBD reader, which has no visible manufacturer or model number.  I believe this is application will work with any Elm327 reader but I would really like any feedback from users.
+
+== Vehicles ==
+
+Many of the commands implemented are not available on all vehicles.  For example, of the vehicles listed below on the Ford Edge reported Ambient Air Temperature. This list represents vehicles that have had successful connections and successfully reading (some) data:
+
+*2010 Honda Civic
+*2009 Pontiac Vibe
+*2008(?) Ford Edge
+*2006(?) Nissan Altima
+
+The following vehicles did not get a successful connection.  The reason is unknown, it is very likely this software was the cause of the problem:
+
+*2005 Honda Pilot
+*2008(?) Jeep Grand Cherokee
