@@ -1,7 +1,15 @@
 = Getting Started =
 
-*Setup Android SDK, Eclipse and ADT for Eclipse
-*Check out the project from svn
-*Import the project to Eclipse
-*???
-*Profit
+  *Setup Android SDK, Eclipse and ADT for Eclipse
+  *Check out the project from svn
+  *Import the project to Eclipse
+  *???
+  *Profit
+
+When you first start the application, you will see a blank screen.  Click the "Menu" button to see the possible actions.  The only action currently is to start reading live data.  This will start bind with the ObdReaderService that maintains a thread that will read from the bluetooth device.
+
+You should see the vehicle icon in your notifications while the service is running.  If the service encountered an error, there should be notifications for those errors.
+
+If you push the "Home" button the service will continue to run, to exit the application bring the application to the foreground again and push the "Back" button.  If the vehicle icon is on the notification bar then the service is still running.
+
+To stop the service, push the stop button from the main application menu.
