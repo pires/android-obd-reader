@@ -1,10 +1,10 @@
 = Getting Started =
 
-  *Setup Android SDK, Eclipse and ADT for Eclipse
-  *Check out the project from svn
-  *Import the project to Eclipse
-  *???
-  *Profit
+  * Setup Android SDK, Eclipse and ADT for Eclipse
+  * Check out the project from svn
+  * Import the project to Eclipse
+  * ???
+  * Profit
 
 When you first start the application, you will see a blank screen.  Click the "Menu" button to see the possible actions.  The only action currently is to start reading live data.  This will start bind with the ObdReaderService that maintains a thread that will read from the bluetooth device.
 
