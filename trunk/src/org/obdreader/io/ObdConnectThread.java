@@ -85,14 +85,19 @@ public class ObdConnectThread extends Thread {
             		Thread.sleep(updateCycle);
             	}
             	ObdCommand cmd = cmds.get(i);
-            	cmd = getCopy(cmd); //make a copy because thread can only run once
-				String result = runCommand(cmd);
-				results.put(cmd.getDesc(),result);
+            	try {
+	            	cmd = getCopy(cmd); //make a copy because thread can only run once
+					String result = runCommand(cmd);
+					results.put(cmd.getDesc(),result);
+            	} catch (Exception e) {
+            		results.put(cmd.getDesc(), "");
+            		service.notifyMessage("Error running " + cmd.getDesc(), e.getMessage());
+            	}
 			}
         } catch (IOException e) {
         	service.notifyMessage("Bluetooth Connection Error",e.getMessage());
         } catch (Exception e) {
-			//I don't think we care about anything else
+			service.notifyMessage(e.getMessage(), e.toString());
 		} finally {
 			close();
 		}
