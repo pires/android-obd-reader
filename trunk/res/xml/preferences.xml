@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+            android:title="OBD Preferences">
+
+		<CheckBoxPreference
+			android:key="upload_data_preference"
+			android:defaultValue="false"
+			android:title="Enable Data Upload"
+			android:summaryOff="Disable http data upload"
+			android:summaryOn="Enable http data upload"
+			android:dialogTitle="Enable Data Upload" />
+
+        <EditTextPreference
+            android:key="upload_url_preference"
+            android:defaultValue="http://www.ral.ucar.edu/~lambi/obd/get_data.php"
+            android:title="Upload URL"
+            android:summary="POST URL that will accept real-time data"
+            android:dialogTitle="Upload URL" />
+
+        <ListPreference
+            android:key="bluetooth_list_preference"
+            android:title="Bluetooth Devices"
+            android:summary="List of paired bluetooth devices."
+            android:dialogTitle="Bluetooth Devices" />
+
+		<EditTextPreference
+			android:key="update_period_preference"
+            android:defaultValue="4"
+            android:title="Update Period in Seconds"
+            android:summary="The length of time between querying vehicle data in seconds"
+            android:dialogTitle="Update Period in Seconds" />
+    </PreferenceCategory>
+</PreferenceScreen>

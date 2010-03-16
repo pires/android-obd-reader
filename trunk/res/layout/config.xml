@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:stretchColumns="1"
+    android:id="@+id/config_table_view">
+
+    <TableRow>
+        <TextView
+            android:layout_column="1"
+            android:text="Upload URL"
+            android:padding="3dip" />
+        <EditText
+        	android:id="@+id/urledit"
+            android:text="http://www.ral.ucar.edu/~lambi/obd/get_data.php"
+            android:layout_width="fill_parent"
+            android:gravity="right"
+            android:padding="3dip" />
+    </TableRow>
+	<TableRow>
+		<TextView
+			android:layout_column="1"
+			android:text="Bluetooth Device"
+			android:padding="3dip" />
+		<Spinner
+			android:id="@+id/bluetooth_spinner"
+	        android:layout_width="fill_parent"
+    	    android:gravity="right"
+        	android:drawSelectorOnTop="true"
+	        android:prompt="@string/bluetooth_list"
+    	    android:padding="3dip" />
+	</TableRow>
+</TableLayout>

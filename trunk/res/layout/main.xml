@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  	android:id="@+id/vehicle_view"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_weight="1">
+	<ScrollView
+	  android:id="@+id/status_txt_scroll"
+	  android:layout_weight="20"
+	  android:layout_height="100px"
+	  android:layout_width="fill_parent">
+		<LinearLayout
+		  android:orientation="vertical"
+		  android:id="@+id/status_layout"
+		  android:layout_width="fill_parent"
+		  android:layout_height="fill_parent"
+		  android:layout_weight="1">
+		</LinearLayout>
+	</ScrollView>            
+	<ScrollView
+	  android:id="@+id/data_scroll"
+	  android:layout_weight="70"
+	  android:layout_height="100px"
+	  android:layout_width="fill_parent">
+		<TableLayout
+		  android:id="@+id/data_table"
+		  android:layout_width="fill_parent"
+		  android:layout_height="fill_parent">
+		</TableLayout>
+	</ScrollView>            
+</LinearLayout>
