@@ -31,8 +31,6 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.nullwire.trace.ExceptionHandler;
-
 public class ObdReaderMainActivity extends Activity {
 	static final int NO_BLUETOOTH_ID = 0;
 	static final int NO_GPS_ID = 1;

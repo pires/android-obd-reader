@@ -4,9 +4,9 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Map;
 
+import org.obdreader.R;
 import org.obdreader.activity.ObdReaderConfigActivity;
 
-import org.obdreader.R;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -21,8 +21,6 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
-
-import com.nullwire.trace.ExceptionHandler;
 
 public class ObdReaderService extends Service {
 
