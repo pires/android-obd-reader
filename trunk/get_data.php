@@ -21,9 +21,9 @@ $gtime = $_REQUEST["GPS_Time"];
 $otime = $_REQUEST["Obs_Time"];
 
 $link = new mysqli(
-            'motown',  /* The host to connect to */
-            'lambi',       /* The user to connect as */
-            'w01f n l10n',   /* The password to use */
+            'localhost',  /* The host to connect to */
+            'user',       /* The user to connect as */
+            'nothing',   /* The password to use */
             'obd_data');     /* The default database to query */
 
 if (mysqli_connect_errno()) {
