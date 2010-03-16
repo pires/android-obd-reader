@@ -1,5 +1,7 @@
 = Application Structure = 
 
+I attempted to fit this application into the Android platform as best as possible.  See http://developer.android.com/guide/topics/fundamentals.html
+
 == Activities ==
 
 This application consists of two activities and a service.  The main activity will bind to the service and poll for updates.  The config activity allows the user to select the bluetooth device and a few other config parameters.
