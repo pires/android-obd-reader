@@ -1,0 +1,8 @@
+
+= Application Structure = 
+
+This application consists of two activities and a service.  The main activity will bind to the service and poll for updates.  The config activity allows the user to select the bluetooth device and a few other config parameters.
+
+The service will be created the first time an activity binds to it, when the user starts the application.  The user will explicitly start and stop the service using the menu options from the main activity.  The service will then use notifications to communicate problems to the user.  The service starts one thread that will communicate with the bluetooth device and the service provides a hook to this thread to receive actual data values.
+
+The obd commands are stored in a static list from the ObdConfig class, this is a list of ObdCommand implementations that contain the command string and the code to handle a response.  All commands inherit from ObdCommand, this is where a command will be run and a response is parsed.  ObdConfig contains two lists, commands and static commands.  Static commands are commands that should not be run in real time like resetting trouble codes or reading trouble codes.
