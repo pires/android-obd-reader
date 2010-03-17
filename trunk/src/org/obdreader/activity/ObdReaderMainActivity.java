@@ -12,6 +12,8 @@ import org.obdreader.config.ObdConfig;
 import org.obdreader.io.ObdReaderService;
 import org.obdreader.io.ObdReaderServiceConnection;
 
+import com.nullwire.trace.ExceptionHandler;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -37,7 +39,7 @@ public class ObdReaderMainActivity extends Activity {
 	static final int START_LIVE_DATA = 1;
 	static final int STOP_LIVE_DATA = 2;
 	static final int SETTINGS = 3;
-	static final int CONFIG_ACTIVITY = 4;
+	static final int COMMAND_ACTIVITY = 5;
 	private Handler handler = null;
 	private Intent serviceIntent = null;
 	private ObdReaderServiceConnection serviceConn = null;
@@ -47,6 +49,7 @@ public class ObdReaderMainActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ExceptionHandler.register(this,"http://www.whidbeycleaning.com/droid/server.php");
         setContentView(R.layout.main);
         handler = new Handler();
         serviceIntent = new Intent(this, ObdReaderService.class);
@@ -70,6 +73,7 @@ public class ObdReaderMainActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(0, START_LIVE_DATA, 0, "Start Live Data");
         menu.add(0, SETTINGS, 0, "Settings");
+        menu.add(0, COMMAND_ACTIVITY, 0, "Run Command");
         menu.add(0, STOP_LIVE_DATA, 0, "Stop");
         return true;
     }
@@ -84,8 +88,15 @@ public class ObdReaderMainActivity extends Activity {
         case SETTINGS:
         	updateConfig();
         	return true;
+        case COMMAND_ACTIVITY:
+        	staticCommand();
+        	return true;
         }
         return false;
+    }
+    private void staticCommand() {
+    	Intent commandIntent = new Intent(this, ObdReaderCommandActivity.class);
+    	startActivity(commandIntent);
     }
     private void liveData() {
     	if (!serviceConn.isRunning()) {
@@ -141,14 +152,17 @@ public class ObdReaderMainActivity extends Activity {
     	MenuItem startItem = menu.findItem(START_LIVE_DATA);
     	MenuItem stopItem = menu.findItem(STOP_LIVE_DATA);
     	MenuItem settingsItem = menu.findItem(SETTINGS);
+    	MenuItem commandItem = menu.findItem(COMMAND_ACTIVITY);
     	if (serviceConn.isRunning()) {
     		startItem.setEnabled(false);
     		stopItem.setEnabled(true);
     		settingsItem.setEnabled(false);
+    		commandItem.setEnabled(false);
     	} else {
     		stopItem.setEnabled(false);
     		startItem.setEnabled(true);
     		settingsItem.setEnabled(true);
+    		commandItem.setEnabled(true);
     	}
     	return true;
     }

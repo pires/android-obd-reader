@@ -2,5 +2,5 @@
 <resources>
     <string name="hello">Hello World, ObdReader!</string>
     <string name="app_name">OBD II Reader</string>
-    <string name="bluetooth_list">Choose a device</string>
+    <string name="command_list">Choose a command</string>
 </resources>

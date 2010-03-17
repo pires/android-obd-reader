@@ -34,4 +34,10 @@ public class ObdConfig {
 		cmds.add(new ObdCommand("04","Reset Codes",""));
 		return cmds;
 	}
+	public static ArrayList<ObdCommand> getAllCommands() {
+		ArrayList<ObdCommand> cmds = new ArrayList<ObdCommand>();
+		cmds.addAll(getStaticCommands());
+		cmds.addAll(getCommands());
+		return cmds;
+	}
 }

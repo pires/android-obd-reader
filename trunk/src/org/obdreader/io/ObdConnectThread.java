@@ -21,7 +21,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 
-public class ObdConnectThread extends Thread {
+public class ObdConnectThread extends Thread implements LocationListener {
 
 	protected BluetoothDevice dev = null;
 	protected BluetoothSocket sock = null;
@@ -31,10 +31,11 @@ public class ObdConnectThread extends Thread {
 	protected OutputStream out = null;
 	protected ArrayList<ObdCommand> cmds = null;
 	protected Map<String,String> results = null;
-	private int updateCycle = 4000;
-	private ObdReaderService service = null;
-	private String uploadUrl = null;
-	private Location currentLocation = null;
+	protected int updateCycle = 4000;
+	protected ObdReaderService service = null;
+	protected String uploadUrl = null;
+	protected Location currentLocation = null;
+	protected LocationManager locationManager = null;
 
 	public ObdConnectThread(BluetoothDevice dev, LocationManager locationManager, final ObdReaderService service, String uploadUrl, int updateCycle) {
 		this.dev = dev;
@@ -42,18 +43,10 @@ public class ObdConnectThread extends Thread {
 		this.updateCycle = updateCycle;
 		this.service = service;
 		this.uploadUrl = uploadUrl;
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0.0f, new LocationListener() {
-			public void onStatusChanged(String provider, int status, Bundle extras) {
-			}
-			public void onProviderEnabled(String provider) {
-			}
-			public void onProviderDisabled(String provider) {
-				service.notifyMessage("GPS Unavailable", "GPS_PROVIDER disabled, please enable gps in your settings.");
-			}
-			public void onLocationChanged(Location location) {
-				currentLocation = location;
-			}
-		});
+		this.locationManager = locationManager;
+		if (locationManager != null) {
+			this.locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0.0f, this);
+		}
 		results = new HashMap<String,String>();
 	}
 	protected void startDevice() throws IOException, InterruptedException {
@@ -91,18 +84,18 @@ public class ObdConnectThread extends Thread {
 					results.put(cmd.getDesc(),result);
             	} catch (Exception e) {
             		results.put(cmd.getDesc(), "");
-            		service.notifyMessage("Error running " + cmd.getDesc(), e.getMessage());
+            		service.notifyMessage("Error running " + cmd.getDesc(), e.getMessage(), ObdReaderService.COMMAND_ERROR_NOTIFY);
             	}
 			}
         } catch (IOException e) {
-        	service.notifyMessage("Bluetooth Connection Error",e.getMessage());
+        	service.notifyMessage("Bluetooth Connection Error",e.getMessage(), ObdReaderService.CONNECT_ERROR_NOTIFY);
         } catch (Exception e) {
-			service.notifyMessage(e.getMessage(), e.toString());
+			service.notifyMessage(e.getMessage(), e.toString(), ObdReaderService.OBD_SERVICE_ERROR_NOTIFY);
 		} finally {
 			close();
 		}
 	}
-	protected ObdCommand getCopy(ObdCommand cmd) throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+	public static ObdCommand getCopy(ObdCommand cmd) throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 		return cmd.getClass().getConstructor(cmd.getClass()).newInstance(cmd);
 	}
 	public String runCommand(ObdCommand cmd) throws InterruptedException {
@@ -138,6 +131,10 @@ public class ObdConnectThread extends Thread {
 	}
 	public void close() {
 		try {
+			locationManager.removeUpdates(this);
+		} catch (Exception e) {
+		}
+		try {
         	stop = true;
             sock.close();
         } catch (Exception e) { 
@@ -148,5 +145,19 @@ public class ObdConnectThread extends Thread {
     	PrintWriter ptrw = new PrintWriter(strw);
     	e.printStackTrace(ptrw);
     	return strw.toString();
+	}
+	@Override
+	public void onLocationChanged(Location location) {
+		currentLocation = location;
+	}
+	@Override
+	public void onProviderDisabled(String provider) {
+		service.notifyMessage("GPS Unavailable", "GPS_PROVIDER disabled, please enable gps in your settings.", ObdReaderService.OBD_SERVICE_ERROR_NOTIFY);
+	}
+	@Override
+	public void onProviderEnabled(String provider) {
+	}
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
 	}
 }

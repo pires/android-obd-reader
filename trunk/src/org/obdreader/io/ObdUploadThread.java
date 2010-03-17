@@ -21,7 +21,7 @@ public class ObdUploadThread extends Thread {
 				du.uploadRecord(urlString,dataMap);
     		}
 		} catch (Exception e) {
-			service.notifyMessage("Error uploading data", e.getMessage());
+			service.notifyMessage("Error uploading data", e.getMessage(), ObdReaderService.OBD_SERVICE_ERROR_NOTIFY);
 		}
 	}
 }

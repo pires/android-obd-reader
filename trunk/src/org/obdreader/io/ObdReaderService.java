@@ -26,11 +26,14 @@ public class ObdReaderService extends Service {
 
 	private ObdConnectThread connectThread = null;
 	private final IBinder binder = new ObdReaderServiceBinder();
-	private int notifyId = 1;
 	private NotificationManager notifyMan = null;
 	private Context context = null;
 	private Intent notificationIntent = null;
 	private PendingIntent contentIntent = null;
+	public static final int COMMAND_ERROR_NOTIFY = 2;
+	public static final int CONNECT_ERROR_NOTIFY = 3;
+	public static final int OBD_SERVICE_RUNNING_NOTIFY = 4;
+	public static final int OBD_SERVICE_ERROR_NOTIFY = 5;
 
 	public void onCreate() {
 		super.onCreate();
@@ -104,19 +107,18 @@ public class ObdReaderService extends Service {
 		    	StringWriter strw = new StringWriter();
 		    	PrintWriter ptrw = new PrintWriter(strw);
 		    	e.printStackTrace(ptrw);
-				notifyMessage(e.getMessage(),strw.toString());
+				notifyMessage(e.getMessage(),strw.toString(), OBD_SERVICE_ERROR_NOTIFY);
 			}
 		}
 		connectThread.close();
 		stopSelf();
 		return true;
 	}
-	public void notifyMessage(String msg, String longMsg) {
+	public void notifyMessage(String msg, String longMsg, int notifyId) {
 		long when = System.currentTimeMillis();
 		Notification notification = new Notification(android.R.drawable.stat_notify_error, msg, when);
 		notification.setLatestEventInfo(context, msg, longMsg, contentIntent);
 		notifyMan.notify(notifyId, notification);
-		notifyId ++;
 	}
 	public Map<String,String> getDataMap() {
 		if (connectThread != null) {
@@ -142,13 +144,13 @@ public class ObdReaderService extends Service {
 			notification.setLatestEventInfo(context, "OBD Service Running", "", contentIntent);
 			notification.flags |= Notification.FLAG_NO_CLEAR;
 			notification.flags |= Notification.FLAG_ONGOING_EVENT;
-			notifyMan.notify(3, notification);
+			notifyMan.notify(OBD_SERVICE_RUNNING_NOTIFY, notification);
 			try {
 				t.join();
 			} catch (InterruptedException e) {
 			}
 			stopSelf();
-			notifyMan.cancel(3);
+			notifyMan.cancel(OBD_SERVICE_RUNNING_NOTIFY);
 		}
 	}
 }
