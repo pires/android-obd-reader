@@ -12,8 +12,6 @@ import org.obdreader.config.ObdConfig;
 import org.obdreader.io.ObdReaderService;
 import org.obdreader.io.ObdReaderServiceConnection;
 
-import com.nullwire.trace.ExceptionHandler;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -49,7 +47,7 @@ public class ObdReaderMainActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ExceptionHandler.register(this,"http://www.whidbeycleaning.com/droid/server.php");
+//        ExceptionHandler.register(this,"http://www.whidbeycleaning.com/droid/server.php");
         setContentView(R.layout.main);
         handler = new Handler();
         serviceIntent = new Intent(this, ObdReaderService.class);
