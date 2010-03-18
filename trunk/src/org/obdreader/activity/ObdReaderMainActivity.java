@@ -31,8 +31,6 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.nullwire.trace.ExceptionHandler;
-
 public class ObdReaderMainActivity extends Activity {
 	static final int NO_BLUETOOTH_ID = 0;
 	static final int NO_GPS_ID = 1;
@@ -49,7 +47,7 @@ public class ObdReaderMainActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ExceptionHandler.register(this,"http://www.whidbeycleaning.com/droid/server.php");
+//        ExceptionHandler.register(this,"http://www.whidbeycleaning.com/droid/server.php");
         setContentView(R.layout.main);
         handler = new Handler();
         serviceIntent = new Intent(this, ObdReaderService.class);

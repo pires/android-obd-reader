@@ -26,8 +26,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
-import com.nullwire.trace.ExceptionHandler;
-
 public class ObdReaderCommandActivity extends Activity implements OnItemSelectedListener {
 
 	final private ArrayList<ObdCommand> commands = ObdConfig.getAllCommands();
@@ -39,7 +37,6 @@ public class ObdReaderCommandActivity extends Activity implements OnItemSelected
 	public void onCreate(Bundle savedInstance) {
 		super.onCreate(savedInstance);
 		setContentView(R.layout.command);
-		ExceptionHandler.register(this,"http://www.whidbeycleaning.com/droid/server.php");
 		Spinner cmdSpin = (Spinner) findViewById(R.id.command_spinner);
 		cmdSpin.setOnItemSelectedListener(this);
 		cmdMap = new HashMap<String,ObdCommand>();
