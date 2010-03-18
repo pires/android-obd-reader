@@ -32,6 +32,10 @@ public class ObdConfig {
 		cmds.add(new DtcNumberObdCommand("0101","Trouble Code Status",""));
 		cmds.add(new TroubleCodesObdCommand("03","Trouble Codes",""));
 		cmds.add(new ObdCommand("04","Reset Codes",""));
+		cmds.add(new ObdCommand("atz","Serial Reset atz",""));
+		cmds.add(new ObdCommand("ate0","Serial Echo Off ate0",""));
+		cmds.add(new ObdCommand("ate1","Serial Echo On ate1",""));
+		cmds.add(new ObdCommand("atsp0","Reset Protocol astp0",""));
 		return cmds;
 	}
 	public static ArrayList<ObdCommand> getAllCommands() {

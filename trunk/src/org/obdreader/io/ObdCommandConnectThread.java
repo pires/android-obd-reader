@@ -18,11 +18,15 @@ public class ObdCommandConnectThread extends ObdConnectThread {
 
 	public void run() {
 		try {
+			activity.logMsg("Starting device...");
 			startDevice();
+			activity.logMsg("Device started, running " + cmd.getCmd() + "...");
 			String res = runCommand(cmd);
+			String rawRes = cmd.getResult().replace("\r","\\r").replace("\n","\\n");
+			activity.logMsg("Raw result is '" + rawRes + "'");
 			results.put(cmd.getDesc(), res);
 		} catch (Exception e) {
-			activity.showMessage("Error running command: " + e.getMessage());
+			activity.logMsg("Error running command: " + e.getMessage() + ", result was: '" + cmd.getResult() + "'");
 		} finally {
 			close();
 		}

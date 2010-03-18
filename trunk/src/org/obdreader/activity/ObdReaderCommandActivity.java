@@ -26,6 +26,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
+import com.nullwire.trace.ExceptionHandler;
+
 public class ObdReaderCommandActivity extends Activity implements OnItemSelectedListener {
 
 	final private ArrayList<ObdCommand> commands = ObdConfig.getAllCommands();
@@ -37,7 +39,7 @@ public class ObdReaderCommandActivity extends Activity implements OnItemSelected
 	public void onCreate(Bundle savedInstance) {
 		super.onCreate(savedInstance);
 		setContentView(R.layout.command);
-//		ExceptionHandler.register(this,"http://www.whidbeycleaning.com/droid/server.php");
+		ExceptionHandler.register(this,"http://www.whidbeycleaning.com/droid/server.php");
 		Spinner cmdSpin = (Spinner) findViewById(R.id.command_spinner);
 		cmdSpin.setOnItemSelectedListener(this);
 		cmdMap = new HashMap<String,ObdCommand>();
@@ -81,15 +83,22 @@ public class ObdReaderCommandActivity extends Activity implements OnItemSelected
 			}
 		});
 	}
-	private void setText(final String desc, final String value) {
+	private void setText(final String value, final boolean clear) {
 		handler.post(new Runnable() {
 			public void run() {
-				TextView idView  = (TextView) findViewById(R.id.command_id_text);
 				TextView txtView = (TextView) findViewById(R.id.command_result_text);
-				idView.setText(desc + ": ");
-				txtView.setText(value);
+				String curr = (String) txtView.getText();
+				if (curr == null || clear || "".equals(curr)) {
+					curr = value;
+				} else {
+					curr = curr + "\n" + value;
+				}
+				txtView.setText(curr);
 			}
 		});
+	}
+	public void logMsg(final String msg) {
+		setText(msg,false);
 	}
 	private class ObdReaderCommandActivityWorkerThread extends Thread {
 		ObdCommand cmd = null;
@@ -110,7 +119,7 @@ public class ObdReaderCommandActivity extends Activity implements OnItemSelected
 	    	}
 			BluetoothDevice dev = mBluetoothAdapter.getRemoteDevice(devString);
 			final ObdCommandConnectThread thread = new ObdCommandConnectThread(dev, ObdReaderCommandActivity.this, cmd);
-			setText(cmd.getDesc(), "Running...");
+			setText("Running...", true);
 			try {
 				thread.start();
 				thread.join();
@@ -123,7 +132,7 @@ public class ObdReaderCommandActivity extends Activity implements OnItemSelected
 			} else {
 				res = thread.getResults().get(cmd.getDesc());
 			}
-			setText(cmd.getDesc(), res);
+			logMsg("Formated result: " + res);
 		}
 	}
 }

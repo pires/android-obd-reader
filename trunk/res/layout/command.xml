@@ -1,33 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:stretchColumns="1"
-    android:id="@+id/command_table_view">
+    android:orientation="vertical"
+    android:id="@+id/command_linear_view">
 
-	<TableRow>
 		<Spinner
-			android:layout_column="1"
 			android:id="@+id/command_spinner"
 	        android:layout_width="fill_parent"
-    	    android:gravity="right"
-        	android:drawSelectorOnTop="true"
+	        android:layout_height="wrap_content"
+    	    android:gravity="center"
 	        android:prompt="@string/command_list"
-	        android:layout_span="2"
     	    android:padding="3dip" />
-	</TableRow>
-    <TableRow>
-        <TextView
-            android:layout_column="1"
-			android:id="@+id/command_id_text"
-			android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="3dip" />
+	<ScrollView
+	  android:id="@+id/command_txt_scroll"
+	  android:layout_height="300px"
+	  android:layout_width="fill_parent">
+	  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    		android:layout_width="fill_parent"
+    		android:layout_height="fill_parent">
         <TextView
         	android:id="@+id/command_result_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="left" />
-    </TableRow>
-
-</TableLayout>
+     </LinearLayout>
+	</ScrollView>
+</LinearLayout>
