@@ -19,6 +19,13 @@
             android:summary="POST URL that will accept real-time data"
             android:dialogTitle="Upload URL" />
 
+        <EditTextPreference
+            android:key="vehicle_id_preference"
+            android:defaultValue=""
+            android:title="Vehicle ID"
+            android:summary="Optional unique id of this vehicle, used with uploaded data"
+            android:dialogTitle="Vehicle ID" />
+
         <ListPreference
             android:key="bluetooth_list_preference"
             android:title="Bluetooth Devices"

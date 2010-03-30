@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ObdCommand extends Thread {
 
@@ -14,6 +15,8 @@ public class ObdCommand extends Thread {
 	protected String desc = null;
 	protected String resType = null;
 	protected Exception error;
+	protected Object rawValue = null;
+	protected HashMap<String,Object> data = null;
 	
 	public ObdCommand(String cmd, String desc, String resType) {
 		this.cmd = cmd;
@@ -33,6 +36,9 @@ public class ObdCommand extends Thread {
 	public void run() {
 		sendCmd(cmd);
 		readResult();
+	}
+	public void setDataMap(HashMap<String,Object> data) {
+		this.data = data;
 	}
 	protected void sendCmd(String cmd) {
 		try {
@@ -92,5 +98,8 @@ public class ObdCommand extends Thread {
 	}
 	public Exception getError() {
 		return error;
+	}
+	public Object getRawValue() {
+		return rawValue;
 	}
 }

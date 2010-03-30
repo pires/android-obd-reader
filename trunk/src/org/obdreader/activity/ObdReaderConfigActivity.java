@@ -23,6 +23,7 @@ public class ObdReaderConfigActivity extends PreferenceActivity implements OnPre
 	public static final String UPLOAD_URL_KEY = "upload_url_preference";
 	public static final String UPLOAD_DATA_KEY = "upload_data_preference";
 	public static final String UPDATE_PERIOD_KEY = "update_period_preference";
+	public static final String VEHICLE_ID_KEY = "vehicle_id_preference";
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences);

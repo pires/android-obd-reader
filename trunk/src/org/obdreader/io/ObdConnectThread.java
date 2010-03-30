@@ -30,12 +30,14 @@ public class ObdConnectThread extends Thread implements LocationListener {
 	protected InputStream in = null;
 	protected OutputStream out = null;
 	protected ArrayList<ObdCommand> cmds = null;
-	protected Map<String,String> results = null;
+	protected HashMap<String,String> results = null;
+	protected HashMap<String,Object> data = null;
 	protected int updateCycle = 4000;
 	protected ObdReaderService service = null;
 	protected String uploadUrl = null;
 	protected Location currentLocation = null;
 	protected LocationManager locationManager = null;
+	
 
 	public ObdConnectThread(BluetoothDevice dev, LocationManager locationManager, final ObdReaderService service, String uploadUrl, int updateCycle) {
 		this.dev = dev;
@@ -48,6 +50,7 @@ public class ObdConnectThread extends Thread implements LocationListener {
 			this.locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0.0f, this);
 		}
 		results = new HashMap<String,String>();
+		data = new HashMap<String,Object>();
 	}
 	protected void startDevice() throws IOException, InterruptedException {
 		sock = this.dev.createRfcommSocketToServiceRecord(MY_UUID);
@@ -66,12 +69,17 @@ public class ObdConnectThread extends Thread implements LocationListener {
 	public void run() {
         try {
         	startDevice();
-            for (int i = 0; i < cmds.size(); i++) {
-            	results.put(cmds.get(i).getDesc(),"");
+        	int cmdSize = cmds.size();
+            for (int i = 0; i < cmdSize; i++) {
+            	String desc = cmds.get(i).getDesc();
+            	results.put(desc,"--");
+            	data.put(desc,-9999);
             }
-            for (int i = 0; !stop; i = ((i+1) % cmds.size())) {
+            for (int i = 0; !stop; i = ((i+1) % cmdSize)) {
             	if (i == 0) {
-            		results.put("Obs Time", Long.toString(System.currentTimeMillis()/1000));
+            		long obsTime = System.currentTimeMillis()/1000;
+            		results.put("Obs Time", Long.toString(obsTime));
+            		data.put("Obs Time", obsTime);
             		if (uploadUrl != null && !"".equals(uploadUrl)) {
             			new ObdUploadThread(uploadUrl, service, getResults()).start();
             		}
@@ -80,10 +88,12 @@ public class ObdConnectThread extends Thread implements LocationListener {
             	ObdCommand cmd = cmds.get(i);
             	try {
 	            	cmd = getCopy(cmd); //make a copy because thread can only run once
+	            	String desc = cmd.getDesc();
 					String result = runCommand(cmd);
-					results.put(cmd.getDesc(),result);
+					results.put(desc,result);
+					data.put(desc,cmd.getRawValue());
             	} catch (Exception e) {
-            		results.put(cmd.getDesc(), "");
+            		results.put(cmd.getDesc(), "--");
             		service.notifyMessage("Error running " + cmd.getDesc(), e.getMessage(), ObdReaderService.COMMAND_ERROR_NOTIFY);
             	}
 			}
@@ -101,6 +111,7 @@ public class ObdConnectThread extends Thread implements LocationListener {
 	public String runCommand(ObdCommand cmd) throws InterruptedException {
 		cmd.setInputStream(in);
 		cmd.setOutputStream(out);
+		cmd.setDataMap(data);
 		cmd.start();
 		while (!stop) {
 			cmd.join(300);
@@ -119,10 +130,14 @@ public class ObdConnectThread extends Thread implements LocationListener {
     		double lon = currentLocation.getLongitude();
     		int speed = (int) currentLocation.getSpeed();
     		long gtime = currentLocation.getTime()/1000;
-    		results.put("Latitude", Double.toString(lat));
-    		results.put("Longitude", Double.toString(lon));
-    		results.put("GPS Speed", Integer.toString(speed));
+    		results.put("Latitude", String.format("%.5f", lat));
+    		results.put("Longitude", String.format("%.5f", lon));
+    		results.put("GPS Speed", String.format("%d m/s", speed));
     		results.put("GPS Time", Long.toString(gtime));
+    		data.put("Latitude", lat);
+    		data.put("Longitude", lon);
+    		data.put("GPS Speed", speed);
+    		data.put("GPS Time", gtime);
 		}
 		return results;
 	}

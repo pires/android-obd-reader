@@ -27,6 +27,7 @@ public class ObdCommandConnectThread extends ObdConnectThread {
 			results.put(cmd.getDesc(), res);
 		} catch (Exception e) {
 			activity.logMsg("Error running command: " + e.getMessage() + ", result was: '" + cmd.getResult() + "'");
+			activity.logMsg("Error was: " + getStackTrace(e));
 		} finally {
 			close();
 		}

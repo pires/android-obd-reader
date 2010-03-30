@@ -6,19 +6,6 @@
     android:layout_height="fill_parent"
     android:layout_weight="1">
 	<ScrollView
-	  android:id="@+id/status_txt_scroll"
-	  android:layout_weight="20"
-	  android:layout_height="100px"
-	  android:layout_width="fill_parent">
-		<LinearLayout
-		  android:orientation="vertical"
-		  android:id="@+id/status_layout"
-		  android:layout_width="fill_parent"
-		  android:layout_height="fill_parent"
-		  android:layout_weight="1">
-		</LinearLayout>
-	</ScrollView>            
-	<ScrollView
 	  android:id="@+id/data_scroll"
 	  android:layout_weight="70"
 	  android:layout_height="100px"
@@ -26,7 +13,8 @@
 		<TableLayout
 		  android:id="@+id/data_table"
 		  android:layout_width="fill_parent"
-		  android:layout_height="fill_parent">
+		  android:layout_height="fill_parent"
+		  android:stretchColumns="*">
 		</TableLayout>
 	</ScrollView>            
 </LinearLayout>

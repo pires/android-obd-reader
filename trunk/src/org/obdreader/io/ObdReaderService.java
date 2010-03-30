@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.obdreader.R;
 import org.obdreader.activity.ObdReaderConfigActivity;
+import org.obdreader.activity.ObdReaderMainActivity;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -84,12 +85,7 @@ public class ObdReaderService extends Service {
         	stopSelf();
         	return false;
         }
-        String periodString = prefs.getString(ObdReaderConfigActivity.UPDATE_PERIOD_KEY, "4");
-        int period = 4000;
-        try {
-			period = Integer.parseInt(periodString);
-		} catch (Exception e) {
-		}
+        int period = ObdReaderMainActivity.getUpdatePeriod(prefs);
 		BluetoothDevice dev = mBluetoothAdapter.getRemoteDevice(devString);
 		connectThread = new ObdConnectThread(dev,locationManager,this,uploadUrl,period);
 		new ObdReaderServiceWorkerThread(connectThread).start();
@@ -138,19 +134,20 @@ public class ObdReaderService extends Service {
 			this.t = t;
 		}
 		public void run() {
-			t.start();
-			long when = System.currentTimeMillis();
-			Notification notification = new Notification(R.drawable.car, "OBD Service Running", when);
-			notification.setLatestEventInfo(context, "OBD Service Running", "", contentIntent);
-			notification.flags |= Notification.FLAG_NO_CLEAR;
-			notification.flags |= Notification.FLAG_ONGOING_EVENT;
-			notifyMan.notify(OBD_SERVICE_RUNNING_NOTIFY, notification);
 			try {
+				t.start();
+				long when = System.currentTimeMillis();
+				Notification notification = new Notification(R.drawable.car, "OBD Service Running", when);
+				notification.setLatestEventInfo(context, "OBD Service Running", "", contentIntent);
+				notification.flags |= Notification.FLAG_NO_CLEAR;
+				notification.flags |= Notification.FLAG_ONGOING_EVENT;
+				notifyMan.notify(OBD_SERVICE_RUNNING_NOTIFY, notification);
 				t.join();
-			} catch (InterruptedException e) {
+			} catch (Exception e) {
+			} finally {
+				notifyMan.cancel(OBD_SERVICE_RUNNING_NOTIFY);
+				stopSelf();
 			}
-			stopSelf();
-			notifyMan.cancel(OBD_SERVICE_RUNNING_NOTIFY);
 		}
 	}
 }

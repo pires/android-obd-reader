@@ -1,7 +1,6 @@
 package org.obdreader.activity;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -18,18 +17,20 @@ import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import com.nullwire.trace.ExceptionHandler;
 
 public class ObdReaderMainActivity extends Activity {
 	static final int NO_BLUETOOTH_ID = 0;
@@ -47,7 +48,7 @@ public class ObdReaderMainActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        ExceptionHandler.register(this,"http://www.whidbeycleaning.com/droid/server.php");
+        ExceptionHandler.register(this,"http://www.whidbeycleaning.com/droid/server.php");
         setContentView(R.layout.main);
         handler = new Handler();
         serviceIntent = new Intent(this, ObdReaderService.class);
@@ -112,28 +113,6 @@ public class ObdReaderMainActivity extends Activity {
     		updater.stop = true;
     	}
     }
-    public void logMsg(final String msg, final int color) {
-    	handler.post(new Runnable() {
-			public void run() {
-				addStatusMsg(msg,color);
-			}
-		});
-    }
-    public void logStackTrace(Exception e) {
-    	StringWriter strw = new StringWriter();
-    	PrintWriter ptrw = new PrintWriter(strw);
-    	e.printStackTrace(ptrw);
-    	logWarn(strw.toString());
-    }
-    public void logError(final String msg) {
-    	logMsg(msg,Color.RED);
-    }
-    public void logWarn(final String msg) {
-    	logMsg(msg,Color.YELLOW);
-    }
-    public void logInfo(final String msg) {
-    	logMsg(msg,Color.GREEN);
-    }
     protected Dialog onCreateDialog(int id) {
     	AlertDialog.Builder build = new AlertDialog.Builder(this);
     	switch(id) {
@@ -175,7 +154,9 @@ public class ObdReaderMainActivity extends Activity {
     	TableLayout tl = (TableLayout) findViewById(R.id.data_table);
     	tl.removeAllViews();
     	Set<String> keySet = dataMap.keySet();
-    	for (String k:keySet) {
+    	String[] keys = keySet.toArray(new String[0]);
+    	Arrays.sort(keys);
+    	for (String k:keys) {
     		addTableRow(tl,k,dataMap.get(k));
     	}
     	
@@ -183,7 +164,7 @@ public class ObdReaderMainActivity extends Activity {
     private void addTableRow(TableLayout tl, String key, String val) {
     	TableRow tr = new TableRow(this);
 		tr.setLayoutParams(new LayoutParams(
-                LayoutParams.FILL_PARENT,
+                LayoutParams.WRAP_CONTENT,
                 LayoutParams.WRAP_CONTENT));
 		TextView name = new TextView(this);
 		name.setGravity(Gravity.RIGHT);
@@ -194,19 +175,26 @@ public class ObdReaderMainActivity extends Activity {
 		tr.addView(name);
 		tr.addView(value);
 		tl.addView(tr,new TableLayout.LayoutParams(
-                    LayoutParams.FILL_PARENT,
+                    LayoutParams.WRAP_CONTENT,
                     LayoutParams.WRAP_CONTENT));
     }
-    private void addStatusMsg(String txt, int color) {
-    	LinearLayout line = (LinearLayout) findViewById(R.id.status_layout);
-    	TextView view = new TextView(this);
-    	view.setText(txt);
-    	view.setTextColor(color);
-    	line.addView(view,0);
+    public static int getUpdatePeriod(SharedPreferences prefs) {
+        String periodString = prefs.getString(ObdReaderConfigActivity.UPDATE_PERIOD_KEY, "4");
+        int period = 4000;
+        try {
+			period = Integer.parseInt(periodString) * 1000;
+		} catch (Exception e) {
+		}
+    	if (period <= 0) {
+    		period = 250;
+    	}
+    	return period;
     }
     private class UpdateThread extends Thread {
     	boolean stop = false;
     	public void run() {
+    		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ObdReaderMainActivity.this);
+    		String vehicleId = prefs.getString(ObdReaderConfigActivity.VEHICLE_ID_KEY,"");
     		while (!stop && serviceConn.isRunning()) {
     			ObdReaderService svc = serviceConn.getService();
     			Map<String,String> dataMap = null;
@@ -218,9 +206,12 @@ public class ObdReaderMainActivity extends Activity {
     			} else {
     				dataMap = svc.getDataMap();
     			}
+    			if (vehicleId != null && !"".equals(vehicleId.trim())) {
+        			dataMap.put("Vehicle ID", vehicleId);
+        		}
     			updateDataTable(dataMap);
     			try {
-					Thread.sleep(4000);
+					Thread.sleep(ObdReaderMainActivity.getUpdatePeriod(prefs));
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
