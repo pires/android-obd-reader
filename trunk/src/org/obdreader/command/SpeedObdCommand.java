@@ -8,4 +8,11 @@ public class SpeedObdCommand extends IntObdCommand {
 	public SpeedObdCommand(SpeedObdCommand other) {
 		super(other);
 	}
+	@Override
+	public int getImperialInt() {
+		if (intValue <= 0) {
+			return 0;
+		}
+		return (int)(intValue * .625);
+	}
 }
