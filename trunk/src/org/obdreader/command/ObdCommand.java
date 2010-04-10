@@ -6,6 +6,8 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.obdreader.io.ObdConnectThread;
+
 public class ObdCommand extends Thread {
 
 	protected InputStream in = null;
@@ -17,15 +19,27 @@ public class ObdCommand extends Thread {
 	protected Exception error;
 	protected Object rawValue = null;
 	protected HashMap<String,Object> data = null;
-	
-	public ObdCommand(String cmd, String desc, String resType) {
+	protected ObdConnectThread connectThread = null;
+	protected String impType = null;
+
+	public ObdCommand(String cmd, String desc, String resType, String impType) {
 		this.cmd = cmd;
 		this.desc = desc;
 		this.resType = resType;
 		this.buff = new ArrayList<Byte>();
+		this.impType = impType;
+	}
+	public void setConnectThread(ObdConnectThread thread) {
+		this.connectThread = thread;
+	}
+	public boolean isImperial() {
+		if (connectThread != null && connectThread.getImperialUnits()) {
+			return true;
+		}
+		return false;
 	}
 	public ObdCommand(ObdCommand other) {
-		this(other.cmd, other.desc, other.resType);
+		this(other.cmd, other.desc, other.resType, other.impType);
 	}
 	public void setInputStream(InputStream in) {
 		this.in = in;

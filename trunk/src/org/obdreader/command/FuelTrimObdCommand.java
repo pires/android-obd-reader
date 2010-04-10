@@ -3,14 +3,14 @@ package org.obdreader.command;
 public class FuelTrimObdCommand extends IntObdCommand {
 
 	public FuelTrimObdCommand(String cmd, String desc, String resType) {
-		super(cmd,desc,resType);
+		super(cmd,desc,resType,resType);
 	}
 	public FuelTrimObdCommand(FuelTrimObdCommand other) {
 		super(other);
 	}
 
 	public FuelTrimObdCommand() {
-		super("0107","Long Term Fuel Trim","%");
+		super("0107","Long Term Fuel Trim","%","%");
 	}
 
 	@Override

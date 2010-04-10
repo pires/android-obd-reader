@@ -2,11 +2,12 @@ package org.obdreader.io;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.obdreader.R;
 import org.obdreader.activity.ObdReaderConfigActivity;
-import org.obdreader.activity.ObdReaderMainActivity;
+import org.obdreader.command.ObdCommand;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -85,9 +86,16 @@ public class ObdReaderService extends Service {
         	stopSelf();
         	return false;
         }
-        int period = ObdReaderMainActivity.getUpdatePeriod(prefs);
+        int period = ObdReaderConfigActivity.getUpdatePeriod(prefs);
+        double ve = ObdReaderConfigActivity.getVolumetricEfficieny(prefs);
+        double ed = ObdReaderConfigActivity.getEngineDisplacement(prefs);
+        boolean imperialUnits = prefs.getBoolean(ObdReaderConfigActivity.IMPERIAL_UNITS_KEY, false);
+        boolean gps = prefs.getBoolean(ObdReaderConfigActivity.ENABLE_GPS_KEY, false);
+        ArrayList<ObdCommand> cmds = ObdReaderConfigActivity.getObdCommands(prefs);
 		BluetoothDevice dev = mBluetoothAdapter.getRemoteDevice(devString);
-		connectThread = new ObdConnectThread(dev,locationManager,this,uploadUrl,period);
+		connectThread = new ObdConnectThread(dev,locationManager,this,uploadUrl,period,ed,ve,imperialUnits,gps,cmds);
+		connectThread.setEngineDisplacement(ed);
+		connectThread.setVolumetricEfficiency(ve);
 		new ObdReaderServiceWorkerThread(connectThread).start();
 		return true;
 	}

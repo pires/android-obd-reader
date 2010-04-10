@@ -5,10 +5,7 @@ public class DtcNumberObdCommand extends ObdCommand {
 	private int codeCount = -1;
 	private boolean milOn = false;
 	public DtcNumberObdCommand() {
-		super("0101","DTC Status","");
-	}
-	public DtcNumberObdCommand(String cmd, String desc, String resType) {
-		super(cmd, desc, resType);
+		super("0101","DTC Status","","");
 	}
 	public DtcNumberObdCommand(DtcNumberObdCommand other) {
 		super(other);

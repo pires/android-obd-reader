@@ -4,10 +4,10 @@ public class CommandEquivRatioObdCommand extends ObdCommand {
 
 	private double ratio = 1.0;
 	public CommandEquivRatioObdCommand() {
-		super("0144","Command Equivalence Ratio","");
+		super("0144","Command Equivalence Ratio","","");
 	}
-	public CommandEquivRatioObdCommand(String cmd, String desc, String resType) {
-		super(cmd, desc, resType);
+	public CommandEquivRatioObdCommand(String cmd, String desc, String resType, String impType) {
+		super(cmd, desc, resType, impType);
 	}
 	public CommandEquivRatioObdCommand(CommandEquivRatioObdCommand other) {
 		super(other);

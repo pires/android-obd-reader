@@ -1,9 +1,9 @@
 package org.obdreader.command;
 
-public class FuelPressureObdCommand extends IntObdCommand{
+public class FuelPressureObdCommand extends PressureObdCommand{
 
-	public FuelPressureObdCommand(String cmd, String desc, String resType) {
-		super(cmd, desc, resType);
+	public FuelPressureObdCommand() {
+		super("010A","Fuel Press","kPa","atm");
 	}
 	public FuelPressureObdCommand(FuelPressureObdCommand other) {
 		super(other);

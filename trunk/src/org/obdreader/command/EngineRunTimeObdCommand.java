@@ -5,7 +5,7 @@ package org.obdreader.command;
 public class EngineRunTimeObdCommand extends ObdCommand {
 
 	public EngineRunTimeObdCommand() {
-		super("011F","Engine Runtime","");
+		super("011F","Engine Runtime","","");
 	}
 	public EngineRunTimeObdCommand(EngineRunTimeObdCommand other) {
 		super(other);

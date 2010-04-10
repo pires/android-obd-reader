@@ -115,7 +115,12 @@ public class ObdReaderCommandActivity extends Activity implements OnItemSelected
 	    		return;
 	    	}
 			BluetoothDevice dev = mBluetoothAdapter.getRemoteDevice(devString);
-			final ObdCommandConnectThread thread = new ObdCommandConnectThread(dev, ObdReaderCommandActivity.this, cmd);
+			double ve = ObdReaderConfigActivity.getVolumetricEfficieny(prefs);
+			double ed = ObdReaderConfigActivity.getEngineDisplacement(prefs);
+			boolean imperialUnits = prefs.getBoolean(ObdReaderConfigActivity.IMPERIAL_UNITS_KEY, false);
+			final ObdCommandConnectThread thread = new ObdCommandConnectThread(dev, ObdReaderCommandActivity.this, cmd, ed, ve, imperialUnits);
+			thread.setVolumetricEfficiency(ve);
+			thread.setEngineDisplacement(ed);
 			setText("Running...", true);
 			try {
 				thread.start();

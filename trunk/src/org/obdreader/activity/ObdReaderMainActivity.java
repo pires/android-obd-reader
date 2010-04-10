@@ -178,18 +178,6 @@ public class ObdReaderMainActivity extends Activity {
                     LayoutParams.WRAP_CONTENT,
                     LayoutParams.WRAP_CONTENT));
     }
-    public static int getUpdatePeriod(SharedPreferences prefs) {
-        String periodString = prefs.getString(ObdReaderConfigActivity.UPDATE_PERIOD_KEY, "4");
-        int period = 4000;
-        try {
-			period = Integer.parseInt(periodString) * 1000;
-		} catch (Exception e) {
-		}
-    	if (period <= 0) {
-    		period = 250;
-    	}
-    	return period;
-    }
     private class UpdateThread extends Thread {
     	boolean stop = false;
     	public void run() {
@@ -211,7 +199,7 @@ public class ObdReaderMainActivity extends Activity {
         		}
     			updateDataTable(dataMap);
     			try {
-					Thread.sleep(ObdReaderMainActivity.getUpdatePeriod(prefs));
+					Thread.sleep(ObdReaderConfigActivity.getUpdatePeriod(prefs));
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}

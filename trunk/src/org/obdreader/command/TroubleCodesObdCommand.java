@@ -5,11 +5,11 @@ public class TroubleCodesObdCommand extends ObdCommand {
 	protected final static char[] dtcLetters = {'P','C','B','U'};
 	private StringBuffer codes = null;
 	public TroubleCodesObdCommand() {
-		super("03","Trouble Codes","");
+		super("03","Trouble Codes","","");
 		codes = new StringBuffer();
 	}
-	public TroubleCodesObdCommand(String cmd, String desc, String resType) {
-		super(cmd, desc, resType);
+	public TroubleCodesObdCommand(String cmd, String desc, String resType, String impType) {
+		super(cmd, desc, resType, impType);
 		codes = new StringBuffer();
 	}
 	public TroubleCodesObdCommand(TroubleCodesObdCommand other) {

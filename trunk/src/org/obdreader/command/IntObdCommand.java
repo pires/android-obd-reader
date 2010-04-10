@@ -2,9 +2,9 @@ package org.obdreader.command;
 
 public class IntObdCommand extends ObdCommand {
 
-	private int intValue = -9999;
-	public IntObdCommand(String cmd, String desc, String resType) {
-		super(cmd, desc, resType);
+	protected int intValue = -9999;
+	public IntObdCommand(String cmd, String desc, String resType, String impType) {
+		super(cmd, desc, resType, impType);
 	}
 	public IntObdCommand(IntObdCommand other) {
 		super(other);
@@ -17,12 +17,19 @@ public class IntObdCommand extends ObdCommand {
 		String byteStr = res.substring(4,6);
 		int b = Integer.parseInt(byteStr,16);
 		intValue = transform(b);
-		return Integer.toString(intValue) + " " + resType;
+		if (isImperial()) {
+			return String.format("%s %s", Integer.toString(getImperialInt()), impType); 
+		} else {
+			return String.format("%s %s", Integer.toString(intValue), resType);
+		}
 	}
 	protected int transform(int b) {
 		return b;
 	}
 	public int getInt() {
+		return intValue;
+	}
+	public int getImperialInt() {
 		return intValue;
 	}
 }

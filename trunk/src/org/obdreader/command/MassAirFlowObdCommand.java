@@ -4,10 +4,7 @@ public class MassAirFlowObdCommand extends ObdCommand {
 
 	private double maf = 0.0;
 	public MassAirFlowObdCommand() {
-		super("0110","Mass Air Flow","g/s");
-	}
-	public MassAirFlowObdCommand(String cmd, String desc, String resType) {
-		super(cmd, desc, resType);
+		super("0110","Mass Air Flow","g/s","g/s");
 	}
 	public MassAirFlowObdCommand(MassAirFlowObdCommand other) {
 		super(other);

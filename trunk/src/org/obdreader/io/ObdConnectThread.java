@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.obdreader.command.ObdCommand;
-import org.obdreader.config.ObdConfig;
 
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -37,20 +36,34 @@ public class ObdConnectThread extends Thread implements LocationListener {
 	protected String uploadUrl = null;
 	protected Location currentLocation = null;
 	protected LocationManager locationManager = null;
-	
+	protected double engineDisplacement = 1.0;
+	protected double volumetricEfficiency = 1.0;
+	protected boolean imperialUnits = false;
 
-	public ObdConnectThread(BluetoothDevice dev, LocationManager locationManager, final ObdReaderService service, String uploadUrl, int updateCycle) {
+	public ObdConnectThread(BluetoothDevice dev, 
+			LocationManager locationManager, 
+			final ObdReaderService service, 
+			String uploadUrl, 
+			int updateCycle,
+			double engineDisplacement, 
+			double volumetricEfficiency,
+			boolean imperialUnits,
+			boolean enableGps,
+			ArrayList<ObdCommand> cmds) {
 		this.dev = dev;
-		this.cmds = ObdConfig.getCommands();
+		this.cmds = cmds;
 		this.updateCycle = updateCycle;
 		this.service = service;
 		this.uploadUrl = uploadUrl;
 		this.locationManager = locationManager;
-		if (locationManager != null) {
+		if (locationManager != null && enableGps) {
 			this.locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0.0f, this);
 		}
 		results = new HashMap<String,String>();
 		data = new HashMap<String,Object>();
+		this.volumetricEfficiency = volumetricEfficiency;
+		this.engineDisplacement = engineDisplacement;
+		this.imperialUnits = imperialUnits;
 	}
 	protected void startDevice() throws IOException, InterruptedException {
 		sock = this.dev.createRfcommSocketToServiceRecord(MY_UUID);
@@ -58,7 +71,7 @@ public class ObdConnectThread extends Thread implements LocationListener {
         in = sock.getInputStream();
         out = sock.getOutputStream();
         while (!stop) {
-        	ObdCommand echoOff = new ObdCommand("ate0", "echo off", "string");
+        	ObdCommand echoOff = new ObdCommand("ate0", "echo off", "string", "string");
         	String result = runCommand(echoOff).replace(" ","");
         	if (result != null && result.contains("OK")) {
         		break;
@@ -94,7 +107,9 @@ public class ObdConnectThread extends Thread implements LocationListener {
 					data.put(desc,cmd.getRawValue());
             	} catch (Exception e) {
             		results.put(cmd.getDesc(), "--");
-            		service.notifyMessage("Error running " + cmd.getDesc(), e.getMessage(), ObdReaderService.COMMAND_ERROR_NOTIFY);
+            		if (!stop) {
+            			service.notifyMessage("Error running " + cmd.getDesc(), e.getMessage(), ObdReaderService.COMMAND_ERROR_NOTIFY);
+            		}
             	}
 			}
         } catch (IOException e) {
@@ -112,6 +127,7 @@ public class ObdConnectThread extends Thread implements LocationListener {
 		cmd.setInputStream(in);
 		cmd.setOutputStream(out);
 		cmd.setDataMap(data);
+		cmd.setConnectThread(this);
 		cmd.start();
 		while (!stop) {
 			cmd.join(300);
@@ -174,5 +190,20 @@ public class ObdConnectThread extends Thread implements LocationListener {
 	}
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
+	}
+	public void setVolumetricEfficiency(double ve) {
+		this.volumetricEfficiency = ve;
+	}
+	public void setEngineDisplacement(double ed) {
+		this.engineDisplacement = ed;
+	}
+	public double getVolumetricEfficiency() {
+		return volumetricEfficiency;
+	}
+	public double getEngineDisplacement() {
+		return engineDisplacement;
+	}
+	public boolean getImperialUnits() {
+		return imperialUnits;
 	}
 }

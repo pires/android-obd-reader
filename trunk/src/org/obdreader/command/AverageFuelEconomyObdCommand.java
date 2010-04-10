@@ -7,12 +7,11 @@ public class AverageFuelEconomyObdCommand extends ObdCommand {
 	public static final String AVG_FUEL_ECONOMY_COUNT_KEY = "Average Fuel Economy Count";
 	
 	public AverageFuelEconomyObdCommand() {
-		super("",AVG_FUEL_ECONOMY_KEY,"mpg");
+		super("",AVG_FUEL_ECONOMY_KEY,"kmpg","mpg");
 	}
 	public AverageFuelEconomyObdCommand(AverageFuelEconomyObdCommand other) {
 		super(other);
 	}
-
 	public String formatResult() {
 		Double ampg = 0.0;
 		Integer count = 0;
