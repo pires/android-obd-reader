@@ -53,6 +53,12 @@
             android:summary="The length of time between querying vehicle data in seconds"
             android:dialogTitle="Update Period in Seconds" />
         <EditTextPreference
+			android:key="max_fuel_econ_preference"
+            android:defaultValue="70"
+            android:title="Maximum Fuel Economy Value"
+            android:summary="Any fuel economy values larger than this will be thrown out"
+            android:dialogTitle="Maximum Fuel Economy Value" />
+        <EditTextPreference
 			android:key="volumetric_efficiency_preference"
             android:defaultValue=".85"
             android:title="Volumetric Efficiency"

@@ -1,11 +1,13 @@
 package org.obdreader.command;
 
+import org.obdreader.config.ObdConfig;
+
 
 
 public class EngineRunTimeObdCommand extends ObdCommand {
 
 	public EngineRunTimeObdCommand() {
-		super("011F","Engine Runtime","","");
+		super("011F",ObdConfig.RUN_TIME,"","");
 	}
 	public EngineRunTimeObdCommand(EngineRunTimeObdCommand other) {
 		super(other);

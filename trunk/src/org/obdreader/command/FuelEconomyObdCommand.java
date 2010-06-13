@@ -1,16 +1,18 @@
 package org.obdreader.command;
 
+import org.obdreader.config.ObdConfig;
+
 public class FuelEconomyObdCommand extends ObdCommand {
 
 	public static final double AIR_FUEL_RATIO = 14.64;
 	public static final double FUEL_DENSITY_GRAMS_PER_LITER = 720.0;
-	protected double fuelEcon = 0.0;
+	protected double fuelEcon = -9999.0;
 
 	public FuelEconomyObdCommand(String cmd, String desc, String resType, String impType) {
 		super(cmd,desc,resType,impType);
 	}
 	public FuelEconomyObdCommand() {
-		super("","Fuel Economy","kml","mpg");
+		super("",ObdConfig.FUEL_ECON,"kml","mpg");
 	}
 	public FuelEconomyObdCommand(FuelEconomyObdCommand other) {
 		super(other);
@@ -22,6 +24,9 @@ public class FuelEconomyObdCommand extends ObdCommand {
 			runCmd(maf);
 			maf.formatResult();
 			double mafV = maf.getMAF();
+			if (mafV == -9999.0) {
+				fuelEcon = -9999.0;
+			}
 			runCmd(speed);
 			speed.formatResult();
 			double speedV = (double)speed.getInt();
@@ -41,6 +46,9 @@ public class FuelEconomyObdCommand extends ObdCommand {
 		}
 	}
 	public String formatResult() {
+		if (fuelEcon < 0) {
+			return "NODATA";
+		}
 		if (!isImperial()) {
 			double kml = fuelEcon * 0.354013;
 			return String.format("%.1f %s", kml, resType);

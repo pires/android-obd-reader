@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" 
+	android:shape="rectangle"
+	android:id="@+id/coolant_gauge_shape">
+	<gradient android:startColor="#0000ff" android:endColor="#ff0000"
+            android:angle="0"/>
+</shape>

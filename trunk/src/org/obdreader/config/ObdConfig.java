@@ -19,21 +19,30 @@ import org.obdreader.command.PressureObdCommand;
 import org.obdreader.command.SpeedObdCommand;
 import org.obdreader.command.TempObdCommand;
 import org.obdreader.command.ThrottleObdCommand;
+import org.obdreader.command.TimingAdvanceObdCommand;
 import org.obdreader.command.TroubleCodesObdCommand;
 
 public class ObdConfig {
+
+	public final static String COOLANT_TEMP = "Coolant Temp";
+	public final static String FUEL_ECON = "Fuel Economy";
+	public final static String FUEL_ECON_MAP = "Fuel Economy MAP";
+	public final static String RPM = "Engine RPM";
+	public final static String RUN_TIME = "Engine Runtime";
+	public final static String SPEED = "Vehicle Speed";
+	public final static String AIR_TEMP = "Ambient Air Temp";
 
 	public static ArrayList<ObdCommand> getCommands() {
 		ArrayList<ObdCommand> cmds = new ArrayList<ObdCommand>();
 		cmds.add(new AirIntakeTempObdCommand());
 		cmds.add(new IntakeManifoldPressureObdCommand());
 		cmds.add(new PressureObdCommand("0133","Barometric Press","kPa","atm"));
-		cmds.add(new TempObdCommand("0146","Ambient Air Temp","C","F"));
+		cmds.add(new TempObdCommand("0146",AIR_TEMP,"C","F"));
 		cmds.add(new SpeedObdCommand());
 		cmds.add(new ThrottleObdCommand());
 		cmds.add(new EngineRPMObdCommand());
 		cmds.add(new FuelPressureObdCommand());
-		cmds.add(new TempObdCommand("0105","Coolant Temp","C","F"));
+		cmds.add(new TempObdCommand("0105",COOLANT_TEMP,"C","F"));
 		cmds.add(new ThrottleObdCommand("0104","Engine Load","%"));
 		cmds.add(new MassAirFlowObdCommand());
 		cmds.add(new FuelEconomyObdCommand());
@@ -43,6 +52,7 @@ public class ObdConfig {
 		cmds.add(new FuelTrimObdCommand("0106","Short Term Fuel Trim","%"));
 		cmds.add(new EngineRunTimeObdCommand());
 		cmds.add(new CommandEquivRatioObdCommand());
+		cmds.add(new TimingAdvanceObdCommand());
 		return cmds;
 	}
 	public static ArrayList<ObdCommand> getStaticCommands() {

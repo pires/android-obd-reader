@@ -34,6 +34,7 @@ public class ObdReaderConfigActivity extends PreferenceActivity implements OnPre
 	public static final String IMPERIAL_UNITS_KEY = "imperial_units_preference";
 	public static final String COMMANDS_SCREEN_KEY = "obd_commands_screen";
 	public static final String ENABLE_GPS_KEY = "enable_gps_preference";
+	public static final String MAX_FUEL_ECON_KEY = "max_fuel_econ_preference";
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,7 +42,7 @@ public class ObdReaderConfigActivity extends PreferenceActivity implements OnPre
 		ArrayList<CharSequence> pairedDeviceStrings = new ArrayList<CharSequence>();
         ArrayList<CharSequence> vals = new ArrayList<CharSequence>();
 		ListPreference listPref = (ListPreference) getPreferenceScreen().findPreference(BLUETOOTH_LIST_KEY);
-		String[] prefKeys = new String[]{ENGINE_DISPLACEMENT_KEY,VOLUMETRIC_EFFICIENCY_KEY,UPDATE_PERIOD_KEY}; 
+		String[] prefKeys = new String[]{ENGINE_DISPLACEMENT_KEY,VOLUMETRIC_EFFICIENCY_KEY,UPDATE_PERIOD_KEY,MAX_FUEL_ECON_KEY}; 
 		for (String prefKey:prefKeys) {
 			EditTextPreference txtPref = (EditTextPreference) getPreferenceScreen().findPreference(prefKey);
 			txtPref.setOnPreferenceChangeListener(this);
@@ -85,12 +86,13 @@ public class ObdReaderConfigActivity extends PreferenceActivity implements OnPre
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
 		if (UPDATE_PERIOD_KEY.equals(preference.getKey()) || 
 				VOLUMETRIC_EFFICIENCY_KEY.equals(preference.getKey()) ||
-				ENGINE_DISPLACEMENT_KEY.equals(preference.getKey())) {
+				ENGINE_DISPLACEMENT_KEY.equals(preference.getKey()) ||
+				MAX_FUEL_ECON_KEY.equals(preference.getKey())) {
 			try {
 				Double.parseDouble(newValue.toString());
 				return true;
 			} catch (Exception e) {
-				Toast.makeText(this,"Couldn't parse '" + newValue.toString() + "' as an number.",Toast.LENGTH_LONG).show();
+				Toast.makeText(this,"Couldn't parse '" + newValue.toString() + "' as a number.",Toast.LENGTH_LONG).show();
 			}
 		}
 		return false;
@@ -136,5 +138,14 @@ public class ObdReaderConfigActivity extends PreferenceActivity implements OnPre
     		}
     	}
     	return ucmds;
+    }
+    public static double getMaxFuelEconomy(SharedPreferences prefs) {
+    	String maxStr = prefs.getString(ObdReaderConfigActivity.MAX_FUEL_ECON_KEY, "70");
+    	double max = 70;
+    	try {
+			max = Double.parseDouble(maxStr);
+		} catch (Exception e) {
+		}
+		return max;
     }
 }

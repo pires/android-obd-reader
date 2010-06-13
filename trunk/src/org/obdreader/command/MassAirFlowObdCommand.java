@@ -2,7 +2,7 @@ package org.obdreader.command;
 
 public class MassAirFlowObdCommand extends ObdCommand {
 
-	private double maf = 0.0;
+	private double maf = -9999.0;
 	public MassAirFlowObdCommand() {
 		super("0110","Mass Air Flow","g/s","g/s");
 	}

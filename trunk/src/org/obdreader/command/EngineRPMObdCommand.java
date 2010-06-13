@@ -1,9 +1,11 @@
 package org.obdreader.command;
 
+import org.obdreader.config.ObdConfig;
+
 public class EngineRPMObdCommand extends IntObdCommand{
 
 	public EngineRPMObdCommand() {
-		super("010C","Engine RPM","RPM","RPM");
+		super("010C",ObdConfig.RPM,"RPM","RPM");
 	}
 	public EngineRPMObdCommand(EngineRPMObdCommand other) {
 		super(other);

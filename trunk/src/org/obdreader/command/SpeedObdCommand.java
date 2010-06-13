@@ -1,9 +1,11 @@
 package org.obdreader.command;
 
+import org.obdreader.config.ObdConfig;
+
 public class SpeedObdCommand extends IntObdCommand {
 
 	public SpeedObdCommand() {
-		super("010D","Vehicle Speed","km/h","mph");
+		super("010D",ObdConfig.SPEED,"km/h","mph");
 	}
 	public SpeedObdCommand(SpeedObdCommand other) {
 		super(other);

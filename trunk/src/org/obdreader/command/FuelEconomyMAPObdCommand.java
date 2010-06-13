@@ -1,5 +1,7 @@
 package org.obdreader.command;
 
+import org.obdreader.config.ObdConfig;
+
 
 public class FuelEconomyMAPObdCommand extends FuelEconomyObdCommand {
 
@@ -7,7 +9,7 @@ public class FuelEconomyMAPObdCommand extends FuelEconomyObdCommand {
 	public static final double FUEL_DENSITY_GRAMS_PER_LITER = 720.0;
 
 	public FuelEconomyMAPObdCommand() {
-		super("","Fuel Economy MAP","kml","mpg");
+		super("",ObdConfig.FUEL_ECON_MAP,"kml","mpg");
 	}
 	public FuelEconomyMAPObdCommand(FuelEconomyMAPObdCommand other) {
 		super(other);
