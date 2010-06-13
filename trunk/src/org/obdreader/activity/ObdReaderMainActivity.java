@@ -50,6 +50,7 @@ public class ObdReaderMainActivity extends Activity {
 	static final int SETTINGS = 3;
 	static final int COMMAND_ACTIVITY = 5;
 	static final int TABLE_ROW_MARGIN = 6;
+
 	private Handler handler = null;
 	private Intent serviceIntent = null;
 	private ObdReaderServiceConnection serviceConn = null;
@@ -235,7 +236,7 @@ public class ObdReaderMainActivity extends Activity {
     	String fuelEcon = dataMap.get(ObdConfig.FUEL_ECON);
     	String fuelEconMap = dataMap.get(ObdConfig.FUEL_ECON_MAP);
     	String speed = dataMap.get(ObdConfig.SPEED);
-    	String temp = dataMap.get(ObdConfig.AIR_TEMP);
+    	String temp = dataMap.get(ObdConfig.INTAKE_TEMP);
     	if (coolant != null) {
     		setCoolantTemp(coolant);
     	}

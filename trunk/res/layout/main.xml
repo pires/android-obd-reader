@@ -25,11 +25,6 @@
       	  android:id="@+id/avg_fuel_econ_lbl"
       	  android:gravity="bottom|left"/>
       	<TextView
-      	  android:id="@+id/air_temp_text"
-      	  android:text=""
-      	  android:gravity="center"
-      	  android:textSize="115px"/>
-      	<TextView
       	  android:id="@+id/compass_text"
       	  android:text="N"
       	  android:gravity="center"
@@ -55,6 +50,11 @@
 		  android:layout_height="wrap_content"
 		  android:layout_gravity="center_vertical|center_horizontal"
 		  android:paddingLeft="10px"/>
+		<TextView
+      	  android:id="@+id/air_temp_text"
+      	  android:text=""
+      	  android:layout_marginLeft="15px"
+      	  android:layout_gravity="center_vertical|center_horizontal"/>
 	  </TableRow>
 	  <!--
 	  <TableRow
@@ -97,13 +97,13 @@
 	<ScrollView
 	  android:id="@+id/data_scroll"
 	  android:layout_width="fill_parent"
-	  android:layout_height="wrap_content"
-	  android:background="#dddddd">
+	  android:layout_height="wrap_content">
 		<TableLayout
 		  android:id="@+id/data_table"
 		  android:layout_width="fill_parent"
 		  android:layout_height="fill_parent"
-		  android:stretchColumns="*">
+		  android:stretchColumns="*"
+		  android:background="#dddddd">
 		</TableLayout>
 	</ScrollView>            
 </LinearLayout>

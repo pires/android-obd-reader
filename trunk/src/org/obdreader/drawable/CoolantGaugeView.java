@@ -13,7 +13,7 @@ import android.util.AttributeSet;
 
 public class CoolantGaugeView extends GradientGaugeView {
 
-	public final static int min_temp = 60;
+	public final static int min_temp = 35;
 	public final static int max_temp = 138;
 	public final static int TEXT_SIZE = 18;
 	public final static int range = max_temp - min_temp;

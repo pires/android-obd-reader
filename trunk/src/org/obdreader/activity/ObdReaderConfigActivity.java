@@ -35,6 +35,7 @@ public class ObdReaderConfigActivity extends PreferenceActivity implements OnPre
 	public static final String COMMANDS_SCREEN_KEY = "obd_commands_screen";
 	public static final String ENABLE_GPS_KEY = "enable_gps_preference";
 	public static final String MAX_FUEL_ECON_KEY = "max_fuel_econ_preference";
+	public static final String CONFIG_READER_KEY = "reader_config_preference";
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -147,5 +148,10 @@ public class ObdReaderConfigActivity extends PreferenceActivity implements OnPre
 		} catch (Exception e) {
 		}
 		return max;
+    }
+    public static String[] getReaderConfigCommands(SharedPreferences prefs) {
+    	String cmdsStr = prefs.getString(CONFIG_READER_KEY, "atsp0\natz");
+    	String[] cmds = cmdsStr.split("\n");
+    	return cmds;
     }
 }

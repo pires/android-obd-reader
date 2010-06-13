@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import org.obdreader.R;
 import org.obdreader.command.ObdCommand;
+import org.obdreader.command.ObdMultiCommand;
 import org.obdreader.config.ObdConfig;
 import org.obdreader.io.ObdCommandConnectThread;
 import org.obdreader.io.ObdConnectThread;
@@ -32,15 +33,22 @@ public class ObdReaderCommandActivity extends Activity implements OnItemSelected
 	private Map<String,ObdCommand> cmdMap = null;
 	protected static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 	private Handler handler = null;
-	private ObdCommand selectedCmd = null;
+	private SharedPreferences prefs = null;
+	private final static String NO_SELECTION_TXT = "Choose Command to Run...";
 
 	public void onCreate(Bundle savedInstance) {
 		super.onCreate(savedInstance);
+		prefs = PreferenceManager.getDefaultSharedPreferences(ObdReaderCommandActivity.this);
 		setContentView(R.layout.command);
 		Spinner cmdSpin = (Spinner) findViewById(R.id.command_spinner);
 		cmdSpin.setOnItemSelectedListener(this);
 		cmdMap = new HashMap<String,ObdCommand>();
 		ArrayList<String> cmdStrs = new ArrayList<String>();
+		cmdStrs.add(NO_SELECTION_TXT);
+		String[] configCmdStrs = ObdReaderConfigActivity.getReaderConfigCommands(prefs);
+		ObdMultiCommand configCmd = new ObdMultiCommand(configCmdStrs,"Configure Reader","string","string");
+		cmdMap.put(configCmd.getDesc(), configCmd);
+		cmdStrs.add(configCmd.getDesc());
 		for (ObdCommand cmd:commands) {
 			cmdMap.put(cmd.getDesc(), cmd);
 			cmdStrs.add(cmd.getDesc());
@@ -53,12 +61,10 @@ public class ObdReaderCommandActivity extends Activity implements OnItemSelected
 	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		Spinner cmdSpin = (Spinner) findViewById(R.id.command_spinner);
 		String cmdDesc = cmdSpin.getSelectedItem().toString();
-		ObdCommand cmd = cmdMap.get(cmdDesc);
-		//hack to keep this from running the first time
-		if (this.selectedCmd == null) {
-			this.selectedCmd = cmd;
+		if (NO_SELECTION_TXT.equals(cmdDesc)) {
 			return;
 		}
+		ObdCommand cmd = cmdMap.get(cmdDesc);
 		ObdReaderCommandActivityWorkerThread worker = null;
 		try {
 			worker = new ObdReaderCommandActivityWorkerThread(ObdConnectThread.getCopy(cmd));
@@ -67,6 +73,7 @@ public class ObdReaderCommandActivity extends Activity implements OnItemSelected
 			return;
 		}
 		worker.start();
+		cmdSpin.setSelection(0);
 	}
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0) {
@@ -103,7 +110,6 @@ public class ObdReaderCommandActivity extends Activity implements OnItemSelected
 			this.cmd = cmd;
 		}
 		public void run() {
-			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ObdReaderCommandActivity.this);
 			String devString = prefs.getString(ObdReaderConfigActivity.BLUETOOTH_LIST_KEY, null);
 			final BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 	    	if (mBluetoothAdapter == null) {
@@ -121,7 +127,7 @@ public class ObdReaderCommandActivity extends Activity implements OnItemSelected
 			final ObdCommandConnectThread thread = new ObdCommandConnectThread(dev, ObdReaderCommandActivity.this, cmd, ed, ve, imperialUnits);
 			thread.setVolumetricEfficiency(ve);
 			thread.setEngineDisplacement(ed);
-			setText("Running...", true);
+			setText(String.format("Running %s...", cmd.getDesc()), true);
 			try {
 				thread.start();
 				thread.join();

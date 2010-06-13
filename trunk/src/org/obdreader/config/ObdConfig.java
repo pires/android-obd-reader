@@ -31,6 +31,7 @@ public class ObdConfig {
 	public final static String RUN_TIME = "Engine Runtime";
 	public final static String SPEED = "Vehicle Speed";
 	public final static String AIR_TEMP = "Ambient Air Temp";
+	public final static String INTAKE_TEMP = "Air Intake Temp";
 
 	public static ArrayList<ObdCommand> getCommands() {
 		ArrayList<ObdCommand> cmds = new ArrayList<ObdCommand>();
