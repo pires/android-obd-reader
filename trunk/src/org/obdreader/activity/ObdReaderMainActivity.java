@@ -28,6 +28,7 @@ import android.hardware.SensorManager;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.view.Gravity;
 import android.view.Menu;
@@ -63,6 +64,8 @@ public class ObdReaderMainActivity extends Activity {
 	private int speedi = 0;
 	private SharedPreferences prefs = null;
 	private double maxFuelEcon = 70.0;
+	private PowerManager powerManager = null;
+	private PowerManager.WakeLock wakeLock = null;
 
 	private final SensorEventListener orientListener = new SensorEventListener() {
 		@Override
@@ -122,12 +125,27 @@ public class ObdReaderMainActivity extends Activity {
         	orientSensor = sens.get(0);
         }
     }
+    @Override
+    protected void onDestroy() {
+    	super.onDestroy();
+    	if (wakeLock.isHeld()) {
+    		wakeLock.release();
+    	}
+    }
+    @Override
+    protected void onPause() {
+    	super.onPause();
+    	if (wakeLock.isHeld()) {
+    		wakeLock.release();
+    	}
+    }
     protected void onResume() {
     	super.onResume();
     	sensorManager.registerListener(orientListener, orientSensor, SensorManager.SENSOR_DELAY_UI);
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		maxFuelEcon = ObdReaderConfigActivity.getMaxFuelEconomy(prefs);
-
+		powerManager = (PowerManager)getSystemService(Context.POWER_SERVICE);
+		wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "ObdReader");
     }
     private void updateConfig() {
     	Intent configIntent = new Intent(this,ObdReaderConfigActivity.class);
@@ -167,6 +185,7 @@ public class ObdReaderMainActivity extends Activity {
     	}
     	updater = new UpdateThread();
     	updater.start();
+    	wakeLock.acquire();
     }
     private void cancel() {
     	stopService(serviceIntent);
@@ -176,6 +195,7 @@ public class ObdReaderMainActivity extends Activity {
     	if (updater != null) {
     		updater.stop = true;
     	}
+    	wakeLock.release();
     }
     protected Dialog onCreateDialog(int id) {
     	AlertDialog.Builder build = new AlertDialog.Builder(this);
