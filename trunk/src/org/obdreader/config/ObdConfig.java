@@ -54,6 +54,7 @@ public class ObdConfig {
 		cmds.add(new EngineRunTimeObdCommand());
 		cmds.add(new CommandEquivRatioObdCommand());
 		cmds.add(new TimingAdvanceObdCommand());
+		cmds.add(new ObdCommand("03","Trouble Codes","",""));
 		return cmds;
 	}
 	public static ArrayList<ObdCommand> getStaticCommands() {
@@ -61,8 +62,8 @@ public class ObdConfig {
 		cmds.add(new DtcNumberObdCommand());
 		cmds.add(new TroubleCodesObdCommand("03","Trouble Codes","",""));
 		cmds.add(new ObdCommand("04","Reset Codes","",""));
-		cmds.add(new ObdCommand("atz","Serial Reset atz","",""));
-		cmds.add(new ObdCommand("ate0","Serial Echo Off ate0","",""));
+		cmds.add(new ObdCommand("atz\ratz\ratz\r","Serial Reset atz","",""));
+		cmds.add(new ObdCommand("atz\ratz\ratz\rate0","Serial Echo Off ate0","",""));
 		cmds.add(new ObdCommand("ate1","Serial Echo On ate1","",""));
 		cmds.add(new ObdCommand("atsp0","Reset Protocol astp0","",""));
 		cmds.add(new ObdCommand("atspa2","Reset Protocol atspa2","",""));
