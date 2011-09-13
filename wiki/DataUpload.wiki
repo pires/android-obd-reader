@@ -1,4 +1,0 @@
-
-= Data Uploader =
-
-get_data.php and obdreader.sql is an example of how one might receive data from the phone device.  See DataUploader.java to see how parameters are uploaded.
