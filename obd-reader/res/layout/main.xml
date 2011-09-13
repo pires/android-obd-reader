@@ -39,7 +39,7 @@
       <TableRow
       	android:layout_margin="2dip"
         android:background="#000000">
-        <org.obdreader.drawable.CoolantGaugeView
+        <eu.lighthouselabs.obd.reader.drawable.CoolantGaugeView
           android:layout_width="330px"
           android:id="@+id/coolant_gauge"
 		  android:layout_height="50px"
@@ -64,7 +64,7 @@
           android:id="@+id/accel_text"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"/>
-		<org.obdreader.drawable.AccelGaugeView
+		<eu.lighthouselabs.obd.reader.drawable.AccelGaugeView
 		  android:id="@+id/accel_gauge"
 		  android:layout_width="330px"
 		  android:layout_height="50px"
