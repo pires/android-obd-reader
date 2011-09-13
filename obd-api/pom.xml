@@ -8,9 +8,9 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <groupId>eu.lighthouselabs.obd</groupId>
-    <artifactId>reader</artifactId>
-    <packaging>apk</packaging>
-    <name>OBD-Reader</name>
+    <artifactId>api</artifactId>
+    <packaging>apklib</packaging>
+    <name>obd-api</name>
 
     <dependencies>
         <dependency>
