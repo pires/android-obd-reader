@@ -42,63 +42,106 @@ public class ObdReaderService extends Service {
 		notifyMan = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		context = getApplicationContext();
 		notificationIntent = new Intent(this, ObdReaderService.class);
-		contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+		contentIntent = PendingIntent.getActivity(this, 0, notificationIntent,
+				0);
 	}
+
 	public void onDestroy() {
 		super.onDestroy();
 		stopService();
 		stopSelf();
 	}
+
 	public boolean isRunning() {
 		if (connectThread == null) {
 			return false;
 		}
 		return connectThread.isAlive();
 	}
+
 	public IBinder onBind(Intent intent) {
 		return binder;
 	}
+
 	public boolean startService() {
 		if (connectThread != null && connectThread.isAlive()) {
 			return true;
 		}
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		String devString = prefs.getString(ObdReaderConfigActivity.BLUETOOTH_LIST_KEY, null);
-		boolean uploadEnabled = prefs.getBoolean(ObdReaderConfigActivity.UPLOAD_DATA_KEY,false);
-		String uploadUrl = null;
-		if (uploadEnabled) {
-			uploadUrl = prefs.getString(ObdReaderConfigActivity.UPLOAD_URL_KEY, null);
-		}
-		final BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-    	if (mBluetoothAdapter == null) {
-    		Toast.makeText(this, "This device does not support bluetooth", Toast.LENGTH_LONG).show();
-    		stopSelf();
-        	return false;
-        }
-    	if (devString == null || "".equals(devString)) {
-    		Toast.makeText(this, "No bluetooth device selected", Toast.LENGTH_LONG).show();
+		
+		/*
+		 * Retrieve preferences
+		 */
+		SharedPreferences prefs = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		
+		/*
+		 * Let's get the remote Bluetooth device 
+		 */
+		String devString = prefs.getString(
+				ObdReaderConfigActivity.BLUETOOTH_LIST_KEY, null);
+		// TODO the following condition can be deleted as validation is performed on app boot.
+		final BluetoothAdapter mBluetoothAdapter = BluetoothAdapter
+				.getDefaultAdapter();
+		if (mBluetoothAdapter == null) {
+			Toast.makeText(this, "This Bevice does not support bluetooth",
+					Toast.LENGTH_LONG).show();
 			stopSelf();
 			return false;
 		}
-    	LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (locationManager == null) {
-        	Toast.makeText(this, "This device does not support GPS", Toast.LENGTH_LONG).show();
-        	stopSelf();
-        	return false;
-        }
-        int period = ObdReaderConfigActivity.getUpdatePeriod(prefs);
-        double ve = ObdReaderConfigActivity.getVolumetricEfficieny(prefs);
-        double ed = ObdReaderConfigActivity.getEngineDisplacement(prefs);
-        boolean imperialUnits = prefs.getBoolean(ObdReaderConfigActivity.IMPERIAL_UNITS_KEY, false);
-        boolean gps = prefs.getBoolean(ObdReaderConfigActivity.ENABLE_GPS_KEY, false);
-        ArrayList<ObdCommand> cmds = ObdReaderConfigActivity.getObdCommands(prefs);
+		if (devString == null || "".equals(devString)) {
+			Toast.makeText(this, "No Bluetooth device selected",
+					Toast.LENGTH_LONG).show();
+			stopSelf();
+			return false;
+		}
 		BluetoothDevice dev = mBluetoothAdapter.getRemoteDevice(devString);
-		connectThread = new ObdConnectThread(dev,locationManager,this,uploadUrl,period,ed,ve,imperialUnits,gps,cmds);
+		
+		/*
+		 * Determine if upload is enabled
+		 */
+		boolean uploadEnabled = prefs.getBoolean(
+				ObdReaderConfigActivity.UPLOAD_DATA_KEY, false);
+		String uploadUrl = null;
+		if (uploadEnabled) {
+			uploadUrl = prefs.getString(ObdReaderConfigActivity.UPLOAD_URL_KEY,
+					null);
+		}
+
+		/*
+		 * Get GPS
+		 */
+		LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		if (locationManager == null) {
+			Toast.makeText(this, "This device does not support GPS",
+					Toast.LENGTH_LONG).show();
+			stopSelf();
+			return false;
+		}
+		boolean gps = prefs.getBoolean(ObdReaderConfigActivity.ENABLE_GPS_KEY, false);
+		
+		/*
+		 * Get more preferences
+		 */
+		int period = ObdReaderConfigActivity.getUpdatePeriod(prefs);
+		double ve = ObdReaderConfigActivity.getVolumetricEfficieny(prefs);
+		double ed = ObdReaderConfigActivity.getEngineDisplacement(prefs);
+		boolean imperialUnits = prefs.getBoolean(
+				ObdReaderConfigActivity.IMPERIAL_UNITS_KEY, false);
+		ArrayList<ObdCommand> cmds = ObdReaderConfigActivity
+				.getObdCommands(prefs);
+		
+		/*
+		 * Establish Bluetooth connection
+		 */
+		connectThread = new ObdConnectThread(dev, locationManager, this,
+				uploadUrl, period, ed, ve, imperialUnits, gps, cmds);
 		connectThread.setEngineDisplacement(ed);
 		connectThread.setVolumetricEfficiency(ve);
 		new ObdReaderServiceWorkerThread(connectThread).start();
+		
 		return true;
 	}
+
 	public boolean stopService() {
 		if (connectThread == null) {
 			return true;
@@ -108,45 +151,55 @@ public class ObdReaderService extends Service {
 				connectThread.cancel();
 				connectThread.join(300);
 			} catch (InterruptedException e) {
-		    	StringWriter strw = new StringWriter();
-		    	PrintWriter ptrw = new PrintWriter(strw);
-		    	e.printStackTrace(ptrw);
-				notifyMessage(e.getMessage(),strw.toString(), OBD_SERVICE_ERROR_NOTIFY);
+				StringWriter strw = new StringWriter();
+				PrintWriter ptrw = new PrintWriter(strw);
+				e.printStackTrace(ptrw);
+				notifyMessage(e.getMessage(), strw.toString(),
+						OBD_SERVICE_ERROR_NOTIFY);
 			}
 		}
 		connectThread.close();
 		stopSelf();
 		return true;
 	}
+
 	public void notifyMessage(String msg, String longMsg, int notifyId) {
 		long when = System.currentTimeMillis();
-		Notification notification = new Notification(android.R.drawable.stat_notify_error, msg, when);
+		Notification notification = new Notification(
+				android.R.drawable.stat_notify_error, msg, when);
 		notification.setLatestEventInfo(context, msg, longMsg, contentIntent);
 		notifyMan.notify(notifyId, notification);
 	}
-	public Map<String,String> getDataMap() {
+
+	public Map<String, String> getDataMap() {
 		if (connectThread != null) {
 			return connectThread.getResults();
 		}
 		return null;
 	}
+
 	public class ObdReaderServiceBinder extends Binder {
 		ObdReaderService getService() {
 			return ObdReaderService.this;
 		}
 	}
+
 	private class ObdReaderServiceWorkerThread extends Thread {
 
 		ObdConnectThread t = null;
+
 		public ObdReaderServiceWorkerThread(ObdConnectThread t) {
 			this.t = t;
 		}
+
 		public void run() {
 			try {
 				t.start();
 				long when = System.currentTimeMillis();
-				Notification notification = new Notification(R.drawable.car, "OBD Service Running", when);
-				notification.setLatestEventInfo(context, "OBD Service Running", "", contentIntent);
+				Notification notification = new Notification(R.drawable.car,
+						"OBD Service Running", when);
+				notification.setLatestEventInfo(context, "OBD Service Running",
+						"", contentIntent);
 				notification.flags |= Notification.FLAG_NO_CLEAR;
 				notification.flags |= Notification.FLAG_ONGOING_EVENT;
 				notifyMan.notify(OBD_SERVICE_RUNNING_NOTIFY, notification);

@@ -1,3 +1,7 @@
+/*
+ * TODO put header
+ */
+
 package eu.lighthouselabs.obd.reader.command;
 
 import java.io.IOException;
@@ -8,6 +12,15 @@ import java.util.HashMap;
 
 import eu.lighthouselabs.obd.reader.io.ObdConnectThread;
 
+/**
+ * Every time a command is created, a thread is instantiated in order to deal
+ * with the execution of the same command. Also, the response is dealt with
+ * here.
+ * 
+ * TODO
+ * Separate Command API from Thread management. This should be pooled
+ * somewhere?
+ */
 public class ObdCommand extends Thread {
 
 	protected InputStream in = null;
@@ -18,7 +31,7 @@ public class ObdCommand extends Thread {
 	protected String resType = null;
 	protected Exception error;
 	protected Object rawValue = null;
-	protected HashMap<String,Object> data = null;
+	protected HashMap<String, Object> data = null;
 	protected ObdConnectThread connectThread = null;
 	protected String impType = null;
 
@@ -29,90 +42,107 @@ public class ObdCommand extends Thread {
 		this.buff = new ArrayList<Byte>();
 		this.impType = impType;
 	}
+
 	public void setConnectThread(ObdConnectThread thread) {
 		this.connectThread = thread;
 	}
+
 	public boolean isImperial() {
 		if (connectThread != null && connectThread.getImperialUnits()) {
 			return true;
 		}
 		return false;
 	}
+
 	public ObdCommand(ObdCommand other) {
 		this(other.cmd, other.desc, other.resType, other.impType);
 	}
+
 	public void setInputStream(InputStream in) {
 		this.in = in;
 	}
+
 	public void setOutputStream(OutputStream out) {
 		this.out = out;
 	}
+
 	public void run() {
 		sendCmd(cmd);
 		readResult();
 	}
-	public void setDataMap(HashMap<String,Object> data) {
+
+	public void setDataMap(HashMap<String, Object> data) {
 		this.data = data;
 	}
+
 	protected void sendCmd(String cmd) {
 		try {
 			cmd += "\r\n";
 			out.write(cmd.getBytes());
 			out.flush();
 		} catch (Exception e) {
-			// TODO: handle exception
+			// TODO app should know something went wrong
 		}
 	}
+
 	protected void readResult() {
 		byte c = 0;
 		this.buff.clear();
 		try {
-			while ((char)(c = (byte)in.read()) != '>') {
+			while ((char) (c = (byte) in.read()) != '>') {
 				buff.add(c);
 			}
 		} catch (IOException e) {
+			// TODO app should know something went wrong
 		}
 	}
+
 	public String getResult() {
-		return new String(getByteArray());
+		return getByteArray().toString();
 	}
-	public byte[] getByteArray() {
-		byte[] data = new byte[this.buff.size()];
-		for (int i = 0; i < this.buff.size(); i++) {
-			data[i] = this.buff.get(i);
-		}
-		return data;
+
+	public Byte[] getByteArray() {
+		Byte[] data = new Byte[this.buff.size()];
+		return this.buff.toArray(data);
 	}
+
 	public String formatResult() {
-		String res = getResult();
-		String[] ress = res.split("\r");
-		res = ress[0].replace(" ","");
-		return res;
+		String[] ress = getResult().split("\r");
+		return ress[0].replace(" ", "");
 	}
+
 	public InputStream getIn() {
 		return in;
 	}
+
 	public OutputStream getOut() {
 		return out;
 	}
+
 	public ArrayList<Byte> getBuff() {
 		return buff;
 	}
+
 	public String getCmd() {
 		return cmd;
 	}
+
 	public String getDesc() {
 		return desc;
 	}
+
 	public String getResType() {
 		return resType;
 	}
+
 	public void setError(Exception e) {
 		error = e;
 	}
+
 	public Exception getError() {
 		return error;
 	}
+
 	public Object getRawValue() {
 		return rawValue;
 	}

@@ -42,47 +42,61 @@ public class ObdReaderConfigActivity extends PreferenceActivity implements OnPre
 		addPreferencesFromResource(R.xml.preferences);
 		ArrayList<CharSequence> pairedDeviceStrings = new ArrayList<CharSequence>();
         ArrayList<CharSequence> vals = new ArrayList<CharSequence>();
-		ListPreference listPref = (ListPreference) getPreferenceScreen().findPreference(BLUETOOTH_LIST_KEY);
+		ListPreference listBtDevices = (ListPreference) getPreferenceScreen().findPreference(BLUETOOTH_LIST_KEY);
 		String[] prefKeys = new String[]{ENGINE_DISPLACEMENT_KEY,VOLUMETRIC_EFFICIENCY_KEY,UPDATE_PERIOD_KEY,MAX_FUEL_ECON_KEY}; 
 		for (String prefKey:prefKeys) {
 			EditTextPreference txtPref = (EditTextPreference) getPreferenceScreen().findPreference(prefKey);
 			txtPref.setOnPreferenceChangeListener(this);
 		}
-        final BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (mBluetoothAdapter == null) {
-        	listPref.setEntries(pairedDeviceStrings.toArray(new CharSequence[0]));
-            listPref.setEntryValues(vals.toArray(new CharSequence[0]));
-        	return;
-        }
-        final Activity thisAct = this;
-        listPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-			public boolean onPreferenceClick(Preference preference) {
-				if (mBluetoothAdapter == null) {
-					Toast.makeText(thisAct,"This device does not support bluetooth", Toast.LENGTH_LONG);
-					return false;
-				}
-				return true;
-			}
-		});
-        Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
-        if (pairedDevices.size() > 0) {
-            for (BluetoothDevice device : pairedDevices) {
-                pairedDeviceStrings.add(device.getName() + "\n" + device.getAddress());
-                vals.add(device.getAddress());
-            }
-        }
-        listPref.setEntries(pairedDeviceStrings.toArray(new CharSequence[0]));
-        listPref.setEntryValues(vals.toArray(new CharSequence[0]));
-        ArrayList<ObdCommand> cmds = ObdConfig.getCommands();
+		
+		/*
+		 * Available OBD commands
+		 * 
+		 * TODO This should be read from preferences database
+		 */
+		ArrayList<ObdCommand> cmds = ObdConfig.getCommands();
         PreferenceScreen cmdScr = (PreferenceScreen) getPreferenceScreen().findPreference(COMMANDS_SCREEN_KEY);
-        for (int i = 0; i < cmds.size(); i++) {
-        	ObdCommand cmd = cmds.get(i);
+        for (ObdCommand cmd : cmds) {
         	CheckBoxPreference cpref = new CheckBoxPreference(this);
         	cpref.setTitle(cmd.getDesc());
         	cpref.setKey(cmd.getDesc());
         	cpref.setChecked(true);
         	cmdScr.addPreference(cpref);
         }
+        
+		/*
+		 * Let's use this device Bluetooth adapter to select which paired OBD-II compliant device we'll use.
+		 */
+        final BluetoothAdapter mBtAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        if (mBtAdapter == null) {
+        	listBtDevices.setEntries(pairedDeviceStrings.toArray(new CharSequence[0]));
+            listBtDevices.setEntryValues(vals.toArray(new CharSequence[0]));
+        	return;
+        }
+        
+        listBtDevices.setEntries(new CharSequence[1]);
+        listBtDevices.setEntryValues(new CharSequence[1]);
+        
+        final Activity thisAct = this;
+        listBtDevices.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+			public boolean onPreferenceClick(Preference preference) {
+				if (mBtAdapter == null || !mBtAdapter.isEnabled()) {
+					Toast.makeText(thisAct, "This device does not support Bluetooth or it is disabled.", Toast.LENGTH_LONG);
+					return false;
+				}
+				return true;
+			}
+		});
+        Set<BluetoothDevice> pairedDevices = mBtAdapter.getBondedDevices();
+        if (pairedDevices.size() > 0) {
+            for (BluetoothDevice device : pairedDevices) {
+                pairedDeviceStrings.add(device.getName() + "\n" + device.getAddress());
+                vals.add(device.getAddress());
+            }
+        }
+        listBtDevices.setEntries(pairedDeviceStrings.toArray(new CharSequence[0]));
+        listBtDevices.setEntryValues(vals.toArray(new CharSequence[0]));
 	}
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
 		if (UPDATE_PERIOD_KEY.equals(preference.getKey()) || 

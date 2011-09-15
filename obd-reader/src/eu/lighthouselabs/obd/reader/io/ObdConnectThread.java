@@ -1,3 +1,6 @@
+/*
+ * TODO put header
+ */
 package eu.lighthouselabs.obd.reader.io;
 
 import java.io.IOException;
@@ -20,13 +23,27 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 
+/**
+ * 
+ */
 public class ObdConnectThread extends Thread implements LocationListener {
 
 	protected BluetoothDevice dev = null;
 	protected BluetoothSocket sock = null;
 	protected boolean stop = false;
+
+	/*
+	 * http://developer.android.com/reference/android/bluetooth/BluetoothDevice.html
+	 * #createRfcommSocketToServiceRecord(java.util.UUID)
+	 * 
+	 * "Hint: If you are connecting to a Bluetooth serial board then try using
+	 * the well-known SPP UUID 00001101-0000-1000-8000-00805F9B34FB. However if
+	 * you are connecting to an Android peer then please generate your own
+	 * unique UUID."
+	 */
 	protected static final UUID MY_UUID = UUID
 			.fromString("00001101-0000-1000-8000-00805F9B34FB");
+
 	protected InputStream in = null;
 	protected OutputStream out = null;
 	protected ArrayList<ObdCommand> cmds = null;
@@ -63,15 +80,28 @@ public class ObdConnectThread extends Thread implements LocationListener {
 		this.imperialUnits = imperialUnits;
 	}
 
+	/**
+	 * Initiate the connection to the remote Bluetooth device.
+	 * 
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
 	protected void startDevice() throws IOException, InterruptedException {
+		/*
+		 * Instantiate a BluetoothSocket for the remote device and connect it.
+		 */
 		sock = this.dev.createRfcommSocketToServiceRecord(MY_UUID);
 		sock.connect();
 		in = sock.getInputStream();
 		out = sock.getOutputStream();
+		
+		/*
+		 * Send echoOff command every 1500ms until a valid response arrives.
+		 */
 		while (!stop) {
-			ObdCommand echoOff = new ObdCommand("ate0", "echo off", "string",
-					"string");
-			String result = runCommand(echoOff).replace(" ", "");
+			String result = runCommand(
+					new ObdCommand("ate0", "echo off", "string", "string"))
+					.replace(" ", "");
 			if (result != null && result.contains("OK")) {
 				break;
 			}
@@ -79,26 +109,33 @@ public class ObdConnectThread extends Thread implements LocationListener {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void run() {
 		try {
 			startDevice();
-			int cmdSize = cmds.size();
-			for (int i = 0; i < cmdSize; i++) {
-				String desc = cmds.get(i).getDesc();
+			
+			for (ObdCommand cmd : cmds) {
+				String desc = cmd.getDesc();
 				results.put(desc, "--");
 				data.put(desc, -9999);
 			}
-			for (int i = 0; !stop; i = ((i + 1) % cmdSize)) {
+			
+			for (int i = 0; !stop; i = ((i + 1) % cmds.size())) {
 				if (i == 0) {
 					long obsTime = System.currentTimeMillis() / 1000;
 					results.put("Obs Time", Long.toString(obsTime));
 					data.put("Obs Time", obsTime);
+					
 					if (uploadUrl != null && !"".equals(uploadUrl)) {
 						new ObdUploadThread(uploadUrl, service, getResults())
 								.start();
 					}
+					
 					Thread.sleep(updateCycle);
 				}
+				
 				ObdCommand cmd = cmds.get(i);
 				try {
 					cmd = getCopy(cmd); // make a copy because thread can only
@@ -142,10 +179,9 @@ public class ObdConnectThread extends Thread implements LocationListener {
 		cmd.start();
 		while (!stop) {
 			cmd.join(300);
-			if (!cmd.isAlive()) {
-				break;
-			}
+			if (!cmd.isAlive()) break;
 		}
+		
 		return cmd.formatResult();
 	}
 
