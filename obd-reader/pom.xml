@@ -12,6 +12,13 @@
 	<packaging>apk</packaging>
 	<name>obd-reader</name>
 
+	<repositories>
+		<repository>
+			<id>local-repo</id>
+			<url>file://${basedir}/libs</url>
+		</repository>
+	</repositories>
+
 	<dependencies>
 		<dependency>
 			<groupId>com.google.android</groupId>
@@ -28,19 +35,55 @@
 		<dependency>
 			<groupId>com.nullwire</groupId>
 			<artifactId>trace</artifactId>
-			<version>nov2009</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/trace.jar</systemPath>
+			<version>1.1</version>
 		</dependency>
 	</dependencies>
 
 	<build>
+		<!-- <sourceDirectory>src</sourceDirectory> -->
 		<plugins>
 			<plugin>
 				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
 				<artifactId>maven-android-plugin</artifactId>
+				<version>3.0.0-alpha-7</version>
+				<configuration>
+					<androidManifestFile>${project.basedir}/AndroidManifest.xml</androidManifestFile>
+					<assetsDirectory>${project.basedir}/assets</assetsDirectory>
+					<resourceDirectory>${project.basedir}/res</resourceDirectory>
+					<nativeLibrariesDirectory>${project.basedir}/libs</nativeLibrariesDirectory>
+					<sdk>
+						<platform>9</platform>
+					</sdk>
+					<deleteConflictingFiles>true</deleteConflictingFiles>
+					<undeployBeforeDeploy>true</undeployBeforeDeploy>
+				</configuration>
 				<extensions>true</extensions>
 			</plugin>
+
+<!-- 			<plugin> -->
+<!-- 				<groupId>com.pyx4me</groupId> -->
+<!-- 				<artifactId>proguard-maven-plugin</artifactId> -->
+<!-- 				<version>2.0.4</version> -->
+<!-- 				<executions> -->
+<!-- 					<execution> -->
+<!-- 						<phase>process-classes</phase> -->
+<!-- 						<goals> -->
+<!-- 							<goal>proguard</goal> -->
+<!-- 						</goals> -->
+<!-- 					</execution> -->
+<!-- 				</executions> -->
+<!-- 				<configuration> -->
+<!-- 					<injar>android-classes</injar> -->
+<!-- 					<libs> -->
+<!-- 						<lib>${java.home}/lib/rt.jar</lib> -->
+<!-- 						<lib>${project.basedir}/libs</lib> -->
+<!-- 					</libs> -->
+<!-- 					<obfuscate>false</obfuscate> -->
+<!-- 					<options> -->
+<!-- 						<option>@proguard.cfg</option> -->
+<!-- 					</options> -->
+<!-- 				</configuration> -->
+<!-- 			</plugin> -->
 		</plugins>
 	</build>
 
