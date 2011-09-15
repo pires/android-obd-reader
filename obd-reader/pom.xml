@@ -60,30 +60,30 @@
 				<extensions>true</extensions>
 			</plugin>
 
-<!-- 			<plugin> -->
-<!-- 				<groupId>com.pyx4me</groupId> -->
-<!-- 				<artifactId>proguard-maven-plugin</artifactId> -->
-<!-- 				<version>2.0.4</version> -->
-<!-- 				<executions> -->
-<!-- 					<execution> -->
-<!-- 						<phase>process-classes</phase> -->
-<!-- 						<goals> -->
-<!-- 							<goal>proguard</goal> -->
-<!-- 						</goals> -->
-<!-- 					</execution> -->
-<!-- 				</executions> -->
-<!-- 				<configuration> -->
-<!-- 					<injar>android-classes</injar> -->
-<!-- 					<libs> -->
-<!-- 						<lib>${java.home}/lib/rt.jar</lib> -->
+			<plugin>
+				<groupId>com.pyx4me</groupId>
+				<artifactId>proguard-maven-plugin</artifactId>
+				<version>2.0.4</version>
+				<executions>
+					<execution>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>proguard</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<injar>android-classes</injar>
+					<libs>
+						<lib>${java.home}/lib/rt.jar</lib>
 <!-- 						<lib>${project.basedir}/libs</lib> -->
-<!-- 					</libs> -->
-<!-- 					<obfuscate>false</obfuscate> -->
-<!-- 					<options> -->
-<!-- 						<option>@proguard.cfg</option> -->
-<!-- 					</options> -->
-<!-- 				</configuration> -->
-<!-- 			</plugin> -->
+					</libs>
+					<obfuscate>false</obfuscate>
+					<options>
+						<option>@proguard.cfg</option>
+					</options>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
