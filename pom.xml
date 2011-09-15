@@ -23,7 +23,7 @@ the Android SDK dir.
     <modelVersion>4.0.0</modelVersion>
     <groupId>eu.lighthouselabs</groupId>
     <artifactId>obd</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.1.2</version>
     <name>obd</name>
     <modules>
     	<module>obd-api</module>
