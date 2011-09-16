@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>eu.lighthouselabs</groupId>
 		<artifactId>obd</artifactId>
-		<version>1.1.2</version>
+		<version>1.1.2.1</version>
 	</parent>
 	<groupId>eu.lighthouselabs.obd</groupId>
 	<artifactId>reader</artifactId>
@@ -40,7 +40,8 @@
 	</dependencies>
 
 	<build>
-		<!-- <sourceDirectory>src</sourceDirectory> -->
+		<finalName>${project.name}-${project.version}</finalName>
+		<sourceDirectory>src</sourceDirectory>
 		<plugins>
 			<plugin>
 				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
@@ -50,7 +51,6 @@
 					<androidManifestFile>${project.basedir}/AndroidManifest.xml</androidManifestFile>
 					<assetsDirectory>${project.basedir}/assets</assetsDirectory>
 					<resourceDirectory>${project.basedir}/res</resourceDirectory>
-					<nativeLibrariesDirectory>${project.basedir}/libs</nativeLibrariesDirectory>
 					<sdk>
 						<platform>8</platform>
 					</sdk>
@@ -60,10 +60,11 @@
 				<extensions>true</extensions>
 			</plugin>
 
+			<!-- proguard can shrink the source classes and remove unused classes 
+				and more.. -->
 			<plugin>
 				<groupId>com.pyx4me</groupId>
 				<artifactId>proguard-maven-plugin</artifactId>
-				<version>2.0.4</version>
 				<executions>
 					<execution>
 						<phase>process-classes</phase>
@@ -72,19 +73,64 @@
 						</goals>
 					</execution>
 				</executions>
+				<!-- we need to override the dependency of the plugin to get a newer 
+					version of proguard -->
+				<dependencies>
+					<dependency>
+						<groupId>net.sf.proguard</groupId>
+						<artifactId>proguard</artifactId>
+						<version>4.4</version>
+						<scope>runtime</scope>
+					</dependency>
+				</dependencies>
 				<configuration>
+					<proguardVersion>4.4</proguardVersion>
+					<proguardInclude>${basedir}/proguard.cfg</proguardInclude>
+					<maxMemory>256m</maxMemory>
 					<injar>android-classes</injar>
 					<libs>
 						<lib>${java.home}/lib/rt.jar</lib>
-<!-- 						<lib>${project.basedir}/libs</lib> -->
+						<lib>${project.basedir}/libs</lib>
 					</libs>
-					<obfuscate>false</obfuscate>
-					<options>
-						<option>@proguard.cfg</option>
-					</options>
+					<skip>false</skip>
+					<obfuscate>true</obfuscate>
 				</configuration>
 			</plugin>
 		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>com.pyx4me</groupId>
+										<artifactId>
+											proguard-maven-plugin
+										</artifactId>
+										<versionRange>
+											[2.0.4,)
+										</versionRange>
+										<goals>
+											<goal>proguard</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 
 </project>
