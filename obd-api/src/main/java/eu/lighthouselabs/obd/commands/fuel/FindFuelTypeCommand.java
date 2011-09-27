@@ -1,13 +1,15 @@
 /*
  * TODO put header 
  */
-package eu.lighthouselabs.obd.commands;
+package eu.lighthouselabs.obd.commands.fuel;
+
+import eu.lighthouselabs.obd.commands.ObdCommand;
 
 
 /**
  * This command is intended to determine the vehicle fuel type.
  */
-public class FindFuelTypeCommand extends OBDCommand {
+public class FindFuelTypeCommand extends ObdCommand {
 
 	/**
 	 * Default ctor.
@@ -21,7 +23,7 @@ public class FindFuelTypeCommand extends OBDCommand {
 	 * 
 	 * @param other
 	 */
-	public FindFuelTypeCommand(OBDCommand other) {
+	public FindFuelTypeCommand(ObdCommand other) {
 		super(other);
 	}
 

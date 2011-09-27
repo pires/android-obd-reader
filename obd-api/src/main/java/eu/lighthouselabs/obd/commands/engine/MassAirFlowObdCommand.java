@@ -1,14 +1,16 @@
 /*
  * TODO put header
  */
-package eu.lighthouselabs.obd.commands;
+package eu.lighthouselabs.obd.commands.engine;
+
+import eu.lighthouselabs.obd.commands.ObdCommand;
 
 /**
  * TODO put description
  * 
  * Mass Air Flow
  */
-public class MassAirFlowObdCommand extends OBDCommand {
+public class MassAirFlowObdCommand extends ObdCommand {
 
 	private double maf = -9999.0;
 
@@ -49,7 +51,7 @@ public class MassAirFlowObdCommand extends OBDCommand {
 	/**
 	 * @return MAF value for further calculus.
 	 */
-	double getMAF() {
+	public double getMAF() {
 		return maf;
 	}
 }

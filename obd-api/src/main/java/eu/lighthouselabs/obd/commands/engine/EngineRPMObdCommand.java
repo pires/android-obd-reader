@@ -1,14 +1,14 @@
 /*
  * TODO put header
  */
-package eu.lighthouselabs.obd.commands;
+package eu.lighthouselabs.obd.commands.engine;
+
+import eu.lighthouselabs.obd.commands.ObdCommand;
 
 /**
- * TODO
- * 
- * put description
+ * Displays the current engine revolutions per minute (RPM).
  */
-public class EngineRPMObdCommand extends OBDCommand {
+public class EngineRPMObdCommand extends ObdCommand {
 
 	/**
 	 * Default ctor.
@@ -36,11 +36,11 @@ public class EngineRPMObdCommand extends OBDCommand {
 
 		if (!"NODATA".equals(res)) {
 			// ignore first two bytes [01 0C] of the response
-			byte b1 = Byte.parseByte(res.substring(4, 6));
-			byte b2 = Byte.parseByte(res.substring(6, 8));
-			value = ((b1 << 8) | b2) / 4;
+			byte b1 = buff.get(2);
+			byte b2 = buff.get(3);
+			value = (((b1 << 8) | b2) & 0xFFFF) / 4;
 		}
 
-		return String.format("%d", value);
+		return String.format("%d%s", value, "RPM");
 	}
 }

@@ -1,7 +1,9 @@
 /*
  * TODO put header
  */
-package eu.lighthouselabs.obd.commands;
+package eu.lighthouselabs.obd.commands.fuel;
+
+import eu.lighthouselabs.obd.commands.ObdCommand;
 
 /**
  * TODO
@@ -10,7 +12,7 @@ package eu.lighthouselabs.obd.commands;
  *
  */
 @Deprecated
-public class AverageFuelEconomyObdCommand extends OBDCommand {
+public class AverageFuelEconomyObdCommand extends ObdCommand {
 
 	public static final String FUEL_ECONOMY_KEY = "Fuel Economy";
 	public static final String AVG_FUEL_ECONOMY_KEY = "Fuel Economy Average";

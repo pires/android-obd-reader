@@ -1,14 +1,17 @@
 /*
  * TODO put header
  */
-package eu.lighthouselabs.obd.commands;
+package eu.lighthouselabs.obd.commands.temperature;
+
+import eu.lighthouselabs.obd.commands.ObdCommand;
+import eu.lighthouselabs.obd.commands.SystemOfUnits;
 
 /**
  * TODO
  * 
  * put description
  */
-public class TempObdCommand extends OBDCommand implements SystemOfUnits {
+public class TempObdCommand extends ObdCommand implements SystemOfUnits {
 
 	/**
 	 * Default ctor.
@@ -36,12 +39,12 @@ public class TempObdCommand extends OBDCommand implements SystemOfUnits {
 	 * @param temp
 	 * @return
 	 */
-	protected final int prepareTempValue(int temp) {
+	protected final float prepareTempValue(float temp) {
 		return temp - 40;
 	}
 
 	/**
-	 * TODO find how to determine if raw values are Metric or Imperial
+	 * Get values from 'buff', since we can't rely on char/string for calculations.
 	 * 
 	 * @return Temperature in Celsius or Fahrenheit.
 	 */
@@ -52,14 +55,15 @@ public class TempObdCommand extends OBDCommand implements SystemOfUnits {
 
 		if (!"NODATA".equals(res)) {
 			// ignore first two bytes [hh hh] of the response
-			byte b1 = Byte.parseByte(res.substring(4, 6));
-			value = prepareTempValue((b1 << 8) / 4);
+			int temp = buff.get(2) & 0xFF; // unsigned short
+			value = prepareTempValue(temp);
+			
+			// convert?
+			if (useImperialUnits)
+				res = String.format("%.1f%s", getImperialUnit(value), "F");
+			else
+				res = String.format("%.0f%s", value, "C");
 		}
-
-		if (useImperialUnits)
-			res = String.format("%.0f %s", getImperialUnit(value), "F");
-		else
-			res = String.format("%.1f %s", value, "C");
 
 		return res;
 	}
@@ -67,8 +71,8 @@ public class TempObdCommand extends OBDCommand implements SystemOfUnits {
 	/**
 	 * Converts from Celsius to Fahrenheit.
 	 */
-	public float  getImperialUnit(float value) {
-		return (value * (9 / 5)) + 32;
+	public float getImperialUnit(float value) {
+		return value * 1.8f + 32;
 	}
 	
 }

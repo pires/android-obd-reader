@@ -1,11 +1,17 @@
 /*
  * TODO put header
  */
-package eu.lighthouselabs.obd.commands;
+package eu.lighthouselabs.obd.commands.fuel;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import eu.lighthouselabs.obd.commands.SpeedObdCommand;
+import eu.lighthouselabs.obd.commands.control.CommandEquivRatioObdCommand;
+import eu.lighthouselabs.obd.commands.engine.EngineRPMObdCommand;
+import eu.lighthouselabs.obd.commands.engine.IntakeManifoldPressureObdCommand;
+import eu.lighthouselabs.obd.commands.temperature.AirIntakeTempObdCommand;
 
 /**
  * TODO put description

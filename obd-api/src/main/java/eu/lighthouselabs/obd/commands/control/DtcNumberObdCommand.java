@@ -1,13 +1,15 @@
 /*
  * TODO put header
  */
-package eu.lighthouselabs.obd.commands;
+package eu.lighthouselabs.obd.commands.control;
+
+import eu.lighthouselabs.obd.commands.ObdCommand;
 
 /**
  * TODO put description
  * 
  */
-public class DtcNumberObdCommand extends OBDCommand {
+public class DtcNumberObdCommand extends ObdCommand {
 
 	private int codeCount = -1;
 	private boolean milOn = false;
@@ -36,7 +38,7 @@ public class DtcNumberObdCommand extends OBDCommand {
 		
 		if (!"NODATA".equals(res)) {
 			// ignore first two bytes [hh hh] of the response
-			byte mil = Byte.parseByte(res.substring(4, 6));
+			byte mil = buff.get(2);
 			if ((mil & 0x80) == 1)
 				milOn = true;
 			

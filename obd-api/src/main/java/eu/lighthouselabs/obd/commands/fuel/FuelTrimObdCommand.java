@@ -1,13 +1,15 @@
 /*
  * TODO put header
  */
-package eu.lighthouselabs.obd.commands;
+package eu.lighthouselabs.obd.commands.fuel;
+
+import eu.lighthouselabs.obd.commands.ObdCommand;
 
 /**
  * TODO put description
  * 
  */
-public class FuelTrimObdCommand extends OBDCommand {
+public class FuelTrimObdCommand extends ObdCommand {
 
 	/**
 	 * Default ctor.

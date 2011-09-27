@@ -1,14 +1,16 @@
 /*
  * TODO put header
  */
-package eu.lighthouselabs.obd.commands;
+package eu.lighthouselabs.obd.commands.engine;
+
+import eu.lighthouselabs.obd.commands.ObdCommand;
 
 /**
  * TODO put description
  * 
  * Throttle Position
  */
-public class ThrottleObdCommand extends OBDCommand {
+public class ThrottleObdCommand extends ObdCommand {
 
 	/**
 	 * Default ctor.

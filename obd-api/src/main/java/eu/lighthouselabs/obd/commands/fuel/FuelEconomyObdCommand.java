@@ -1,16 +1,20 @@
 /*
  * TODO put header
  */
-package eu.lighthouselabs.obd.commands;
+package eu.lighthouselabs.obd.commands.fuel;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import eu.lighthouselabs.obd.commands.ObdCommand;
+import eu.lighthouselabs.obd.commands.SpeedObdCommand;
+import eu.lighthouselabs.obd.commands.engine.MassAirFlowObdCommand;
+
 /**
  * TODO put description
  */
-public class FuelEconomyObdCommand extends OBDCommand {
+public class FuelEconomyObdCommand extends ObdCommand {
 
 	public static final double AIR_FUEL_RATIO = 14.64;
 	public static final double FUEL_DENSITY_GRAMS_PER_LITER = 720.0;

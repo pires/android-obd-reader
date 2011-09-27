@@ -4,6 +4,7 @@
 
 package eu.lighthouselabs.obd.commands;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -18,9 +19,9 @@ import java.util.HashMap;
  * TODO Separate Command API from Thread management. This should be pooled
  * somewhere?
  */
-public abstract class OBDCommand {
+public abstract class ObdCommand {
 
-	private static final String TAG = "OBDCommand";
+	private static final String TAG = "ObdCommand";
 
 	protected ArrayList<Byte> buff = null;
 	protected String cmd = null;
@@ -34,7 +35,7 @@ public abstract class OBDCommand {
 	 * @param command
 	 *            the command to send
 	 */
-	public OBDCommand(String command) {
+	public ObdCommand(String command) {
 		this.cmd = command;
 		this.buff = new ArrayList<Byte>();
 		this.data = new HashMap<String, Object>();
@@ -43,16 +44,16 @@ public abstract class OBDCommand {
 	/**
 	 * Prevent empty instantiation
 	 */
-	private OBDCommand() {
+	private ObdCommand() {
 	}
 
 	/**
 	 * Copy ctor.
 	 * 
 	 * @param other
-	 *            the OBDCommand to copy.
+	 *            the ObdCommand to copy.
 	 */
-	public OBDCommand(OBDCommand other) {
+	public ObdCommand(ObdCommand other) {
 		this(other.cmd);
 	}
 
@@ -118,17 +119,12 @@ public abstract class OBDCommand {
 	 * This method may be overriden in subclasses, such as ObdMultiCommand.
 	 */
 	protected void readResult(InputStream in) throws IOException {
-		byte c = 0;
+		byte b = 0;
 		this.buff.clear();
 
-		// read until no more bytes available
-		while ((c = (byte) in.read()) != -1) {
-			// exit loop if read char == prompt char
-			if ((char) c == '>')
-				break;
-
-			this.buff.add(c);
-		}
+		// read until '>' arrives
+		while ((char)(b = (byte)in.read()) != '>')
+			this.buff.add(b);
 	}
 
 	/**
@@ -199,7 +195,7 @@ public abstract class OBDCommand {
 	}
 
 	/**
-	 * Returns this command response in byte format.
+	 * Returns this command response in Byte format.
 	 * 
 	 * @return a list of Byte
 	 */

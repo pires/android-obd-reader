@@ -1,4 +1,6 @@
-package eu.lighthouselabs.obd.commands;
+package eu.lighthouselabs.obd.commands.fuel;
+
+import eu.lighthouselabs.obd.commands.PressureObdCommand;
 
 public class FuelPressureObdCommand extends PressureObdCommand {
 

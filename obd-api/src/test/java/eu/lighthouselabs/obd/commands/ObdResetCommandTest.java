@@ -3,7 +3,10 @@
  */
 package eu.lighthouselabs.obd.commands;
 
-import static org.powermock.api.easymock.PowerMock.*;
+import static org.powermock.api.easymock.PowerMock.createMock;
+import static org.powermock.api.easymock.PowerMock.expectLastCall;
+import static org.powermock.api.easymock.PowerMock.replayAll;
+import static org.powermock.api.easymock.PowerMock.verifyAll;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotEquals;
 import static org.testng.Assert.assertNotNull;
@@ -11,7 +14,6 @@ import static org.testng.Assert.assertNull;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -19,24 +21,23 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import eu.lighthouselabs.obd.commands.protocol.ObdResetCommand;
+
 /**
- * Tests for OBDCommand sub-classes.
+ * Tests for ObdCommand sub-classes.
  */
 @PrepareForTest(InputStream.class)
-public class OBDResetCommandTest {
+public class ObdResetCommandTest {
 	
-	private OBDResetCommand command;
+	private ObdResetCommand command;
 	private InputStream mockIn;
-	private OutputStream mockOut;
 	
 	/**
-	 * We must mock everything we need in each test, instead of 
-	 * 
 	 * @throws Exception
 	 */
 	@BeforeClass
-	public void setup() throws Exception {
-		command = new OBDResetCommand();
+	public void setUp() throws Exception {
+		command = new ObdResetCommand();
 	}
 	
 	/**
@@ -49,9 +50,10 @@ public class OBDResetCommandTest {
 		// mock InputStream read
 		mockIn = createMock(InputStream.class);
 		mockIn.read();
-		expectLastCall().andReturn(1);
-		expectLastCall().andReturn(2);
-		expectLastCall().andReturn(-1);
+		expectLastCall().andReturn(0x4F); // O
+		expectLastCall().andReturn(0x4B); // K
+		expectLastCall().andReturn(0x0D); // \r
+		expectLastCall().andReturn(0x3E); // '>'
 		
 		replayAll();
 		
@@ -59,6 +61,7 @@ public class OBDResetCommandTest {
 		command.readResult(mockIn);
 		
 		assertNotEquals(command.buff.size(), 0);
+		assertEquals(command.getFormattedResult(), "OK");
 		
 		verifyAll();
 	}
@@ -73,7 +76,7 @@ public class OBDResetCommandTest {
 		// mock InputStream read
 		mockIn = createMock(InputStream.class);
 		mockIn.read();
-		expectLastCall().andReturn(-1);
+		expectLastCall().andReturn(0x3E); // '>'
 		replayAll();
 		
 		// call the method  to test
@@ -119,7 +122,6 @@ public class OBDResetCommandTest {
 	public void tearDown() {
 		command = null;
 		mockIn = null;
-		mockOut = null;
 	}
 
 }

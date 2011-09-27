@@ -8,7 +8,7 @@ package eu.lighthouselabs.obd.commands;
  * 
  * Current speed.
  */
-public class SpeedObdCommand extends OBDCommand implements SystemOfUnits {
+public class SpeedObdCommand extends ObdCommand implements SystemOfUnits {
 
 	private int metricSpeed = -1;
 	
@@ -32,7 +32,7 @@ public class SpeedObdCommand extends OBDCommand implements SystemOfUnits {
 	 * Convert from km/h to mph
 	 */
 	public float getImperialUnit(float value) {
-		Double tempValue = value * 0.625;
+		Double tempValue = value * 0.621371192;
 		return Float.valueOf(tempValue.toString());
 	}
 
@@ -44,12 +44,11 @@ public class SpeedObdCommand extends OBDCommand implements SystemOfUnits {
 
 		if (!"NODATA".equals(res)) {
 			// ignore first two bytes [hh hh] of the response
-			byte b1 = Byte.parseByte(res.substring(4, 6));
-			metricSpeed = b1 << 8;
-			res = String.format("%d %s", metricSpeed, "km/h");
+			metricSpeed = buff.get(2) & 0xFF; // unsigned short
+			res = String.format("%d%s", metricSpeed, "km/h");
 
 			if (useImperialUnits)
-				res = String.format("%.1f %s", getImperialUnit(metricSpeed), "mph");
+				res = String.format("%.2f%s", getImperialUnit(metricSpeed), "mph");
 		}
 
 		return res;
@@ -60,6 +59,13 @@ public class SpeedObdCommand extends OBDCommand implements SystemOfUnits {
 	 */
 	public int getMetricSpeed() {
 		return metricSpeed;
+	}
+	
+	/**
+	 * @return the speed in imperial units.
+	 */
+	public float getImperialSpeed() {
+		return getImperialUnit(metricSpeed);
 	}
 	
 }

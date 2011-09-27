@@ -1,7 +1,9 @@
 /*
  * TODO put header
  */
-package eu.lighthouselabs.obd.commands;
+package eu.lighthouselabs.obd.commands.control;
+
+import eu.lighthouselabs.obd.commands.ObdCommand;
 
 /**
  * In order to get ECU Trouble Codes, one must first send a DtcNumberObdCommand
@@ -10,7 +12,7 @@ package eu.lighthouselabs.obd.commands;
  * 
  * If none are available (totalCodes < 1), don't instantiate this command.
  */
-public class TroubleCodesObdCommand extends OBDCommand {
+public class TroubleCodesObdCommand extends ObdCommand {
 
 	protected final static char[] dtcLetters = { 'P', 'C', 'B', 'U' };
 

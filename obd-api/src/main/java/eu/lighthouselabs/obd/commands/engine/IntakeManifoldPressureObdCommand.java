@@ -1,7 +1,9 @@
 /*
  * TODO put header
  */
-package eu.lighthouselabs.obd.commands;
+package eu.lighthouselabs.obd.commands.engine;
+
+import eu.lighthouselabs.obd.commands.PressureObdCommand;
 
 /**
  * 

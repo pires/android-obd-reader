@@ -1,17 +1,27 @@
 /*
  * TODO put header
  */
-package eu.lighthouselabs.obd.commands;
+package eu.lighthouselabs.obd.commands.engine;
+
+import eu.lighthouselabs.obd.commands.ObdCommand;
 
 /**
  * TODO put description
  */
-public class EngineRuntimeObdCommand extends OBDCommand {
+public class EngineRuntimeObdCommand extends ObdCommand {
 
+	/**
+	 * Default ctor.
+	 */
 	public EngineRuntimeObdCommand() {
 		super("01 1F");
 	}
 
+	/**
+	 * Copy ctor.
+	 * 
+	 * @param other
+	 */
 	public EngineRuntimeObdCommand(EngineRuntimeObdCommand other) {
 		super(other);
 	}
@@ -22,9 +32,9 @@ public class EngineRuntimeObdCommand extends OBDCommand {
 
 		if (!"NODATA".equals(res)) {
 			// ignore first two bytes [01 0C] of the response
-			byte b1 = Byte.parseByte(res.substring(4, 6));
-			byte b2 = Byte.parseByte(res.substring(6, 8));
-			int value = ((b1 << 8) | b2);
+			byte b1 = buff.get(2);
+			byte b2 = buff.get(3);
+			int value = ((b1 << 8) | b2) & 0xFFFF;
 			
 			// determine time
 			String hh = String.format("%02d", value / 3600);

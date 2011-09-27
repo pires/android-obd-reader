@@ -1,6 +1,12 @@
+/*
+ * TODO put header 
+ */
 package eu.lighthouselabs.obd.commands;
 
-public abstract class PressureObdCommand extends OBDCommand implements
+/**
+ * TODO put description
+ */
+public abstract class PressureObdCommand extends ObdCommand implements
 		SystemOfUnits {
 
 	protected int tempValue = 0;
@@ -42,13 +48,12 @@ public abstract class PressureObdCommand extends OBDCommand implements
 
 		if (!"NODATA".equals(res)) {
 			// ignore first two bytes [hh hh] of the response
-			byte b1 = Byte.parseByte(res.substring(4, 6));
-			tempValue = b1 << 8;
+			tempValue = buff.get(2) & 0xFF; // unsigned short
 			int value = preparePressureValue(); // this will need tempValue
-			res = String.format("%d %s", value, "kPa");
+			res = String.format("%d%s", value, "kPa");
 
 			if (useImperialUnits) {
-				res = String.format("%.1f %s", getImperialUnit(value), "psi");
+				res = String.format("%.1f%s", getImperialUnit(value), "psi");
 			}
 		}
 
@@ -59,8 +64,7 @@ public abstract class PressureObdCommand extends OBDCommand implements
 	 * Convert kPa to psi
 	 */
 	public float getImperialUnit(float value) {
-		//value * 0.000145037;
-		Double d = value / 101.3;
+		Double d = value * 0.145037738;
 		return Float.valueOf(d.toString());
 	}
 }

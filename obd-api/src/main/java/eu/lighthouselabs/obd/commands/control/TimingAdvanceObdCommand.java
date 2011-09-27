@@ -1,14 +1,16 @@
 /*
  * TODO put header
  */
-package eu.lighthouselabs.obd.commands;
+package eu.lighthouselabs.obd.commands.control;
+
+import eu.lighthouselabs.obd.commands.ObdCommand;
 
 /**
  * TODO put description
  * 
  * Timing Advance
  */
-public class TimingAdvanceObdCommand extends OBDCommand {
+public class TimingAdvanceObdCommand extends ObdCommand {
 
 	public TimingAdvanceObdCommand() {
 		super("01 0E");
