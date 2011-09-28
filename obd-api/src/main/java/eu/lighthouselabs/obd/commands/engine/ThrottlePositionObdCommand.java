@@ -8,12 +8,12 @@ import eu.lighthouselabs.obd.commands.ObdCommand;
 /**
  * Read the throttle position in percentage.
  */
-public class ThrottleObdCommand extends ObdCommand {
+public class ThrottlePositionObdCommand extends ObdCommand {
 
 	/**
 	 * Default ctor.
 	 */
-	public ThrottleObdCommand() {
+	public ThrottlePositionObdCommand() {
 		super("01 11");
 	}
 
@@ -22,7 +22,7 @@ public class ThrottleObdCommand extends ObdCommand {
 	 * 
 	 * @param other
 	 */
-	public ThrottleObdCommand(ThrottleObdCommand other) {
+	public ThrottlePositionObdCommand(ThrottlePositionObdCommand other) {
 		super(other);
 	}
 
@@ -41,5 +41,10 @@ public class ThrottleObdCommand extends ObdCommand {
 		}
 
 		return res;
+	}
+
+	@Override
+	public String getName() {
+		return "Throttle Position";
 	}
 }

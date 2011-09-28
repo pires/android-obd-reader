@@ -70,4 +70,9 @@ public class DtcNumberObdCommand extends ObdCommand {
 		return milOn;
 	}
 
+	@Override
+	public String getName() {
+		return "Diagnostic Trouble Codes";
+	}
+
 }

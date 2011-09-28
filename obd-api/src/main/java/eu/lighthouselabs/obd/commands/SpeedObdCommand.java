@@ -11,7 +11,7 @@ package eu.lighthouselabs.obd.commands;
 public class SpeedObdCommand extends ObdCommand implements SystemOfUnits {
 
 	private int metricSpeed = -1;
-	
+
 	/**
 	 * Default ctor.
 	 */
@@ -48,7 +48,8 @@ public class SpeedObdCommand extends ObdCommand implements SystemOfUnits {
 			res = String.format("%d%s", metricSpeed, "km/h");
 
 			if (useImperialUnits)
-				res = String.format("%.2f%s", getImperialUnit(metricSpeed), "mph");
+				res = String.format("%.2f%s", getImperialUnit(metricSpeed),
+						"mph");
 		}
 
 		return res;
@@ -60,12 +61,17 @@ public class SpeedObdCommand extends ObdCommand implements SystemOfUnits {
 	public int getMetricSpeed() {
 		return metricSpeed;
 	}
-	
+
 	/**
 	 * @return the speed in imperial units.
 	 */
 	public float getImperialSpeed() {
 		return getImperialUnit(metricSpeed);
 	}
-	
+
+	@Override
+	public String getName() {
+		return "Vehicle Speed";
+	}
+
 }

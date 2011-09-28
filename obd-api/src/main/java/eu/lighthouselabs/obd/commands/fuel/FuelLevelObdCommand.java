@@ -38,4 +38,9 @@ public class FuelLevelObdCommand extends ObdCommand {
 		return res;
 	}
 
+	@Override
+	public String getName() {
+		return "Fuel Level";
+	}
+
 }

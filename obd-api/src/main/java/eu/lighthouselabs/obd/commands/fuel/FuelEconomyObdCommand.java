@@ -90,4 +90,9 @@ public class FuelEconomyObdCommand extends ObdCommand {
 		return Float.valueOf(tempValue.toString());
 	}
 
+	@Override
+	public String getName() {
+		return "Fuel Consumption";
+	}
+
 }

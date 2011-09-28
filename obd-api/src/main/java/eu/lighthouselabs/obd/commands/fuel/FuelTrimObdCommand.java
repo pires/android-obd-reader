@@ -7,7 +7,7 @@ import eu.lighthouselabs.obd.commands.ObdCommand;
 import eu.lighthouselabs.obd.enums.FuelTrim;
 
 /**
- * Get Long Term fuel % trim - Bank 1
+ * Get Fuel Trim.
  * 
  */
 public class FuelTrimObdCommand extends ObdCommand {
@@ -47,18 +47,23 @@ public class FuelTrimObdCommand extends ObdCommand {
 
 		return res;
 	}
-	
+
 	/**
 	 * @return the readed Fuel Trim percentage value.
 	 */
 	public final float getValue() {
 		return fuelTrimValue;
 	}
-	
+
 	/**
 	 * @return the name of the bank in string representation.
 	 */
 	public final String getBank() {
+		return bank.getBank();
+	}
+
+	@Override
+	public String getName() {
 		return bank.getBank();
 	}
 }

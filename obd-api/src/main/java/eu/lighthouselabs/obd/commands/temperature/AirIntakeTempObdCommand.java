@@ -17,4 +17,9 @@ public class AirIntakeTempObdCommand extends TempObdCommand {
 	public AirIntakeTempObdCommand(AirIntakeTempObdCommand other) {
 		super(other);
 	}
+
+	@Override
+	public String getName() {
+		return "Air Intake Temperature";
+	}
 }

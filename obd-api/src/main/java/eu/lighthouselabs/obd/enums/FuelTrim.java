@@ -44,16 +44,16 @@ public enum FuelTrim {
 		
 		switch (value) {
 		case 0x06:
-			res = "Short Term Bank 1";
+			res = "Short Term Fuel Trim Bank 1";
 			break;
 		case 0x07:
-			res = "Long Term Bank 1";
+			res = "Long Term Fuel Trim Bank 1";
 			break;
 		case 0x08:
-			res = "Short Term Bank 2";
+			res = "Short Term Fuel Trim Bank 2";
 			break;
 		case 0x09:
-			res = "Long Term Bank 2";
+			res = "Long Term Fuel Trim Bank 2";
 			break;
 		default:
 			break;

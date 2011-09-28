@@ -51,7 +51,8 @@ public class CommandEquivRatioObdCommand extends ObdCommand {
 				// ignore first two bytes [hh hh] of the response
 				byte b1 = buff.get(2);
 				byte b2 = buff.get(3);
-				// TODO should we OR the 2 bytes? or are they int,fraction? don't forget 0xFF
+				// TODO should we OR the 2 bytes? or are they int,fraction?
+				// don't forget 0xFF
 				ratio = ((int) (b1 << 8) | b2) / 32768;
 				res = String.format("%.1f%s", ratio, "%");
 			} catch (Exception e) {
@@ -66,12 +67,14 @@ public class CommandEquivRatioObdCommand extends ObdCommand {
 	}
 
 	/**
-	 * TODO is this needed?
-	 * 
 	 * @return
 	 */
-	@Deprecated
 	double getRatio() {
 		return ratio;
+	}
+
+	@Override
+	public String getName() {
+		return "Command Equivalence Ratio";
 	}
 }

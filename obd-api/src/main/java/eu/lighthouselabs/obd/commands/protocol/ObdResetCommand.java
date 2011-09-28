@@ -36,4 +36,9 @@ public class ObdResetCommand extends ObdCommand {
 		return getResult();
 	}
 
+	@Override
+	public String getName() {
+		return "Reset OBD";
+	}
+
 }

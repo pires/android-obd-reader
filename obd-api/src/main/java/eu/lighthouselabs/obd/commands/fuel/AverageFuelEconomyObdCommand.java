@@ -50,4 +50,9 @@ public class AverageFuelEconomyObdCommand extends ObdCommand {
 		return String.format("%.1f mpg", ampg);
 	}
 
+	@Override
+	public String getName() {
+		return "Average Fuel Consumption";
+	}
+
 }

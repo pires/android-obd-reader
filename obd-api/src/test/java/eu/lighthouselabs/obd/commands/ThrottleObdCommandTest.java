@@ -17,14 +17,14 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import eu.lighthouselabs.obd.commands.engine.ThrottleObdCommand;
+import eu.lighthouselabs.obd.commands.engine.ThrottlePositionObdCommand;
 
 /**
- * Tests for ThrottleObdCommand class.
+ * Tests for ThrottlePositionObdCommand class.
  */
 @PrepareForTest(InputStream.class)
 public class ThrottleObdCommandTest {
-	private ThrottleObdCommand command;
+	private ThrottlePositionObdCommand command;
 	private InputStream mockIn;
 
 	/**
@@ -32,7 +32,7 @@ public class ThrottleObdCommandTest {
 	 */
 	@BeforeClass
 	public void setUp() throws Exception {
-		command = new ThrottleObdCommand();
+		command = new ThrottlePositionObdCommand();
 	}
 
 	/**

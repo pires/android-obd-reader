@@ -45,4 +45,9 @@ public class EngineRuntimeObdCommand extends ObdCommand {
 
 		return res;
 	}
+
+	@Override
+	public String getName() {
+		return "Engine Runtime";
+	}
 }

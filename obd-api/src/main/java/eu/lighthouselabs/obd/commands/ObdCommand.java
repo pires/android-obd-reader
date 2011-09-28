@@ -4,7 +4,6 @@
 
 package eu.lighthouselabs.obd.commands;
 
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -20,8 +19,6 @@ import java.util.HashMap;
  * somewhere?
  */
 public abstract class ObdCommand {
-
-	private static final String TAG = "ObdCommand";
 
 	protected ArrayList<Byte> buff = null;
 	protected String cmd = null;
@@ -228,5 +225,10 @@ public abstract class ObdCommand {
 	public void useImperialUnits(boolean isImperial) {
 		this.useImperialUnits = isImperial;
 	}
+	
+	/**
+	 * @return the OBD command name.
+	 */
+	public abstract String getName();
 
 }

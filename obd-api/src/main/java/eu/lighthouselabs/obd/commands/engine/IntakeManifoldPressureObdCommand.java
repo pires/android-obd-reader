@@ -38,4 +38,9 @@ public class IntakeManifoldPressureObdCommand extends PressureObdCommand {
 		// just return tempValue as no calculations are needed
 		return tempValue;
 	}
+
+	@Override
+	public String getName() {
+		return "Intake Manifold Pressure";
+	}
 }

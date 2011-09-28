@@ -11,7 +11,7 @@ import eu.lighthouselabs.obd.commands.SystemOfUnits;
  * 
  * put description
  */
-public class TempObdCommand extends ObdCommand implements SystemOfUnits {
+public abstract class TempObdCommand extends ObdCommand implements SystemOfUnits {
 
 	/**
 	 * Default ctor.

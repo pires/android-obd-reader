@@ -23,4 +23,9 @@ public class FuelPressureObdCommand extends PressureObdCommand {
 	protected final int preparePressureValue() {
 		return tempValue * 3;
 	}
+
+	@Override
+	public String getName() {
+		return "Fuel Pressure";
+	}
 }

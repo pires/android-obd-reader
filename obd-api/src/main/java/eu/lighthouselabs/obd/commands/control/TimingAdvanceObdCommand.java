@@ -31,4 +31,9 @@ public class TimingAdvanceObdCommand extends ObdCommand {
 
 		return res;
 	}
+
+	@Override
+	public String getName() {
+		return "Timing Advance";
+	}
 }

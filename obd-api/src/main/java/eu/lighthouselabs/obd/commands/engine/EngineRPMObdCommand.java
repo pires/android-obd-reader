@@ -43,4 +43,9 @@ public class EngineRPMObdCommand extends ObdCommand {
 
 		return String.format("%d%s", value, "RPM");
 	}
+
+	@Override
+	public String getName() {
+		return "Engine RPM";
+	}
 }
