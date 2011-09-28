@@ -6,9 +6,7 @@ package eu.lighthouselabs.obd.commands.engine;
 import eu.lighthouselabs.obd.commands.ObdCommand;
 
 /**
- * TODO put description
- * 
- * Throttle Position
+ * Read the throttle position in percentage.
  */
 public class ThrottleObdCommand extends ObdCommand {
 
@@ -37,10 +35,9 @@ public class ThrottleObdCommand extends ObdCommand {
 
 		if (!"NODATA".equals(res)) {
 			// ignore first two bytes [hh hh] of the response
-			byte b1 = Byte.parseByte(res.substring(4, 6));
-			byte b2 = Byte.parseByte(res.substring(6, 8));
-			int tempValue = (b1 << 8) | b2;
-			res = String.format("%.1f %s", (tempValue * 100) / 255, "%");
+			byte b1 = buff.get(2);
+			float tempValue = ((b1 & 0xFF) * 100.0f) / 255.0f;
+			res = String.format("%.1f%s", tempValue, "%");
 		}
 
 		return res;

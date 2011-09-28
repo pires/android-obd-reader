@@ -7,6 +7,8 @@ import static org.powermock.api.easymock.PowerMock.createMock;
 import static org.powermock.api.easymock.PowerMock.expectLastCall;
 import static org.powermock.api.easymock.PowerMock.replayAll;
 import static org.powermock.api.easymock.PowerMock.verifyAll;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.assertEquals;
 
 import java.io.IOException;
@@ -17,75 +19,81 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import eu.lighthouselabs.obd.commands.control.DtcNumberObdCommand;
+
 /**
- * Tests for ObdSpeedCommand class.
+ * Tests for DtcNumberObdCommand class. 
  */
 @PrepareForTest(InputStream.class)
-public class SpeedObdCommandTest {
+public class DtcNumberObdCommandTest {
 
-	private SpeedObdCommand command;
+	private DtcNumberObdCommand command;
 	private InputStream mockIn;
-	
+
 	/**
 	 * @throws Exception
 	 */
 	@BeforeClass
 	public void setUp() throws Exception {
-		command = new SpeedObdCommand();
+		command = new DtcNumberObdCommand();
 	}
-	
+
 	/**
-	 * Test for valid InputStream read, 64km/h
+	 * Test for valid InputStream read, MIL on.
 	 * 
 	 * @throws IOException
 	 */
 	@Test
-	public void testValidSpeedMetric() throws IOException {
+	public void testMILOn() throws IOException {
 		// mock InputStream read
 		mockIn = createMock(InputStream.class);
 		mockIn.read();
 		expectLastCall().andReturn(0x41);
-		expectLastCall().andReturn(0x0D);
-		expectLastCall().andReturn(0x40);
-		expectLastCall().andReturn(0x0D);
+		expectLastCall().andReturn(0x01);
+		expectLastCall().andReturn(0x9F);
+		expectLastCall().andReturn(0x13);
 		expectLastCall().andReturn(0x3E); // '>'
-		
+
 		replayAll();
-		
-		// call the method  to test
+
+		// call the method to test
 		command.readResult(mockIn);
-		command.useImperialUnits = false;
-		assertEquals(command.getFormattedResult(), "64km/h");
+		command.getFormattedResult();
 		
+		assertTrue(command.getMilOn());
+		assertEquals(command.getTotalAvailableCodes(), 31);
+
 		verifyAll();
 	}
-	
+
 	/**
-	 * Test for valid InputStream read, 42.87mph
+	 * Test for valid InputStream read, MIL off.
 	 * 
 	 * @throws IOException
 	 */
 	@Test
-	public void testValidSpeedImperial() throws IOException {
+	public void testMILOff() throws IOException {
 		// mock InputStream read
 		mockIn = createMock(InputStream.class);
 		mockIn.read();
 		expectLastCall().andReturn(0x41);
-		expectLastCall().andReturn(0x0D);
-		expectLastCall().andReturn(0x45);
-		expectLastCall().andReturn(0x0D);
+		expectLastCall().andReturn(0x01);
+		expectLastCall().andReturn(0x0F);
+		expectLastCall().andReturn(0x13);
 		expectLastCall().andReturn(0x3E); // '>'
-		
+
 		replayAll();
-		
-		// call the method  to test
+
+		// call the method to test
 		command.readResult(mockIn);
-		command.useImperialUnits = true;
-		assertEquals(command.getFormattedResult(), "42.87mph");
+		command.getFormattedResult();
 		
+		assertFalse(command.getMilOn());
+		assertEquals(command.getTotalAvailableCodes(), 15);
+
 		verifyAll();
 	}
-	
+
 	/**
 	 * Clear resources.
 	 */
@@ -94,5 +102,5 @@ public class SpeedObdCommandTest {
 		command = null;
 		mockIn = null;
 	}
-	
+
 }

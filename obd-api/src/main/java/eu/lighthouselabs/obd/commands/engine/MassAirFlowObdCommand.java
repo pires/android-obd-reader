@@ -39,10 +39,10 @@ public class MassAirFlowObdCommand extends ObdCommand {
 
 		if (!"NODATA".equals(res)) {
 			// ignore first two bytes [hh hh] of the response
-			byte b1 = Byte.parseByte(res.substring(4, 6));
-			byte b2 = Byte.parseByte(res.substring(6, 8));
-			maf = ((b1 << 8) | b2) / 100.0;
-			res = String.format("%.2f %s", maf, "grams/sec");
+			byte b1 = buff.get(2);
+			byte b2 = buff.get(3);
+			maf = (((b1 << 8) | b2) & 0xFFFF) / 100.0f;
+			res = String.format("%.2f%s", maf, "g/s");
 		}
 
 		return res;

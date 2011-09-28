@@ -55,8 +55,7 @@ public class TempObdCommand extends ObdCommand implements SystemOfUnits {
 
 		if (!"NODATA".equals(res)) {
 			// ignore first two bytes [hh hh] of the response
-			int temp = buff.get(2) & 0xFF; // unsigned short
-			value = prepareTempValue(temp);
+			value = prepareTempValue(buff.get(2) & 0xFF);
 			
 			// convert?
 			if (useImperialUnits)

@@ -25,8 +25,8 @@ public class TimingAdvanceObdCommand extends ObdCommand {
 
 		if (!"NODATA".equals(res)) {
 			// ignore first two bytes [hh hh] of the response
-			byte b1 = Byte.parseByte(res.substring(4, 6));
-			res = String.format("%.1f %s", ((b1 << 8) / 2) - 64, "%");
+			float tempValue = (buff.get(2) & 0xFF) / 2.0f - 64.0f;
+			res = String.format("%.1f %s", tempValue, "%");
 		}
 
 		return res;

@@ -4,38 +4,35 @@
 package eu.lighthouselabs.obd.commands.fuel;
 
 import eu.lighthouselabs.obd.commands.ObdCommand;
+import eu.lighthouselabs.obd.enums.FuelTrim;
 
 /**
- * TODO put description
+ * Get Long Term fuel % trim - Bank 1
  * 
  */
 public class FuelTrimObdCommand extends ObdCommand {
 
+	private float fuelTrimValue = 0.0f;
+	private final FuelTrim bank;
+
 	/**
 	 * Default ctor.
+	 * 
+	 * Will read the bank from parameters and construct the command accordingly.
+	 * Please, see FuelTrim enum for more details.
 	 */
-	public FuelTrimObdCommand() {
-		super("01 07");
+	public FuelTrimObdCommand(FuelTrim bank) {
+		super(bank.getObdCommand());
+		this.bank = bank;
 	}
 
 	/**
-	 * Copy ctor.
-	 * 
-	 * @param other
-	 */
-	public FuelTrimObdCommand(FuelTrimObdCommand other) {
-		super(other);
-	}
-
-	/**
-	 * TODO is this needed?
-	 * 
 	 * @param value
 	 * @return
 	 */
-	private int prepareTempValue(int value) {
+	private float prepareTempValue(int value) {
 		Double perc = (value - 128) * (100.0 / 128);
-		return Integer.parseInt(perc.toString());
+		return Float.parseFloat(perc.toString());
 	}
 
 	@Override
@@ -44,10 +41,24 @@ public class FuelTrimObdCommand extends ObdCommand {
 
 		if (!"NODATA".equals(res)) {
 			// ignore first two bytes [hh hh] of the response
-			byte b1 = Byte.parseByte(res.substring(4, 6));
-			res = String.format("%.2f %s", prepareTempValue(b1 << 8), "%");
+			fuelTrimValue = prepareTempValue(buff.get(2) & 0xFF);
+			res = String.format("%.2f%s", fuelTrimValue, "%");
 		}
 
 		return res;
+	}
+	
+	/**
+	 * @return the readed Fuel Trim percentage value.
+	 */
+	public final float getValue() {
+		return fuelTrimValue;
+	}
+	
+	/**
+	 * @return the name of the bank in string representation.
+	 */
+	public final String getBank() {
+		return bank.getBank();
 	}
 }

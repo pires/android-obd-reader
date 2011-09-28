@@ -17,75 +17,102 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import eu.lighthouselabs.obd.commands.engine.MassAirFlowObdCommand;
+
 /**
- * Tests for ObdSpeedCommand class.
+ * Tests for MassAirFlowObdCommand class.
  */
 @PrepareForTest(InputStream.class)
-public class SpeedObdCommandTest {
-
-	private SpeedObdCommand command;
+public class MassAirFlowObdCommandTest {
+	private MassAirFlowObdCommand command;
 	private InputStream mockIn;
-	
+
 	/**
 	 * @throws Exception
 	 */
 	@BeforeClass
 	public void setUp() throws Exception {
-		command = new SpeedObdCommand();
+		command = new MassAirFlowObdCommand();
 	}
-	
+
 	/**
-	 * Test for valid InputStream read, 64km/h
+	 * Test for valid InputStream read, maximum value of 655.35g/s
 	 * 
 	 * @throws IOException
 	 */
 	@Test
-	public void testValidSpeedMetric() throws IOException {
+	public void testMaxMAFValue() throws IOException {
 		// mock InputStream read
 		mockIn = createMock(InputStream.class);
 		mockIn.read();
 		expectLastCall().andReturn(0x41);
-		expectLastCall().andReturn(0x0D);
-		expectLastCall().andReturn(0x40);
+		expectLastCall().andReturn(0x10);
+		expectLastCall().andReturn(0xFF);
+		expectLastCall().andReturn(0xFF);
 		expectLastCall().andReturn(0x0D);
 		expectLastCall().andReturn(0x3E); // '>'
-		
+
 		replayAll();
-		
-		// call the method  to test
+
+		// call the method to test
 		command.readResult(mockIn);
-		command.useImperialUnits = false;
-		assertEquals(command.getFormattedResult(), "64km/h");
-		
+		assertEquals(command.getFormattedResult(), "655.35g/s");
+
 		verifyAll();
 	}
-	
+
 	/**
-	 * Test for valid InputStream read, 42.87mph
+	 * Test for valid InputStream read, 381.61g/s
 	 * 
 	 * @throws IOException
 	 */
 	@Test
-	public void testValidSpeedImperial() throws IOException {
+	public void testSomeMAFValue() throws IOException {
 		// mock InputStream read
 		mockIn = createMock(InputStream.class);
 		mockIn.read();
 		expectLastCall().andReturn(0x41);
-		expectLastCall().andReturn(0x0D);
-		expectLastCall().andReturn(0x45);
+		expectLastCall().andReturn(0x10);
+		expectLastCall().andReturn(0x95);
+		expectLastCall().andReturn(0x11);
 		expectLastCall().andReturn(0x0D);
 		expectLastCall().andReturn(0x3E); // '>'
-		
+
 		replayAll();
-		
-		// call the method  to test
+
+		// call the method to test
 		command.readResult(mockIn);
-		command.useImperialUnits = true;
-		assertEquals(command.getFormattedResult(), "42.87mph");
-		
+		assertEquals(command.getFormattedResult(), "381.61g/s");
+
 		verifyAll();
 	}
 	
+	/**
+	 * Test for valid InputStream read, minimum value 0g/s
+	 * 
+	 * @throws IOException
+	 */
+	@Test
+	public void testMinMAFValue() throws IOException {
+		// mock InputStream read
+		mockIn = createMock(InputStream.class);
+		mockIn.read();
+		expectLastCall().andReturn(0x41);
+		expectLastCall().andReturn(0x10);
+		expectLastCall().andReturn(0x00);
+		expectLastCall().andReturn(0x00);
+		expectLastCall().andReturn(0x0D);
+		expectLastCall().andReturn(0x3E); // '>'
+
+		replayAll();
+
+		// call the method to test
+		command.readResult(mockIn);
+		assertEquals(command.getFormattedResult(), "0.00g/s");
+
+		verifyAll();
+	}
+
 	/**
 	 * Clear resources.
 	 */
@@ -94,5 +121,5 @@ public class SpeedObdCommandTest {
 		command = null;
 		mockIn = null;
 	}
-	
+
 }
