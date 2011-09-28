@@ -8,13 +8,13 @@ package eu.lighthouselabs.obd.commands.temperature;
  * 
  * put description
  */
-public class AirIntakeTempObdCommand extends TempObdCommand {
+public class AirIntakeTemperatureObdCommand extends TemperatureObdCommand {
 
-	public AirIntakeTempObdCommand() {
+	public AirIntakeTemperatureObdCommand() {
 		super("01 0F");
 	}
 
-	public AirIntakeTempObdCommand(AirIntakeTempObdCommand other) {
+	public AirIntakeTemperatureObdCommand(AirIntakeTemperatureObdCommand other) {
 		super(other);
 	}
 

@@ -17,15 +17,15 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import eu.lighthouselabs.obd.commands.temperature.AirIntakeTempObdCommand;
+import eu.lighthouselabs.obd.commands.temperature.AirIntakeTemperatureObdCommand;
 
 /**
- * Tests for TempObdCommand sub-classes.
+ * Tests for TemperatureObdCommand sub-classes.
  */
 @PrepareForTest(InputStream.class)
 public class AirIntakeTempObdCommandTest {
 
-	private AirIntakeTempObdCommand command = null;
+	private AirIntakeTemperatureObdCommand command = null;
 	private InputStream mockIn = null;
 	
 	/**
@@ -33,7 +33,7 @@ public class AirIntakeTempObdCommandTest {
 	 */
 	@BeforeClass
 	public void setUp() throws Exception {
-		command = new AirIntakeTempObdCommand();
+		command = new AirIntakeTemperatureObdCommand();
 	}
 	
 	/**

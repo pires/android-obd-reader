@@ -11,14 +11,14 @@ import eu.lighthouselabs.obd.commands.SystemOfUnits;
  * 
  * put description
  */
-public abstract class TempObdCommand extends ObdCommand implements SystemOfUnits {
+public abstract class TemperatureObdCommand extends ObdCommand implements SystemOfUnits {
 
 	/**
 	 * Default ctor.
 	 * 
 	 * @param cmd
 	 */
-	public TempObdCommand(String cmd) {
+	public TemperatureObdCommand(String cmd) {
 		super(cmd);
 	}
 
@@ -27,7 +27,7 @@ public abstract class TempObdCommand extends ObdCommand implements SystemOfUnits
 	 * 
 	 * @param other
 	 */
-	public TempObdCommand(TempObdCommand other) {
+	public TemperatureObdCommand(TemperatureObdCommand other) {
 		super(other);
 	}
 

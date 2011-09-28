@@ -1,15 +1,11 @@
 /*
  * TODO put header
  */
-package eu.lighthouselabs.obd.commands.engine;
+package eu.lighthouselabs.obd.commands.pressure;
 
-import eu.lighthouselabs.obd.commands.PressureObdCommand;
 
 /**
- * 
- * TODO put description
- * 
- * Intake Manifold Press
+ * Intake Manifold Pressure
  */
 public class IntakeManifoldPressureObdCommand extends PressureObdCommand {
 
@@ -28,15 +24,6 @@ public class IntakeManifoldPressureObdCommand extends PressureObdCommand {
 	public IntakeManifoldPressureObdCommand(
 			IntakeManifoldPressureObdCommand other) {
 		super(other);
-	}
-
-	/**
-	 * 
-	 */
-	@Override
-	protected int preparePressureValue() {
-		// just return tempValue as no calculations are needed
-		return tempValue;
 	}
 
 	@Override

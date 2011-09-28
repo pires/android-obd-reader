@@ -1,7 +1,10 @@
 /*
  * TODO put header 
  */
-package eu.lighthouselabs.obd.commands;
+package eu.lighthouselabs.obd.commands.pressure;
+
+import eu.lighthouselabs.obd.commands.ObdCommand;
+import eu.lighthouselabs.obd.commands.SystemOfUnits;
 
 /**
  * TODO put description
@@ -37,7 +40,9 @@ public abstract class PressureObdCommand extends ObdCommand implements
 	 * 
 	 * @return
 	 */
-	protected abstract int preparePressureValue();
+	protected int preparePressureValue() {
+		return tempValue;
+	}
 
 	/**
 	 * 

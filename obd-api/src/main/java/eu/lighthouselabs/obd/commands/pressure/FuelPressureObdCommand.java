@@ -1,6 +1,5 @@
-package eu.lighthouselabs.obd.commands.fuel;
+package eu.lighthouselabs.obd.commands.pressure;
 
-import eu.lighthouselabs.obd.commands.PressureObdCommand;
 
 public class FuelPressureObdCommand extends PressureObdCommand {
 
@@ -20,6 +19,7 @@ public class FuelPressureObdCommand extends PressureObdCommand {
 	 * @param temp
 	 * @return
 	 */
+	@Override
 	protected final int preparePressureValue() {
 		return tempValue * 3;
 	}

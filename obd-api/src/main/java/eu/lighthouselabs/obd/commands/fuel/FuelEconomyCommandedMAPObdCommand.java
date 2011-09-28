@@ -9,8 +9,8 @@ import java.io.OutputStream;
 
 import eu.lighthouselabs.obd.commands.SpeedObdCommand;
 import eu.lighthouselabs.obd.commands.engine.EngineRPMObdCommand;
-import eu.lighthouselabs.obd.commands.engine.IntakeManifoldPressureObdCommand;
-import eu.lighthouselabs.obd.commands.temperature.AirIntakeTempObdCommand;
+import eu.lighthouselabs.obd.commands.pressure.IntakeManifoldPressureObdCommand;
+import eu.lighthouselabs.obd.commands.temperature.AirIntakeTemperatureObdCommand;
 
 /**
  * TODO put description
@@ -34,7 +34,7 @@ public class FuelEconomyCommandedMAPObdCommand extends FuelEconomyObdCommand {
 	public void run(InputStream in, OutputStream out) throws IOException,
 	InterruptedException {
 		EngineRPMObdCommand rpm = new EngineRPMObdCommand();
-		AirIntakeTempObdCommand temp = new AirIntakeTempObdCommand();
+		AirIntakeTemperatureObdCommand temp = new AirIntakeTemperatureObdCommand();
 		SpeedObdCommand speed = new SpeedObdCommand();
 		IntakeManifoldPressureObdCommand press = new IntakeManifoldPressureObdCommand();
 		// double mafV = (imap/120.0) * ve * ed * 28.97 / 8.314;
