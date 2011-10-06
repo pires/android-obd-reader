@@ -1,26 +1,26 @@
 /*
- * TODO put header 
+ * TODO put header
  */
 package eu.lighthouselabs.obd.commands.protocol;
 
 import eu.lighthouselabs.obd.commands.ObdCommand;
 
 /**
- * This method will reset the OBD connection.
+ * This command will turn-off echo.
  */
-public class ObdResetCommand extends ObdCommand {
+public class EchoOffObdCommand extends ObdCommand {
 
 	/**
 	 * @param command
 	 */
-	public ObdResetCommand() {
-		super("AT Z");
+	public EchoOffObdCommand() {
+		super("AT E0");
 	}
 
 	/**
 	 * @param other
 	 */
-	public ObdResetCommand(ObdResetCommand other) {
+	public EchoOffObdCommand(ObdCommand other) {
 		super(other);
 	}
 
@@ -36,7 +36,7 @@ public class ObdResetCommand extends ObdCommand {
 
 	@Override
 	public String getName() {
-		return "Reset OBD";
+		return "Echo Off";
 	}
 
 }

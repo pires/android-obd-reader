@@ -1,27 +1,24 @@
 /*
- * TODO put header 
+ * TODO put header
  */
 package eu.lighthouselabs.obd.commands.protocol;
 
 import eu.lighthouselabs.obd.commands.ObdCommand;
+import eu.lighthouselabs.obd.enums.ObdProtocols;
 
 /**
- * This method will reset the OBD connection.
+ * Select the protocol to use.
  */
-public class ObdResetCommand extends ObdCommand {
+public class SelectProtocolObdCommand extends ObdCommand {
+	
+	private final ObdProtocols _protocol;
 
 	/**
 	 * @param command
 	 */
-	public ObdResetCommand() {
-		super("AT Z");
-	}
-
-	/**
-	 * @param other
-	 */
-	public ObdResetCommand(ObdResetCommand other) {
-		super(other);
+	public SelectProtocolObdCommand(ObdProtocols protocol) {
+		super("AT SP " + protocol.getValue());
+		_protocol = protocol;
 	}
 
 	/*
@@ -36,7 +33,7 @@ public class ObdResetCommand extends ObdCommand {
 
 	@Override
 	public String getName() {
-		return "Reset OBD";
+		return "Select Protocol " + _protocol.name();
 	}
 
 }

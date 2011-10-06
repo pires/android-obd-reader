@@ -1,26 +1,26 @@
 /*
- * TODO put header 
+ * TODO put header
  */
 package eu.lighthouselabs.obd.commands.protocol;
 
 import eu.lighthouselabs.obd.commands.ObdCommand;
 
 /**
- * This method will reset the OBD connection.
+ * Turns off line-feed.
  */
-public class ObdResetCommand extends ObdCommand {
+public class LineFeedOffObdCommand extends ObdCommand {
 
 	/**
 	 * @param command
 	 */
-	public ObdResetCommand() {
-		super("AT Z");
+	public LineFeedOffObdCommand() {
+		super("AT L0");
 	}
 
 	/**
 	 * @param other
 	 */
-	public ObdResetCommand(ObdResetCommand other) {
+	public LineFeedOffObdCommand(ObdCommand other) {
 		super(other);
 	}
 
@@ -36,7 +36,7 @@ public class ObdResetCommand extends ObdCommand {
 
 	@Override
 	public String getName() {
-		return "Reset OBD";
+		return "Line Feed Off";
 	}
 
 }
