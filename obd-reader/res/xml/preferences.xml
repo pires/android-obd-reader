@@ -9,15 +9,14 @@
 			android:defaultValue="false"
 			android:title="Enable Data Upload"
 			android:summaryOff="Disable http data upload"
-			android:summaryOn="Enable http data upload"
-			android:dialogTitle="Enable Data Upload" />
+			android:summaryOn="Enable http data upload" android:dialogTitle="Enable Data Upload" android:enabled="false"/>
 
         <EditTextPreference
             android:key="upload_url_preference"
             android:defaultValue="http://www.ral.ucar.edu/~lambi/obd/get_data.php"
             android:title="Upload URL"
             android:summary="POST URL that will accept real-time data"
-            android:dialogTitle="Upload URL" />
+            android:dialogTitle="Upload URL" android:enabled="false"/>
 
         <EditTextPreference
             android:key="vehicle_id_preference"
@@ -37,16 +36,14 @@
 			android:defaultValue="false"
 			android:title="Imperial Units"
 			android:summaryOff="Enable imperial units"
-			android:summaryOn="Go back to metric units"
-			android:dialogTitle="Imperial Units" />
+			android:summaryOn="Go back to metric units" android:dialogTitle="Imperial Units"/>
 
 		<CheckBoxPreference
 			android:key="enable_gps_preference"
 			android:defaultValue="false"
 			android:title="Enable GPS"
 			android:summaryOff="Turn on GPS"
-			android:summaryOn="Turn off GPS"
-			android:dialogTitle="Enable GPS" />
+			android:summaryOn="Turn off GPS" android:dialogTitle="Enable GPS"/>
 
 		<EditTextPreference
 			android:key="update_period_preference"

@@ -1,10 +1,9 @@
+/*
+ * TODO put header
+ */
 package eu.lighthouselabs.obd.reader.activity;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -32,17 +31,22 @@ import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-
-import com.nullwire.trace.ExceptionHandler;
-
+import eu.lighthouselabs.obd.reader.IPostListener;
 import eu.lighthouselabs.obd.reader.R;
-import eu.lighthouselabs.obd.reader.command.ObdCommand;
-import eu.lighthouselabs.obd.reader.config.ObdConfig;
-import eu.lighthouselabs.obd.reader.drawable.CoolantGaugeView;
-import eu.lighthouselabs.obd.reader.io.ObdReaderService;
-import eu.lighthouselabs.obd.reader.io.ObdReaderServiceConnection;
+import eu.lighthouselabs.obd.reader.io.ObdCommandJob;
+import eu.lighthouselabs.obd.reader.io.ObdGatewayService;
+import eu.lighthouselabs.obd.reader.io.ObdGatewayServiceConnection;
 
-public class ObdReaderMainActivity extends Activity {
+/**
+ * The main activity.
+ */
+public class MainActivity extends Activity {
+
+	private static String TAG = "MainActivity";
+
+	/*
+	 * TODO put description
+	 */
 	static final int NO_BLUETOOTH_ID = 0;
 	static final int BLUETOOTH_DISABLED = 1;
 	static final int NO_GPS_ID = 2;
@@ -53,10 +57,13 @@ public class ObdReaderMainActivity extends Activity {
 	static final int TABLE_ROW_MARGIN = 7;
 	static final int NO_ORIENTATION_SENSOR = 8;
 
-	private Handler handler = null;
-	private Intent serviceIntent = null;
-	private ObdReaderServiceConnection serviceConn = null;
-	private UpdateThread updater = null;
+	/**
+	 * Callback for ObdGatewayService to update UI.
+	 */
+	private IPostListener _listener;
+	private Intent _serviceIntent = null;
+	private ObdGatewayServiceConnection _serviceConnection = null;
+
 	private SensorManager sensorManager = null;
 	private Sensor orientSensor = null;
 	private double fuelEconAvg = 0;
@@ -65,6 +72,7 @@ public class ObdReaderMainActivity extends Activity {
 	private int speedi = 0;
 	private SharedPreferences prefs = null;
 	private double maxFuelEcon = 70.0;
+
 	private PowerManager powerManager = null;
 	private PowerManager.WakeLock wakeLock = null;
 
@@ -100,24 +108,51 @@ public class ObdReaderMainActivity extends Activity {
 		}
 	};
 
-	/** Called when the activity is first created. */
+	public void updateTextView(final TextView view, final String txt) {
+		new Handler().post(new Runnable() {
+			public void run() {
+				view.setText(txt);
+			}
+		});
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		ExceptionHandler.register(this,
-				"http://www.whidbeycleaning.com/droid/server.php");
+
+		/*
+		 * TODO clean-up this upload thing
+		 * 
+		 * ExceptionHandler.register(this,
+		 * "http://www.whidbeycleaning.com/droid/server.php");
+		 */
 		setContentView(R.layout.main);
-		handler = new Handler();
-		serviceIntent = new Intent(this, ObdReaderService.class);
-		serviceConn = new ObdReaderServiceConnection();
-		bindService(serviceIntent, serviceConn, Context.BIND_AUTO_CREATE);
+
+		_listener = new IPostListener() {
+			public void stateUpdate(ObdCommandJob job) {
+				// TODO Auto-generated method stub
+				addTableRow(job.getCommand().getName(), job.getCommand()
+						.getFormattedResult());
+			}
+		};
+
+		/*
+		 * Start service
+		 */
+		_serviceIntent = new Intent(this, ObdGatewayService.class);
+		_serviceConnection = new ObdGatewayServiceConnection();
+		bindService(_serviceIntent, _serviceConnection,
+				Context.BIND_AUTO_CREATE);
 
 		/*
 		 * Validate GPS service.
 		 */
 		LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		if (locationManager == null) {
-			preRequisites = false;
+			/*
+			 * TODO for testing purposes we'll not make GPS a pre-requisite.
+			 */
+			// preRequisites = false;
 			showDialog(NO_GPS_ID);
 		}
 
@@ -137,9 +172,9 @@ public class ObdReaderMainActivity extends Activity {
 				showDialog(BLUETOOTH_DISABLED);
 			}
 		}
-		
+
 		/*
-		 * Get Orientation sensor. 
+		 * Get Orientation sensor.
 		 */
 		sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 		List<Sensor> sens = sensorManager
@@ -152,12 +187,13 @@ public class ObdReaderMainActivity extends Activity {
 
 		// validate app pre-requisites
 		if (!preRequisites)
-			unbindService(serviceConn);
+			unbindService(_serviceConnection);
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+
 		if (wakeLock.isHeld()) {
 			wakeLock.release();
 		}
@@ -166,6 +202,7 @@ public class ObdReaderMainActivity extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
+
 		if (wakeLock.isHeld()) {
 			wakeLock.release();
 		}
@@ -176,14 +213,14 @@ public class ObdReaderMainActivity extends Activity {
 		sensorManager.registerListener(orientListener, orientSensor,
 				SensorManager.SENSOR_DELAY_UI);
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		maxFuelEcon = ObdReaderConfigActivity.getMaxFuelEconomy(prefs);
+		maxFuelEcon = ConfigActivity.getMaxFuelEconomy(prefs);
 		powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
 		wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK,
 				"ObdReader");
 	}
 
 	private void updateConfig() {
-		Intent configIntent = new Intent(this, ObdReaderConfigActivity.class);
+		Intent configIntent = new Intent(this, ConfigActivity.class);
 		startActivity(configIntent);
 	}
 
@@ -198,43 +235,44 @@ public class ObdReaderMainActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case START_LIVE_DATA:
-			liveData();
+			startLiveData();
 			return true;
 		case STOP_LIVE_DATA:
-			cancel();
+			stopLiveData();
 			return true;
 		case SETTINGS:
 			updateConfig();
 			return true;
-		case COMMAND_ACTIVITY:
-			staticCommand();
-			return true;
+			// case COMMAND_ACTIVITY:
+			// staticCommand();
+			// return true;
 		}
 		return false;
 	}
 
-	private void staticCommand() {
-		Intent commandIntent = new Intent(this, ObdReaderCommandActivity.class);
-		startActivity(commandIntent);
-	}
+	// private void staticCommand() {
+	// Intent commandIntent = new Intent(this, ObdReaderCommandActivity.class);
+	// startActivity(commandIntent);
+	// }
 
-	private void liveData() {
-		if (!serviceConn.isRunning()) {
-			serviceConn.getService().startService();
+	private void startLiveData() {
+		if (!_serviceConnection.isRunning()) {
+			_serviceConnection.setServiceListener(_listener);
+			startService(_serviceIntent);
 		}
-		updater = new UpdateThread();
-		updater.start();
+
+		// TODO start running commands
+
+		// screen won't turn off until wakeLock.release()
 		wakeLock.acquire();
 	}
 
-	private void cancel() {
-		stopService(serviceIntent);
-		if (serviceConn.isRunning()) {
-			serviceConn.getService().stopService();
-		}
-		if (updater != null) {
-			updater.stop = true;
-		}
+	private void stopLiveData() {
+		if (_serviceConnection.isRunning())
+			stopService(_serviceIntent);
+
+		// TODO stop running commands
+
 		wakeLock.release();
 	}
 
@@ -265,7 +303,7 @@ public class ObdReaderMainActivity extends Activity {
 
 		// validate if preRequisites are satisfied.
 		if (preRequisites) {
-			if (serviceConn.isRunning()) {
+			if (_serviceConnection.isRunning()) {
 				startItem.setEnabled(false);
 				stopItem.setEnabled(true);
 				settingsItem.setEnabled(false);
@@ -274,7 +312,7 @@ public class ObdReaderMainActivity extends Activity {
 				stopItem.setEnabled(false);
 				startItem.setEnabled(true);
 				settingsItem.setEnabled(true);
-				commandItem.setEnabled(true);
+				commandItem.setEnabled(false);
 			}
 		} else {
 			startItem.setEnabled(false);
@@ -286,148 +324,8 @@ public class ObdReaderMainActivity extends Activity {
 		return true;
 	}
 
-	public void updateDataTable(final Map<String, String> dataMap) {
-		handler.post(new Runnable() {
-			public void run() {
-				setDataTableText(dataMap);
-			}
-		});
-	}
-
-	public void updateTextView(final TextView view, final String txt) {
-		handler.post(new Runnable() {
-			public void run() {
-				view.setText(txt);
-			}
-		});
-	}
-
-	public void setDataTableText(Map<String, String> dataMap) {
+	private void addTableRow(String key, String val) {
 		TableLayout tl = (TableLayout) findViewById(R.id.data_table);
-		tl.removeAllViews();
-		Set<String> keySet = dataMap.keySet();
-		String[] keys = keySet.toArray(new String[0]);
-		Arrays.sort(keys);
-		for (String k : keys) {
-			addTableRow(tl, k, dataMap.get(k));
-		}
-		String coolant = dataMap.get(ObdConfig.COOLANT_TEMP);
-		String runTime = dataMap.get(ObdConfig.RUN_TIME);
-		String rpm = dataMap.get(ObdConfig.RPM);
-		String fuelEcon = dataMap.get(ObdConfig.FUEL_ECON);
-		String fuelEconMap = dataMap.get(ObdConfig.FUEL_ECON_MAP);
-		String speed = dataMap.get(ObdConfig.SPEED);
-		String temp = dataMap.get(ObdConfig.INTAKE_TEMP);
-		if (coolant != null) {
-			setCoolantTemp(coolant);
-		}
-		if (isFill(fuelEcon)) {
-			if (!isFill(fuelEconMap)) {
-				setFuelEconomy(fuelEconMap);
-			}
-		} else {
-			setFuelEconomy(fuelEcon);
-		}
-		setRunTime(runTime);
-		setRpm(rpm);
-		setAvgSpeed(speed);
-		setAirTemp(temp);
-	}
-
-	private void setAirTemp(String temp) {
-		if (isFill(temp)) {
-			return;
-		}
-		TextView tempView = (TextView) findViewById(R.id.air_temp_text);
-		tempView.setText(temp);
-	}
-
-	private void setAvgSpeed(String spd) {
-		try {
-			String[] spds = spd.split(" ");
-			int spdv = Integer.parseInt(spds[0]);
-			if ("km/h".equals(spds[1])) {
-				spdv = (int) ((double) spdv / .625);
-			}
-			if (spdv > 0) {
-				speedAvg = (spdv + (speedi * speedAvg)) / (speedi + 1);
-				speedi += 1;
-			}
-			TextView avgSpeed = (TextView) findViewById(R.id.avg_spd_text);
-			spdv = (int) speedAvg;
-			if ("km/h".equals(spds[1])) {
-				spdv = (int) (speedAvg * .625);
-			}
-			avgSpeed.setText(String.format("%d %s", spdv, spds[1]));
-		} catch (Exception e) {
-		}
-	}
-
-	private boolean isFill(String data) {
-		if ("--".equals(data) || "NODATA".equals(data)) {
-			return true;
-		}
-		return false;
-	}
-
-	private void setRpm(String rpm) {
-		if (isFill(rpm)) {
-			return;
-		}
-		TextView rpmView = (TextView) findViewById(R.id.avg_rpm_text);
-		rpmView.setText(rpm);
-	}
-
-	private void setRunTime(String runTime) {
-		if (isFill(runTime)) {
-			return;
-		}
-		TextView runTimeView = (TextView) findViewById(R.id.run_time_text);
-		runTimeView.setText(runTime);
-	}
-
-	private void setFuelEconomy(String fuelEcon) {
-		try {
-			String[] econs = fuelEcon.split(" ");
-			double econ = Double.parseDouble(econs[0]);
-			if ("kml".equals(econs[1])) {
-				econ = econ / 0.354013;
-			}
-			if (econ > 0 && econ <= maxFuelEcon) {
-				fuelEconAvg = (econ + (fuelEconi * fuelEconAvg))
-						/ (fuelEconi + 1);
-				fuelEconi += 1;
-			}
-			TextView instEcon = (TextView) findViewById(R.id.inst_fuel_econ_text);
-			TextView avgEcon = (TextView) findViewById(R.id.avg_fuel_econ_text);
-			TextView avgEconlbl = (TextView) findViewById(R.id.avg_fuel_econ_lbl);
-			instEcon.setText(fuelEcon);
-			String lbl = "mpg";
-			if ("kml".equals(econs[1])) {
-				econ = fuelEconAvg * 0.354013;
-				lbl = "kml";
-			}
-			avgEcon.setText(String.format("%d", Math.round(fuelEconAvg)));
-			avgEconlbl.setText(lbl);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-	}
-
-	private void setCoolantTemp(String coolant) {
-		try {
-			String[] cools = coolant.split(" ");
-			int temp = Integer.parseInt(cools[0]);
-			if ("F".equals(cools[1])) {
-				temp = (temp - 32) * 5 / 9;
-			}
-			CoolantGaugeView gauge = (CoolantGaugeView) findViewById(R.id.coolant_gauge);
-			gauge.setTemp(temp);
-		} catch (Exception e) {
-		}
-	}
-
-	private void addTableRow(TableLayout tl, String key, String val) {
 		TableRow tr = new TableRow(this);
 		MarginLayoutParams params = new ViewGroup.MarginLayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -445,35 +343,45 @@ public class ObdReaderMainActivity extends Activity {
 		tr.addView(value);
 		tl.addView(tr, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT));
+
+		/*
+		 * TODO remove this hack
+		 * 
+		 * let's define a limit number of rows
+		 */
+		if (tl.getChildCount() > 10)
+			tl.removeViewAt(0);
 	}
 
-	private class UpdateThread extends Thread {
-		boolean stop = false;
+	// private class UpdateThread extends Thread {
+	// boolean stop = false;
+	//
+	// public void run() {
+	// String vehicleId = prefs.getString(
+	// ConfigActivity.VEHICLE_ID_KEY, "");
+	// while (!stop && _serviceConnection.isRunning()) {
+	// ObdReaderService svc = _serviceConnection.getService();
+	// Map<String, String> dataMap = null;
+	// if (svc == null || svc.getDataMap() == null) {
+	// dataMap = new HashMap<String, String>();
+	// for (ObdCommand cmd : ObdConfig.getCommands()) {
+	// // TODO why a Map?
+	// dataMap.put(cmd.getName(), "--");
+	// }
+	// } else {
+	// dataMap = svc.getDataMap();
+	// }
+	// if (vehicleId != null && !"".equals(vehicleId.trim())) {
+	// dataMap.put("Vehicle ID", vehicleId);
+	// }
+	// updateDataTable(dataMap);
+	// try {
+	// Thread.sleep(ConfigActivity.getUpdatePeriod(prefs));
+	// } catch (InterruptedException e) {
+	// e.printStackTrace();
+	// }
+	// }
+	// }
+	// }
 
-		public void run() {
-			String vehicleId = prefs.getString(
-					ObdReaderConfigActivity.VEHICLE_ID_KEY, "");
-			while (!stop && serviceConn.isRunning()) {
-				ObdReaderService svc = serviceConn.getService();
-				Map<String, String> dataMap = null;
-				if (svc == null || svc.getDataMap() == null) {
-					dataMap = new HashMap<String, String>();
-					for (ObdCommand cmd : ObdConfig.getCommands()) {
-						dataMap.put(cmd.getDesc(), "--");
-					}
-				} else {
-					dataMap = svc.getDataMap();
-				}
-				if (vehicleId != null && !"".equals(vehicleId.trim())) {
-					dataMap.put("Vehicle ID", vehicleId);
-				}
-				updateDataTable(dataMap);
-				try {
-					Thread.sleep(ObdReaderConfigActivity.getUpdatePeriod(prefs));
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
 }
