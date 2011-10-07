@@ -49,7 +49,7 @@ import eu.lighthouselabs.obd.reader.io.ObdCommandJob.ObdCommandJobState;
  */
 public class ObdGatewayService extends Service {
 
-	private static String TAG = "ObdGatewayService";
+	private static final String TAG = "ObdGatewayService";
 
 	private IPostListener _callback = null;
 	private final Binder _binder = new LocalBinder();
@@ -79,9 +79,8 @@ public class ObdGatewayService extends Service {
 	private boolean _run = true;
 
 	/**
-	 * Because this is a local service, we won't be binding to it, but since
-	 * Service requires an implementation of the onBind() method, we provide one
-	 * that simply returns null.
+	 * As long as the service is bound to another component, say an Activity, it
+	 * will remain alive.
 	 */
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -99,8 +98,6 @@ public class ObdGatewayService extends Service {
 		Log.d(TAG, "Received start id " + startId + ": " + intent);
 
 		/*
-		 * TODO
-		 * 
 		 * Register listener Start OBD connection
 		 */
 		startService();
@@ -113,6 +110,8 @@ public class ObdGatewayService extends Service {
 	}
 
 	private void startService() {
+		Log.d(TAG, "Starting service..");
+
 		/*
 		 * Retrieve preferences
 		 */
@@ -120,7 +119,7 @@ public class ObdGatewayService extends Service {
 				.getDefaultSharedPreferences(this);
 
 		/*
-		 * Let's get the remote Bluetooth device TODO clean this
+		 * Let's get the remote Bluetooth device
 		 */
 		String remoteDevice = prefs.getString(
 				ConfigActivity.BLUETOOTH_LIST_KEY, null);
@@ -128,7 +127,11 @@ public class ObdGatewayService extends Service {
 			Toast.makeText(this, "No Bluetooth device selected",
 					Toast.LENGTH_LONG).show();
 
-			stopSelf();
+			// log error
+			Log.e(TAG, "No Bluetooth device has been selected.");
+
+			// kill this service
+			stopService();
 		}
 
 		final BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -150,7 +153,10 @@ public class ObdGatewayService extends Service {
 		 */
 		LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		boolean gps = prefs.getBoolean(ConfigActivity.ENABLE_GPS_KEY, false);
+
 		/*
+		 * TODO clean
+		 * 
 		 * Get more preferences
 		 */
 		int period = ConfigActivity.getUpdatePeriod(prefs);
@@ -175,6 +181,7 @@ public class ObdGatewayService extends Service {
 		 * http://developer.android.com/reference/android/bluetooth/BluetoothAdapter
 		 * .html#cancelDiscovery()
 		 */
+		Log.d(TAG, "Stopping Bluetooth discovery.");
 		btAdapter.cancelDiscovery();
 
 		try {
@@ -183,14 +190,10 @@ public class ObdGatewayService extends Service {
 			Log.e(TAG, "Can't connect to remote device. -> " + e.getMessage());
 			Toast.makeText(this, "Can't connect to remote device.",
 					Toast.LENGTH_SHORT);
-			try {
-				stopService();
-			} catch (IOException e2) {
-				Log.e(TAG,
-						"Can't connect to remote device. -> " + e2.getMessage());
-			}
-		}
 
+			// in case of failure, stop this service.
+			stopService();
+		}
 	}
 
 	/**
@@ -199,11 +202,14 @@ public class ObdGatewayService extends Service {
 	 * @throws IOException
 	 */
 	private void startObdConnection() throws IOException {
+		Log.d(TAG, "Starting OBD connection..");
+
 		// Instantiate a BluetoothSocket for the remote device and connect it.
 		_sock = _dev.createRfcommSocketToServiceRecord(MY_UUID);
 		_sock.connect();
 
 		// Let's configure the connection.
+		Log.d(TAG, "Queing jobs for connection configuration..");
 		queueJob(new ObdCommandJob(new ObdResetCommand()));
 		queueJob(new ObdCommandJob(new EchoOffObdCommand()));
 
@@ -221,6 +227,8 @@ public class ObdGatewayService extends Service {
 		queueJob(new ObdCommandJob(new SelectProtocolObdCommand(
 				ObdProtocols.AUTO)));
 
+		Log.d(TAG, "Jobs queued. Let's run, baby!");
+
 		// Service is running..
 		_isRunning = true;
 
@@ -233,22 +241,34 @@ public class ObdGatewayService extends Service {
 	 * Runs the queue until the service is stopped
 	 */
 	private void executeQueue() {
+		Log.d(TAG, "Executing queue..");
+
 		while (_run) {
 			while (!_queue.isEmpty()) {
 				ObdCommandJob job = null;
 				try {
 					job = _queue.take();
+
+					// log job
+					Log.d(TAG, "Taking job[" + job.getId() + "] from queue..");
+
 					if (job.getState().equals(ObdCommandJobState.NEW)) {
+						Log.d(TAG, "Job state is NEW. Run it..");
+
 						job.setState(ObdCommandJobState.RUNNING);
 						job.getCommand().run(_sock.getInputStream(),
 								_sock.getOutputStream());
 					}
+					// log not new job
+					Log.e(TAG,
+							"Job state was not new, so it shouldn't be in queue. BUG ALERT!");
 				} catch (Exception e) {
 					job.setState(ObdCommandJobState.EXECUTION_ERROR);
 					Log.e(TAG, "Failed to run command. -> " + e.getMessage());
 				}
 
-				if (job != null) {
+				if (job != null) {// log error
+					Log.d(TAG, "Job is finished.");
 					job.setState(ObdCommandJobState.FINISHED);
 					_callback.stateUpdate(job);
 				}
@@ -265,26 +285,38 @@ public class ObdGatewayService extends Service {
 	 */
 	public Long queueJob(ObdCommandJob job) {
 		_queueCounter++;
+		Log.d(TAG, "Adding job[" + _queueCounter + "] to queue..");
 
 		job.setId(_queueCounter);
 		try {
 			_queue.put(job);
 		} catch (InterruptedException e) {
 			job.setState(ObdCommandJobState.QUEUE_ERROR);
+			// log error
+			Log.e(TAG, "Failed to queue job.");
 		}
 
+		Log.d(TAG, "Job queued successfully.");
 		return _queueCounter;
 	}
 
 	/**
 	 * Stop OBD connection and queue processing.
-	 * 
-	 * @throws IOException
 	 */
-	public void stopService() throws IOException {
+	public void stopService() {
+		Log.d(TAG, "Stopping service..");
+
 		_run = false;
 		_queue.removeAll(_queue); // is this safe?
-		_sock.close();
+
+		// close socket
+		try {
+			_sock.close();
+		} catch (IOException e) {
+			Log.e(TAG, e.getMessage());
+		}
+
+		// kill service
 		stopSelf();
 	}
 

@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,7 +43,7 @@ import eu.lighthouselabs.obd.reader.io.ObdGatewayServiceConnection;
  */
 public class MainActivity extends Activity {
 
-	private static String TAG = "MainActivity";
+	private static final String TAG = "MainActivity";
 
 	/*
 	 * TODO put description
@@ -137,8 +138,9 @@ public class MainActivity extends Activity {
 		};
 
 		/*
-		 * Start service
+		 * Bind service
 		 */
+		Log.d(TAG, "Binding service..");
 		_serviceIntent = new Intent(this, ObdGatewayService.class);
 		_serviceConnection = new ObdGatewayServiceConnection();
 		bindService(_serviceIntent, _serviceConnection,
@@ -193,23 +195,27 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-
-		if (wakeLock.isHeld()) {
-			wakeLock.release();
-		}
+		releaseWakeLockIfHeld();
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
+		Log.d(TAG, "Pausing..");
+		releaseWakeLockIfHeld();
+	}
 
+	private void releaseWakeLockIfHeld() {
 		if (wakeLock.isHeld()) {
 			wakeLock.release();
 		}
 	}
-
+	
 	protected void onResume() {
 		super.onResume();
+		
+		Log.d(TAG, "Resuming..");
+		
 		sensorManager.registerListener(orientListener, orientSensor,
 				SensorManager.SENSOR_DELAY_UI);
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -256,24 +262,30 @@ public class MainActivity extends Activity {
 	// }
 
 	private void startLiveData() {
+		Log.d(TAG, "Starting live data..");
+		
 		if (!_serviceConnection.isRunning()) {
 			_serviceConnection.setServiceListener(_listener);
 			startService(_serviceIntent);
 		}
 
 		// TODO start running commands
-
+		// we can do this through binder in serviceconnection
+		
 		// screen won't turn off until wakeLock.release()
 		wakeLock.acquire();
 	}
 
 	private void stopLiveData() {
+		Log.d(TAG, "Stopping live data..");
+		
 		if (_serviceConnection.isRunning())
 			stopService(_serviceIntent);
 
 		// TODO stop running commands
+		// we can do this through binder in serviceconnection
 
-		wakeLock.release();
+		releaseWakeLockIfHeld();
 	}
 
 	protected Dialog onCreateDialog(int id) {
