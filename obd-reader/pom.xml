@@ -41,7 +41,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>${project.name}-${project.version}</finalName>
+		<finalName>${project.name}-${project.version}-signed</finalName>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
 			<plugin>
@@ -86,12 +86,11 @@
 				</dependencies>
 				<configuration>
 					<proguardVersion>4.4</proguardVersion>
-					<proguardInclude>${basedir}/proguard.cfg</proguardInclude>
+					<proguardInclude>${project.basedir}/proguard.cfg</proguardInclude>
 					<maxMemory>256m</maxMemory>
 					<injar>android-classes</injar>
 					<libs>
 						<lib>${java.home}/lib/rt.jar</lib>
-						<lib>${project.basedir}/libs</lib>
 					</libs>
 					<skip>false</skip>
 					<obfuscate>true</obfuscate>
@@ -133,5 +132,53 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+  
+  <profiles>
+    <profile>
+      <id>sign</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jarsigner-plugin</artifactId>
+            <version>1.2</version>
+            <executions>
+              <execution>
+                <id>signing</id>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+                <phase>package</phase>
+                <inherited>true</inherited>
+                <configuration>
+                  <archiveDirectory></archiveDirectory>
+                  <includes>
+                    <include>target/*.apk</include>
+                  </includes>
+                  <keystore>${project.basedir}/obd-reader-release-key.keystore</keystore>
+                  <storepass>obddev</storepass>
+                  <keypass>obddev</keypass>
+                  <alias>obdreader</alias>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+            <artifactId>android-maven-plugin</artifactId>
+            <inherited>true</inherited>
+            <configuration>
+              <sign>
+                <debug>false</debug>
+              </sign>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
 </project>
