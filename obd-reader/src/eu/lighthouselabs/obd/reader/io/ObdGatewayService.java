@@ -183,6 +183,8 @@ public class ObdGatewayService extends Service {
 		 */
 		Log.d(TAG, "Stopping Bluetooth discovery.");
 		btAdapter.cancelDiscovery();
+		
+		Toast.makeText(this, "Starting OBD connection..", Toast.LENGTH_SHORT);
 
 		try {
 			startObdConnection();
