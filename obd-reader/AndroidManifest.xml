@@ -32,7 +32,7 @@
 <!--                   android:label="@string/app_name" -->
 <!--                   android:screenOrientation="portrait"> -->
 <!--         </activity> -->
-		<service android:name=".io.ObdReaderService"/>
+		<service android:name=".io.ObdReaderService" android:exported="false"/>
     </application>
     <uses-sdk android:minSdkVersion="8" />
 
