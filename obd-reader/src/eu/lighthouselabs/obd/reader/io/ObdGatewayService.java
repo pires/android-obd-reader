@@ -57,6 +57,7 @@ public class ObdGatewayService extends Service {
 	private NotificationManager _notifManager;
 
 	private BlockingQueue<ObdCommandJob> _queue = new LinkedBlockingQueue<ObdCommandJob>();
+	private boolean _isQueueRunning = false;
 	private Long _queueCounter = 0L;
 
 	private BluetoothDevice _dev = null;
@@ -135,7 +136,7 @@ public class ObdGatewayService extends Service {
 		}
 
 		final BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
-		BluetoothDevice dev = btAdapter.getRemoteDevice(remoteDevice);
+		_dev = btAdapter.getRemoteDevice(remoteDevice);
 
 		/*
 		 * TODO put this as deprecated Determine if upload is enabled
@@ -183,15 +184,14 @@ public class ObdGatewayService extends Service {
 		 */
 		Log.d(TAG, "Stopping Bluetooth discovery.");
 		btAdapter.cancelDiscovery();
-		
+
 		Toast.makeText(this, "Starting OBD connection..", Toast.LENGTH_SHORT);
 
 		try {
 			startObdConnection();
 		} catch (Exception e) {
-			Log.e(TAG, "Can't connect to remote device. -> " + e.getMessage());
-			Toast.makeText(this, "Can't connect to remote device.",
-					Toast.LENGTH_SHORT);
+			Log.e(TAG, "There was an error while establishing connection. -> "
+					+ e.getMessage());
 
 			// in case of failure, stop this service.
 			stopService();
@@ -234,48 +234,50 @@ public class ObdGatewayService extends Service {
 		// Service is running..
 		_isRunning = true;
 
-		// Let's start queue execution
+		// Set queue execution counter
 		_queueCounter = 0L;
-		executeQueue();
 	}
 
 	/**
 	 * Runs the queue until the service is stopped
 	 */
-	private void executeQueue() {
+	private void _executeQueue() {
 		Log.d(TAG, "Executing queue..");
+		
+		_isQueueRunning = true;
 
-		while (_run) {
-			while (!_queue.isEmpty()) {
-				ObdCommandJob job = null;
-				try {
-					job = _queue.take();
+		while (!_queue.isEmpty()) {
+			ObdCommandJob job = null;
+			try {
+				job = _queue.take();
 
-					// log job
-					Log.d(TAG, "Taking job[" + job.getId() + "] from queue..");
+				// log job
+				Log.d(TAG, "Taking job[" + job.getId() + "] from queue..");
 
-					if (job.getState().equals(ObdCommandJobState.NEW)) {
-						Log.d(TAG, "Job state is NEW. Run it..");
+				if (job.getState().equals(ObdCommandJobState.NEW)) {
+					Log.d(TAG, "Job state is NEW. Run it..");
 
-						job.setState(ObdCommandJobState.RUNNING);
-						job.getCommand().run(_sock.getInputStream(),
-								_sock.getOutputStream());
-					}
+					job.setState(ObdCommandJobState.RUNNING);
+					job.getCommand().run(_sock.getInputStream(),
+							_sock.getOutputStream());
+				} else {
 					// log not new job
 					Log.e(TAG,
 							"Job state was not new, so it shouldn't be in queue. BUG ALERT!");
-				} catch (Exception e) {
-					job.setState(ObdCommandJobState.EXECUTION_ERROR);
-					Log.e(TAG, "Failed to run command. -> " + e.getMessage());
 				}
+			} catch (Exception e) {
+				job.setState(ObdCommandJobState.EXECUTION_ERROR);
+				Log.e(TAG, "Failed to run command. -> " + e.getMessage());
+			}
 
-				if (job != null) {// log error
-					Log.d(TAG, "Job is finished.");
-					job.setState(ObdCommandJobState.FINISHED);
-					_callback.stateUpdate(job);
-				}
+			if (job != null) {
+				Log.d(TAG, "Job is finished.");
+				job.setState(ObdCommandJobState.FINISHED);
+				_callback.stateUpdate(job);
 			}
 		}
+		
+		_isQueueRunning = false;
 	}
 
 	/**
@@ -353,6 +355,17 @@ public class ObdGatewayService extends Service {
 
 		public boolean isRunning() {
 			return _isRunning;
+		}
+
+		public void executeQueue() {
+			_executeQueue();
+		}
+
+		public void addJobToQueue(ObdCommandJob job) {
+			_queue.add(job);
+			
+			if (!_isQueueRunning)
+			_executeQueue();
 		}
 	}
 

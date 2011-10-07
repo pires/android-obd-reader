@@ -61,7 +61,7 @@ public class MainActivity extends Activity {
 	/**
 	 * Callback for ObdGatewayService to update UI.
 	 */
-	private IPostListener _listener;
+	private IPostListener _listener = null;
 	private Intent _serviceIntent = null;
 	private ObdGatewayServiceConnection _serviceConnection = null;
 
@@ -131,20 +131,17 @@ public class MainActivity extends Activity {
 
 		_listener = new IPostListener() {
 			public void stateUpdate(ObdCommandJob job) {
-				// TODO Auto-generated method stub
 				addTableRow(job.getCommand().getName(), job.getCommand()
 						.getFormattedResult());
+				Log.d(TAG, "stateUpdate callback");
 			}
 		};
-
 		/*
-		 * Bind service
+		 * Prepare service and its connection
 		 */
-		Log.d(TAG, "Binding service..");
 		_serviceIntent = new Intent(this, ObdGatewayService.class);
 		_serviceConnection = new ObdGatewayServiceConnection();
-		bindService(_serviceIntent, _serviceConnection,
-				Context.BIND_AUTO_CREATE);
+		_serviceConnection.setServiceListener(_listener);
 
 		/*
 		 * Validate GPS service.
@@ -264,8 +261,16 @@ public class MainActivity extends Activity {
 	private void startLiveData() {
 		Log.d(TAG, "Starting live data..");
 		
+		/*
+		 * Bind service
+		 */
+		Log.d(TAG, "Binding service..");
+		bindService(_serviceIntent, _serviceConnection,
+				Context.BIND_AUTO_CREATE);
+		
 		if (!_serviceConnection.isRunning()) {
-			_serviceConnection.setServiceListener(_listener);
+			Log.d(TAG, "Service is not running. Going to start it..");
+			
 			startService(_serviceIntent);
 		}
 

@@ -25,6 +25,7 @@ public class ObdCommandJob {
 	 */
 	public ObdCommandJob(ObdCommand command) {
 		_command = command;
+		_state = ObdCommandJobState.NEW;
 	}
 	
 	public Long getId() {
