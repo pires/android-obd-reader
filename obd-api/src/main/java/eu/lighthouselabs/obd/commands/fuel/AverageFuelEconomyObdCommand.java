@@ -31,19 +31,19 @@ public class AverageFuelEconomyObdCommand extends ObdCommand {
 		Double ampg = 0.0;
 		Integer count = 0;
 		Double mpg = 0.0;
-		if (data.containsKey(AVG_FUEL_ECONOMY_KEY)) {
-			ampg = (Double) data.get(AVG_FUEL_ECONOMY_KEY);
-			count = (Integer) data.get(AVG_FUEL_ECONOMY_COUNT_KEY);
-		}
-		if (data.containsKey(FUEL_ECONOMY_KEY)) {
-			mpg = (Double) data.get(FUEL_ECONOMY_KEY);
-		}
-		if (mpg > 0) {
-			ampg += mpg;
-			count += 1;
-			data.put(AVG_FUEL_ECONOMY_KEY, ampg);
-			data.put(AVG_FUEL_ECONOMY_COUNT_KEY, count);
-		}
+//		if (data.containsKey(AVG_FUEL_ECONOMY_KEY)) {
+//			ampg = (Double) data.get(AVG_FUEL_ECONOMY_KEY);
+//			count = (Integer) data.get(AVG_FUEL_ECONOMY_COUNT_KEY);
+//		}
+//		if (data.containsKey(FUEL_ECONOMY_KEY)) {
+//			mpg = (Double) data.get(FUEL_ECONOMY_KEY);
+//		}
+//		if (mpg > 0) {
+//			ampg += mpg;
+//			count += 1;
+//			data.put(AVG_FUEL_ECONOMY_KEY, ampg);
+//			data.put(AVG_FUEL_ECONOMY_COUNT_KEY, count);
+//		}
 		if (count > 0) {
 			ampg = ampg / (double) count;
 		}

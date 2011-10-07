@@ -8,21 +8,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
- * Every time a command is created, a thread is instantiated in order to deal
- * with the execution of the same command. Also, the response is dealt with
- * here.
- * 
- * TODO Separate Command API from Thread management. This should be pooled
- * somewhere?
+ * TODO put description
  */
 public abstract class ObdCommand {
 
 	protected ArrayList<Byte> buff = null;
 	protected String cmd = null;
-	protected HashMap<String, Object> data = null;
 	protected boolean useImperialUnits = false;
 	protected String unformattedResult = null;
 
@@ -35,7 +28,6 @@ public abstract class ObdCommand {
 	public ObdCommand(String command) {
 		this.cmd = command;
 		this.buff = new ArrayList<Byte>();
-		this.data = new HashMap<String, Object>();
 	}
 
 	/**
@@ -86,10 +78,12 @@ public abstract class ObdCommand {
 		/*
 		 * HACK GOLDEN HAMMER ahead!!
 		 * 
+		 * TODO clean
+		 * 
 		 * Due to the time that some systems may take to respond, let's give it
 		 * 500ms.
 		 */
-		Thread.sleep(250);
+		// Thread.sleep(250);
 	}
 
 	/**
@@ -104,10 +98,12 @@ public abstract class ObdCommand {
 		/*
 		 * HACK GOLDEN HAMMER ahead!!
 		 * 
+		 * TODO clean this
+		 * 
 		 * Due to the time that some systems may take to respond, let's give it
 		 * 500ms.
 		 */
-		Thread.sleep(250);
+		// Thread.sleep(250);
 	}
 
 	/**
@@ -120,7 +116,7 @@ public abstract class ObdCommand {
 		this.buff.clear();
 
 		// read until '>' arrives
-		while ((char)(b = (byte)in.read()) != '>')
+		while ((char) (b = (byte) in.read()) != '>')
 			this.buff.add(b);
 	}
 
@@ -154,7 +150,7 @@ public abstract class ObdCommand {
 
 		// validate empty string
 		String temp = sb.toString();
-		if (! "".equals(temp)) {
+		if (!"".equals(temp)) {
 			// split response lines
 			String[] resultArray = temp.split("\r");
 
@@ -171,6 +167,7 @@ public abstract class ObdCommand {
 				}
 			}
 		}
+		// TODO what happens when sb is empty?
 	}
 
 	/**
@@ -181,15 +178,6 @@ public abstract class ObdCommand {
 	/******************************************************************
 	 * Getters & Setters
 	 */
-
-	/**
-	 * TODO put description
-	 * 
-	 * @param data
-	 */
-	public void setDataMap(HashMap<String, Object> data) {
-		this.data = data;
-	}
 
 	/**
 	 * Returns this command response in Byte format.
@@ -225,7 +213,7 @@ public abstract class ObdCommand {
 	public void useImperialUnits(boolean isImperial) {
 		this.useImperialUnits = isImperial;
 	}
-	
+
 	/**
 	 * @return the OBD command name.
 	 */
