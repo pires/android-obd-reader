@@ -192,7 +192,12 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		
 		releaseWakeLockIfHeld();
+		_serviceIntent = null;
+		_serviceConnection = null;
+		_listener = null;
+		
 	}
 
 	@Override
@@ -202,6 +207,9 @@ public class MainActivity extends Activity {
 		releaseWakeLockIfHeld();
 	}
 
+	/**
+	 * If lock is held, release. Lock will be held when the service is running.
+	 */
 	private void releaseWakeLockIfHeld() {
 		if (wakeLock.isHeld()) {
 			wakeLock.release();
