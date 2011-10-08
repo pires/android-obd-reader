@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -53,11 +54,11 @@ public class ObdGatewayService extends Service {
 
 	private IPostListener _callback = null;
 	private final Binder _binder = new LocalBinder();
-	private boolean _isRunning = false;
+	private AtomicBoolean _isRunning = new AtomicBoolean(false);
 	private NotificationManager _notifManager;
 
 	private BlockingQueue<ObdCommandJob> _queue = new LinkedBlockingQueue<ObdCommandJob>();
-	private boolean _isQueueRunning = false;
+	private AtomicBoolean _isQueueRunning = new AtomicBoolean(false);
 	private Long _queueCounter = 0L;
 
 	private BluetoothDevice _dev = null;
@@ -72,12 +73,7 @@ public class ObdGatewayService extends Service {
 	 * unique UUID."
 	 */
 	private static final UUID MY_UUID = UUID
-			.fromString("00001101-0000-1000-8000-00805F9B34FB");
-
-	/*
-	 * This will be used to stop queue processing.
-	 */
-	private boolean _run = true;
+	        .fromString("00001101-0000-1000-8000-00805F9B34FB");
 
 	/**
 	 * As long as the service is bound to another component, say an Activity, it
@@ -92,6 +88,12 @@ public class ObdGatewayService extends Service {
 	public void onCreate() {
 		_notifManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		showNotification();
+	}
+
+	@Override
+	public void onDestroy() {
+		_callback = null;
+		clearNotification();
 	}
 
 	@Override
@@ -117,16 +119,16 @@ public class ObdGatewayService extends Service {
 		 * Retrieve preferences
 		 */
 		SharedPreferences prefs = PreferenceManager
-				.getDefaultSharedPreferences(this);
+		        .getDefaultSharedPreferences(this);
 
 		/*
 		 * Let's get the remote Bluetooth device
 		 */
 		String remoteDevice = prefs.getString(
-				ConfigActivity.BLUETOOTH_LIST_KEY, null);
+		        ConfigActivity.BLUETOOTH_LIST_KEY, null);
 		if (remoteDevice == null || "".equals(remoteDevice)) {
 			Toast.makeText(this, "No Bluetooth device selected",
-					Toast.LENGTH_LONG).show();
+			        Toast.LENGTH_LONG).show();
 
 			// log error
 			Log.e(TAG, "No Bluetooth device has been selected.");
@@ -164,7 +166,7 @@ public class ObdGatewayService extends Service {
 		double ve = ConfigActivity.getVolumetricEfficieny(prefs);
 		double ed = ConfigActivity.getEngineDisplacement(prefs);
 		boolean imperialUnits = prefs.getBoolean(
-				ConfigActivity.IMPERIAL_UNITS_KEY, false);
+		        ConfigActivity.IMPERIAL_UNITS_KEY, false);
 		ArrayList<ObdCommand> cmds = ConfigActivity.getObdCommands(prefs);
 
 		/*
@@ -191,7 +193,7 @@ public class ObdGatewayService extends Service {
 			startObdConnection();
 		} catch (Exception e) {
 			Log.e(TAG, "There was an error while establishing connection. -> "
-					+ e.getMessage());
+			        + e.getMessage());
 
 			// in case of failure, stop this service.
 			stopService();
@@ -227,12 +229,12 @@ public class ObdGatewayService extends Service {
 
 		// For now set protocol to AUTO
 		queueJob(new ObdCommandJob(new SelectProtocolObdCommand(
-				ObdProtocols.AUTO)));
+		        ObdProtocols.AUTO)));
 
 		Log.d(TAG, "Jobs queued. Let's run, baby!");
 
 		// Service is running..
-		_isRunning = true;
+		_isRunning.set(true);
 
 		// Set queue execution counter
 		_queueCounter = 0L;
@@ -243,8 +245,8 @@ public class ObdGatewayService extends Service {
 	 */
 	private void _executeQueue() {
 		Log.d(TAG, "Executing queue..");
-		
-		_isQueueRunning = true;
+
+		_isQueueRunning.set(true);
 
 		while (!_queue.isEmpty()) {
 			ObdCommandJob job = null;
@@ -259,11 +261,11 @@ public class ObdGatewayService extends Service {
 
 					job.setState(ObdCommandJobState.RUNNING);
 					job.getCommand().run(_sock.getInputStream(),
-							_sock.getOutputStream());
+					        _sock.getOutputStream());
 				} else {
 					// log not new job
 					Log.e(TAG,
-							"Job state was not new, so it shouldn't be in queue. BUG ALERT!");
+					        "Job state was not new, so it shouldn't be in queue. BUG ALERT!");
 				}
 			} catch (Exception e) {
 				job.setState(ObdCommandJobState.EXECUTION_ERROR);
@@ -276,8 +278,8 @@ public class ObdGatewayService extends Service {
 				_callback.stateUpdate(job);
 			}
 		}
-		
-		_isQueueRunning = false;
+
+		_isQueueRunning.set(false);
 	}
 
 	/**
@@ -310,8 +312,8 @@ public class ObdGatewayService extends Service {
 	public void stopService() {
 		Log.d(TAG, "Stopping service..");
 
-		_run = false;
-		_queue.removeAll(_queue); // is this safe?
+		_queue.removeAll(_queue); // TODO is this safe?
+		_isQueueRunning.set(false);
 
 		// close socket
 		try {
@@ -330,19 +332,26 @@ public class ObdGatewayService extends Service {
 	private void showNotification() {
 		// Set the icon, scrolling text and timestamp
 		Notification notification = new Notification(R.drawable.icon,
-				getText(R.string.service_started), System.currentTimeMillis());
+		        getText(R.string.service_started), System.currentTimeMillis());
 
 		// Launch our activity if the user selects this notification
 		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-				new Intent(this, MainActivity.class), 0);
+		        new Intent(this, MainActivity.class), 0);
 
 		// Set the info for the views that show in the notification panel.
 		notification.setLatestEventInfo(this,
-				getText(R.string.notification_label),
-				getText(R.string.service_started), contentIntent);
+		        getText(R.string.notification_label),
+		        getText(R.string.service_started), contentIntent);
 
 		// Send the notification.
 		_notifManager.notify(R.string.service_started, notification);
+	}
+
+	/**
+	 * Clear notification.
+	 */
+	private void clearNotification() {
+		_notifManager.cancel(R.string.service_started);
 	}
 
 	/**
@@ -354,7 +363,7 @@ public class ObdGatewayService extends Service {
 		}
 
 		public boolean isRunning() {
-			return _isRunning;
+			return _isRunning.get();
 		}
 
 		public void executeQueue() {
@@ -363,9 +372,9 @@ public class ObdGatewayService extends Service {
 
 		public void addJobToQueue(ObdCommandJob job) {
 			_queue.add(job);
-			
-			if (!_isQueueRunning)
-			_executeQueue();
+
+			if (!_isQueueRunning.get())
+				_executeQueue();
 		}
 	}
 
