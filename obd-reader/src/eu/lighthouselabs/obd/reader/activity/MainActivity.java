@@ -147,7 +147,7 @@ public class MainActivity extends Activity {
 		 * Validate GPS service.
 		 */
 		LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		if (locationManager == null) {
+		if (locationManager.getProvider(LocationManager.GPS_PROVIDER) == null) {
 			/*
 			 * TODO for testing purposes we'll not make GPS a pre-requisite.
 			 */
@@ -281,9 +281,6 @@ public class MainActivity extends Activity {
 			
 			startService(_serviceIntent);
 		}
-
-		// TODO start running commands
-		// we can do this through binder in serviceconnection
 		
 		// screen won't turn off until wakeLock.release()
 		wakeLock.acquire();
@@ -294,9 +291,6 @@ public class MainActivity extends Activity {
 		
 		if (_serviceConnection.isRunning())
 			stopService(_serviceIntent);
-
-		// TODO stop running commands
-		// we can do this through binder in serviceconnection
 
 		releaseWakeLockIfHeld();
 	}
