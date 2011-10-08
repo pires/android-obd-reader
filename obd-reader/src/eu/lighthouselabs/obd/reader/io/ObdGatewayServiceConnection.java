@@ -3,13 +3,13 @@
  */
 package eu.lighthouselabs.obd.reader.io;
 
-import eu.lighthouselabs.obd.commands.temperature.AmbientAirTemperatureObdCommand;
-import eu.lighthouselabs.obd.reader.IPostListener;
-import eu.lighthouselabs.obd.reader.IPostMonitor;
 import android.content.ComponentName;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.util.Log;
+import eu.lighthouselabs.obd.commands.temperature.AmbientAirTemperatureObdCommand;
+import eu.lighthouselabs.obd.reader.IPostListener;
+import eu.lighthouselabs.obd.reader.IPostMonitor;
 
 /**
  * Service connection for ObdGatewayService.
@@ -24,12 +24,12 @@ public class ObdGatewayServiceConnection implements ServiceConnection {
 	public void onServiceConnected(ComponentName name, IBinder binder) {
 		_service = (IPostMonitor) binder;
 		_service.setListener(_listener);
-		Log.d(TAG, "Service is connected. Starting queue execution..");
-		_service.executeQueue();
+		Log.d(TAG, "Service is connected.");
 
 		// TODO clean this test
-		_service.addJobToQueue(new ObdCommandJob(
-				new AmbientAirTemperatureObdCommand()));
+		if (_service.isRunning())
+			_service.addJobToQueue(new ObdCommandJob(
+			        new AmbientAirTemperatureObdCommand()));
 	}
 
 	public void onServiceDisconnected(ComponentName name) {

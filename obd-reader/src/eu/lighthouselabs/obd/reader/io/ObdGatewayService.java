@@ -230,7 +230,7 @@ public class ObdGatewayService extends Service {
 		queueJob(new ObdCommandJob(new SelectProtocolObdCommand(
 		        ObdProtocols.AUTO)));
 
-		Log.d(TAG, "Jobs queued. Let's run, baby!");
+		Log.d(TAG, "Initialization jobs queued.");
 
 		// Service is running..
 		_isRunning.set(true);
@@ -315,6 +315,7 @@ public class ObdGatewayService extends Service {
 		_queue.removeAll(_queue); // TODO is this safe?
 		_isQueueRunning.set(false);
 		_callback = null;
+		_isRunning.set(false);
 
 		// close socket
 		try {
@@ -372,6 +373,7 @@ public class ObdGatewayService extends Service {
 		}
 
 		public void addJobToQueue(ObdCommandJob job) {
+			Log.d(TAG, "Adding job [" + job.getCommand().getName() + "] to queue.");
 			_queue.add(job);
 
 			if (!_isQueueRunning.get())
