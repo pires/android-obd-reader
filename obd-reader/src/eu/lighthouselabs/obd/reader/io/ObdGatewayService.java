@@ -92,8 +92,7 @@ public class ObdGatewayService extends Service {
 
 	@Override
 	public void onDestroy() {
-		_callback = null;
-		clearNotification();
+		stopService();
 	}
 
 	@Override
@@ -312,8 +311,10 @@ public class ObdGatewayService extends Service {
 	public void stopService() {
 		Log.d(TAG, "Stopping service..");
 
+		clearNotification();
 		_queue.removeAll(_queue); // TODO is this safe?
 		_isQueueRunning.set(false);
+		_callback = null;
 
 		// close socket
 		try {
