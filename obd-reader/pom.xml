@@ -12,6 +12,7 @@
 	<packaging>apk</packaging>
 	<name>obd-reader</name>
 
+    <!-- no longer needed, but remains for historical reasons. -->
 	<repositories>
 		<repository>
 			<id>local-repo</id>
