@@ -132,7 +132,7 @@ public class ObdGatewayService extends Service {
 			// log error
 			Log.e(TAG, "No Bluetooth device has been selected.");
 
-			// kill this service
+			// TODO kill this service gracefully
 			stopService();
 		}
 

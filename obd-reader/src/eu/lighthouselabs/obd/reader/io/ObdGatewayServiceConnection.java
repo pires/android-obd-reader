@@ -7,6 +7,7 @@ import android.content.ComponentName;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.util.Log;
+import eu.lighthouselabs.obd.commands.engine.EngineRPMObdCommand;
 import eu.lighthouselabs.obd.commands.temperature.AmbientAirTemperatureObdCommand;
 import eu.lighthouselabs.obd.reader.IPostListener;
 import eu.lighthouselabs.obd.reader.IPostMonitor;
@@ -27,9 +28,12 @@ public class ObdGatewayServiceConnection implements ServiceConnection {
 		Log.d(TAG, "Service is connected.");
 
 		// TODO clean this test
-		if (_service.isRunning())
+		if (_service.isRunning()) {
 			_service.addJobToQueue(new ObdCommandJob(
-			        new AmbientAirTemperatureObdCommand()));
+					new AmbientAirTemperatureObdCommand()));
+			_service.addJobToQueue(new ObdCommandJob(
+					new EngineRPMObdCommand()));
+		}
 	}
 
 	public void onServiceDisconnected(ComponentName name) {
