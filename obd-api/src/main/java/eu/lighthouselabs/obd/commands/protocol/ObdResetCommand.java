@@ -3,6 +3,7 @@
  */
 package eu.lighthouselabs.obd.commands.protocol;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import eu.lighthouselabs.obd.commands.ObdCommand;
@@ -29,10 +30,12 @@ public class ObdResetCommand extends ObdCommand {
 	/**
 	 * Reset command returns an empty string, so we must override the following
 	 * two methods.
+	 * @throws IOException 
 	 */
 	@Override
-	public void readResult(InputStream in) {
+	public void readResult(InputStream in) throws IOException {
 		// do nothing
+		return;
 	}
 
 	@Override

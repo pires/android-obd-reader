@@ -22,14 +22,9 @@ public class AmbientAirTemperatureObdCommand extends TemperatureObdCommand {
 		super(other);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see eu.lighthouselabs.obd.commands.ObdCommand#getName()
-	 */
 	@Override
-	public String getName() {
+    public String getName() {
 		return "Ambient Air Temperature";
-	}
+    }
 
 }

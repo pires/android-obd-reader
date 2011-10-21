@@ -74,4 +74,9 @@ public abstract class TemperatureObdCommand extends ObdCommand implements System
 		return value * 1.8f + 32;
 	}
 	
+	/**
+	 * @return the OBD command name.
+	 */
+	public abstract String getName();
+	
 }

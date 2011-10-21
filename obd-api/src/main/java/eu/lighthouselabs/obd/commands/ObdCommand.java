@@ -83,7 +83,7 @@ public abstract class ObdCommand {
 		 * Due to the time that some systems may take to respond, let's give it
 		 * 500ms.
 		 */
-		// Thread.sleep(250);
+		Thread.sleep(200);
 	}
 
 	/**
