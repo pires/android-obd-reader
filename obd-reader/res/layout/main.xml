@@ -87,11 +87,11 @@
       	  android:id="@+id/run_time_text"
       	  android:text="00:00:00"/>
       	<TextView
-      	  android:id="@+id/avg_rpm_text"
-      	  android:text="0000 RPM"/>
+      	  android:id="@+id/rpm_text"
+      	  android:text=""/>
       	<TextView
-      	  android:id="@+id/avg_spd_text"
-      	  android:text="0 mph"/>
+      	  android:id="@+id/spd_text"
+      	  android:text=""/>
       </TableRow>
     </TableLayout>
 	<ScrollView
