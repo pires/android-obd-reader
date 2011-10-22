@@ -14,7 +14,7 @@ import java.io.InputStream;
 
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
@@ -25,15 +25,15 @@ public class SpeedObdCommandTest {
 
 	private SpeedObdCommand command;
 	private InputStream mockIn;
-	
+
 	/**
 	 * @throws Exception
 	 */
-	@BeforeClass
+	@BeforeMethod
 	public void setUp() throws Exception {
 		command = new SpeedObdCommand();
 	}
-	
+
 	/**
 	 * Test for valid InputStream read, 64km/h
 	 * 
@@ -49,17 +49,16 @@ public class SpeedObdCommandTest {
 		expectLastCall().andReturn(0x40);
 		expectLastCall().andReturn(0x0D);
 		expectLastCall().andReturn(0x3E); // '>'
-		
+
 		replayAll();
-		
-		// call the method  to test
+
+		// call the method to test
 		command.readResult(mockIn);
-		command.useImperialUnits = false;
 		assertEquals(command.getFormattedResult(), "64km/h");
-		
+
 		verifyAll();
 	}
-	
+
 	/**
 	 * Test for valid InputStream read, 42.87mph
 	 * 
@@ -75,17 +74,42 @@ public class SpeedObdCommandTest {
 		expectLastCall().andReturn(0x45);
 		expectLastCall().andReturn(0x0D);
 		expectLastCall().andReturn(0x3E); // '>'
-		
+
 		replayAll();
-		
-		// call the method  to test
+
+		// call the method to test
 		command.readResult(mockIn);
 		command.useImperialUnits = true;
 		assertEquals(command.getFormattedResult(), "42.87mph");
-		
+
 		verifyAll();
 	}
-	
+
+	/**
+	 * Test for valid InputStream read, 0km/h
+	 * 
+	 * @throws IOException
+	 */
+	@Test
+	public void testZeroSpeedMetric() throws IOException {
+		// mock InputStream read
+		mockIn = createMock(InputStream.class);
+		mockIn.read();
+		expectLastCall().andReturn(0x41);
+		expectLastCall().andReturn(0x0D);
+		expectLastCall().andReturn(0x00);
+		expectLastCall().andReturn(0x0D);
+		expectLastCall().andReturn(0x3E); // '>'
+
+		replayAll();
+
+		// call the method to test
+		command.readResult(mockIn);
+		assertEquals(command.getFormattedResult(), "0km/h");
+
+		verifyAll();
+	}
+
 	/**
 	 * Clear resources.
 	 */
@@ -94,5 +118,5 @@ public class SpeedObdCommandTest {
 		command = null;
 		mockIn = null;
 	}
-	
+
 }

@@ -14,7 +14,7 @@ import java.io.InputStream;
 
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import eu.lighthouselabs.obd.commands.temperature.AirIntakeTemperatureObdCommand;
@@ -31,7 +31,7 @@ public class AirIntakeTempObdCommandTest {
 	/**
 	 * @throws Exception
 	 */
-	@BeforeClass
+	@BeforeMethod
 	public void setUp() throws Exception {
 		command = new AirIntakeTemperatureObdCommand();
 	}
@@ -83,6 +83,31 @@ public class AirIntakeTempObdCommandTest {
 		command.readResult(mockIn);
 		command.useImperialUnits = true;
 		assertEquals(command.getFormattedResult(), "84.2F");
+		
+		verifyAll();
+	}
+	
+	/**
+	 * Test for valid InputStream read, 0ºC
+	 * 
+	 * @throws IOException
+	 */
+	@Test
+	public void testValidTemperatureZeroCelsius() throws IOException {
+		// mock InputStream read
+		mockIn = createMock(InputStream.class);
+		mockIn.read();
+		expectLastCall().andReturn(0x41);
+		expectLastCall().andReturn(0x0F);
+		expectLastCall().andReturn(0x28);
+		expectLastCall().andReturn(0x13);
+		expectLastCall().andReturn(0x3E); // '>'
+		
+		replayAll();
+		
+		// call the method  to test
+		command.readResult(mockIn);
+		assertEquals(command.getFormattedResult(), "0C");
 		
 		verifyAll();
 	}

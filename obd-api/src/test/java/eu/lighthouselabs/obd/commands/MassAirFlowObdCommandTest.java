@@ -14,7 +14,7 @@ import java.io.InputStream;
 
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import eu.lighthouselabs.obd.commands.engine.MassAirFlowObdCommand;
@@ -30,7 +30,7 @@ public class MassAirFlowObdCommandTest {
 	/**
 	 * @throws Exception
 	 */
-	@BeforeClass
+	@BeforeMethod
 	public void setUp() throws Exception {
 		command = new MassAirFlowObdCommand();
 	}

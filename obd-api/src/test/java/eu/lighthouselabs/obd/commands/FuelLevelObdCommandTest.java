@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import eu.lighthouselabs.obd.commands.fuel.FuelLevelObdCommand;
@@ -29,7 +29,7 @@ public class FuelLevelObdCommandTest {
 	/**
 	 * @throws Exception
 	 */
-	@BeforeClass
+	@BeforeMethod
 	public void setUp() throws Exception {
 		command = new FuelLevelObdCommand();
 	}
