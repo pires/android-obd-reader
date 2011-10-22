@@ -7,8 +7,6 @@ import android.content.ComponentName;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.util.Log;
-import eu.lighthouselabs.obd.commands.engine.EngineRPMObdCommand;
-import eu.lighthouselabs.obd.commands.temperature.AmbientAirTemperatureObdCommand;
 import eu.lighthouselabs.obd.reader.IPostListener;
 import eu.lighthouselabs.obd.reader.IPostMonitor;
 
@@ -25,15 +23,6 @@ public class ObdGatewayServiceConnection implements ServiceConnection {
 	public void onServiceConnected(ComponentName name, IBinder binder) {
 		_service = (IPostMonitor) binder;
 		_service.setListener(_listener);
-		Log.d(TAG, "Service is connected.");
-
-		// TODO clean this test
-		if (_service.isRunning()) {
-			_service.addJobToQueue(new ObdCommandJob(
-					new AmbientAirTemperatureObdCommand()));
-			_service.addJobToQueue(new ObdCommandJob(
-					new EngineRPMObdCommand()));
-		}
 	}
 
 	public void onServiceDisconnected(ComponentName name) {
@@ -53,6 +42,17 @@ public class ObdGatewayServiceConnection implements ServiceConnection {
 	}
 
 	/**
+	 * Queue JobObdCommand.
+	 * 
+	 * @param the
+	 *            job
+	 */
+	public void addJobToQueue(ObdCommandJob job) {
+		if (null != _service)
+			_service.addJobToQueue(job);
+	}
+
+	/**
 	 * Sets a callback in the service.
 	 * 
 	 * @param listener
@@ -60,4 +60,5 @@ public class ObdGatewayServiceConnection implements ServiceConnection {
 	public void setServiceListener(IPostListener listener) {
 		_listener = listener;
 	}
+
 }
