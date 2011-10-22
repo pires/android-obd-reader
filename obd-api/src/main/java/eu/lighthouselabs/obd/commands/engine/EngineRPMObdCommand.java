@@ -4,6 +4,7 @@
 package eu.lighthouselabs.obd.commands.engine;
 
 import eu.lighthouselabs.obd.commands.ObdCommand;
+import eu.lighthouselabs.obd.enums.AvailableCommandNames;
 
 /**
  * Displays the current engine revolutions per minute (RPM).
@@ -38,7 +39,7 @@ public class EngineRPMObdCommand extends ObdCommand {
 			// ignore first two bytes [01 0C] of the response
 			byte b1 = buff.get(2);
 			byte b2 = buff.get(3);
-			value = (((b1 << 8) | b2) & 0xFFFF) / 4;
+			value = (((b1 & 0xFF) << 8) | (b2 & 0xFF)) / 4;
 		}
 
 		return String.format("%d%s", value, "RPM");
@@ -46,6 +47,6 @@ public class EngineRPMObdCommand extends ObdCommand {
 
 	@Override
 	public String getName() {
-		return "Engine RPM";
+		return AvailableCommandNames.ENGINE_RPM.getValue();
 	}
 }

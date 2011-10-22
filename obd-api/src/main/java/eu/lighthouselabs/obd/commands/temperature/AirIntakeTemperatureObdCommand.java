@@ -3,6 +3,8 @@
  */
 package eu.lighthouselabs.obd.commands.temperature;
 
+import eu.lighthouselabs.obd.enums.AvailableCommandNames;
+
 /**
  * TODO
  * 
@@ -20,6 +22,7 @@ public class AirIntakeTemperatureObdCommand extends TemperatureObdCommand {
 
 	@Override
 	public String getName() {
-		return "Air Intake Temperature";
+		return AvailableCommandNames.AIR_INTAKE_TEMP.getValue();
 	}
+	
 }

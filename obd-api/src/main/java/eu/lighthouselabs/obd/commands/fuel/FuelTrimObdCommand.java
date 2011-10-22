@@ -66,4 +66,5 @@ public class FuelTrimObdCommand extends ObdCommand {
 	public String getName() {
 		return bank.getBank();
 	}
+	
 }

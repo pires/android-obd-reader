@@ -3,6 +3,8 @@
  */
 package eu.lighthouselabs.obd.commands.temperature;
 
+import eu.lighthouselabs.obd.enums.AvailableCommandNames;
+
 /**
  * Engine Coolant Temperature.
  */
@@ -29,7 +31,7 @@ public class EngineCoolantTemperatureObdCommand extends TemperatureObdCommand {
 	 */
 	@Override
 	public String getName() {
-		return "Engine Coolant Temperature";
+		return AvailableCommandNames.ENGINE_COOLANT_TEMP.getValue();
 	}
 
 }

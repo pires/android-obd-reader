@@ -4,6 +4,7 @@
 package eu.lighthouselabs.obd.commands.engine;
 
 import eu.lighthouselabs.obd.commands.ObdCommand;
+import eu.lighthouselabs.obd.enums.AvailableCommandNames;
 
 /**
  * TODO put description
@@ -57,6 +58,6 @@ public class MassAirFlowObdCommand extends ObdCommand {
 
 	@Override
 	public String getName() {
-		return "Mass Air Flow";
+		return AvailableCommandNames.MAF.getValue();
 	}
 }

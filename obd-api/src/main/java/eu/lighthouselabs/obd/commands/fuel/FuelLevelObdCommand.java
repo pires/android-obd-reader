@@ -4,6 +4,7 @@
 package eu.lighthouselabs.obd.commands.fuel;
 
 import eu.lighthouselabs.obd.commands.ObdCommand;
+import eu.lighthouselabs.obd.enums.AvailableCommandNames;
 
 /**
  * Get fuel level in percentage
@@ -40,7 +41,7 @@ public class FuelLevelObdCommand extends ObdCommand {
 
 	@Override
 	public String getName() {
-		return "Fuel Level";
+		return AvailableCommandNames.FUEL_LEVEL.getValue();
 	}
 
 }

@@ -4,6 +4,7 @@
 package eu.lighthouselabs.obd.commands.engine;
 
 import eu.lighthouselabs.obd.commands.PercentageObdCommand;
+import eu.lighthouselabs.obd.enums.AvailableCommandNames;
 
 /**
  * Read the throttle position in percentage.
@@ -31,6 +32,7 @@ public class ThrottlePositionObdCommand extends PercentageObdCommand {
 	 */
 	@Override
 	public String getName() {
-		return "Throttle Position";
+		return AvailableCommandNames.THROTTLE_POS.getValue();
 	}
+	
 }

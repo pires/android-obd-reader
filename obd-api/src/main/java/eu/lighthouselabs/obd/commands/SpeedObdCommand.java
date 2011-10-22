@@ -3,6 +3,8 @@
  */
 package eu.lighthouselabs.obd.commands;
 
+import eu.lighthouselabs.obd.enums.AvailableCommandNames;
+
 /**
  * TODO put description
  * 
@@ -43,15 +45,8 @@ public class SpeedObdCommand extends ObdCommand implements SystemOfUnits {
 		String res = getResult();
 
 		if (!"NODATA".equals(res)) {
-			/*
-			 * Ignore first two bytes [hh hh] of the response.
-			 * 
-			 * If the car is stopped, then we must not &0xFF or else metricSpeed
-			 * would equal to 32.
-			 */
-			byte raw = buff.get(2);
-			if (0x00 != raw)
-				metricSpeed = raw & 0xFF; // unsigned short
+			//Ignore first two bytes [hh hh] of the response.
+			metricSpeed = buff.get(2) & 0xFF;
 			res = String.format("%d%s", metricSpeed, "km/h");
 
 			if (useImperialUnits)
@@ -78,7 +73,7 @@ public class SpeedObdCommand extends ObdCommand implements SystemOfUnits {
 
 	@Override
 	public String getName() {
-		return "Vehicle Speed";
+		return AvailableCommandNames.SPEED.getValue();
 	}
 
 }

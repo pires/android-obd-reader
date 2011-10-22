@@ -3,6 +3,8 @@
  */
 package eu.lighthouselabs.obd.commands.pressure;
 
+import eu.lighthouselabs.obd.enums.AvailableCommandNames;
+
 
 /**
  * Intake Manifold Pressure
@@ -28,6 +30,7 @@ public class IntakeManifoldPressureObdCommand extends PressureObdCommand {
 
 	@Override
 	public String getName() {
-		return "Intake Manifold Pressure";
+		return AvailableCommandNames.INTAKE_MANIFOLD_PRESSURE.getValue();
 	}
+	
 }

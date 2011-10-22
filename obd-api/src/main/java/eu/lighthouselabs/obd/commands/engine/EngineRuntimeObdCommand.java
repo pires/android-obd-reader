@@ -4,6 +4,7 @@
 package eu.lighthouselabs.obd.commands.engine;
 
 import eu.lighthouselabs.obd.commands.ObdCommand;
+import eu.lighthouselabs.obd.enums.AvailableCommandNames;
 
 /**
  * TODO put description
@@ -48,6 +49,6 @@ public class EngineRuntimeObdCommand extends ObdCommand {
 
 	@Override
 	public String getName() {
-		return "Engine Runtime";
+		return AvailableCommandNames.ENGINE_RUNTIME.getValue();
 	}
 }

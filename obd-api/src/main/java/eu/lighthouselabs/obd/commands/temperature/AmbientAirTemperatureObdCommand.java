@@ -3,6 +3,8 @@
  */
 package eu.lighthouselabs.obd.commands.temperature;
 
+import eu.lighthouselabs.obd.enums.AvailableCommandNames;
+
 /**
  * Ambient Air Temperature. 
  */
@@ -24,7 +26,7 @@ public class AmbientAirTemperatureObdCommand extends TemperatureObdCommand {
 
 	@Override
     public String getName() {
-		return "Ambient Air Temperature";
+		return AvailableCommandNames.AMBIENT_AIR_TEMP.getValue();
     }
 
 }

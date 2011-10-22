@@ -4,6 +4,7 @@
 package eu.lighthouselabs.obd.commands.control;
 
 import eu.lighthouselabs.obd.commands.ObdCommand;
+import eu.lighthouselabs.obd.enums.AvailableCommandNames;
 
 /**
  * This command will for now read MIL (check engine light) state and number of
@@ -72,7 +73,7 @@ public class DtcNumberObdCommand extends ObdCommand {
 
 	@Override
 	public String getName() {
-		return "Diagnostic Trouble Codes";
+		return AvailableCommandNames.DTC_NUMBER.getValue();
 	}
 
 }

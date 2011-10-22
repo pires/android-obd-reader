@@ -4,6 +4,7 @@
 package eu.lighthouselabs.obd.commands.control;
 
 import eu.lighthouselabs.obd.commands.ObdCommand;
+import eu.lighthouselabs.obd.enums.AvailableCommandNames;
 
 /**
  * Fuel systems that use conventional oxygen sensor display the commanded open
@@ -75,6 +76,6 @@ public class CommandEquivRatioObdCommand extends ObdCommand {
 
 	@Override
 	public String getName() {
-		return "Command Equivalence Ratio";
+		return AvailableCommandNames.EQUIV_RATIO.getValue();
 	}
 }

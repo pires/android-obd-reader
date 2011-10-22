@@ -5,6 +5,7 @@ package eu.lighthouselabs.obd.commands.engine;
 
 import eu.lighthouselabs.obd.commands.ObdCommand;
 import eu.lighthouselabs.obd.commands.PercentageObdCommand;
+import eu.lighthouselabs.obd.enums.AvailableCommandNames;
 
 /**
  * Calculated Engine Load value.
@@ -30,7 +31,7 @@ public class EngineLoadObdCommand extends PercentageObdCommand {
 	 */
 	@Override
 	public String getName() {
-		return "Engine Load";
+		return AvailableCommandNames.ENGINE_LOAD.getValue();
 	}
 
 }

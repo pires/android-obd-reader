@@ -4,6 +4,7 @@
 package eu.lighthouselabs.obd.commands.control;
 
 import eu.lighthouselabs.obd.commands.ObdCommand;
+import eu.lighthouselabs.obd.enums.AvailableCommandNames;
 
 /**
  * In order to get ECU Trouble Codes, one must first send a DtcNumberObdCommand
@@ -110,6 +111,6 @@ public class TroubleCodesObdCommand extends ObdCommand {
 
 	@Override
 	public String getName() {
-		return "Trouble Codes";
+		return AvailableCommandNames.TROUBLE_CODES.getValue();
 	}
 }

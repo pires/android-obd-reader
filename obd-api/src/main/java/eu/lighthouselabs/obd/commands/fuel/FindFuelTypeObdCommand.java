@@ -5,6 +5,7 @@ package eu.lighthouselabs.obd.commands.fuel;
 
 import eu.lighthouselabs.obd.commands.ObdCommand;
 import eu.lighthouselabs.obd.commands.utils.ObdUtils;
+import eu.lighthouselabs.obd.enums.AvailableCommandNames;
 
 /**
  * This command is intended to determine the vehicle fuel type.
@@ -56,7 +57,7 @@ public class FindFuelTypeObdCommand extends ObdCommand {
 
 	@Override
 	public String getName() {
-		return "Fuel Type";
+		return AvailableCommandNames.FUEL_TYPE.getValue();
 	}
 
 }

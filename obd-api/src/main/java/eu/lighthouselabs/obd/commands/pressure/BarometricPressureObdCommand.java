@@ -3,6 +3,8 @@
  */
 package eu.lighthouselabs.obd.commands.pressure;
 
+import eu.lighthouselabs.obd.enums.AvailableCommandNames;
+
 
 /**
  * Barometric pressure.
@@ -29,7 +31,7 @@ public class BarometricPressureObdCommand extends PressureObdCommand {
 	 */
 	@Override
 	public String getName() {
-		return "Barometric Pressure";
+		return AvailableCommandNames.BAROMETRIC_PRESSURE.getValue();
 	}
 
 }

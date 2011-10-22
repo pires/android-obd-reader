@@ -1,5 +1,7 @@
 package eu.lighthouselabs.obd.commands.pressure;
 
+import eu.lighthouselabs.obd.enums.AvailableCommandNames;
+
 
 public class FuelPressureObdCommand extends PressureObdCommand {
 
@@ -26,6 +28,7 @@ public class FuelPressureObdCommand extends PressureObdCommand {
 
 	@Override
 	public String getName() {
-		return "Fuel Pressure";
+		return AvailableCommandNames.FUEL_PRESSURE.getValue();
 	}
+	
 }
