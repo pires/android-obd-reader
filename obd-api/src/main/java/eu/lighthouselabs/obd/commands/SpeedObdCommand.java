@@ -10,7 +10,7 @@ package eu.lighthouselabs.obd.commands;
  */
 public class SpeedObdCommand extends ObdCommand implements SystemOfUnits {
 
-	private int metricSpeed = -1;
+	private int metricSpeed = 0;
 
 	/**
 	 * Default ctor.
@@ -43,13 +43,20 @@ public class SpeedObdCommand extends ObdCommand implements SystemOfUnits {
 		String res = getResult();
 
 		if (!"NODATA".equals(res)) {
-			// ignore first two bytes [hh hh] of the response
-			metricSpeed = buff.get(2) & 0xFF; // unsigned short
+			/*
+			 * Ignore first two bytes [hh hh] of the response.
+			 * 
+			 * If the car is stopped, then we must not &0xFF or else metricSpeed
+			 * would equal to 32.
+			 */
+			byte raw = buff.get(2);
+			if (0x00 != raw)
+				metricSpeed = raw & 0xFF; // unsigned short
 			res = String.format("%d%s", metricSpeed, "km/h");
 
 			if (useImperialUnits)
 				res = String.format("%.2f%s", getImperialUnit(metricSpeed),
-						"mph");
+				        "mph");
 		}
 
 		return res;
