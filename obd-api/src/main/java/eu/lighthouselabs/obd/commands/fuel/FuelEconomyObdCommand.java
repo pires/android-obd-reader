@@ -9,16 +9,15 @@ import java.io.OutputStream;
 
 import eu.lighthouselabs.obd.commands.ObdCommand;
 import eu.lighthouselabs.obd.commands.SpeedObdCommand;
-import eu.lighthouselabs.obd.commands.engine.MassAirFlowObdCommand;
+import eu.lighthouselabs.obd.enums.AvailableCommandNames;
 
 /**
  * TODO put description
  */
 public class FuelEconomyObdCommand extends ObdCommand {
 
-	public static final double AIR_FUEL_RATIO = 14.64;
-	public static final double FUEL_DENSITY_GRAMS_PER_LITER = 720.0;
-	protected double fuelEcon = -9999.0;
+	protected float kml = -1.0f;
+	private float speed = -1.0f;
 
 	/**
 	 * Default ctor.
@@ -34,24 +33,20 @@ public class FuelEconomyObdCommand extends ObdCommand {
 	@Override
 	public void run(InputStream in, OutputStream out) throws IOException,
 			InterruptedException {
-		MassAirFlowObdCommand mafCommand = new MassAirFlowObdCommand();
-		mafCommand.run(in, out);
+		// get consumption liters per hour
+		FuelConsumptionObdCommand fuelConsumptionCommand = new FuelConsumptionObdCommand();
+		fuelConsumptionCommand.run(in, out);
+		fuelConsumptionCommand.getFormattedResult();
+		float fuelConsumption = fuelConsumptionCommand.getLitersPerHour();
 
-		// call in order to calculate mafCommand.getMAF()
-		mafCommand.getFormattedResult();
-		double maf = mafCommand.getMAF();
-
+		// get metric speed
 		SpeedObdCommand speedCommand = new SpeedObdCommand();
 		speedCommand.run(in, out);
-
-		// call in order to calculate speedCommand.getMetricSpeed()
 		speedCommand.getFormattedResult();
-		double speed = speedCommand.getMetricSpeed();
+		speed = speedCommand.getMetricSpeed();
 
-		/*
-		 * TODO calculate fuelEcon for metric units
-		 */
-		fuelEcon = calculateFuelEconomy(maf, speed);
+		// get l/100km
+		kml = (100 / speed) * fuelConsumption;
 	}
 
 	/**
@@ -60,39 +55,28 @@ public class FuelEconomyObdCommand extends ObdCommand {
 	 */
 	@Override
 	public String getFormattedResult() {
-		if (fuelEcon < 0) {
-			return "NODATA";
-		}
 		if (useImperialUnits) {
-			double kml = fuelEcon * 0.354013;
-			return String.format("%.1f %s", kml, "l/100km");
+			// convert to mpg
+			return String.format("%.1f %s", getMilesPerUKGallon(), "mpg");
 		}
-		return String.format("%.1f %s", fuelEcon, "mpg");
+		return String.format("%.1f %s", kml, "l/100km");
 	}
-
-	/**
-	 * TODO implement
-	 * 
-	 * This method will calculate
-	 * 
-	 * @param value
-	 * @return
-	 */
-	private float calculateFuelEconomy(double maf, double speed) {
-		Double tempValue = 0d;
-
-		tempValue = (14.7 * 6.17 * 454.0 * speed * 0.621371) / (3600.0 * maf);
-		if (useImperialUnits) {
-		} else {
-
-		}
-
-		return Float.valueOf(tempValue.toString());
+	
+	public float getLitersPer100Km() {
+		return kml;
+	}
+	
+	public float getMilesPerUSGallon() {
+		return 235.2f / kml;
+	}
+	
+	public float getMilesPerUKGallon() {
+		return 282.5f / kml;
 	}
 
 	@Override
 	public String getName() {
-		return "Fuel Consumption";
+		return AvailableCommandNames.FUEL_ECONOMY.getValue();
 	}
 
 }
