@@ -35,6 +35,7 @@ import android.widget.TextView;
 import eu.lighthouselabs.obd.commands.SpeedObdCommand;
 import eu.lighthouselabs.obd.commands.engine.EngineRPMObdCommand;
 import eu.lighthouselabs.obd.commands.engine.MassAirFlowObdCommand;
+import eu.lighthouselabs.obd.commands.fuel.FuelEconomyObdCommand;
 import eu.lighthouselabs.obd.commands.fuel.FuelLevelObdCommand;
 import eu.lighthouselabs.obd.commands.temperature.AmbientAirTemperatureObdCommand;
 import eu.lighthouselabs.obd.enums.AvailableCommandNames;
@@ -146,9 +147,12 @@ public class MainActivity extends Activity {
 					TextView rpm = (TextView) findViewById(R.id.rpm_text);
 					rpm.setText(cmdResult);
 				} else if (AvailableCommandNames.SPEED.getValue().equals(
-				        cmdName)) {
+						cmdName)) {
 					TextView speed = (TextView) findViewById(R.id.spd_text);
 					speed.setText(cmdResult);
+				} else if (AvailableCommandNames.FUEL_ECONOMY.getValue().equals(cmdName)) {
+					TextView fuelEcon = (TextView) findViewById(R.id.inst_fuel_econ_text);
+					fuelEcon.setText(cmdResult);
 				} else {
 					addTableRow(cmdName, cmdResult);
 				}
@@ -172,7 +176,7 @@ public class MainActivity extends Activity {
 		 */
 		// Bluetooth device exists?
 		final BluetoothAdapter mBtAdapter = BluetoothAdapter
-		        .getDefaultAdapter();
+				.getDefaultAdapter();
 		if (mBtAdapter == null) {
 			preRequisites = false;
 			showDialog(NO_BLUETOOTH_ID);
@@ -189,7 +193,7 @@ public class MainActivity extends Activity {
 		 */
 		sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 		List<Sensor> sens = sensorManager
-		        .getSensorList(Sensor.TYPE_ORIENTATION);
+				.getSensorList(Sensor.TYPE_ORIENTATION);
 		if (sens.size() <= 0) {
 			showDialog(NO_ORIENTATION_SENSOR);
 		} else {
@@ -204,6 +208,11 @@ public class MainActivity extends Activity {
 			mServiceIntent = new Intent(this, ObdGatewayService.class);
 			mServiceConnection = new ObdGatewayServiceConnection();
 			mServiceConnection.setServiceListener(mListener);
+
+			// bind service
+			Log.d(TAG, "Binding service..");
+			bindService(mServiceIntent, mServiceConnection,
+					Context.BIND_AUTO_CREATE);
 		}
 	}
 
@@ -241,12 +250,12 @@ public class MainActivity extends Activity {
 		Log.d(TAG, "Resuming..");
 
 		sensorManager.registerListener(orientListener, orientSensor,
-		        SensorManager.SENSOR_DELAY_UI);
+				SensorManager.SENSOR_DELAY_UI);
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		maxFuelEcon = ConfigActivity.getMaxFuelEconomy(prefs);
 		powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
 		wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK,
-		        "ObdReader");
+				"ObdReader");
 	}
 
 	private void updateConfig() {
@@ -264,18 +273,18 @@ public class MainActivity extends Activity {
 
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-			case START_LIVE_DATA:
-				startLiveData();
-				return true;
-			case STOP_LIVE_DATA:
-				stopLiveData();
-				return true;
-			case SETTINGS:
-				updateConfig();
-				return true;
-				// case COMMAND_ACTIVITY:
-				// staticCommand();
-				// return true;
+		case START_LIVE_DATA:
+			startLiveData();
+			return true;
+		case STOP_LIVE_DATA:
+			stopLiveData();
+			return true;
+		case SETTINGS:
+			updateConfig();
+			return true;
+			// case COMMAND_ACTIVITY:
+			// staticCommand();
+			// return true;
 		}
 		return false;
 	}
@@ -288,16 +297,8 @@ public class MainActivity extends Activity {
 	private void startLiveData() {
 		Log.d(TAG, "Starting live data..");
 
-		/*
-		 * Bind service
-		 */
-		Log.d(TAG, "Binding service..");
-		bindService(mServiceIntent, mServiceConnection,
-		        Context.BIND_AUTO_CREATE);
-
 		if (!mServiceConnection.isRunning()) {
 			Log.d(TAG, "Service is not running. Going to start it..");
-
 			startService(mServiceIntent);
 		}
 
@@ -323,18 +324,18 @@ public class MainActivity extends Activity {
 	protected Dialog onCreateDialog(int id) {
 		AlertDialog.Builder build = new AlertDialog.Builder(this);
 		switch (id) {
-			case NO_BLUETOOTH_ID:
-				build.setMessage("Sorry, your device doesn't support Bluetooth.");
-				return build.create();
-			case BLUETOOTH_DISABLED:
-				build.setMessage("You have Bluetooth disabled. Please enable it!");
-				return build.create();
-			case NO_GPS_ID:
-				build.setMessage("Sorry, your device doesn't support GPS.");
-				return build.create();
-			case NO_ORIENTATION_SENSOR:
-				build.setMessage("Orientation sensor missing?");
-				return build.create();
+		case NO_BLUETOOTH_ID:
+			build.setMessage("Sorry, your device doesn't support Bluetooth.");
+			return build.create();
+		case BLUETOOTH_DISABLED:
+			build.setMessage("You have Bluetooth disabled. Please enable it!");
+			return build.create();
+		case NO_GPS_ID:
+			build.setMessage("Sorry, your device doesn't support GPS.");
+			return build.create();
+		case NO_ORIENTATION_SENSOR:
+			build.setMessage("Orientation sensor missing?");
+			return build.create();
 		}
 		return null;
 	}
@@ -372,9 +373,9 @@ public class MainActivity extends Activity {
 		TableLayout tl = (TableLayout) findViewById(R.id.data_table);
 		TableRow tr = new TableRow(this);
 		MarginLayoutParams params = new ViewGroup.MarginLayoutParams(
-		        LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		params.setMargins(TABLE_ROW_MARGIN, TABLE_ROW_MARGIN, TABLE_ROW_MARGIN,
-		        TABLE_ROW_MARGIN);
+				TABLE_ROW_MARGIN);
 		tr.setLayoutParams(params);
 		tr.setBackgroundColor(Color.BLACK);
 		TextView name = new TextView(this);
@@ -386,7 +387,7 @@ public class MainActivity extends Activity {
 		tr.addView(name);
 		tr.addView(value);
 		tl.addView(tr, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
-		        LayoutParams.WRAP_CONTENT));
+				LayoutParams.WRAP_CONTENT));
 
 		/*
 		 * TODO remove this hack
@@ -401,7 +402,6 @@ public class MainActivity extends Activity {
 	 * 
 	 */
 	private Runnable mQueueCommands = new Runnable() {
-		@Override
 		public void run() {
 			if (mServiceConnection.isRunning())
 				queueCommands();
@@ -416,17 +416,19 @@ public class MainActivity extends Activity {
 	 */
 	private void queueCommands() {
 		final ObdCommandJob airTemp = new ObdCommandJob(
-		        new AmbientAirTemperatureObdCommand());
+				new AmbientAirTemperatureObdCommand());
 		final ObdCommandJob speed = new ObdCommandJob(new SpeedObdCommand());
+		final ObdCommandJob fuelEcon = new ObdCommandJob(new FuelEconomyObdCommand());
 		final ObdCommandJob rpm = new ObdCommandJob(new EngineRPMObdCommand());
 		final ObdCommandJob maf = new ObdCommandJob(new MassAirFlowObdCommand());
 		final ObdCommandJob fuelLevel = new ObdCommandJob(
-		        new FuelLevelObdCommand());
+				new FuelLevelObdCommand());
 
-		mServiceConnection.addJobToQueue(airTemp);
+		// mServiceConnection.addJobToQueue(airTemp);
 		mServiceConnection.addJobToQueue(speed);
+		mServiceConnection.addJobToQueue(fuelEcon);
 		mServiceConnection.addJobToQueue(rpm);
 		mServiceConnection.addJobToQueue(maf);
-		mServiceConnection.addJobToQueue(fuelLevel);
+		// mServiceConnection.addJobToQueue(fuelLevel);
 	}
 }

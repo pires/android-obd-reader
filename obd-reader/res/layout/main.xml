@@ -17,11 +17,11 @@
           android:layout_gravity="top|left"/>
       	<TextView
       	  android:text="0"
-      	  android:id="@+id/avg_fuel_econ_text"
+      	  android:id="@+id/fuel_econ_text"
       	  android:textSize="115px"
       	  android:gravity="bottom|right"/>
       	<TextView
-      	  android:text="mpg"
+      	  android:text="l/100km"
       	  android:id="@+id/avg_fuel_econ_lbl"
       	  android:gravity="bottom|left"/>
       	<TextView
@@ -82,7 +82,7 @@
         android:background="#000000">
       	<TextView
       	  android:id="@+id/inst_fuel_econ_text"
-      	  android:text="0 mpg"/>
+      	  android:text="0l/100km"/>
       	<TextView
       	  android:id="@+id/run_time_text"
       	  android:text="00:00:00"/>
