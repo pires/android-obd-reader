@@ -8,7 +8,6 @@ import static org.powermock.api.easymock.PowerMock.expectLastCall;
 import static org.powermock.api.easymock.PowerMock.replayAll;
 import static org.powermock.api.easymock.PowerMock.verifyAll;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,7 +24,7 @@ import eu.lighthouselabs.obd.commands.fuel.FuelLevelObdCommand;
 public class FuelLevelObdCommandTest {
 	private FuelLevelObdCommand command = null;
 	private InputStream mockIn = null;
-	
+
 	/**
 	 * @throws Exception
 	 */
@@ -33,7 +32,7 @@ public class FuelLevelObdCommandTest {
 	public void setUp() throws Exception {
 		command = new FuelLevelObdCommand();
 	}
-	
+
 	/**
 	 * Test for valid InputStream read, full tank
 	 * 
@@ -44,22 +43,25 @@ public class FuelLevelObdCommandTest {
 		// mock InputStream read
 		mockIn = createMock(InputStream.class);
 		mockIn.read();
-		expectLastCall().andReturn(0x41);
-		expectLastCall().andReturn(0x2F);
-		expectLastCall().andReturn(0xFF);
-		expectLastCall().andReturn(0x13);
-		expectLastCall().andReturn(0x3E); // '>'
-		
+		expectLastCall().andReturn((byte) '4');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '2');
+		expectLastCall().andReturn((byte) 'F');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) 'F');
+		expectLastCall().andReturn((byte) 'F');
+		expectLastCall().andReturn((byte) '>');
+
 		replayAll();
-		
-		// call the method  to test
+
+		// call the method to test
 		command.readResult(mockIn);
-		assertTrue(command.buff.size() > 2);
 		assertEquals(command.getFormattedResult(), "100.0%");
-		
+
 		verifyAll();
 	}
-	
+
 	/**
 	 * Test for valid InputStream read. 78.4%
 	 * 
@@ -70,21 +72,25 @@ public class FuelLevelObdCommandTest {
 		// mock InputStream read
 		mockIn = createMock(InputStream.class);
 		mockIn.read();
-		expectLastCall().andReturn(0x41); 
-		expectLastCall().andReturn(0x2F); 
-		expectLastCall().andReturn(0xC8);
-		expectLastCall().andReturn(0x13);
-		expectLastCall().andReturn(0x3E); // '>'
-		
+		expectLastCall().andReturn((byte) '4');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '2');
+		expectLastCall().andReturn((byte) 'F');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) 'C');
+		expectLastCall().andReturn((byte) '8');
+		expectLastCall().andReturn((byte) '>');
+
 		replayAll();
-		
-		// call the method  to test
+
+		// call the method to test
 		command.readResult(mockIn);
 		assertEquals(command.getFormattedResult(), "78.4%");
-		
+
 		verifyAll();
 	}
-	
+
 	/**
 	 * Test for valid InputStream read, full tank
 	 * 
@@ -95,21 +101,25 @@ public class FuelLevelObdCommandTest {
 		// mock InputStream read
 		mockIn = createMock(InputStream.class);
 		mockIn.read();
-		expectLastCall().andReturn(0x41);
-		expectLastCall().andReturn(0x2F);
-		expectLastCall().andReturn(0x00);
-		expectLastCall().andReturn(0x13);
-		expectLastCall().andReturn(0x3E); // '>'
-		
+		expectLastCall().andReturn((byte) '4');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '2');
+		expectLastCall().andReturn((byte) 'F');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '0');
+		expectLastCall().andReturn((byte) '0');
+		expectLastCall().andReturn((byte) '>');
+
 		replayAll();
-		
-		// call the method  to test
+
+		// call the method to test
 		command.readResult(mockIn);
 		assertEquals(command.getFormattedResult(), "0.0%");
-		
+
 		verifyAll();
 	}
-	
+
 	/**
 	 * Clear resources.
 	 */
@@ -118,4 +128,5 @@ public class FuelLevelObdCommandTest {
 		command = null;
 		mockIn = null;
 	}
+
 }

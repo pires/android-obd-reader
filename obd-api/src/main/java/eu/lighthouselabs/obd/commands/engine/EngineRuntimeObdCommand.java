@@ -33,9 +33,9 @@ public class EngineRuntimeObdCommand extends ObdCommand {
 
 		if (!"NODATA".equals(res)) {
 			// ignore first two bytes [01 0C] of the response
-			byte b1 = buff.get(2);
-			byte b2 = buff.get(3);
-			int value = ((b1 << 8) | b2) & 0xFFFF;
+			int a = buffer.get(2);
+			int b = buffer.get(3);
+			int value = a * 256 + b;
 			
 			// determine time
 			String hh = String.format("%02d", value / 3600);

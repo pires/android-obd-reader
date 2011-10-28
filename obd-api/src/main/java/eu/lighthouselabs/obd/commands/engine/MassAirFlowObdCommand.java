@@ -13,7 +13,7 @@ import eu.lighthouselabs.obd.enums.AvailableCommandNames;
  */
 public class MassAirFlowObdCommand extends ObdCommand {
 
-	private double maf = -9999.0;
+	private float _maf = -1.0f;
 
 	/**
 	 * Default ctor.
@@ -36,24 +36,21 @@ public class MassAirFlowObdCommand extends ObdCommand {
 	 */
 	@Override
 	public String getFormattedResult() {
-		String res = getResult();
-
-		if (!"NODATA".equals(res)) {
+		if (!"NODATA".equals(getResult())) {
 			// ignore first two bytes [hh hh] of the response
-			byte b1 = buff.get(2);
-			byte b2 = buff.get(3);
-			maf = (((b1 << 8) | b2) & 0xFFFF) / 100.0f;
-			res = String.format("%.2f%s", maf, "g/s");
+			int a = buffer.get(2);
+			int b = buffer.get(3);
+			_maf = (a * 256 + b) / 100.0f;
 		}
 
-		return res;
+		return String.format("%.2f%s", _maf, "g/s");
 	}
 
 	/**
 	 * @return MAF value for further calculus.
 	 */
 	public double getMAF() {
-		return maf;
+		return _maf;
 	}
 
 	@Override

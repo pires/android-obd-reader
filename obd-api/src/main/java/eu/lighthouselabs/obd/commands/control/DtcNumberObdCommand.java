@@ -43,7 +43,7 @@ public class DtcNumberObdCommand extends ObdCommand {
 
 		if (!"NODATA".equals(res)) {
 			// ignore first two bytes [hh hh] of the response
-			byte mil = buff.get(2);
+			int mil = buffer.get(2);
 			if ((mil & 0x80) == 128)
 				milOn = true;
 

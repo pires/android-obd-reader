@@ -14,10 +14,10 @@ import java.util.ArrayList;
  */
 public abstract class ObdCommand {
 
-	protected ArrayList<Byte> buff = null;
+	protected ArrayList<Integer> buffer = null;
 	protected String cmd = null;
 	protected boolean useImperialUnits = false;
-	protected String unformattedResult = null;
+	protected String rawData = null;
 
 	/**
 	 * Default ctor to use
@@ -27,7 +27,7 @@ public abstract class ObdCommand {
 	 */
 	public ObdCommand(String command) {
 		this.cmd = command;
-		this.buff = new ArrayList<Byte>();
+		this.buffer = new ArrayList<Integer>();
 	}
 
 	/**
@@ -113,61 +113,47 @@ public abstract class ObdCommand {
 	 */
 	protected void readResult(InputStream in) throws IOException {
 		byte b = 0;
-		this.buff.clear();
+		StringBuilder res = new StringBuilder();
 
 		// read until '>' arrives
 		while ((char) (b = (byte) in.read()) != '>')
-			this.buff.add(b);
+			if ((char) b != ' ')
+				res.append((char) b);
+
+		/*
+		 * Imagine the following response 41 0c 00 0d.
+		 * 
+		 * ELM sends strings!! So, ELM puts spaces between each "byte". And pay
+		 * attention to the fact that I've put the word byte in quotes, because
+		 * 41 is actually TWO bytes (two chars) in the socket. So, we must do
+		 * some more processing..
+		 */
+		//
+		rawData = res.toString().trim();
+
+		// clear buffer
+		buffer.clear();
+
+		// read string each two chars
+		int begin = 0;
+		int end = 2;
+		while (end <= rawData.length()) {
+			String temp = "0x" + rawData.substring(begin, end);
+			buffer.add(Integer.decode(temp));
+			begin = end;
+			end += 2;
+		}
 	}
 
 	/**
-	 * If an unformatted result is not available, it will be prepared before
-	 * returning.
-	 * 
 	 * @return the raw command response in string representation.
 	 */
-	protected String getResult() {
-		if (unformattedResult == null)
-			prepareResult();
-
-		return unformattedResult;
-	}
-
-	/**
-	 * Prepare raw result.
-	 */
-	protected void prepareResult() {
-		/*
-		 * Parse buffer to string
-		 */
-		StringBuilder sb = new StringBuilder();
-		for (byte b : this.buff)
-			sb.append((char) b);
-
-		/*
-		 * Process result
-		 */
-
-		// validate empty string
-		String temp = sb.toString();
-		if (!"".equals(temp)) {
-			// split response lines
-			String[] resultArray = temp.split("\r");
-
-			// validate lines and determine result
-			if (resultArray.length > 0) {
-				/*
-				 * The following will happen when first command after
-				 * auto-protocol search is set.
-				 */
-				if ("SEARCHING...".equals(resultArray[0])) {
-					unformattedResult = resultArray[1].replace(" ", "");
-				} else {
-					unformattedResult = resultArray[0].replace(" ", "");
-				}
-			}
+	public String getResult() {
+		if (rawData.contains("SEARCHING") || rawData.contains("DATA")) {
+			rawData = "NODATA";
 		}
-		// TODO what happens when sb is empty?
+
+		return rawData;
 	}
 
 	/**
@@ -180,12 +166,10 @@ public abstract class ObdCommand {
 	 */
 
 	/**
-	 * Returns this command response in Byte format.
-	 * 
-	 * @return a list of Byte
+	 * @return a list of integers
 	 */
-	public ArrayList<Byte> getBuff() {
-		return buff;
+	public ArrayList<Integer> getBuffer() {
+		return buffer;
 	}
 
 	/**

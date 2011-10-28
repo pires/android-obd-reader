@@ -48,11 +48,15 @@ public class DtcNumberObdCommandTest {
 		// mock InputStream read
 		mockIn = createMock(InputStream.class);
 		mockIn.read();
-		expectLastCall().andReturn(0x41);
-		expectLastCall().andReturn(0x01);
-		expectLastCall().andReturn(0x9F);
-		expectLastCall().andReturn(0x13);
-		expectLastCall().andReturn(0x3E); // '>'
+		expectLastCall().andReturn((byte) '4');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '0');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '9');
+		expectLastCall().andReturn((byte) 'F');
+		expectLastCall().andReturn((byte) '>');
 
 		replayAll();
 
@@ -76,11 +80,15 @@ public class DtcNumberObdCommandTest {
 		// mock InputStream read
 		mockIn = createMock(InputStream.class);
 		mockIn.read();
-		expectLastCall().andReturn(0x41);
-		expectLastCall().andReturn(0x01);
-		expectLastCall().andReturn(0x0F);
-		expectLastCall().andReturn(0x13);
-		expectLastCall().andReturn(0x3E); // '>'
+		expectLastCall().andReturn((byte) '4');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '0');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '0');
+		expectLastCall().andReturn((byte) 'F');
+		expectLastCall().andReturn((byte) '>');
 
 		replayAll();
 

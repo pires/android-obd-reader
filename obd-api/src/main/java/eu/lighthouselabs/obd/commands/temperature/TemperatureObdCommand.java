@@ -55,7 +55,7 @@ public abstract class TemperatureObdCommand extends ObdCommand implements System
 
 		if (!"NODATA".equals(res)) {
 			// ignore first two bytes [hh hh] of the response
-			value = prepareTempValue(buff.get(2) & 0xFF);
+			value = prepareTempValue(buffer.get(2));
 			
 			// convert?
 			if (useImperialUnits)

@@ -35,7 +35,7 @@ public class FindFuelTypeObdCommandTest {
 	}
 
 	/**
-	 * Test for valid InputStream read, maximum value of 100%
+	 * Test for valid InputStream read, Gasoline
 	 * 
 	 * @throws IOException
 	 */
@@ -44,11 +44,15 @@ public class FindFuelTypeObdCommandTest {
 		// mock InputStream read
 		mockIn = createMock(InputStream.class);
 		mockIn.read();
-		expectLastCall().andReturn(0x41);
-		expectLastCall().andReturn(0x51);
-		expectLastCall().andReturn(0x01);
-		expectLastCall().andReturn(0x0D);
-		expectLastCall().andReturn(0x3E); // '>'
+		expectLastCall().andReturn((byte) '4');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '5');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '0');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) '>');
 
 		replayAll();
 
@@ -60,7 +64,7 @@ public class FindFuelTypeObdCommandTest {
 	}
 
 	/**
-	 * Test for valid InputStream read, 58.4%
+	 * Test for valid InputStream read, Diesel
 	 * 
 	 * @throws IOException
 	 */
@@ -69,11 +73,15 @@ public class FindFuelTypeObdCommandTest {
 		// mock InputStream read
 		mockIn = createMock(InputStream.class);
 		mockIn.read();
-		expectLastCall().andReturn(0x41);
-		expectLastCall().andReturn(0x51);
-		expectLastCall().andReturn(0x04);
-		expectLastCall().andReturn(0x0D);
-		expectLastCall().andReturn(0x3E); // '>'
+		expectLastCall().andReturn((byte) '4');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '5');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '0');
+		expectLastCall().andReturn((byte) '4');
+		expectLastCall().andReturn((byte) '>');
 
 		replayAll();
 
@@ -85,7 +93,7 @@ public class FindFuelTypeObdCommandTest {
 	}
 
 	/**
-	 * Test for valid InputStream read, minimum value 0%
+	 * Test for valid InputStream read, Ethanol
 	 * 
 	 * @throws IOException
 	 */
@@ -94,11 +102,15 @@ public class FindFuelTypeObdCommandTest {
 		// mock InputStream read
 		mockIn = createMock(InputStream.class);
 		mockIn.read();
-		expectLastCall().andReturn(0x41);
-		expectLastCall().andReturn(0x51);
-		expectLastCall().andReturn(0x12);
-		expectLastCall().andReturn(0x0D);
-		expectLastCall().andReturn(0x3E); // '>'
+		expectLastCall().andReturn((byte) '4');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '5');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) '2');
+		expectLastCall().andReturn((byte) '>');
 
 		replayAll();
 

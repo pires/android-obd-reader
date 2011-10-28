@@ -37,15 +37,12 @@ public class FuelTrimObdCommand extends ObdCommand {
 
 	@Override
 	public String getFormattedResult() {
-		String res = getResult();
-
-		if (!"NODATA".equals(res)) {
+		if (!"NODATA".equals(getResult())) {
 			// ignore first two bytes [hh hh] of the response
-			fuelTrimValue = prepareTempValue(buff.get(2) & 0xFF);
-			res = String.format("%.2f%s", fuelTrimValue, "%");
+			fuelTrimValue = prepareTempValue(buffer.get(2));
 		}
 
-		return res;
+		return String.format("%.2f%s", fuelTrimValue, "%");
 	}
 
 	/**
@@ -66,5 +63,5 @@ public class FuelTrimObdCommand extends ObdCommand {
 	public String getName() {
 		return bank.getBank();
 	}
-	
+
 }

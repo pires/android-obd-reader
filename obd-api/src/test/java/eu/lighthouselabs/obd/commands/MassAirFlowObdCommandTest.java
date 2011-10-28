@@ -45,17 +45,24 @@ public class MassAirFlowObdCommandTest {
 		// mock InputStream read
 		mockIn = createMock(InputStream.class);
 		mockIn.read();
-		expectLastCall().andReturn(0x41);
-		expectLastCall().andReturn(0x10);
-		expectLastCall().andReturn(0xFF);
-		expectLastCall().andReturn(0xFF);
-		expectLastCall().andReturn(0x0D);
-		expectLastCall().andReturn(0x3E); // '>'
+		expectLastCall().andReturn((byte) '4');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) '0');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) 'F');
+		expectLastCall().andReturn((byte) 'F');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) 'F');
+		expectLastCall().andReturn((byte) 'F');
+		expectLastCall().andReturn((byte) '>');
 
 		replayAll();
 
 		// call the method to test
 		command.readResult(mockIn);
+		command.getFormattedResult();
 		assertEquals(command.getFormattedResult(), "655.35g/s");
 
 		verifyAll();
@@ -71,22 +78,29 @@ public class MassAirFlowObdCommandTest {
 		// mock InputStream read
 		mockIn = createMock(InputStream.class);
 		mockIn.read();
-		expectLastCall().andReturn(0x41);
-		expectLastCall().andReturn(0x10);
-		expectLastCall().andReturn(0x95);
-		expectLastCall().andReturn(0x11);
-		expectLastCall().andReturn(0x0D);
-		expectLastCall().andReturn(0x3E); // '>'
+		expectLastCall().andReturn((byte) '4');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) '0');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '9');
+		expectLastCall().andReturn((byte) '5');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) '>');
 
 		replayAll();
 
 		// call the method to test
 		command.readResult(mockIn);
+		command.getFormattedResult();
 		assertEquals(command.getFormattedResult(), "381.61g/s");
 
 		verifyAll();
 	}
-	
+
 	/**
 	 * Test for valid InputStream read, minimum value 0g/s
 	 * 
@@ -97,17 +111,24 @@ public class MassAirFlowObdCommandTest {
 		// mock InputStream read
 		mockIn = createMock(InputStream.class);
 		mockIn.read();
-		expectLastCall().andReturn(0x41);
-		expectLastCall().andReturn(0x10);
-		expectLastCall().andReturn(0x00);
-		expectLastCall().andReturn(0x00);
-		expectLastCall().andReturn(0x0D);
-		expectLastCall().andReturn(0x3E); // '>'
+		expectLastCall().andReturn((byte) '4');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) '0');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '0');
+		expectLastCall().andReturn((byte) '0');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '0');
+		expectLastCall().andReturn((byte) '0');
+		expectLastCall().andReturn((byte) '>');
 
 		replayAll();
 
 		// call the method to test
 		command.readResult(mockIn);
+		command.getFormattedResult();
 		assertEquals(command.getFormattedResult(), "0.00g/s");
 
 		verifyAll();

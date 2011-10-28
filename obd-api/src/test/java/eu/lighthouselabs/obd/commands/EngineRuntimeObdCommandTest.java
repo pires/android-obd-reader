@@ -46,12 +46,18 @@ public class EngineRuntimeObdCommandTest {
 		// mock InputStream read
 		mockIn = createMock(InputStream.class);
 		mockIn.read();
-		expectLastCall().andReturn(0x41);
-		expectLastCall().andReturn(0x31);
-		expectLastCall().andReturn(0xFF);
-		expectLastCall().andReturn(0xFF);
-		expectLastCall().andReturn(0x13);
-		expectLastCall().andReturn(0x3E); // '>'
+		expectLastCall().andReturn((byte) '4');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '3');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) 'F');
+		expectLastCall().andReturn((byte) 'F');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) 'F');
+		expectLastCall().andReturn((byte) 'F');
+		expectLastCall().andReturn((byte) '>');
 		
 		replayAll();
 		
@@ -72,12 +78,18 @@ public class EngineRuntimeObdCommandTest {
 		// mock InputStream read
 		mockIn = createMock(InputStream.class);
 		mockIn.read();
-		expectLastCall().andReturn(0x41);
-		expectLastCall().andReturn(0x31);
-		expectLastCall().andReturn(0x45);
-		expectLastCall().andReturn(0x43);
-		expectLastCall().andReturn(0x13);
-		expectLastCall().andReturn(0x3E); // '>'
+		expectLastCall().andReturn((byte) '4');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '3');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '4');
+		expectLastCall().andReturn((byte) '5');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '4');
+		expectLastCall().andReturn((byte) '3');
+		expectLastCall().andReturn((byte) '>');
 		
 		replayAll();
 		
@@ -98,12 +110,18 @@ public class EngineRuntimeObdCommandTest {
 		// mock InputStream read
 		mockIn = createMock(InputStream.class);
 		mockIn.read();
-		expectLastCall().andReturn(0x41);
-		expectLastCall().andReturn(0x31);
-		expectLastCall().andReturn(0x00);
-		expectLastCall().andReturn(0x00);
-		expectLastCall().andReturn(0x13);
-		expectLastCall().andReturn(0x3E); // '>'
+		expectLastCall().andReturn((byte) '4');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '3');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '0');
+		expectLastCall().andReturn((byte) '0');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '0');
+		expectLastCall().andReturn((byte) '0');
+		expectLastCall().andReturn((byte) '>');
 		
 		replayAll();
 		

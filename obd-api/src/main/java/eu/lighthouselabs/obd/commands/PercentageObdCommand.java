@@ -33,8 +33,7 @@ public abstract class PercentageObdCommand extends ObdCommand {
 
 		if (!"NODATA".equals(res)) {
 			// ignore first two bytes [hh hh] of the response
-			byte b1 = buff.get(2);
-			float tempValue = ((b1 & 0xFF) * 100.0f) / 255.0f;
+			float tempValue = (buffer.get(2) * 100.0f) / 255.0f;
 			res = String.format("%.1f%s", tempValue, "%");
 		}
 

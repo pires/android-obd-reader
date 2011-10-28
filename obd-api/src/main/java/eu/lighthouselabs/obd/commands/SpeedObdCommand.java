@@ -43,10 +43,10 @@ public class SpeedObdCommand extends ObdCommand implements SystemOfUnits {
 	 */
 	public String getFormattedResult() {
 		String res = getResult();
-
+		
 		if (!"NODATA".equals(res)) {
 			//Ignore first two bytes [hh hh] of the response.
-			metricSpeed = buff.get(2) & 0xFF;
+			metricSpeed = buffer.get(2);
 			res = String.format("%d%s", metricSpeed, "km/h");
 
 			if (useImperialUnits)

@@ -27,7 +27,7 @@ public class IntakeManifoldPressureObdCommandTest {
 
 	private IntakeManifoldPressureObdCommand command;
 	private InputStream mockIn;
-	
+
 	/**
 	 * @throws Exception
 	 */
@@ -35,7 +35,7 @@ public class IntakeManifoldPressureObdCommandTest {
 	public void setUp() throws Exception {
 		command = new IntakeManifoldPressureObdCommand();
 	}
-	
+
 	/**
 	 * Test for valid InputStream read, 100kPa
 	 * 
@@ -46,22 +46,26 @@ public class IntakeManifoldPressureObdCommandTest {
 		// mock InputStream read
 		mockIn = createMock(InputStream.class);
 		mockIn.read();
-		expectLastCall().andReturn(0x41);
-		expectLastCall().andReturn(0x0B);
-		expectLastCall().andReturn(0x64);
-		expectLastCall().andReturn(0x0D);
-		expectLastCall().andReturn(0x3E); // '>';
-		
+		expectLastCall().andReturn((byte) '4');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '0');
+		expectLastCall().andReturn((byte) 'B');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '6');
+		expectLastCall().andReturn((byte) '4');
+		expectLastCall().andReturn((byte) '>');
+
 		replayAll();
-		
-		// call the method  to test
+
+		// call the method to test
 		command.readResult(mockIn);
 		command.useImperialUnits = false;
 		assertEquals(command.getFormattedResult(), "100kPa");
-		
+
 		verifyAll();
 	}
-	
+
 	/**
 	 * Test for valid InputStream read, 14.50psi
 	 * 
@@ -72,22 +76,26 @@ public class IntakeManifoldPressureObdCommandTest {
 		// mock InputStream read
 		mockIn = createMock(InputStream.class);
 		mockIn.read();
-		expectLastCall().andReturn(0x41);
-		expectLastCall().andReturn(0x0B);
-		expectLastCall().andReturn(0x64);
-		expectLastCall().andReturn(0x0D);
-		expectLastCall().andReturn(0x3E); // '>'
-		
+		expectLastCall().andReturn((byte) '4');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '0');
+		expectLastCall().andReturn((byte) 'B');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '6');
+		expectLastCall().andReturn((byte) '4');
+		expectLastCall().andReturn((byte) '>');
+
 		replayAll();
-		
-		// call the method  to test
+
+		// call the method to test
 		command.readResult(mockIn);
 		command.useImperialUnits = true;
 		assertEquals(command.getFormattedResult(), "14.5psi");
-		
+
 		verifyAll();
 	}
-	
+
 	/**
 	 * Clear resources.
 	 */
@@ -96,5 +104,5 @@ public class IntakeManifoldPressureObdCommandTest {
 		command = null;
 		mockIn = null;
 	}
-	
+
 }

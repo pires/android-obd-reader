@@ -10,7 +10,9 @@ import eu.lighthouselabs.obd.enums.AvailableCommandNames;
  * Displays the current engine revolutions per minute (RPM).
  */
 public class EngineRPMObdCommand extends ObdCommand {
-
+	
+	private int _rpm = -1;
+	
 	/**
 	 * Default ctor.
 	 */
@@ -32,21 +34,22 @@ public class EngineRPMObdCommand extends ObdCommand {
 	 */
 	@Override
 	public String getFormattedResult() {
-		String res = getResult();
-		int value = 0;
-
-		if (!"NODATA".equals(res)) {
-			// ignore first two bytes [01 0C] of the response
-			byte b1 = buff.get(2);
-			byte b2 = buff.get(3);
-			value = (((b1 & 0xFF) << 8) | (b2 & 0xFF)) / 4;
+		if (!"NODATA".equals(getResult())) {
+			// ignore first two bytes [41 0C] of the response
+			int a = buffer.get(2);
+			int b = buffer.get(3);
+			_rpm = (a * 256 + b) / 4;
 		}
 
-		return String.format("%d%s", value, "RPM");
+		return String.format("%d%s", _rpm, " RPM");
 	}
 
 	@Override
 	public String getName() {
 		return AvailableCommandNames.ENGINE_RPM.getValue();
+	}
+	
+	public int getRPM() {
+		return _rpm;
 	}
 }

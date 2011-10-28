@@ -44,17 +44,22 @@ public class SpeedObdCommandTest {
 		// mock InputStream read
 		mockIn = createMock(InputStream.class);
 		mockIn.read();
-		expectLastCall().andReturn(0x41);
-		expectLastCall().andReturn(0x0D);
-		expectLastCall().andReturn(0x40);
-		expectLastCall().andReturn(0x0D);
-		expectLastCall().andReturn(0x3E); // '>'
+		expectLastCall().andReturn((byte) '4');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '0');
+		expectLastCall().andReturn((byte) 'D');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '4');
+		expectLastCall().andReturn((byte) '0');
+		expectLastCall().andReturn((byte) '>');
 
 		replayAll();
 
 		// call the method to test
 		command.readResult(mockIn);
-		assertEquals(command.getFormattedResult(), "64km/h");
+		command.getFormattedResult();
+		assertEquals(command.getMetricSpeed(), 64);
 
 		verifyAll();
 	}
@@ -69,18 +74,23 @@ public class SpeedObdCommandTest {
 		// mock InputStream read
 		mockIn = createMock(InputStream.class);
 		mockIn.read();
-		expectLastCall().andReturn(0x41);
-		expectLastCall().andReturn(0x0D);
-		expectLastCall().andReturn(0x45);
-		expectLastCall().andReturn(0x0D);
-		expectLastCall().andReturn(0x3E); // '>'
+		expectLastCall().andReturn((byte) '4');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '0');
+		expectLastCall().andReturn((byte) 'D');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '4');
+		expectLastCall().andReturn((byte) '5');
+		expectLastCall().andReturn((byte) '>');
 
 		replayAll();
 
 		// call the method to test
 		command.readResult(mockIn);
 		command.useImperialUnits = true;
-		assertEquals(command.getFormattedResult(), "42.87mph");
+		command.getFormattedResult();
+		assertEquals(command.getImperialSpeed(), 42.87461f);
 
 		verifyAll();
 	}
@@ -95,17 +105,22 @@ public class SpeedObdCommandTest {
 		// mock InputStream read
 		mockIn = createMock(InputStream.class);
 		mockIn.read();
-		expectLastCall().andReturn(0x41);
-		expectLastCall().andReturn(0x0D);
-		expectLastCall().andReturn(0x00);
-		expectLastCall().andReturn(0x0D);
-		expectLastCall().andReturn(0x3E); // '>'
+		expectLastCall().andReturn((byte) '4');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '0');
+		expectLastCall().andReturn((byte) 'D');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '0');
+		expectLastCall().andReturn((byte) '0');
+		expectLastCall().andReturn((byte) '>');
 
 		replayAll();
 
 		// call the method to test
 		command.readResult(mockIn);
-		assertEquals(command.getFormattedResult(), "0km/h");
+		command.getFormattedResult();
+		assertEquals(command.getMetricSpeed(), 0);
 
 		verifyAll();
 	}

@@ -27,7 +27,7 @@ public class EngineRPMObdCommandTest {
 
 	private EngineRPMObdCommand command = null;
 	private InputStream mockIn = null;
-	
+
 	/**
 	 * @throws Exception
 	 */
@@ -35,7 +35,7 @@ public class EngineRPMObdCommandTest {
 	public void setUp() throws Exception {
 		command = new EngineRPMObdCommand();
 	}
-	
+
 	/**
 	 * Test for valid InputStream read, max RPM
 	 * 
@@ -46,22 +46,29 @@ public class EngineRPMObdCommandTest {
 		// mock InputStream read
 		mockIn = createMock(InputStream.class);
 		mockIn.read();
-		expectLastCall().andReturn(0x41);
-		expectLastCall().andReturn(0x0C);
-		expectLastCall().andReturn(0xFF);
-		expectLastCall().andReturn(0xFF);
-		expectLastCall().andReturn(0x0D);
-		expectLastCall().andReturn(0x3E); // '>'
-		
+		expectLastCall().andReturn((byte) '4');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '0');
+		expectLastCall().andReturn((byte) 'C');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) 'F');
+		expectLastCall().andReturn((byte) 'F');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) 'F');
+		expectLastCall().andReturn((byte) 'F');
+		expectLastCall().andReturn((byte) '>');
+
 		replayAll();
-		
-		// call the method  to test
+
+		// call the method to test
 		command.readResult(mockIn);
-		assertEquals(command.getFormattedResult(), "16383RPM");
-		
+		command.getFormattedResult();
+		assertEquals(command.getRPM(), 16383);
+
 		verifyAll();
 	}
-	
+
 	/**
 	 * Test for valid InputStream read
 	 * 
@@ -72,22 +79,29 @@ public class EngineRPMObdCommandTest {
 		// mock InputStream read
 		mockIn = createMock(InputStream.class);
 		mockIn.read();
-		expectLastCall().andReturn(0x41);
-		expectLastCall().andReturn(0x0C);
-		expectLastCall().andReturn(0x28);
-		expectLastCall().andReturn(0x3C);
-		expectLastCall().andReturn(0x0D);
-		expectLastCall().andReturn(0x3E); // '>'
-		
+		expectLastCall().andReturn((byte) '4');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '0');
+		expectLastCall().andReturn((byte) 'C');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '2');
+		expectLastCall().andReturn((byte) '8');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '3');
+		expectLastCall().andReturn((byte) 'C');
+		expectLastCall().andReturn((byte) '>');
+
 		replayAll();
-		
-		// call the method  to test
+
+		// call the method to test
 		command.readResult(mockIn);
-		assertEquals(command.getFormattedResult(), "2575RPM");
-		
+		command.getFormattedResult();
+		assertEquals(command.getRPM(), 2575);
+
 		verifyAll();
 	}
-	
+
 	/**
 	 * Test for valid InputStream read
 	 * 
@@ -98,22 +112,29 @@ public class EngineRPMObdCommandTest {
 		// mock InputStream read
 		mockIn = createMock(InputStream.class);
 		mockIn.read();
-		expectLastCall().andReturn(0x41);
-		expectLastCall().andReturn(0x0C);
-		expectLastCall().andReturn(0x0A);
-		expectLastCall().andReturn(0x00);
-		expectLastCall().andReturn(0x0D);
-		expectLastCall().andReturn(0x3E); // '>'
-		
+		expectLastCall().andReturn((byte) '4');
+		expectLastCall().andReturn((byte) '1');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '0');
+		expectLastCall().andReturn((byte) 'C');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '0');
+		expectLastCall().andReturn((byte) 'A');
+		expectLastCall().andReturn((byte) ' ');
+		expectLastCall().andReturn((byte) '0');
+		expectLastCall().andReturn((byte) '0');
+		expectLastCall().andReturn((byte) '>');
+
 		replayAll();
-		
-		// call the method  to test
+
+		// call the method to test
 		command.readResult(mockIn);
-		assertEquals(command.getFormattedResult(), "640RPM");
-		
+		command.getFormattedResult();
+		assertEquals(command.getRPM(), 640);
+
 		verifyAll();
 	}
-	
+
 	/**
 	 * Clear resources.
 	 */
@@ -122,5 +143,5 @@ public class EngineRPMObdCommandTest {
 		command = null;
 		mockIn = null;
 	}
-	
+
 }

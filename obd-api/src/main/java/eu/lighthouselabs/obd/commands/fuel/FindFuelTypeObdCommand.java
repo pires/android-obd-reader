@@ -41,7 +41,7 @@ public class FindFuelTypeObdCommand extends ObdCommand {
 
 		if (!"NODATA".equals(res)) {
 			// ignore first two bytes [hh hh] of the response
-			fuelType = buff.get(2) & 0xFF;
+			fuelType = buffer.get(2);
 			res = getFuelTypeName();
 		}
 
