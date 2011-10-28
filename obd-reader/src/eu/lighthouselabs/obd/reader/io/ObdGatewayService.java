@@ -32,6 +32,7 @@ import eu.lighthouselabs.obd.commands.protocol.LineFeedOffObdCommand;
 import eu.lighthouselabs.obd.commands.protocol.ObdResetCommand;
 import eu.lighthouselabs.obd.commands.protocol.SelectProtocolObdCommand;
 import eu.lighthouselabs.obd.commands.protocol.TimeoutObdCommand;
+import eu.lighthouselabs.obd.commands.temperature.AmbientAirTemperatureObdCommand;
 import eu.lighthouselabs.obd.enums.ObdProtocols;
 import eu.lighthouselabs.obd.reader.IPostListener;
 import eu.lighthouselabs.obd.reader.IPostMonitor;
@@ -229,6 +230,9 @@ public class ObdGatewayService extends Service {
 		// For now set protocol to AUTO
 		queueJob(new ObdCommandJob(new SelectProtocolObdCommand(
 		        ObdProtocols.AUTO)));
+		
+		// Job for returning dummy data
+		queueJob(new ObdCommandJob(new AmbientAirTemperatureObdCommand()));
 
 		Log.d(TAG, "Initialization jobs queued.");
 
