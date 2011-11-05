@@ -9,6 +9,6 @@ package eu.lighthouselabs.obd.commands;
  */
 public interface SystemOfUnits {
 
-	float getImperialUnit(float value);
+	float getImperialUnit();
 
 }

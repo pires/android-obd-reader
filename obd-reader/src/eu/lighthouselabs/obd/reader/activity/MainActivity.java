@@ -36,9 +36,12 @@ import eu.lighthouselabs.obd.commands.SpeedObdCommand;
 import eu.lighthouselabs.obd.commands.engine.EngineRPMObdCommand;
 import eu.lighthouselabs.obd.commands.engine.MassAirFlowObdCommand;
 import eu.lighthouselabs.obd.commands.fuel.FuelEconomyObdCommand;
+import eu.lighthouselabs.obd.commands.fuel.FuelEconomyWithMAFObdCommand;
 import eu.lighthouselabs.obd.commands.fuel.FuelLevelObdCommand;
+import eu.lighthouselabs.obd.commands.fuel.FuelTrimObdCommand;
 import eu.lighthouselabs.obd.commands.temperature.AmbientAirTemperatureObdCommand;
 import eu.lighthouselabs.obd.enums.AvailableCommandNames;
+import eu.lighthouselabs.obd.enums.FuelTrim;
 import eu.lighthouselabs.obd.reader.IPostListener;
 import eu.lighthouselabs.obd.reader.R;
 import eu.lighthouselabs.obd.reader.io.ObdCommandJob;
@@ -150,9 +153,11 @@ public class MainActivity extends Activity {
 						cmdName)) {
 					TextView speed = (TextView) findViewById(R.id.spd_text);
 					speed.setText(cmdResult);
-				} else if (AvailableCommandNames.FUEL_ECONOMY.getValue().equals(cmdName)) {
-					TextView fuelEcon = (TextView) findViewById(R.id.inst_fuel_econ_text);
-					fuelEcon.setText(cmdResult);
+					// TODO
+//				} else if (AvailableCommandNames.FUEL_ECONOMY.getValue()
+//						.equals(cmdName)) {
+//					TextView fuelEcon = (TextView) findViewById(R.id.inst_fuel_econ_text);
+//					fuelEcon.setText(cmdResult);
 				} else {
 					addTableRow(cmdName, cmdResult);
 				}
@@ -418,17 +423,33 @@ public class MainActivity extends Activity {
 		final ObdCommandJob airTemp = new ObdCommandJob(
 				new AmbientAirTemperatureObdCommand());
 		final ObdCommandJob speed = new ObdCommandJob(new SpeedObdCommand());
-		final ObdCommandJob fuelEcon = new ObdCommandJob(new FuelEconomyObdCommand());
+		final ObdCommandJob fuelEcon = new ObdCommandJob(
+				new FuelEconomyObdCommand());
 		final ObdCommandJob rpm = new ObdCommandJob(new EngineRPMObdCommand());
 		final ObdCommandJob maf = new ObdCommandJob(new MassAirFlowObdCommand());
 		final ObdCommandJob fuelLevel = new ObdCommandJob(
 				new FuelLevelObdCommand());
+		final ObdCommandJob ltft1 = new ObdCommandJob(new FuelTrimObdCommand(
+				FuelTrim.LONG_TERM_BANK_1));
+		final ObdCommandJob ltft2 = new ObdCommandJob(new FuelTrimObdCommand(
+				FuelTrim.LONG_TERM_BANK_2));
+		final ObdCommandJob stft1 = new ObdCommandJob(new FuelTrimObdCommand(
+				FuelTrim.SHORT_TERM_BANK_1));
+		final ObdCommandJob stft2 = new ObdCommandJob(new FuelTrimObdCommand(
+				FuelTrim.SHORT_TERM_BANK_2));
+		final ObdCommandJob fuelEconWithMaf = new ObdCommandJob(
+				new FuelEconomyWithMAFObdCommand());
 
-		// mServiceConnection.addJobToQueue(airTemp);
+		mServiceConnection.addJobToQueue(airTemp);
 		mServiceConnection.addJobToQueue(speed);
 		mServiceConnection.addJobToQueue(fuelEcon);
 		mServiceConnection.addJobToQueue(rpm);
 		mServiceConnection.addJobToQueue(maf);
-		// mServiceConnection.addJobToQueue(fuelLevel);
+		mServiceConnection.addJobToQueue(fuelLevel);
+		mServiceConnection.addJobToQueue(ltft1);
+		mServiceConnection.addJobToQueue(ltft2);
+		mServiceConnection.addJobToQueue(stft1);
+		mServiceConnection.addJobToQueue(stft2);
+		mServiceConnection.addJobToQueue(fuelEconWithMaf);
 	}
 }

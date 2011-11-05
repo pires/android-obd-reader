@@ -24,6 +24,8 @@ public enum AvailableCommandNames {
 	FUEL_TYPE("Fuel Type"),
 	FUEL_CONSUMPTION("Fuel Consumption"),
 	FUEL_ECONOMY("Fuel Economy"),
+	FUEL_ECONOMY_WITH_MAF("Fuel Economy 2"),
+	FUEL_ECONOMY_WITHOUT_MAF("Fuel Economy 3"),
 	TIMING_ADVANCE("Timing Advance"),
 	DTC_NUMBER("Diagnostic Trouble Codes"),
 	EQUIV_RATIO("Command Equivalence Ratio");

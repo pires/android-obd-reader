@@ -12,6 +12,8 @@ import eu.lighthouselabs.obd.commands.SystemOfUnits;
  * put description
  */
 public abstract class TemperatureObdCommand extends ObdCommand implements SystemOfUnits {
+	
+	private float temperature = 0.0f;
 
 	/**
 	 * Default ctor.
@@ -51,27 +53,40 @@ public abstract class TemperatureObdCommand extends ObdCommand implements System
 	@Override
 	public String getFormattedResult() {
 		String res = getResult();
-		float value = 0f;
 
 		if (!"NODATA".equals(res)) {
 			// ignore first two bytes [hh hh] of the response
-			value = prepareTempValue(buffer.get(2));
+			temperature = prepareTempValue(buffer.get(2));
 			
 			// convert?
 			if (useImperialUnits)
-				res = String.format("%.1f%s", getImperialUnit(value), "F");
+				res = String.format("%.1f%s", getImperialUnit(), "F");
 			else
-				res = String.format("%.0f%s", value, "C");
+				res = String.format("%.0f%s", temperature, "C");
 		}
 
 		return res;
 	}
+	
+	/**
+	 * @return the temperature in Celsius.
+	 */
+	public float getTemperature() {
+		return temperature;
+	}
 
 	/**
-	 * Converts from Celsius to Fahrenheit.
+	 * @return the temperature in Fahrenheit.
 	 */
-	public float getImperialUnit(float value) {
-		return value * 1.8f + 32;
+	public float getImperialUnit() {
+		return temperature * 1.8f + 32;
+	}
+	
+	/**
+	 * @return the temperature in Kelvin.
+	 */
+	public float getKelvin() {
+		return temperature + 273.15f;
 	}
 	
 	/**

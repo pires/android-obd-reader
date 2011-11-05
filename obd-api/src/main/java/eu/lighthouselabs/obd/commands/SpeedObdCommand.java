@@ -31,14 +31,6 @@ public class SpeedObdCommand extends ObdCommand implements SystemOfUnits {
 	}
 
 	/**
-	 * Convert from km/h to mph
-	 */
-	public float getImperialUnit(float value) {
-		Double tempValue = value * 0.621371192;
-		return Float.valueOf(tempValue.toString());
-	}
-
-	/**
 	 * 
 	 */
 	public String getFormattedResult() {
@@ -50,7 +42,7 @@ public class SpeedObdCommand extends ObdCommand implements SystemOfUnits {
 			res = String.format("%d%s", metricSpeed, "km/h");
 
 			if (useImperialUnits)
-				res = String.format("%.2f%s", getImperialUnit(metricSpeed),
+				res = String.format("%.2f%s", getImperialUnit(),
 				        "mph");
 		}
 
@@ -68,7 +60,15 @@ public class SpeedObdCommand extends ObdCommand implements SystemOfUnits {
 	 * @return the speed in imperial units.
 	 */
 	public float getImperialSpeed() {
-		return getImperialUnit(metricSpeed);
+		return getImperialUnit();
+	}
+	
+	/**
+	 * Convert from km/h to mph
+	 */
+	public float getImperialUnit() {
+		Double tempValue = metricSpeed * 0.621371192;
+		return Float.valueOf(tempValue.toString());
 	}
 
 	@Override

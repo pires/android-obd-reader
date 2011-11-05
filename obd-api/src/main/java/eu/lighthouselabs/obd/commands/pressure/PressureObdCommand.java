@@ -13,6 +13,7 @@ public abstract class PressureObdCommand extends ObdCommand implements
 		SystemOfUnits {
 
 	protected int tempValue = 0;
+	protected int pressure = 0;
 
 	/**
 	 * Default ctor
@@ -54,22 +55,29 @@ public abstract class PressureObdCommand extends ObdCommand implements
 		if (!"NODATA".equals(res)) {
 			// ignore first two bytes [hh hh] of the response
 			tempValue = buffer.get(2);
-			int value = preparePressureValue(); // this will need tempValue
-			res = String.format("%d%s", value, "kPa");
+			pressure = preparePressureValue(); // this will need tempValue
+			res = String.format("%d%s", pressure, "kPa");
 
 			if (useImperialUnits) {
-				res = String.format("%.1f%s", getImperialUnit(value), "psi");
+				res = String.format("%.1f%s", getImperialUnit(), "psi");
 			}
 		}
 
 		return res;
 	}
+	
+	/**
+	 * @return the pressure in kPa
+	 */
+	public int getMetricUnit() {
+		return pressure;
+	}
 
 	/**
-	 * Convert kPa to psi
+	 * @return the pressure in psi
 	 */
-	public float getImperialUnit(float value) {
-		Double d = value * 0.145037738;
+	public float getImperialUnit() {
+		Double d = pressure * 0.145037738;
 		return Float.valueOf(d.toString());
 	}
 }
