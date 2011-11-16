@@ -151,6 +151,8 @@ public class MainActivity extends Activity {
 				String cmdName = job.getCommand().getName();
 				String cmdResult = job.getCommand().getFormattedResult();
 
+				Log.d(TAG, FuelTrim.LONG_TERM_BANK_1.getBank() + " equals " + cmdName + "?");
+				
 				if (AvailableCommandNames.ENGINE_RPM.getValue().equals(cmdName)) {
 					TextView tvRpm = (TextView) findViewById(R.id.rpm_text);
 					tvRpm.setText(cmdResult);
@@ -163,7 +165,7 @@ public class MainActivity extends Activity {
 				} else if (AvailableCommandNames.MAF.getValue().equals(cmdName)) {
 					maf = ((MassAirFlowObdCommand) job.getCommand()).getMAF();
 					addTableRow(cmdName, cmdResult);
-				} else if (FuelTrim.LONG_TERM_BANK_1.equals(cmdName)) {
+				} else if (FuelTrim.LONG_TERM_BANK_1.getBank().equals(cmdName)) {
 					ltft = ((FuelTrimObdCommand) job.getCommand()).getValue();
 					addTableRow(cmdName, cmdResult);
 				} else {
@@ -419,12 +421,14 @@ public class MainActivity extends Activity {
 			/*
 			 * If values are not default, then we have values to calculate MPG
 			 */
+			Log.d(TAG, "SPD:" + speed + ", MAF:" + maf + ", LTFT:" + ltft);
 			if (speed > 1 && maf > 1 && ltft != 0) {
 				FuelEconomyWithMAFObdCommand fuelEconCmd = new FuelEconomyWithMAFObdCommand(
 						FuelType.DIESEL, speed, maf, ltft, false /* TODO */);
 				TextView tvMpg = (TextView) findViewById(R.id.fuel_econ_text);
-				String liters100km = String.format("%.2d", fuelEconCmd.getLitersPer100Km());
+				String liters100km = String.format("%.2f%s", fuelEconCmd.getLitersPer100Km(), "l/100km");
 				tvMpg.setText("" + liters100km);
+				Log.d(TAG, "FUELECON:" + liters100km);
 				addTableRow(fuelEconCmd.getName(), liters100km + "L/100KM");
 			}
 

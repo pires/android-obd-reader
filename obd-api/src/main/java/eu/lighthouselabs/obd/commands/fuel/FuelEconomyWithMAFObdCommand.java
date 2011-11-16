@@ -31,16 +31,16 @@ public class FuelEconomyWithMAFObdCommand {
 		this.ltft = ltft;
 		this.useImperial = useImperial;
 
-		mpg = (14.7 * (1 + ltft / 100) * 6.17 * 454 * speed * 0.621371)
-				/ (3600 * maf);
+		mpg = (14.7 * 6.17 * 454 * speed * 0.621371) / (3600 * maf);
 		// mpg = 710.7 * speed / maf * (1 + ltft / 100);
+
 		litersPer100Km = mpg / 2.2352;
 
 		// float fuelDensity = 0.71f;
 		// if (fuelType.equals(FuelType.DIESEL))
 		// fuelDensity = 0.832f;
-		// litersPer100Km = (maf / 14.7 / fuelDensity * 3600) * (1 + tft / 100)/
-		// speed * 100;
+		// litersPer100Km = (maf / 14.7 / fuelDensity * 3600) * (1 + ltft / 100)
+		// / speed;
 	}
 
 	/**

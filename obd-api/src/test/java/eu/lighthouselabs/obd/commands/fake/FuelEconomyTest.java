@@ -32,6 +32,13 @@ public class FuelEconomyTest {
 	}
 
 	@Test
+	public void testSomeLitersPer100Km_v2() {
+		cmdWithMAF = new FuelEconomyWithMAFObdCommand(FuelType.DIESEL, 38,
+				17.66d, -85.94f, false);
+		assertEquals(cmdWithMAF.getLitersPer100Km(), 1.0957601324895183d);
+	}
+	
+	@Test
 	public void testSomeLitersPer100Km() {
 		assertEquals(cmdWithMAF.getLitersPer100Km(), 1.0957601324895183d);
 	}
