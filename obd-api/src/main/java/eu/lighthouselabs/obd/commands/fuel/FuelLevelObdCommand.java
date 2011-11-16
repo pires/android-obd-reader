@@ -29,8 +29,7 @@ public class FuelLevelObdCommand extends ObdCommand {
 	public String getFormattedResult() {
 		if (!"NODATA".equals(getResult())) {
 			// ignore first two bytes [hh hh] of the response
-			int temp = buffer.get(2);
-			fuelLevel = 100.0f * temp / 255.0f;
+			fuelLevel = 100.0f * buffer.get(2) / 255.0f;
 		}
 
 		return String.format("%.1f%s", fuelLevel, "%");

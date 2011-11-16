@@ -92,7 +92,7 @@ public class FuelLevelObdCommandTest {
 	}
 
 	/**
-	 * Test for valid InputStream read, full tank
+	 * Test for valid InputStream read, empty tank
 	 * 
 	 * @throws IOException
 	 */

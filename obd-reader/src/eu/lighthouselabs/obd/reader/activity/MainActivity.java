@@ -42,6 +42,7 @@ import eu.lighthouselabs.obd.commands.fuel.FuelTrimObdCommand;
 import eu.lighthouselabs.obd.commands.temperature.AmbientAirTemperatureObdCommand;
 import eu.lighthouselabs.obd.enums.AvailableCommandNames;
 import eu.lighthouselabs.obd.enums.FuelTrim;
+import eu.lighthouselabs.obd.enums.FuelType;
 import eu.lighthouselabs.obd.reader.IPostListener;
 import eu.lighthouselabs.obd.reader.R;
 import eu.lighthouselabs.obd.reader.io.ObdCommandJob;
@@ -90,6 +91,10 @@ public class MainActivity extends Activity {
 	private PowerManager.WakeLock wakeLock = null;
 
 	private boolean preRequisites = true;
+
+	private int speed = 1;
+	private double maf = 1;
+	private float ltft = 0;
 
 	private final SensorEventListener orientListener = new SensorEventListener() {
 		public void onSensorChanged(SensorEvent event) {
@@ -147,17 +152,20 @@ public class MainActivity extends Activity {
 				String cmdResult = job.getCommand().getFormattedResult();
 
 				if (AvailableCommandNames.ENGINE_RPM.getValue().equals(cmdName)) {
-					TextView rpm = (TextView) findViewById(R.id.rpm_text);
-					rpm.setText(cmdResult);
+					TextView tvRpm = (TextView) findViewById(R.id.rpm_text);
+					tvRpm.setText(cmdResult);
 				} else if (AvailableCommandNames.SPEED.getValue().equals(
 						cmdName)) {
-					TextView speed = (TextView) findViewById(R.id.spd_text);
-					speed.setText(cmdResult);
-					// TODO
-//				} else if (AvailableCommandNames.FUEL_ECONOMY.getValue()
-//						.equals(cmdName)) {
-//					TextView fuelEcon = (TextView) findViewById(R.id.inst_fuel_econ_text);
-//					fuelEcon.setText(cmdResult);
+					TextView tvSpeed = (TextView) findViewById(R.id.spd_text);
+					tvSpeed.setText(cmdResult);
+					speed = ((SpeedObdCommand) job.getCommand())
+							.getMetricSpeed();
+				} else if (AvailableCommandNames.MAF.getValue().equals(cmdName)) {
+					maf = ((MassAirFlowObdCommand) job.getCommand()).getMAF();
+					addTableRow(cmdName, cmdResult);
+				} else if (FuelTrim.LONG_TERM_BANK_1.equals(cmdName)) {
+					ltft = ((FuelTrimObdCommand) job.getCommand()).getValue();
+					addTableRow(cmdName, cmdResult);
 				} else {
 					addTableRow(cmdName, cmdResult);
 				}
@@ -408,6 +416,18 @@ public class MainActivity extends Activity {
 	 */
 	private Runnable mQueueCommands = new Runnable() {
 		public void run() {
+			/*
+			 * If values are not default, then we have values to calculate MPG
+			 */
+			if (speed > 1 && maf > 1 && ltft != 0) {
+				FuelEconomyWithMAFObdCommand fuelEconCmd = new FuelEconomyWithMAFObdCommand(
+						FuelType.DIESEL, speed, maf, ltft, false /* TODO */);
+				TextView tvMpg = (TextView) findViewById(R.id.fuel_econ_text);
+				String liters100km = String.format("%.2d", fuelEconCmd.getLitersPer100Km());
+				tvMpg.setText("" + liters100km);
+				addTableRow(fuelEconCmd.getName(), liters100km + "L/100KM");
+			}
+
 			if (mServiceConnection.isRunning())
 				queueCommands();
 
@@ -437,19 +457,16 @@ public class MainActivity extends Activity {
 				FuelTrim.SHORT_TERM_BANK_1));
 		final ObdCommandJob stft2 = new ObdCommandJob(new FuelTrimObdCommand(
 				FuelTrim.SHORT_TERM_BANK_2));
-		final ObdCommandJob fuelEconWithMaf = new ObdCommandJob(
-				new FuelEconomyWithMAFObdCommand());
 
-		mServiceConnection.addJobToQueue(airTemp);
+		// mServiceConnection.addJobToQueue(airTemp);
 		mServiceConnection.addJobToQueue(speed);
-		mServiceConnection.addJobToQueue(fuelEcon);
+		// mServiceConnection.addJobToQueue(fuelEcon);
 		mServiceConnection.addJobToQueue(rpm);
 		mServiceConnection.addJobToQueue(maf);
 		mServiceConnection.addJobToQueue(fuelLevel);
 		mServiceConnection.addJobToQueue(ltft1);
-		mServiceConnection.addJobToQueue(ltft2);
-		mServiceConnection.addJobToQueue(stft1);
-		mServiceConnection.addJobToQueue(stft2);
-		mServiceConnection.addJobToQueue(fuelEconWithMaf);
+		// mServiceConnection.addJobToQueue(ltft2);
+		// mServiceConnection.addJobToQueue(stft1);
+		// mServiceConnection.addJobToQueue(stft2);
 	}
 }

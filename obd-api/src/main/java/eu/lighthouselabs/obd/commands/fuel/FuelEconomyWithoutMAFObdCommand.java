@@ -17,12 +17,12 @@ import eu.lighthouselabs.obd.commands.temperature.AirIntakeTemperatureObdCommand
 /**
  * TODO put description
  */
-public class FuelEcononomyWithoutMAFObdCommand extends ObdCommand {
+public class FuelEconomyWithoutMAFObdCommand extends ObdCommand {
 	
 	public static final double AIR_FUEL_RATIO = 14.64;
     public static final double FUEL_DENSITY_GRAMS_PER_LITER = 720.0;
 	
-	public FuelEcononomyWithoutMAFObdCommand() {
+	public FuelEconomyWithoutMAFObdCommand() {
 		super("");
 	}
 	
@@ -55,6 +55,7 @@ public class FuelEcononomyWithoutMAFObdCommand extends ObdCommand {
         pressCmd.getFormattedResult();
         
         double imap = rpmCmd.getRPM() * pressCmd.getMetricUnit() / airTempCmd.getKelvin();
+//        double maf = (imap / 120) * (speedCmd.getMetricSpeed()/100)*()
         
 	}
 
