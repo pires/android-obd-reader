@@ -61,7 +61,7 @@ public class CommandEquivRatioObdCommand extends ObdCommand {
 	/**
 	 * @return
 	 */
-	double getRatio() {
+	public double getRatio() {
 		return ratio;
 	}
 
