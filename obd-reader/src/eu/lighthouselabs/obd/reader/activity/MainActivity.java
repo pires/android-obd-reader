@@ -33,6 +33,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import eu.lighthouselabs.obd.commands.SpeedObdCommand;
+import eu.lighthouselabs.obd.commands.control.CommandEquivRatioObdCommand;
 import eu.lighthouselabs.obd.commands.engine.EngineRPMObdCommand;
 import eu.lighthouselabs.obd.commands.engine.MassAirFlowObdCommand;
 import eu.lighthouselabs.obd.commands.fuel.FuelEconomyObdCommand;
@@ -80,12 +81,7 @@ public class MainActivity extends Activity {
 
 	private SensorManager sensorManager = null;
 	private Sensor orientSensor = null;
-	private double fuelEconAvg = 0;
-	private int fuelEconi = 0;
-	private double speedAvg = 0;
-	private int speedi = 0;
 	private SharedPreferences prefs = null;
-	private double maxFuelEcon = 70.0;
 
 	private PowerManager powerManager = null;
 	private PowerManager.WakeLock wakeLock = null;
@@ -95,6 +91,7 @@ public class MainActivity extends Activity {
 	private int speed = 1;
 	private double maf = 1;
 	private float ltft = 0;
+	private double equivRatio = 1;
 
 	private final SensorEventListener orientListener = new SensorEventListener() {
 		public void onSensorChanged(SensorEvent event) {
@@ -167,6 +164,8 @@ public class MainActivity extends Activity {
 					addTableRow(cmdName, cmdResult);
 				} else if (FuelTrim.LONG_TERM_BANK_1.getBank().equals(cmdName)) {
 					ltft = ((FuelTrimObdCommand) job.getCommand()).getValue();
+				} else if (AvailableCommandNames.EQUIV_RATIO.getValue().equals(cmdName)) {
+					equivRatio = ((CommandEquivRatioObdCommand) job.getCommand()).getRatio();
 					addTableRow(cmdName, cmdResult);
 				} else {
 					addTableRow(cmdName, cmdResult);
@@ -267,7 +266,6 @@ public class MainActivity extends Activity {
 		sensorManager.registerListener(orientListener, orientSensor,
 				SensorManager.SENSOR_DELAY_UI);
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		maxFuelEcon = ConfigActivity.getMaxFuelEconomy(prefs);
 		powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
 		wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK,
 				"ObdReader");
@@ -426,10 +424,9 @@ public class MainActivity extends Activity {
 				FuelEconomyWithMAFObdCommand fuelEconCmd = new FuelEconomyWithMAFObdCommand(
 						FuelType.DIESEL, speed, maf, ltft, false /* TODO */);
 				TextView tvMpg = (TextView) findViewById(R.id.fuel_econ_text);
-				String liters100km = String.format("%.2f%s", fuelEconCmd.getLitersPer100Km(), "l/100km");
+				String liters100km = String.format("%.2f", fuelEconCmd.getLitersPer100Km());
 				tvMpg.setText("" + liters100km);
 				Log.d(TAG, "FUELECON:" + liters100km);
-				addTableRow(fuelEconCmd.getName(), liters100km + "L/100KM");
 			}
 
 			if (mServiceConnection.isRunning())
@@ -461,6 +458,7 @@ public class MainActivity extends Activity {
 				FuelTrim.SHORT_TERM_BANK_1));
 		final ObdCommandJob stft2 = new ObdCommandJob(new FuelTrimObdCommand(
 				FuelTrim.SHORT_TERM_BANK_2));
+		final ObdCommandJob equiv = new ObdCommandJob(new CommandEquivRatioObdCommand());
 
 		// mServiceConnection.addJobToQueue(airTemp);
 		mServiceConnection.addJobToQueue(speed);
@@ -468,6 +466,7 @@ public class MainActivity extends Activity {
 		mServiceConnection.addJobToQueue(rpm);
 		mServiceConnection.addJobToQueue(maf);
 		mServiceConnection.addJobToQueue(fuelLevel);
+//		mServiceConnection.addJobToQueue(equiv);
 		mServiceConnection.addJobToQueue(ltft1);
 		// mServiceConnection.addJobToQueue(ltft2);
 		// mServiceConnection.addJobToQueue(stft1);

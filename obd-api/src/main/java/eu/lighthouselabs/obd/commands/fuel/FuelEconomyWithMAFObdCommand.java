@@ -14,6 +14,7 @@ public class FuelEconomyWithMAFObdCommand {
 	private int speed = 1;
 	private double maf = 1;
 	private float ltft = 1;
+	private double ratio = 1;
 	private FuelType fuelType;
 	private boolean useImperial = false;
 
@@ -33,8 +34,11 @@ public class FuelEconomyWithMAFObdCommand {
 
 		mpg = (14.7 * 6.17 * 454 * speed * 0.621371) / (3600 * maf);
 		// mpg = 710.7 * speed / maf * (1 + ltft / 100);
+//		mpg = (14.7 * ratio * 6.17 * 454.0 * speed * 0.621371) / (3600.0 * maf);
+//		mpg = (14.7 * (1 + ltft / 100) * 6.17 * 454.0 * speed * 0.621371) / (3600.0 * maf);
 
-		litersPer100Km = mpg / 2.2352;
+//		litersPer100Km = mpg / 2.2352;
+		litersPer100Km = 235.2 / mpg;
 
 		// float fuelDensity = 0.71f;
 		// if (fuelType.equals(FuelType.DIESEL))
