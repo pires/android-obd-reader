@@ -19,7 +19,7 @@ public abstract class PercentageObdCommand extends ObdCommand {
 	/**
 	 * @param other
 	 */
-	public PercentageObdCommand(ObdCommand other) {
+	public PercentageObdCommand(PercentageObdCommand other) {
 		super(other);
 		// TODO Auto-generated constructor stub
 	}

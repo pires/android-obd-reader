@@ -13,29 +13,29 @@ import java.util.ArrayList;
  */
 public class ObdMultiCommand {
 
-	private ArrayList<ObdCommand> commands;
+	private ArrayList<ObdBaseCommand> commands;
 	
 	/**
 	 * Default ctor.
 	 */
 	public ObdMultiCommand() {
-		this.commands = new ArrayList<ObdCommand>();
+		this.commands = new ArrayList<ObdBaseCommand>();
 	}
 	
 	/**
-	 * Add ObdCommand to list of ObdCommands.
+	 * Add ObdBaseCommand to list of ObdCommands.
 	 * 
 	 * @param command
 	 */
-	public void add(ObdCommand command) {
+	public void add(ObdBaseCommand command) {
 		this.commands.add(command);
 	}
 	
 	/**
-	 * Removes ObdCommand from the list of ObdCommands.
+	 * Removes ObdBaseCommand from the list of ObdCommands.
 	 * @param command
 	 */
-	public void remove(ObdCommand command) {
+	public void remove(ObdBaseCommand command) {
 		this.commands.remove(command);
 	}
 	
@@ -46,7 +46,7 @@ public class ObdMultiCommand {
 	 */
 	public void sendCommands(InputStream in, OutputStream out) throws IOException,
 			InterruptedException {
-		for (ObdCommand command : commands) {
+		for (ObdBaseCommand command : commands) {
 			/*
 			 * Send command and read response.
 			 */
@@ -61,7 +61,7 @@ public class ObdMultiCommand {
 	public String getFormattedResult() {
 		StringBuilder res = new StringBuilder();
 		
-		for (ObdCommand command : commands) {
+		for (ObdBaseCommand command : commands) {
 			res.append(command.getFormattedResult()).append(",");
 		}
 		

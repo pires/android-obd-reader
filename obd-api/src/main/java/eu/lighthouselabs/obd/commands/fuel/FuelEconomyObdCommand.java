@@ -3,13 +3,13 @@
  */
 package eu.lighthouselabs.obd.commands.fuel;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
 import eu.lighthouselabs.obd.commands.ObdCommand;
 import eu.lighthouselabs.obd.commands.SpeedObdCommand;
 import eu.lighthouselabs.obd.enums.AvailableCommandNames;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * TODO put description

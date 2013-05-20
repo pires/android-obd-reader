@@ -3,16 +3,11 @@
  */
 package eu.lighthouselabs.obd.commands.protocol;
 
-import eu.lighthouselabs.obd.commands.ObdCommand;
-
 /**
  * Turns off line-feed.
  */
-public class LineFeedOffObdCommand extends ObdCommand {
+public class LineFeedOffObdCommand extends ObdProtocolCommand {
 
-	/**
-	 * @param command
-	 */
 	public LineFeedOffObdCommand() {
 		super("AT L0");
 	}
@@ -20,14 +15,14 @@ public class LineFeedOffObdCommand extends ObdCommand {
 	/**
 	 * @param other
 	 */
-	public LineFeedOffObdCommand(ObdCommand other) {
+	public LineFeedOffObdCommand(LineFeedOffObdCommand other) {
 		super(other);
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see eu.lighthouselabs.obd.commands.ObdCommand#getFormattedResult()
+	 * @see eu.lighthouselabs.obd.commands.ObdBaseCommand#getFormattedResult()
 	 */
 	@Override
 	public String getFormattedResult() {
