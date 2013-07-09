@@ -3,18 +3,17 @@
  */
 package eu.lighthouselabs.obd.commands.protocol;
 
-import eu.lighthouselabs.obd.commands.ObdCommand;
 import eu.lighthouselabs.obd.enums.ObdProtocols;
 
 /**
  * Select the protocol to use.
  */
-public class SelectProtocolObdCommand extends ObdCommand {
+public class SelectProtocolObdCommand extends ObdProtocolCommand {
 	
 	private final ObdProtocols _protocol;
 
 	/**
-	 * @param command
+	 * @param protocol
 	 */
 	public SelectProtocolObdCommand(ObdProtocols protocol) {
 		super("AT SP " + protocol.getValue());
@@ -24,7 +23,7 @@ public class SelectProtocolObdCommand extends ObdCommand {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see eu.lighthouselabs.obd.commands.ObdCommand#getFormattedResult()
+	 * @see eu.lighthouselabs.obd.commands.ObdBaseCommand#getFormattedResult()
 	 */
 	@Override
 	public String getFormattedResult() {

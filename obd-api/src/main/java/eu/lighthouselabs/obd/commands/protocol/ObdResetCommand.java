@@ -6,16 +6,11 @@ package eu.lighthouselabs.obd.commands.protocol;
 import java.io.IOException;
 import java.io.InputStream;
 
-import eu.lighthouselabs.obd.commands.ObdCommand;
-
 /**
  * This method will reset the OBD connection.
  */
-public class ObdResetCommand extends ObdCommand {
+public class ObdResetCommand extends ObdProtocolCommand {
 
-	/**
-	 * @param command
-	 */
 	public ObdResetCommand() {
 		super("AT Z");
 	}
@@ -46,7 +41,7 @@ public class ObdResetCommand extends ObdCommand {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see eu.lighthouselabs.obd.commands.ObdCommand#getFormattedResult()
+	 * @see eu.lighthouselabs.obd.commands.ObdBaseCommand#getFormattedResult()
 	 */
 	@Override
 	public String getFormattedResult() {

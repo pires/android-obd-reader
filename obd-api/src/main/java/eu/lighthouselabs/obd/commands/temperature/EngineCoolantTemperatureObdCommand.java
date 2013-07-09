@@ -27,7 +27,7 @@ public class EngineCoolantTemperatureObdCommand extends TemperatureObdCommand {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see eu.lighthouselabs.obd.commands.ObdCommand#getName()
+	 * @see eu.lighthouselabs.obd.commands.ObdBaseCommand#getName()
 	 */
 	@Override
 	public String getName() {

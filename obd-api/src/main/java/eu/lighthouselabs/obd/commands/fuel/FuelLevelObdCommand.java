@@ -13,9 +13,6 @@ public class FuelLevelObdCommand extends ObdCommand {
 
 	private float fuelLevel = 0f;
 
-	/**
-	 * @param command
-	 */
 	public FuelLevelObdCommand() {
 		super("01 2F");
 	}
@@ -23,7 +20,7 @@ public class FuelLevelObdCommand extends ObdCommand {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see eu.lighthouselabs.obd.commands.ObdCommand#getFormattedResult()
+	 * @see eu.lighthouselabs.obd.commands.ObdBaseCommand#getFormattedResult()
 	 */
 	@Override
 	public String getFormattedResult() {

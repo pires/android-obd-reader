@@ -17,14 +17,14 @@ public class FuelConsumptionObdCommand extends ObdCommand {
 		super("01 5E");
 	}
 
-	public FuelConsumptionObdCommand(ObdCommand other) {
+	public FuelConsumptionObdCommand(FuelConsumptionObdCommand other) {
 		super(other);
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see eu.lighthouselabs.obd.commands.ObdCommand#getFormattedResult()
+	 * @see eu.lighthouselabs.obd.commands.ObdBaseCommand#getFormattedResult()
 	 */
 	@Override
 	public String getFormattedResult() {
@@ -47,7 +47,7 @@ public class FuelConsumptionObdCommand extends ObdCommand {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see eu.lighthouselabs.obd.commands.ObdCommand#getName()
+	 * @see eu.lighthouselabs.obd.commands.ObdBaseCommand#getName()
 	 */
 	@Override
 	public String getName() {
