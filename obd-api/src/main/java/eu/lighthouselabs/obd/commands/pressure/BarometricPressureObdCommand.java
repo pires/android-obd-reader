@@ -11,9 +11,6 @@ import eu.lighthouselabs.obd.enums.AvailableCommandNames;
  */
 public class BarometricPressureObdCommand extends PressureObdCommand {
 
-	/**
-	 * @param cmd
-	 */
 	public BarometricPressureObdCommand() {
 		super("01 33");
 	}
@@ -27,7 +24,7 @@ public class BarometricPressureObdCommand extends PressureObdCommand {
 	}
 
 	/* (non-Javadoc)
-	 * @see eu.lighthouselabs.obd.commands.ObdCommand#getName()
+	 * @see eu.lighthouselabs.obd.commands.ObdBaseCommand#getName()
 	 */
 	@Override
 	public String getName() {

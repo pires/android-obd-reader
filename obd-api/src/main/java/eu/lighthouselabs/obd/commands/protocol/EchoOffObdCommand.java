@@ -3,16 +3,11 @@
  */
 package eu.lighthouselabs.obd.commands.protocol;
 
-import eu.lighthouselabs.obd.commands.ObdCommand;
-
 /**
  * This command will turn-off echo.
  */
-public class EchoOffObdCommand extends ObdCommand {
+public class EchoOffObdCommand extends ObdProtocolCommand {
 
-	/**
-	 * @param command
-	 */
 	public EchoOffObdCommand() {
 		super("AT E0");
 	}
@@ -20,14 +15,14 @@ public class EchoOffObdCommand extends ObdCommand {
 	/**
 	 * @param other
 	 */
-	public EchoOffObdCommand(ObdCommand other) {
+	public EchoOffObdCommand(EchoOffObdCommand other) {
 		super(other);
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see eu.lighthouselabs.obd.commands.ObdCommand#getFormattedResult()
+	 * @see eu.lighthouselabs.obd.commands.ObdBaseCommand#getFormattedResult()
 	 */
 	@Override
 	public String getFormattedResult() {

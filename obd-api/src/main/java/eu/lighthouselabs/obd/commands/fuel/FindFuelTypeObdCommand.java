@@ -26,14 +26,14 @@ public class FindFuelTypeObdCommand extends ObdCommand {
 	 * 
 	 * @param other
 	 */
-	public FindFuelTypeObdCommand(ObdCommand other) {
+	public FindFuelTypeObdCommand(FindFuelTypeObdCommand other) {
 		super(other);
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see eu.lighthouselabs.obd.command.ObdCommand#getFormattedResult()
+	 * @see eu.lighthouselabs.obd.command.ObdBaseCommand#getFormattedResult()
 	 */
 	@Override
 	public String getFormattedResult() {

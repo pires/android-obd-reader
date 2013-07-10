@@ -3,7 +3,6 @@
  */
 package eu.lighthouselabs.obd.commands.engine;
 
-import eu.lighthouselabs.obd.commands.ObdCommand;
 import eu.lighthouselabs.obd.commands.PercentageObdCommand;
 import eu.lighthouselabs.obd.enums.AvailableCommandNames;
 
@@ -12,9 +11,6 @@ import eu.lighthouselabs.obd.enums.AvailableCommandNames;
  */
 public class EngineLoadObdCommand extends PercentageObdCommand {
 
-	/**
-	 * @param command
-	 */
 	public EngineLoadObdCommand() {
 		super("01 04");
 	}
@@ -22,12 +18,12 @@ public class EngineLoadObdCommand extends PercentageObdCommand {
 	/**
 	 * @param other
 	 */
-	public EngineLoadObdCommand(ObdCommand other) {
+	public EngineLoadObdCommand(EngineLoadObdCommand other) {
 		super(other);
 	}
 
 	/* (non-Javadoc)
-	 * @see eu.lighthouselabs.obd.commands.ObdCommand#getName()
+	 * @see eu.lighthouselabs.obd.commands.ObdBaseCommand#getName()
 	 */
 	@Override
 	public String getName() {
