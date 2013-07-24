@@ -6,9 +6,7 @@
   Define the environment variable ANDROID_HOME with the location of the Android 
   SDK dir. * Run Maven with -Dandroid.sdk.path=PATH_TO_ANDROID_HOME -->
 
-<project
-  xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>eu.lighthouselabs</groupId>
@@ -23,8 +21,10 @@
     <module>obd-api</module>
     <module>obd-reader</module>
   </modules>
-  
+
   <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.sourceEncoding>UTF-8</project.reporting.sourceEncoding>
     <android.version>2.2.1</android.version>
   </properties>
 
@@ -48,16 +48,16 @@
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.3.2</version>
+        <version>3.1</version>
       </plugin>
       <plugin>
         <artifactId>maven-clean-plugin</artifactId>
-        <version>2.4.1</version>
+        <version>2.5</version>
       </plugin>
       <plugin>
         <groupId>com.jayway.maven.plugins.android.generation2</groupId>
         <artifactId>android-maven-plugin</artifactId>
-        <version>3.0.0-alpha-13</version>
+        <version>3.6.0</version>
       </plugin>
     </plugins>
   </build>

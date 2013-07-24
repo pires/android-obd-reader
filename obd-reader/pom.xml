@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project
-  xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
@@ -14,32 +12,16 @@
   <packaging>apk</packaging>
   <name>obd-reader</name>
 
-  <!-- no longer needed, but remains for historical reasons. -->
-  <repositories>
-    <repository>
-      <id>local-repo</id>
-      <url>file://${basedir}/libs</url>
-    </repository>
-  </repositories>
-
   <dependencies>
-    <!-- api module -->
     <dependency>
       <groupId>eu.lighthouselabs.obd</groupId>
       <artifactId>api</artifactId>
       <version>${project.version}</version>
     </dependency>
-
     <dependency>
       <groupId>com.google.android</groupId>
       <artifactId>android</artifactId>
       <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>com.nullwire</groupId>
-      <artifactId>trace</artifactId>
-      <version>1.1</version>
     </dependency>
   </dependencies>
 
@@ -62,91 +44,7 @@
         </configuration>
         <extensions>true</extensions>
       </plugin>
-
-      <!-- proguard can shrink the source classes and remove unused classes 
-        and more.. -->
-      <plugin>
-        <groupId>com.pyx4me</groupId>
-        <artifactId>proguard-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>process-classes</phase>
-            <goals>
-              <goal>proguard</goal>
-            </goals>
-          </execution>
-        </executions>
-        <!-- we need to override the dependency of the plugin to get a newer 
-          version of proguard -->
-        <dependencies>
-          <dependency>
-            <groupId>net.sf.proguard</groupId>
-            <artifactId>proguard</artifactId>
-            <version>4.4</version>
-            <scope>runtime</scope>
-          </dependency>
-        </dependencies>
-        <configuration>
-          <proguardVersion>4.4</proguardVersion>
-          <proguardInclude>${project.basedir}/proguard.cfg</proguardInclude>
-          <maxMemory>256m</maxMemory>
-          <injar>android-classes</injar>
-          <libs>
-            <lib>${java.home}/lib/rt.jar</lib>
-          </libs>
-          <skip>false</skip>
-          <obfuscate>true</obfuscate>
-        </configuration>
-      </plugin>
-<!--       <plugin> -->
-<!--         <artifactId>maven-clean-plugin</artifactId> -->
-<!--         <configuration> -->
-<!--           <filesets> -->
-<!--             <fileset> -->
-<!--               <directory>${project.basedir}/gen</directory> -->
-<!--               <includes> -->
-<!--                 <include>**/*</include> -->
-<!--               </includes> -->
-<!--               <followSymlinks>false</followSymlinks> -->
-<!--             </fileset> -->
-<!--           </filesets> -->
-<!--         </configuration> -->
-<!--       </plugin> -->
     </plugins>
-    <pluginManagement>
-      <plugins>
-        <!--This plugin's configuration is used to store Eclipse m2e settings 
-          only. It has no influence on the Maven build itself. -->
-        <plugin>
-          <groupId>org.eclipse.m2e</groupId>
-          <artifactId>lifecycle-mapping</artifactId>
-          <version>1.0.0</version>
-          <configuration>
-            <lifecycleMappingMetadata>
-              <pluginExecutions>
-                <pluginExecution>
-                  <pluginExecutionFilter>
-                    <groupId>com.pyx4me</groupId>
-                    <artifactId>
-                      proguard-maven-plugin
-                    </artifactId>
-                    <versionRange>
-                      [2.0.4,)
-                    </versionRange>
-                    <goals>
-                      <goal>proguard</goal>
-                    </goals>
-                  </pluginExecutionFilter>
-                  <action>
-                    <ignore></ignore>
-                  </action>
-                </pluginExecution>
-              </pluginExecutions>
-            </lifecycleMappingMetadata>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
   </build>
 
   <profiles>

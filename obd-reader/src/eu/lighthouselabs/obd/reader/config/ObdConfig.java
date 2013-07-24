@@ -5,7 +5,7 @@ package eu.lighthouselabs.obd.reader.config;
 
 import java.util.ArrayList;
 
-import eu.lighthouselabs.obd.commands.ObdCommand;
+import eu.lighthouselabs.obd.commands.ObdBaseCommand;
 import eu.lighthouselabs.obd.commands.SpeedObdCommand;
 import eu.lighthouselabs.obd.commands.control.CommandEquivRatioObdCommand;
 import eu.lighthouselabs.obd.commands.control.DtcNumberObdCommand;
@@ -33,50 +33,50 @@ import eu.lighthouselabs.obd.enums.FuelTrim;
  */
 public final class ObdConfig {
 
-	public static ArrayList<ObdCommand> getCommands() {
-		ArrayList<ObdCommand> cmds = new ArrayList<ObdCommand>();
-		// Protocol
-		cmds.add(new ObdResetCommand());
+  public static ArrayList<ObdBaseCommand> getCommands() {
+    ArrayList<ObdBaseCommand> cmds = new ArrayList<ObdBaseCommand>();
+    // Protocol
+    cmds.add(new ObdResetCommand());
 
-		// Control
-		cmds.add(new CommandEquivRatioObdCommand());
-		cmds.add(new DtcNumberObdCommand());
-		cmds.add(new TimingAdvanceObdCommand());
-		cmds.add(new TroubleCodesObdCommand(0));
+    // Control
+    cmds.add(new CommandEquivRatioObdCommand());
+    cmds.add(new DtcNumberObdCommand());
+    cmds.add(new TimingAdvanceObdCommand());
+    cmds.add(new TroubleCodesObdCommand(0));
 
-		// Engine
-		cmds.add(new EngineLoadObdCommand());
-		cmds.add(new EngineRPMObdCommand());
-		cmds.add(new EngineRuntimeObdCommand());
-		cmds.add(new MassAirFlowObdCommand());
+    // Engine
+    cmds.add(new EngineLoadObdCommand());
+    cmds.add(new EngineRPMObdCommand());
+    cmds.add(new EngineRuntimeObdCommand());
+    cmds.add(new MassAirFlowObdCommand());
 
-		// Fuel
-		// cmds.add(new AverageFuelEconomyObdCommand());
-		// cmds.add(new FuelEconomyObdCommand());
-		// cmds.add(new FuelEconomyMAPObdCommand());
-		// cmds.add(new FuelEconomyCommandedMAPObdCommand());
-		cmds.add(new FindFuelTypeObdCommand());
-		cmds.add(new FuelLevelObdCommand());
-		cmds.add(new FuelTrimObdCommand(FuelTrim.LONG_TERM_BANK_1));
-		cmds.add(new FuelTrimObdCommand(FuelTrim.LONG_TERM_BANK_2));
-		cmds.add(new FuelTrimObdCommand(FuelTrim.SHORT_TERM_BANK_1));
-		cmds.add(new FuelTrimObdCommand(FuelTrim.SHORT_TERM_BANK_2));
+    // Fuel
+    // cmds.add(new AverageFuelEconomyObdCommand());
+    // cmds.add(new FuelEconomyObdCommand());
+    // cmds.add(new FuelEconomyMAPObdCommand());
+    // cmds.add(new FuelEconomyCommandedMAPObdCommand());
+    cmds.add(new FindFuelTypeObdCommand());
+    cmds.add(new FuelLevelObdCommand());
+    cmds.add(new FuelTrimObdCommand(FuelTrim.LONG_TERM_BANK_1));
+    cmds.add(new FuelTrimObdCommand(FuelTrim.LONG_TERM_BANK_2));
+    cmds.add(new FuelTrimObdCommand(FuelTrim.SHORT_TERM_BANK_1));
+    cmds.add(new FuelTrimObdCommand(FuelTrim.SHORT_TERM_BANK_2));
 
-		// Pressure
-		cmds.add(new BarometricPressureObdCommand());
-		cmds.add(new FuelPressureObdCommand());
-		cmds.add(new IntakeManifoldPressureObdCommand());
+    // Pressure
+    cmds.add(new BarometricPressureObdCommand());
+    cmds.add(new FuelPressureObdCommand());
+    cmds.add(new IntakeManifoldPressureObdCommand());
 
-		// Temperature
-		cmds.add(new AirIntakeTemperatureObdCommand());
-		cmds.add(new AmbientAirTemperatureObdCommand());
-		cmds.add(new EngineCoolantTemperatureObdCommand());
+    // Temperature
+    cmds.add(new AirIntakeTemperatureObdCommand());
+    cmds.add(new AmbientAirTemperatureObdCommand());
+    cmds.add(new EngineCoolantTemperatureObdCommand());
 
-		// Misc
-		cmds.add(new SpeedObdCommand());
-		cmds.add(new ThrottlePositionObdCommand());
+    // Misc
+    cmds.add(new SpeedObdCommand());
+    cmds.add(new ThrottlePositionObdCommand());
 
-		return cmds;
-	}
+    return cmds;
+  }
 
 }
