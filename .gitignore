@@ -1,17 +1,30 @@
-*~
-*.class
-*.log
-*.pid
-*.dex
-*.iws
-*.ipr
-*.iml
+# built application files
 *.apk
-*.txt
-.settings
+*.ap_
+
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# generated files
+bin/
+build/
+gen/
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Eclipse project files
 .classpath
 .project
+
+# Gradle stuff
+.gradle
+gradle/
+gradle*
+
+# Idea project files 
+*.iml
 .idea
-gen
-bin
-target
