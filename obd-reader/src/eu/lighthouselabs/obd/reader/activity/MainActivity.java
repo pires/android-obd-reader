@@ -130,6 +130,10 @@ public class MainActivity extends Activity {
 			}
 		});
 	}
+	private void updateTextView (int id, String val) {
+		TextView tv = (TextView) findViewById(id);
+		tv.setText(val);
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -142,34 +146,56 @@ public class MainActivity extends Activity {
 		 * "http://www.whidbeycleaning.com/droid/server.php");
 		 */
 		setContentView(R.layout.main);
+		
+
 
 		mListener = new IPostListener() {
 			public void stateUpdate(ObdCommandJob job) {
-				String cmdName = job.getCommand().getName();
-				String cmdResult = job.getCommand().getFormattedResult();
-
-				Log.d(TAG, FuelTrim.LONG_TERM_BANK_1.getBank() + " equals " + cmdName + "?");
+				final String cmdName = job.getCommand().getName();
+				final String cmdResult = job.getCommand().getFormattedResult();
 				
-				if (AvailableCommandNames.ENGINE_RPM.getValue().equals(cmdName)) {
-					TextView tvRpm = (TextView) findViewById(R.id.rpm_text);
-					tvRpm.setText(cmdResult);
-				} else if (AvailableCommandNames.SPEED.getValue().equals(
-						cmdName)) {
-					TextView tvSpeed = (TextView) findViewById(R.id.spd_text);
-					tvSpeed.setText(cmdResult);
+				AvailableCommandNames acn = AvailableCommandNames.valueOf(cmdName);
+				
+				switch (acn) {
+				case ENGINE_RPM:
+					updateTextView(R.id.rpm_text, cmdResult);
+					break;
+				case SPEED:
+					updateTextView(R.id.spd_text, cmdResult);
 					speed = ((SpeedObdCommand) job.getCommand())
 							.getMetricSpeed();
-				} else if (AvailableCommandNames.MAF.getValue().equals(cmdName)) {
+					break;
+				case MAF:
 					maf = ((MassAirFlowObdCommand) job.getCommand()).getMAF();
 					addTableRow(cmdName, cmdResult);
-				} else if (FuelTrim.LONG_TERM_BANK_1.getBank().equals(cmdName)) {
-					ltft = ((FuelTrimObdCommand) job.getCommand()).getValue();
-				} else if (AvailableCommandNames.EQUIV_RATIO.getValue().equals(cmdName)) {
-					equivRatio = ((CommandEquivRatioObdCommand) job.getCommand()).getRatio();
+					break;
+				default:
 					addTableRow(cmdName, cmdResult);
-				} else {
-					addTableRow(cmdName, cmdResult);
+					break;
+				
 				}
+				
+
+//				if (AvailableCommandNames.ENGINE_RPM.getValue().equals(cmdName)) {
+//					TextView tvRpm = (TextView) findViewById(R.id.rpm_text);
+//					tvRpm.setText(cmdResult);
+//				} else if (AvailableCommandNames.SPEED.getValue().equals(
+//						cmdName)) {
+//					TextView tvSpeed = (TextView) findViewById(R.id.spd_text);
+//					tvSpeed.setText(cmdResult);
+//					speed = ((SpeedObdCommand) job.getCommand())
+//							.getMetricSpeed();
+//				} else if (AvailableCommandNames.MAF.getValue().equals(cmdName)) {
+//					maf = ((MassAirFlowObdCommand) job.getCommand()).getMAF();
+//					addTableRow(cmdName, cmdResult);
+//				} else if (FuelTrim.LONG_TERM_BANK_1.getBank().equals(cmdName)) {
+//					ltft = ((FuelTrimObdCommand) job.getCommand()).getValue();
+//				} else if (AvailableCommandNames.EQUIV_RATIO.getValue().equals(cmdName)) {
+//					equivRatio = ((CommandEquivRatioObdCommand) job.getCommand()).getRatio();
+//					addTableRow(cmdName, cmdResult);
+//				} else {
+//					addTableRow(cmdName, cmdResult);
+//				}
 			}
 		};
 
