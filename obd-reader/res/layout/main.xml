@@ -92,6 +92,12 @@
       	<TextView
       	  android:id="@+id/spd_text"
       	  android:text=""/>
+      	  <TextView
+      	  android:id="@+id/air_intake_temp_text"
+      	  android:text="temp"/>
+      	        	<TextView
+      	  android:id="@+id/maf_pressure_text"
+      	  android:text="MP"/>
       </TableRow>
     </TableLayout>
 	<ScrollView

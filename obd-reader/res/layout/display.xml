@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/air_temp_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="air temp: "
+            android:textSize="35sp" />
+
+        <TextView
+            android:id="@+id/air_temp_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="val"
+            android:textSize="35sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/rpm_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="rpm: "
+            android:textSize="35sp" />
+
+        <TextView
+            android:id="@+id/rpm_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="val"
+            android:textSize="35sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/spd_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="speed: "
+            android:textSize="35sp" />
+
+        <TextView
+            android:id="@+id/spd_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="val"
+            android:textSize="35sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/air_intake_temp_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="intake t: "
+            android:textSize="35sp" />
+
+        <TextView
+            android:id="@+id/air_intake_temp_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="val"
+            android:textSize="35sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/maf_pressure_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="MAF press: "
+            android:textSize="35sp" />
+
+        <TextView
+            android:id="@+id/maf_pressure_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="val"
+            android:textSize="35sp" />
+    </LinearLayout>
+
+</LinearLayout>

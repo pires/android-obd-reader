@@ -149,16 +149,14 @@ public class MainActivity extends Activity {
 				String cmdResult = job.getCommand().getFormattedResult();
 
 				Log.d(TAG, FuelTrim.LONG_TERM_BANK_1.getBank() + " equals " + cmdName + "?");
-				
+
 				if (AvailableCommandNames.ENGINE_RPM.getValue().equals(cmdName)) {
 					TextView tvRpm = (TextView) findViewById(R.id.rpm_text);
 					tvRpm.setText(cmdResult);
-				} else if (AvailableCommandNames.SPEED.getValue().equals(
-						cmdName)) {
+				} else if (AvailableCommandNames.SPEED.getValue().equals(cmdName)) {
 					TextView tvSpeed = (TextView) findViewById(R.id.spd_text);
 					tvSpeed.setText(cmdResult);
-					speed = ((SpeedObdCommand) job.getCommand())
-							.getMetricSpeed();
+					speed = ((SpeedObdCommand) job.getCommand()).getMetricSpeed();
 				} else if (AvailableCommandNames.MAF.getValue().equals(cmdName)) {
 					maf = ((MassAirFlowObdCommand) job.getCommand()).getMAF();
 					addTableRow(cmdName, cmdResult);
@@ -189,8 +187,7 @@ public class MainActivity extends Activity {
 		 * Validate Bluetooth service.
 		 */
 		// Bluetooth device exists?
-		final BluetoothAdapter mBtAdapter = BluetoothAdapter
-				.getDefaultAdapter();
+		final BluetoothAdapter mBtAdapter = BluetoothAdapter.getDefaultAdapter();
 		if (mBtAdapter == null) {
 			preRequisites = false;
 			showDialog(NO_BLUETOOTH_ID);
@@ -206,8 +203,7 @@ public class MainActivity extends Activity {
 		 * Get Orientation sensor.
 		 */
 		sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-		List<Sensor> sens = sensorManager
-				.getSensorList(Sensor.TYPE_ORIENTATION);
+		List<Sensor> sens = sensorManager.getSensorList(Sensor.TYPE_ORIENTATION);
 		if (sens.size() <= 0) {
 			showDialog(NO_ORIENTATION_SENSOR);
 		} else {
@@ -225,8 +221,7 @@ public class MainActivity extends Activity {
 
 			// bind service
 			Log.d(TAG, "Binding service..");
-			bindService(mServiceIntent, mServiceConnection,
-					Context.BIND_AUTO_CREATE);
+			bindService(mServiceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
 		}
 	}
 
@@ -263,12 +258,10 @@ public class MainActivity extends Activity {
 
 		Log.d(TAG, "Resuming..");
 
-		sensorManager.registerListener(orientListener, orientSensor,
-				SensorManager.SENSOR_DELAY_UI);
+		sensorManager.registerListener(orientListener, orientSensor, SensorManager.SENSOR_DELAY_UI);
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
-		wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK,
-				"ObdReader");
+		wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "ObdReader");
 	}
 
 	private void updateConfig() {
@@ -385,10 +378,9 @@ public class MainActivity extends Activity {
 	private void addTableRow(String key, String val) {
 		TableLayout tl = (TableLayout) findViewById(R.id.data_table);
 		TableRow tr = new TableRow(this);
-		MarginLayoutParams params = new ViewGroup.MarginLayoutParams(
-				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		params.setMargins(TABLE_ROW_MARGIN, TABLE_ROW_MARGIN, TABLE_ROW_MARGIN,
-				TABLE_ROW_MARGIN);
+		MarginLayoutParams params = new ViewGroup.MarginLayoutParams(LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT);
+		params.setMargins(TABLE_ROW_MARGIN, TABLE_ROW_MARGIN, TABLE_ROW_MARGIN, TABLE_ROW_MARGIN);
 		tr.setLayoutParams(params);
 		tr.setBackgroundColor(Color.BLACK);
 		TextView name = new TextView(this);
@@ -399,8 +391,7 @@ public class MainActivity extends Activity {
 		value.setText(val);
 		tr.addView(name);
 		tr.addView(value);
-		tl.addView(tr, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
-				LayoutParams.WRAP_CONTENT));
+		tl.addView(tr, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
 		/*
 		 * TODO remove this hack
@@ -421,8 +412,8 @@ public class MainActivity extends Activity {
 			 */
 			Log.d(TAG, "SPD:" + speed + ", MAF:" + maf + ", LTFT:" + ltft);
 			if (speed > 1 && maf > 1 && ltft != 0) {
-				FuelEconomyWithMAFObdCommand fuelEconCmd = new FuelEconomyWithMAFObdCommand(
-						FuelType.DIESEL, speed, maf, ltft, false /* TODO */);
+				FuelEconomyWithMAFObdCommand fuelEconCmd = new FuelEconomyWithMAFObdCommand(FuelType.DIESEL, speed,
+						maf, ltft, false /* TODO */);
 				TextView tvMpg = (TextView) findViewById(R.id.fuel_econ_text);
 				String liters100km = String.format("%.2f", fuelEconCmd.getLitersPer100Km());
 				tvMpg.setText("" + liters100km);
@@ -441,23 +432,16 @@ public class MainActivity extends Activity {
 	 * 
 	 */
 	private void queueCommands() {
-		final ObdCommandJob airTemp = new ObdCommandJob(
-				new AmbientAirTemperatureObdCommand());
+		final ObdCommandJob airTemp = new ObdCommandJob(new AmbientAirTemperatureObdCommand());
 		final ObdCommandJob speed = new ObdCommandJob(new SpeedObdCommand());
-		final ObdCommandJob fuelEcon = new ObdCommandJob(
-				new FuelEconomyObdCommand());
+		final ObdCommandJob fuelEcon = new ObdCommandJob(new FuelEconomyObdCommand());
 		final ObdCommandJob rpm = new ObdCommandJob(new EngineRPMObdCommand());
 		final ObdCommandJob maf = new ObdCommandJob(new MassAirFlowObdCommand());
-		final ObdCommandJob fuelLevel = new ObdCommandJob(
-				new FuelLevelObdCommand());
-		final ObdCommandJob ltft1 = new ObdCommandJob(new FuelTrimObdCommand(
-				FuelTrim.LONG_TERM_BANK_1));
-		final ObdCommandJob ltft2 = new ObdCommandJob(new FuelTrimObdCommand(
-				FuelTrim.LONG_TERM_BANK_2));
-		final ObdCommandJob stft1 = new ObdCommandJob(new FuelTrimObdCommand(
-				FuelTrim.SHORT_TERM_BANK_1));
-		final ObdCommandJob stft2 = new ObdCommandJob(new FuelTrimObdCommand(
-				FuelTrim.SHORT_TERM_BANK_2));
+		final ObdCommandJob fuelLevel = new ObdCommandJob(new FuelLevelObdCommand());
+		final ObdCommandJob ltft1 = new ObdCommandJob(new FuelTrimObdCommand(FuelTrim.LONG_TERM_BANK_1));
+		final ObdCommandJob ltft2 = new ObdCommandJob(new FuelTrimObdCommand(FuelTrim.LONG_TERM_BANK_2));
+		final ObdCommandJob stft1 = new ObdCommandJob(new FuelTrimObdCommand(FuelTrim.SHORT_TERM_BANK_1));
+		final ObdCommandJob stft2 = new ObdCommandJob(new FuelTrimObdCommand(FuelTrim.SHORT_TERM_BANK_2));
 		final ObdCommandJob equiv = new ObdCommandJob(new CommandEquivRatioObdCommand());
 
 		// mServiceConnection.addJobToQueue(airTemp);
@@ -466,7 +450,7 @@ public class MainActivity extends Activity {
 		mServiceConnection.addJobToQueue(rpm);
 		mServiceConnection.addJobToQueue(maf);
 		mServiceConnection.addJobToQueue(fuelLevel);
-//		mServiceConnection.addJobToQueue(equiv);
+		// mServiceConnection.addJobToQueue(equiv);
 		mServiceConnection.addJobToQueue(ltft1);
 		// mServiceConnection.addJobToQueue(ltft2);
 		// mServiceConnection.addJobToQueue(stft1);
