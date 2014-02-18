@@ -22,5 +22,5 @@ gradle clean build installDebug
 
 ## Tested on ##
 
-Samsung Galaxy Nexus (Android 4.3)
-LG Nexus 5 (Android 4.4)
+* Samsung Galaxy Nexus (Android 4.3)
+* LG Nexus 5 (Android 4.4)
