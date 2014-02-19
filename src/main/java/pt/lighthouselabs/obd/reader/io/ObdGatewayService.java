@@ -68,11 +68,11 @@ public class ObdGatewayService extends RoboService {
   @Inject
   private NotificationManager notificationManager;
   private boolean isRunning = false;
+  private boolean isQueueRunning = false;
   private BlockingQueue<ObdCommandJob> jobsQueue = new LinkedBlockingQueue<ObdCommandJob>();
   private Long queueCounter = 0L;
   private BluetoothDevice dev = null;
   private BluetoothSocket sock = null;
-  private boolean isTestRunning = false;
 
   @Override
   public IBinder onBind(Intent intent) {
@@ -197,6 +197,7 @@ public class ObdGatewayService extends RoboService {
    */
   private void executeQueue() {
     Log.d(TAG, "Executing queue..");
+    isQueueRunning = true;
     while (!jobsQueue.isEmpty()) {
       ObdCommandJob job = null;
       try {
@@ -224,6 +225,8 @@ public class ObdGatewayService extends RoboService {
         ((MainActivity) ctx).stateUpdate(job);
       }
     }
+    // will run next time a job is queued
+    isQueueRunning = false;
   }
 
   /**
@@ -240,12 +243,14 @@ public class ObdGatewayService extends RoboService {
     job.setId(queueCounter);
     try {
       jobsQueue.put(job);
+      Log.d(TAG, "Job queued successfully.");
     } catch (InterruptedException e) {
       job.setState(ObdCommandJobState.QUEUE_ERROR);
       Log.e(TAG, "Failed to queue job.");
     }
 
-    Log.d(TAG, "Job queued successfully.");
+    if (!isQueueRunning)
+      executeQueue();
   }
 
   /**
