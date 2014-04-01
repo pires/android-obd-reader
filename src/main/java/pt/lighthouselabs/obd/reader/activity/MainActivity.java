@@ -13,6 +13,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -30,6 +31,9 @@ import android.widget.TextView;
 
 import com.google.inject.Inject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import pt.lighthouselabs.obd.commands.SpeedObdCommand;
 import pt.lighthouselabs.obd.commands.engine.EngineRPMObdCommand;
 import pt.lighthouselabs.obd.commands.fuel.FuelEconomyObdCommand;
@@ -40,12 +44,19 @@ import pt.lighthouselabs.obd.reader.ObdProgressListener;
 import pt.lighthouselabs.obd.reader.R;
 import pt.lighthouselabs.obd.reader.io.ObdCommandJob;
 import pt.lighthouselabs.obd.reader.io.ObdGatewayService;
+import pt.lighthouselabs.obd.reader.net.ObdReading;
+import pt.lighthouselabs.obd.reader.net.ObdService;
+import retrofit.RestAdapter;
+import retrofit.client.Response;
 import roboguice.activity.RoboActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
 
 @ContentView(R.layout.main)
 public class MainActivity extends RoboActivity implements ObdProgressListener {
+
+  // TODO make this configurable
+  private static final boolean UPLOAD = false;
 
   private static final String TAG = MainActivity.class.getName();
   private static final int NO_BLUETOOTH_ID = 0;
@@ -145,6 +156,14 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
       addTableRow(cmdName, cmdResult);
     else
       addTableRow(cmdName, cmdResult);
+
+    if (UPLOAD) {
+      Map<String, String> commandResult = new HashMap<String, String>();
+      commandResult.put(cmdName, cmdResult);
+      // TODO get coords from GPS, if enabled, and set VIN properly
+      ObdReading reading = new ObdReading(0d, 0d, System.currentTimeMillis(), "UNDEFINED_VIN", commandResult);
+      new UploadAsyncTask().execute(reading);
+    }
   }
 
   @Override
@@ -185,7 +204,8 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
 
     releaseWakeLockIfHeld();
     if (isServiceBound)
-      doUnbindService();;
+      doUnbindService();
+    ;
   }
 
   @Override
@@ -374,6 +394,30 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
       Log.d(TAG, "Unbinding OBD service..");
       unbindService(serviceConn);
     }
+  }
+
+  /**
+   * Uploading asynchronous task
+   */
+  private class UploadAsyncTask extends AsyncTask<ObdReading, Void, Void> {
+
+    @Override
+    protected Void doInBackground(ObdReading... readings) {
+      Log.d(TAG, "Uploading " + readings.length + " readings..");
+      // instantiate reading service client
+      RestAdapter restAdapter = new RestAdapter.Builder()
+          .setEndpoint("http://server_ip:8080/obd")
+          .build();
+      ObdService service = restAdapter.create(ObdService.class);
+      // upload readings
+      for (ObdReading reading : readings) {
+        Response response = service.uploadReading(reading);
+        assert response.getStatus() == 200;
+      }
+      Log.d(TAG, "Done");
+      return null;
+    }
+
   }
 
 }
