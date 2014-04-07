@@ -4,7 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.8.+'
+        classpath 'com.android.tools.build:gradle:0.9.+'
     }
 }
 apply plugin: 'android'
@@ -26,6 +26,6 @@ android {
 
 dependencies {
     compile 'com.android.support:appcompat-v7:19.0.1'
-    compile 'pt.lighthouselabs.obd:obd-java-api:0.3'
-    compile 'org.roboguice:roboguice:3.0-alpha-1'
+    compile 'pt.lighthouselabs.obd:obd-java-api:0.4'
+    compile 'org.roboguice:roboguice:3.0b-experimental'
 }
