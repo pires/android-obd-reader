@@ -32,6 +32,10 @@
       android:name=".activity.ConfigActivity"
       android:label="@string/app_name">
     </activity>
+    <activity
+      android:name=".activity.TroubleCodesActivity"
+      android:label="@string/title_activity_trouble_codes">
+    </activity>
 
     <service
       android:name=".io.ObdGatewayService"

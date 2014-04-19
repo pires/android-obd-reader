@@ -64,6 +64,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
   private static final int START_LIVE_DATA = 2;
   private static final int STOP_LIVE_DATA = 3;
   private static final int SETTINGS = 4;
+  private static final int GET_DTC = 5;
   private static final int TABLE_ROW_MARGIN = 7;
   private static final int NO_ORIENTATION_SENSOR = 8;
   private final SensorEventListener orientListener = new SensorEventListener() {
@@ -239,6 +240,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
   public boolean onCreateOptionsMenu(Menu menu) {
     menu.add(0, START_LIVE_DATA, 0, "Start Live Data");
     menu.add(0, STOP_LIVE_DATA, 0, "Stop Live Data");
+    menu.add(0, GET_DTC, 0, "Get DTC");
     menu.add(0, SETTINGS, 0, "Settings");
     return true;
   }
@@ -259,11 +261,18 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
       case SETTINGS:
         updateConfig();
         return true;
+      case GET_DTC:
+        getTroubleCodes();
+        return true;
       // case COMMAND_ACTIVITY:
       // staticCommand();
       // return true;
     }
     return false;
+  }
+
+  private void getTroubleCodes() {
+    startActivity(new Intent(this, TroubleCodesActivity.class));
   }
 
   private void startLiveData() {
@@ -308,19 +317,23 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
     MenuItem startItem = menu.findItem(START_LIVE_DATA);
     MenuItem stopItem = menu.findItem(STOP_LIVE_DATA);
     MenuItem settingsItem = menu.findItem(SETTINGS);
+    MenuItem getDTCItem = menu.findItem(GET_DTC);
 
     // validate if preRequisites are satisfied.
     if (preRequisites) {
       if (service.isRunning()) {
+        getDTCItem.setEnabled(false);
         startItem.setEnabled(false);
         stopItem.setEnabled(true);
         settingsItem.setEnabled(false);
       } else {
+        getDTCItem.setEnabled(true);
         stopItem.setEnabled(false);
         startItem.setEnabled(true);
         settingsItem.setEnabled(true);
       }
     } else {
+      getDTCItem.setEnabled(false);
       startItem.setEnabled(false);
       stopItem.setEnabled(false);
       settingsItem.setEnabled(false);
