@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.google.inject.Inject;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.UUID;
 import java.util.concurrent.BlockingQueue;
@@ -73,6 +74,9 @@ public class ObdGatewayService extends RoboService {
   private Long queueCounter = 0L;
   private BluetoothDevice dev = null;
   private BluetoothSocket sock = null;
+  private BluetoothSocket sockFallback = null;
+  private boolean useFallback = false;
+
 
   @Override
   public IBinder onBind(Intent intent) {
@@ -146,7 +150,8 @@ public class ObdGatewayService extends RoboService {
       Log.e(
           TAG,
           "There was an error while establishing connection. -> "
-              + e.getMessage());
+              + e.getMessage()
+      );
 
       // in case of failure, stop this service.
       stopService();
@@ -155,15 +160,35 @@ public class ObdGatewayService extends RoboService {
 
   /**
    * Start and configure the connection to the OBD interface.
+   * <p/>
+   * See http://stackoverflow.com/questions/18657427/ioexception-read-failed-socket-might-closed-bluetooth-on-android-4-3/18786701#18786701
    *
    * @throws IOException
    */
   private void startObdConnection() throws IOException {
     Log.d(TAG, "Starting OBD connection..");
 
-    // Instantiate a BluetoothSocket for the remote device and connect it.
-    sock = dev.createRfcommSocketToServiceRecord(MY_UUID);
-    sock.connect();
+    try {
+      // Instantiate a BluetoothSocket for the remote device and connect it.
+      sock = dev.createRfcommSocketToServiceRecord(MY_UUID);
+      sock.connect();
+      useFallback = false;
+    } catch (Exception e1) {
+      Log.e(TAG, "There was an error while establishing Bluetooth connection. Falling back..", e1);
+      Class<?> clazz = sock.getRemoteDevice().getClass();
+      Class<?>[] paramTypes = new Class<?>[]{Integer.TYPE};
+      try {
+        Method m = clazz.getMethod("createRfcommSocket", paramTypes);
+        Object[] params = new Object[]{Integer.valueOf(1)};
+        sockFallback = (BluetoothSocket) m.invoke(sock.getRemoteDevice(), params);
+        sockFallback.connect();
+        useFallback = true;
+      } catch (Exception e2) {
+        Log.e(TAG, "Couldn't fallback while establishing Bluetooth connection. Stopping app..", e2);
+        stopService();
+        return;
+      }
+    }
 
     // Let's configure the connection.
     Log.d(TAG, "Queing jobs for connection configuration..");
@@ -195,6 +220,7 @@ public class ObdGatewayService extends RoboService {
   /**
    * Runs the queue until the service is stopped
    */
+
   private void executeQueue() {
     Log.d(TAG, "Executing queue..");
     isQueueRunning = true;
@@ -233,8 +259,7 @@ public class ObdGatewayService extends RoboService {
    * This method will add a job to the queue while setting its ID to the
    * internal queue counter.
    *
-   * @param job
-   * @return
+   * @param job the job to queue.
    */
   public void queueJob(ObdCommandJob job) {
     queueCounter++;
