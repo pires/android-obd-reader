@@ -26,7 +26,6 @@ android {
 
 dependencies {
     compile 'com.android.support:appcompat-v7:19.0.1'
-    compile 'com.squareup.retrofit:retrofit:1.5.0'
     compile 'pt.lighthouselabs.obd:obd-java-api:0.5'
     compile 'org.roboguice:roboguice:3.0b-experimental'
     compile 'com.squareup.retrofit:retrofit:1.5.0'
