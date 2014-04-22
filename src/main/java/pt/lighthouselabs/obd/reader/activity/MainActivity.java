@@ -13,6 +13,9 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -53,7 +56,7 @@ import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
 
 @ContentView(R.layout.main)
-public class MainActivity extends RoboActivity implements ObdProgressListener {
+public class MainActivity extends RoboActivity implements ObdProgressListener, LocationListener {
 
   // TODO make this configurable
   private static final boolean UPLOAD = false;
@@ -95,6 +98,29 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
       // do nothing
     }
   };
+
+  private Location location = null;
+
+  @Override
+  public void onLocationChanged(Location location) {
+    this.location = location;
+  }
+
+  @Override
+  public void onStatusChanged(String s, int i, Bundle bundle) {
+    // ignore
+  }
+
+  @Override
+  public void onProviderEnabled(String s) {
+    // ignore
+  }
+
+  @Override
+  public void onProviderDisabled(String s) {
+    // ignore
+  }
+
   private final Runnable mQueueCommands = new Runnable() {
     public void run() {
       if (service.isRunning())
@@ -158,11 +184,17 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
     else
       addTableRow(cmdName, cmdResult);
 
+    // TODO set VIN read from vehicle
     if (UPLOAD) {
       Map<String, String> commandResult = new HashMap<String, String>();
       commandResult.put(cmdName, cmdResult);
-      // TODO get coords from GPS, if enabled, and set VIN properly
-      ObdReading reading = new ObdReading(0d, 0d, System.currentTimeMillis(), "UNDEFINED_VIN", commandResult);
+      double latitude = 0d;
+      double longitude = 0d;
+      if (location != null) {
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+      }
+      ObdReading reading = new ObdReading(latitude, longitude, System.currentTimeMillis(), "UNDEFINED_VIN", commandResult);
       new UploadAsyncTask().execute(reading);
     }
   }
@@ -397,6 +429,10 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
       Log.d(TAG, "Binding OBD service..");
       Intent serviceIntent = new Intent(this, ObdGatewayService.class);
       bindService(serviceIntent, serviceConn, Context.BIND_AUTO_CREATE);
+      // request locations
+      LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+      if (locationManager != null)
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
     }
   }
 
