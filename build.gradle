@@ -4,7 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.9.+'
+        classpath 'com.android.tools.build:gradle:0.11.+'
     }
 }
 apply plugin: 'android'
@@ -16,17 +16,21 @@ repositories {
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "19.0.1"
+    buildToolsVersion "19.1"
 
     defaultConfig {
         minSdkVersion 10
         targetSdkVersion 19
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:19.0.1'
-    compile 'pt.lighthouselabs.obd:obd-java-api:0.5'
+    compile 'com.android.support:appcompat-v7:19.1.0'
+    compile 'pt.lighthouselabs.obd:obd-java-api:0.6'
     compile 'org.roboguice:roboguice:3.0b-experimental'
     compile 'com.squareup.retrofit:retrofit:1.5.0'
 }
