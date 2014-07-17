@@ -75,8 +75,7 @@ public class ObdGatewayService extends RoboService {
   private BluetoothDevice dev = null;
   private BluetoothSocket sock = null;
   private BluetoothSocket sockFallback = null;
-  private boolean useFallback = false;
-
+  
 
   @Override
   public IBinder onBind(Intent intent) {
@@ -172,7 +171,6 @@ public class ObdGatewayService extends RoboService {
       // Instantiate a BluetoothSocket for the remote device and connect it.
       sock = dev.createRfcommSocketToServiceRecord(MY_UUID);
       sock.connect();
-      useFallback = false;
     } catch (Exception e1) {
       Log.e(TAG, "There was an error while establishing Bluetooth connection. Falling back..", e1);
       Class<?> clazz = sock.getRemoteDevice().getClass();
@@ -182,7 +180,7 @@ public class ObdGatewayService extends RoboService {
         Object[] params = new Object[]{Integer.valueOf(1)};
         sockFallback = (BluetoothSocket) m.invoke(sock.getRemoteDevice(), params);
         sockFallback.connect();
-        useFallback = true;
+        sock = sockFallback;
       } catch (Exception e2) {
         Log.e(TAG, "Couldn't fallback while establishing Bluetooth connection. Stopping app..", e2);
         stopService();
