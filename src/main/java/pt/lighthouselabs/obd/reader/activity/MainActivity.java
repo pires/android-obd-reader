@@ -244,10 +244,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
         SensorManager.SENSOR_DELAY_UI);
     wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK,
         "ObdReader");
-    // bind service
-    if (!isServiceBound) {
-      doBindService();
-    }
+    
   }
 
   private void updateConfig() {
