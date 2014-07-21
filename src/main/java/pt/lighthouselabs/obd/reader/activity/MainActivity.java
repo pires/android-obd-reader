@@ -28,6 +28,7 @@ import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.inject.Inject;
 
@@ -42,6 +43,8 @@ import pt.lighthouselabs.obd.commands.temperature.AmbientAirTemperatureObdComman
 import pt.lighthouselabs.obd.enums.AvailableCommandNames;
 import pt.lighthouselabs.obd.reader.ObdProgressListener;
 import pt.lighthouselabs.obd.reader.R;
+import pt.lighthouselabs.obd.reader.io.AbstractGatewayService;
+import pt.lighthouselabs.obd.reader.io.MockObdGatewayService;
 import pt.lighthouselabs.obd.reader.io.ObdCommandJob;
 import pt.lighthouselabs.obd.reader.io.ObdGatewayService;
 import pt.lighthouselabs.obd.reader.net.ObdReading;
@@ -118,19 +121,25 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
   @Inject
   private SharedPreferences prefs;
   private boolean isServiceBound;
-  @Inject
-  private ObdGatewayService service;
+
+
+  private AbstractGatewayService service;
   private ServiceConnection serviceConn = new ServiceConnection() {
     public void onServiceConnected(ComponentName className, IBinder binder) {
-      Log.d(TAG, "Test service is bound");
+      Log.d(TAG, className.toString()  + " service is bound");
       isServiceBound = true;
+      service = ((AbstractGatewayService.AbstractGatewayServiceBinder)binder).getService();
+      service.setContext(MainActivity.this);
+      Log.d(TAG, "Starting the live data");
+
     }
 
     public void onServiceDisconnected(ComponentName className) {
-      Log.d(TAG, "Test service is unbound");
+      Log.d(TAG, className.toString()  + " service is unbound");
       isServiceBound = false;
     }
   };
+
   private Sensor orientSensor = null;
   private PowerManager.WakeLock wakeLock = null;
   private boolean preRequisites = true;
@@ -179,9 +188,12 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
     if (preRequisites)
       preRequisites = btAdapter.isEnabled();
 
-    if (!preRequisites)
-      // TODO replace with fragment
+    if (!preRequisites) {
       showDialog(BLUETOOTH_DISABLED);
+      Toast.makeText(this, "BT is disabled, will use Mock service instead", Toast.LENGTH_SHORT).show();
+    } else {
+      Toast.makeText(this, "Blutooth ok", Toast.LENGTH_SHORT).show();
+    }
 
 
     // get Orientation sensor
@@ -195,8 +207,9 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
     super.onStart();
     Log.d(TAG, "Entered onStart...");
     // bind service
-    if (!isServiceBound)
+    if (!isServiceBound) {
       doBindService();
+    }
   }
 
   @Override
@@ -231,6 +244,10 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
         SensorManager.SENSOR_DELAY_UI);
     wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK,
         "ObdReader");
+    // bind service
+    if (!isServiceBound) {
+      doBindService();
+    }
   }
 
   private void updateConfig() {
@@ -319,24 +336,16 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
     MenuItem settingsItem = menu.findItem(SETTINGS);
     MenuItem getDTCItem = menu.findItem(GET_DTC);
 
-    // validate if preRequisites are satisfied.
-    if (preRequisites) {
-      if (service.isRunning()) {
-        getDTCItem.setEnabled(false);
-        startItem.setEnabled(false);
-        stopItem.setEnabled(true);
-        settingsItem.setEnabled(false);
-      } else {
-        getDTCItem.setEnabled(true);
-        stopItem.setEnabled(false);
-        startItem.setEnabled(true);
-        settingsItem.setEnabled(true);
-      }
-    } else {
+    if (service!=null && service.isRunning()) {
       getDTCItem.setEnabled(false);
       startItem.setEnabled(false);
-      stopItem.setEnabled(false);
+      stopItem.setEnabled(true);
       settingsItem.setEnabled(false);
+    } else {
+      getDTCItem.setEnabled(true);
+      stopItem.setEnabled(false);
+      startItem.setEnabled(true);
+      settingsItem.setEnabled(true);
     }
 
     return true;
@@ -395,15 +404,21 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
   private void doBindService() {
     if (!isServiceBound) {
       Log.d(TAG, "Binding OBD service..");
-      Intent serviceIntent = new Intent(this, ObdGatewayService.class);
-      bindService(serviceIntent, serviceConn, Context.BIND_AUTO_CREATE);
+      if(preRequisites) {
+        Intent serviceIntent = new Intent(this, ObdGatewayService.class);
+        bindService(serviceIntent, serviceConn, Context.BIND_AUTO_CREATE);
+      } else {
+        Intent serviceIntent = new Intent(this, MockObdGatewayService.class);
+        bindService(serviceIntent, serviceConn, Context.BIND_AUTO_CREATE);
+      }
     }
   }
 
   private void doUnbindService() {
     if (isServiceBound) {
-      if (service.isRunning())
+      if (service.isRunning()) {
         service.stopService();
+      }
       Log.d(TAG, "Unbinding OBD service..");
       unbindService(serviceConn);
     }
