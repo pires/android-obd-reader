@@ -7,7 +7,7 @@ I'm still migrating things over here, so keep with me :-)
 
 ## Prerequisites ##
 - JDK 7
-- Android Studio (tested on 0.6)
+- Android Studio 0.8.1
 - Gradle 1.12
 - Android SDK (API 19, Build tools 19.1)
 
@@ -30,4 +30,5 @@ If you want to upload data to a server, for now, check the following:
 ## Tested on ##
 
 * Samsung Galaxy Nexus (Android 4.3)
-* LG Nexus 5 (Android 4.4.3)
+* LG Nexus 5 (Android 4.4.4)
+* Nexus 7 2013 WiFi (Android 4.4.4)
