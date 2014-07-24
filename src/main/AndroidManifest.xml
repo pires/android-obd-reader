@@ -40,6 +40,9 @@
     <service
       android:name=".io.ObdGatewayService"
       android:exported="false"/>
+    <service
+      android:name=".io.MockObdGatewayService"
+      android:exported="false" />
   </application>
 
 </manifest>

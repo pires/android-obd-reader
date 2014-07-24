@@ -46,9 +46,8 @@ import roboguice.service.RoboService;
  * Secondarily, it will serve as a repository of ObdCommandJobs and at the same
  * time the application state-machine.
  */
-public class ObdGatewayService extends RoboService {
+public class ObdGatewayService extends AbstractGatewayService {
 
-  public static final int NOTIFICATION_ID = 1;
   private static final String TAG = ObdGatewayService.class.getName();
   /*
    * http://developer.android.com/reference/android/bluetooth/BluetoothDevice.html
@@ -59,43 +58,14 @@ public class ObdGatewayService extends RoboService {
    * are connecting to an Android peer then please generate your own unique
    * UUID."
    */
-  private static final UUID MY_UUID = UUID
-      .fromString("00001101-0000-1000-8000-00805F9B34FB");
+  private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
   private final IBinder binder = new ObdGatewayServiceBinder();
   @Inject
   SharedPreferences prefs;
-  @Inject
-  private Context ctx;
-  @Inject
-  private NotificationManager notificationManager;
-  private boolean isRunning = false;
-  private boolean isQueueRunning = false;
-  private BlockingQueue<ObdCommandJob> jobsQueue = new LinkedBlockingQueue<ObdCommandJob>();
-  private Long queueCounter = 0L;
+
   private BluetoothDevice dev = null;
   private BluetoothSocket sock = null;
   private BluetoothSocket sockFallback = null;
-  
-
-  @Override
-  public IBinder onBind(Intent intent) {
-    return binder;
-  }
-
-  @Override
-  public void onCreate() {
-    super.onCreate();
-    Log.d(TAG, "Creating service..");
-    Log.d(TAG, "Service created.");
-  }
-
-  @Override
-  public void onDestroy() {
-    super.onDestroy();
-    Log.d(TAG, "Destroying service...");
-    notificationManager.cancel(NOTIFICATION_ID);
-    Log.d(TAG, "Service destroyed.");
-  }
 
   public void startService() {
     Log.d(TAG, "Starting service..");
@@ -218,8 +188,7 @@ public class ObdGatewayService extends RoboService {
   /**
    * Runs the queue until the service is stopped
    */
-
-  private void executeQueue() {
+  protected void executeQueue() {
     Log.d(TAG, "Executing queue..");
     isQueueRunning = true;
     while (!jobsQueue.isEmpty()) {
@@ -244,9 +213,13 @@ public class ObdGatewayService extends RoboService {
       }
 
       if (job != null) {
-        Log.d(TAG, "Job is finished.");
-        job.setState(ObdCommandJobState.FINISHED);
-        ((MainActivity) ctx).stateUpdate(job);
+        final ObdCommandJob job2=job;
+        ((MainActivity) ctx).runOnUiThread(new Runnable() {
+          @Override
+          public void run() {
+            ((MainActivity) ctx).stateUpdate(job2);
+          }
+        });
       }
     }
     // will run next time a job is queued
@@ -254,31 +227,8 @@ public class ObdGatewayService extends RoboService {
   }
 
   /**
-   * This method will add a job to the queue while setting its ID to the
-   * internal queue counter.
-   *
-   * @param job the job to queue.
-   */
-  public void queueJob(ObdCommandJob job) {
-    queueCounter++;
-    Log.d(TAG, "Adding job[" + queueCounter + "] to queue..");
-
-    job.setId(queueCounter);
-    try {
-      jobsQueue.put(job);
-      Log.d(TAG, "Job queued successfully.");
-    } catch (InterruptedException e) {
-      job.setState(ObdCommandJobState.QUEUE_ERROR);
-      Log.e(TAG, "Failed to queue job.");
-    }
-
-    if (!isQueueRunning)
-      executeQueue();
-  }
-
-  /**
-   * Stop OBD connection and queue processing.
-   */
+  * Stop OBD connection and queue processing.
+  */
   public void stopService() {
     Log.d(TAG, "Stopping service..");
 
@@ -296,33 +246,6 @@ public class ObdGatewayService extends RoboService {
 
     // kill service
     stopSelf();
-  }
-
-  /**
-   * Show a notification while this service is running.
-   */
-  private void showNotification(String contentTitle, String contentText,
-                                int icon, boolean ongoing, boolean notify, boolean vibrate) {
-    final PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0,
-        new Intent(ctx, MainActivity.class), 0);
-    final NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(
-        ctx);
-    notificationBuilder.setContentTitle(contentTitle)
-        .setContentText(contentText).setSmallIcon(icon)
-        .setContentIntent(contentIntent)
-        .setWhen(System.currentTimeMillis());
-    // can cancel?
-    if (ongoing)
-      notificationBuilder.setOngoing(true);
-    else
-      notificationBuilder.setAutoCancel(true);
-    // vibrate?
-    if (vibrate)
-      notificationBuilder.setDefaults(Notification.DEFAULT_VIBRATE);
-
-    if (notify)
-      notificationManager.notify(NOTIFICATION_ID,
-          notificationBuilder.getNotification());
   }
 
   public boolean isRunning() {
