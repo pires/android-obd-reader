@@ -100,8 +100,9 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
   };
   private final Runnable mQueueCommands = new Runnable() {
     public void run() {
-      if (service.isRunning())
+      if (service!=null && service.isRunning()) {
         queueCommands();
+      }
       // run again in 2s
       new Handler().postDelayed(mQueueCommands, 2000);
     }
@@ -125,15 +126,21 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
 
   private AbstractGatewayService service;
   private ServiceConnection serviceConn = new ServiceConnection() {
+    @Override
     public void onServiceConnected(ComponentName className, IBinder binder) {
       Log.d(TAG, className.toString()  + " service is bound");
       isServiceBound = true;
       service = ((AbstractGatewayService.AbstractGatewayServiceBinder)binder).getService();
       service.setContext(MainActivity.this);
       Log.d(TAG, "Starting the live data");
+      service.startService();
 
     }
 
+    // This method is *only* called when the connection to the service is lost unexpectedly
+    // and *not* when the client unbinds (http://developer.android.com/guide/components/bound-services.html)
+    // So the isServiceBound attribute should also be set to false when we unbind from the service.
+    @Override
     public void onServiceDisconnected(ComponentName className) {
       Log.d(TAG, className.toString()  + " service is unbound");
       isServiceBound = false;
@@ -206,10 +213,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
   protected void onStart() {
     super.onStart();
     Log.d(TAG, "Entered onStart...");
-    // bind service
-    if (!isServiceBound) {
-      doBindService();
-    }
+
   }
 
   @Override
@@ -217,9 +221,9 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
     super.onDestroy();
 
     releaseWakeLockIfHeld();
-    if (isServiceBound)
+    if (isServiceBound) {
       doUnbindService();
-    ;
+    }
   }
 
   @Override
@@ -291,11 +295,8 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
 
   private void startLiveData() {
     Log.d(TAG, "Starting live data..");
-    Log.d(TAG, "Service is bound? " + isServiceBound + ", and running? " + service.isRunning());
-    if (isServiceBound && !service.isRunning()) {
-      Log.d(TAG, "Service is not running. Going to start it..");
-      service.startService();
-    }
+
+    doBindService();
 
     // start command execution
     new Handler().post(mQueueCommands);
@@ -306,8 +307,9 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
 
   private void stopLiveData() {
     Log.d(TAG, "Stopping live data..");
-    if (isServiceBound)
-      doUnbindService();
+
+    doUnbindService();
+
     releaseWakeLockIfHeld();
   }
 
@@ -418,6 +420,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
       }
       Log.d(TAG, "Unbinding OBD service..");
       unbindService(serviceConn);
+      isServiceBound = false;
     }
   }
 
