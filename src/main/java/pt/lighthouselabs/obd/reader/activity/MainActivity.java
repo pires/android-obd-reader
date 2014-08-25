@@ -43,6 +43,7 @@ import com.google.inject.Inject;
 
 import org.apache.http.HttpResponse;
 
+
 import org.apache.http.entity.ByteArrayEntity;
 
 import java.io.IOException;
@@ -708,6 +709,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, G
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(ConfigActivity.getUploadURL(prefs));
             try {
+                int ix=0;
                 httppost.setEntity(new ByteArrayEntity(readings.getBytes("UTF8")));
                 response = httpclient.execute(httppost);
             } catch (UnsupportedEncodingException e) {
