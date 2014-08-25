@@ -108,6 +108,33 @@ public class ConfigActivity extends PreferenceActivity implements
     return ucmds;
   }
 
+
+
+    public static String getUploadURL(SharedPreferences prefs) {
+        String url=prefs.getString(ConfigActivity.UPLOAD_URL_KEY,
+                    "http://invalidHost.invalid.com");
+//        return url;
+        return "http://wesenseit-vm1.shef.ac.uk:8080/sensorWeb-1.0-SNAPSHOT/services/json/sensorObservation/";
+    }
+
+
+
+
+    public static boolean getImperialUnitPreference(SharedPreferences prefs) {
+        return (prefs.getBoolean(ConfigActivity.IMPERIAL_UNITS_KEY, false));
+    }
+
+
+    public static boolean getUploadDataPreference(SharedPreferences prefs) {
+        return (prefs.getBoolean(ConfigActivity.UPLOAD_DATA_KEY, false));
+    }
+
+    public static boolean getGPSPreference(SharedPreferences prefs) {
+        return (prefs.getBoolean(ConfigActivity.ENABLE_GPS_KEY, false));
+    }
+
+
+
   /**
    * @param prefs
    * @return
@@ -121,6 +148,18 @@ public class ConfigActivity extends PreferenceActivity implements
     }
     return max;
   }
+
+
+
+
+    /**
+     * @param prefs
+     * @return
+     */
+    public static String getVehicle_id(SharedPreferences prefs) {
+        return (prefs.getString(ConfigActivity.VEHICLE_ID_KEY, "70"));
+
+    }
 
   /**
    * @param prefs
@@ -167,6 +206,7 @@ public class ConfigActivity extends PreferenceActivity implements
       cpref.setChecked(true);
       cmdScr.addPreference(cpref);
     }
+
 
     /*
      * Let's use this device Bluetooth adapter to select which paired OBD-II
@@ -232,7 +272,8 @@ public class ConfigActivity extends PreferenceActivity implements
         || VOLUMETRIC_EFFICIENCY_KEY.equals(preference.getKey())
         || ENGINE_DISPLACEMENT_KEY.equals(preference.getKey())
         || UPDATE_PERIOD_KEY.equals(preference.getKey())
-        || MAX_FUEL_ECON_KEY.equals(preference.getKey())) {
+        || MAX_FUEL_ECON_KEY.equals(preference.getKey())
+          ) {
       try {
         Double.parseDouble(newValue.toString());
         return true;

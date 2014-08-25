@@ -13,6 +13,8 @@
 
 package pt.lighthouselabs.obd.reader.net;
 
+import java.util.List;
+
 import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.PUT;
@@ -23,6 +25,6 @@ import retrofit.http.PUT;
 public interface ObdService {
 
   @PUT("/")
-  Response uploadReading(@Body ObdReading reading);
+  Response uploadReading(@Body String reading);
 
 }

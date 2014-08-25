@@ -26,6 +26,20 @@ android {
     lintOptions {
         abortOnError false
     }
+    buildTypes {
+        release {
+            runProguard true
+            proguardFile getDefaultProguardFile('proguard-android.txt')
+        }
+    }
+
+    productFlavors {
+        flavor1 {
+        }
+        flavor2 {
+            proguardFile 'some-other-rules.txt'
+        }
+    }
 }
 
 dependencies {
@@ -33,4 +47,7 @@ dependencies {
     compile 'pt.lighthouselabs.obd:obd-java-api:0.6'
     compile 'org.roboguice:roboguice:3.0b-experimental'
     compile 'com.squareup.retrofit:retrofit:1.5.0'
+    compile 'com.google.android.gms:play-services:5.0.77'
+    compile 'org.apache.httpcomponents:httpcore:4.3.2'
+
 }
