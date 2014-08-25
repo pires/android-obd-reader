@@ -24,18 +24,27 @@ public class ObdReading {
   private long timestamp;
   private String vin;
   private Map<String, String> readings;
+  private String sensorId;
 
   public ObdReading(){
     readings = new HashMap<String, String>();
   }
 
-  public ObdReading(double latitude, double longitude, long timestamp, String vin, Map<String, String> readings) {
-    this.latitude = latitude;
-    this.longitude = longitude;
-    this.timestamp = timestamp;
-    this.vin = vin;
-    this.readings = readings;
-  }
+    public ObdReading(double latitude, double longitude, long timestamp, String vin, Map<String, String> readings) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.timestamp = timestamp;
+        this.vin = vin;
+        this.readings = readings;
+    }
+    public ObdReading(double latitude, double longitude, long timestamp, String vin, Map<String, String> readings, String sensorId) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.timestamp = timestamp;
+        this.vin = vin;
+        this.readings = readings;
+        this.sensorId= sensorId;
+    }
 
   public double getLatitude() {
     return latitude;
@@ -77,4 +86,11 @@ public class ObdReading {
     this.readings = readings;
   }
 
+    public String getSensorId() {
+        return sensorId;
+    }
+
+    public void setSensorId(String sensorId) {
+        this.sensorId = sensorId;
+    }
 }

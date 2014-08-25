@@ -11,19 +11,20 @@
       android:summaryOff="Disable http data upload"
       android:summaryOn="Enable http data upload"
       android:dialogTitle="Enable Data Upload"
-      android:enabled="false"/>
+      android:enabled="true"/>
 
+      <!--android:defaultValue="http://www.ral.ucar.edu/~lambi/obd/get_data.php"-->
     <EditTextPreference
       android:key="upload_url_preference"
-      android:defaultValue="http://www.ral.ucar.edu/~lambi/obd/get_data.php"
+      android:defaultValue="http://wesenseit-vm1.shef.ac.uk:8080/sensorWeb-1.0-SNAPSHOT/services/json/sensorObservation/"
       android:title="Upload URL"
       android:summary="POST URL that will accept real-time data"
       android:dialogTitle="Upload URL"
-      android:enabled="false"/>
+      android:enabled="true"/>
 
     <EditTextPreference
       android:key="vehicle_id_preference"
-      android:defaultValue=""
+      android:defaultValue="VEH_1"
       android:title="Vehicle ID"
       android:summary="Optional unique id of this vehicle, used with uploaded data"
       android:dialogTitle="Vehicle ID"/>

@@ -40,16 +40,16 @@ public abstract class AbstractGatewayService extends RoboService {
   @Override
   public void onCreate() {
     super.onCreate();
-    Log.d(TAG, "Creating service..");
-    Log.d(TAG, "Service created.");
+    if (MainActivity.trace) Log.d(TAG, "Creating service..");
+    if (MainActivity.trace) Log.d(TAG, "Service created.");
   }
 
   @Override
   public void onDestroy() {
     super.onDestroy();
-    Log.d(TAG, "Destroying service...");
+    if (MainActivity.trace) Log.d(TAG, "Destroying service...");
     notificationManager.cancel(NOTIFICATION_ID);
-    Log.d(TAG, "Service destroyed.");
+    if (MainActivity.trace) Log.d(TAG, "Service destroyed.");
   }
 
   public boolean isRunning() {
@@ -64,6 +64,10 @@ public abstract class AbstractGatewayService extends RoboService {
     }
   }
 
+    public boolean queueEmpty() {
+        return jobsQueue.isEmpty();
+    }
+
    /**
    * This method will add a job to the queue while setting its ID to the
    * internal queue counter.
@@ -72,15 +76,15 @@ public abstract class AbstractGatewayService extends RoboService {
    */
   public void queueJob(ObdCommandJob job) {
       queueCounter++;
-      Log.d(TAG, "Adding job[" + queueCounter + "] to queue..");
+      if (MainActivity.trace) Log.d(TAG, "Adding job[" + queueCounter + "] to queue..");
 
       job.setId(queueCounter);
       try {
         jobsQueue.put(job);
-        Log.d(TAG, "Job queued successfully.");
+        if (MainActivity.trace) Log.d(TAG, "Job queued successfully.");
       } catch (InterruptedException e) {
         job.setState(ObdCommandJob.ObdCommandJobState.QUEUE_ERROR);
-        Log.e(TAG, "Failed to queue job.");
+        if (MainActivity.trace) Log.e(TAG, "Failed to queue job.");
       }
 
     if (!isQueueRunning) {
