@@ -118,6 +118,16 @@ public class TroubleCodesActivity extends Activity {
     lv.setTextFilterEnabled(true);
   }
 
+
+  public class ModifiedTroubleCodesObdCommand extends TroubleCodesObdCommand {
+      @Override
+      public String getResult() {
+          // remove unwanted response from output since this results in erroneous error codes
+      return rawData.replace("SEARCHING...", "");
+      }
+  }
+
+
   private class GetTroubleCodesTask extends AsyncTask<String, Integer, String> {
 
     @Override
@@ -199,7 +209,7 @@ public class TroubleCodesActivity extends Activity {
 
           onProgressUpdate(5);
 
-          TroubleCodesObdCommand tcoc = new TroubleCodesObdCommand();
+          ModifiedTroubleCodesObdCommand tcoc = new ModifiedTroubleCodesObdCommand();
           tcoc.run(sock.getInputStream(), sock.getOutputStream());
           result = tcoc.getFormattedResult();
 
