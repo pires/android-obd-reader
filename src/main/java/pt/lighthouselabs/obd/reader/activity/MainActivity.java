@@ -248,7 +248,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
         SensorManager.SENSOR_DELAY_UI);
     wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK,
         "ObdReader");
-    
+
   }
 
   private void updateConfig() {
@@ -357,7 +357,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
     params.setMargins(TABLE_ROW_MARGIN, TABLE_ROW_MARGIN, TABLE_ROW_MARGIN,
         TABLE_ROW_MARGIN);
     tr.setLayoutParams(params);
-    tr.setBackgroundColor(Color.BLACK);
+
     TextView name = new TextView(this);
     name.setGravity(Gravity.RIGHT);
     name.setText(key + ": ");

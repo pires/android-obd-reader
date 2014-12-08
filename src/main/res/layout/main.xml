@@ -11,7 +11,7 @@
       android:background="#dddddd">
       <TableRow
       	android:layout_margin="2dip"
-        android:background="#000000">
+          >
 
         <TextView
       	  android:text="0"
@@ -38,7 +38,7 @@
       android:background="#dddddd">
       <TableRow
       	android:layout_margin="2dip"
-        android:background="#000000">
+        >
       	<TextView
       	  android:id="@+id/inst_fuel_econ_text"
       	  android:text="0l/100km"/>
@@ -62,7 +62,7 @@
 		  android:layout_width="fill_parent"
 		  android:layout_height="fill_parent"
 		  android:stretchColumns="*"
-		  android:background="#dddddd">
+            >
 		</TableLayout>
 	</ScrollView>            
 </LinearLayout>
