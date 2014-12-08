@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -354,8 +355,11 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
 
   private void addTableRow(String key, String val) {
         TextView existingTV = (TextView) tl.findViewWithTag(key);
-        if  (existingTV != null)
+        if  (existingTV != null) {
+            if (existingTV.getText() == val) existingTV.setTypeface(Typeface.DEFAULT);
+            else existingTV.setTypeface(Typeface.DEFAULT_BOLD);
             existingTV.setText(val);
+        }
         else {
     TableRow tr = new TableRow(this);
     MarginLayoutParams params = new ViewGroup.MarginLayoutParams(
