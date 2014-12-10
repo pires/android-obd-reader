@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -35,11 +36,11 @@ import com.google.inject.Inject;
 import java.util.HashMap;
 import java.util.Map;
 
-import pt.lighthouselabs.obd.commands.SpeedObdCommand;
-import pt.lighthouselabs.obd.commands.engine.EngineRPMObdCommand;
-import pt.lighthouselabs.obd.commands.fuel.FuelEconomyObdCommand;
-import pt.lighthouselabs.obd.commands.fuel.FuelLevelObdCommand;
-import pt.lighthouselabs.obd.commands.temperature.AmbientAirTemperatureObdCommand;
+import pt.lighthouselabs.obd.commands.ObdCommand;
+
+
+
+
 import pt.lighthouselabs.obd.enums.AvailableCommandNames;
 import pt.lighthouselabs.obd.reader.ObdProgressListener;
 import pt.lighthouselabs.obd.reader.R;
@@ -49,6 +50,7 @@ import pt.lighthouselabs.obd.reader.io.ObdCommandJob;
 import pt.lighthouselabs.obd.reader.io.ObdGatewayService;
 import pt.lighthouselabs.obd.reader.net.ObdReading;
 import pt.lighthouselabs.obd.reader.net.ObdService;
+import pt.lighthouselabs.obd.reader.config.ObdConfig;
 import retrofit.RestAdapter;
 import retrofit.client.Response;
 import roboguice.activity.RoboActivity;
@@ -171,6 +173,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
       addTableRow(cmdName, cmdResult);
     else if (AvailableCommandNames.EQUIV_RATIO.getValue().equals(cmdName))
       addTableRow(cmdName, cmdResult);
+    else if (cmdResult.equals("41 00 00 00"))  {} //not an interesting response,do nothing
     else
       addTableRow(cmdName, cmdResult);
 
@@ -295,7 +298,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
 
   private void startLiveData() {
     Log.d(TAG, "Starting live data..");
-
+    tl.removeAllViews(); //start fresh
     doBindService();
 
     // start command execution
@@ -351,6 +354,13 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
   }
 
   private void addTableRow(String key, String val) {
+        TextView existingTV = (TextView) tl.findViewWithTag(key);
+        if  (existingTV != null) {
+            if (existingTV.getText() == val) existingTV.setTypeface(Typeface.DEFAULT);
+            else existingTV.setTypeface(Typeface.DEFAULT_BOLD);
+            existingTV.setText(val);
+        }
+        else {
     TableRow tr = new TableRow(this);
     MarginLayoutParams params = new ViewGroup.MarginLayoutParams(
         LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -364,18 +374,12 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
     TextView value = new TextView(this);
     value.setGravity(Gravity.LEFT);
     value.setText(val);
+    value.setTag(key);
     tr.addView(name);
     tr.addView(value);
     tl.addView(tr, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
         LayoutParams.WRAP_CONTENT));
-
-		/*
-     * TODO remove this hack
-		 *
-		 * let's define a limit number of rows
-		 */
-    if (tl.getChildCount() > 10)
-      tl.removeViewAt(0);
+  }
   }
 
   /**
@@ -383,20 +387,10 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
    */
   private void queueCommands() {
     if (isServiceBound) {
-      final ObdCommandJob airTemp = new ObdCommandJob(
-          new AmbientAirTemperatureObdCommand());
-      final ObdCommandJob speed = new ObdCommandJob(new SpeedObdCommand());
-      final ObdCommandJob fuelEcon = new ObdCommandJob(
-          new FuelEconomyObdCommand());
-      final ObdCommandJob rpm = new ObdCommandJob(new EngineRPMObdCommand());
-      final ObdCommandJob fuelLevel = new ObdCommandJob(
-          new FuelLevelObdCommand());
-
-      service.queueJob(airTemp);
-      service.queueJob(speed);
-      service.queueJob(fuelEcon);
-      service.queueJob(rpm);
-      service.queueJob(fuelLevel);
+      for (ObdCommand Command : ObdConfig.getCommands()  ) {
+          if (prefs.getBoolean(Command.getName(),true))
+             service.queueJob(new ObdCommandJob(Command));
+           }
     }
   }
 
