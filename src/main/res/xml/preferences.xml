@@ -33,7 +33,12 @@
       android:title="Bluetooth Devices"
       android:summary="List of paired bluetooth devices."
       android:dialogTitle="Bluetooth Devices"/>
-
+    <ListPreference
+      android:key="obd_protocols_preference"
+      android:title="OBD Protocol"
+      android:summary="Select OBD Protocol to use"
+      android:dialogTitle="OBD Protocol"
+      android:defaultValue="AUTO"   />
     <CheckBoxPreference
       android:key="imperial_units_preference"
       android:defaultValue="false"
