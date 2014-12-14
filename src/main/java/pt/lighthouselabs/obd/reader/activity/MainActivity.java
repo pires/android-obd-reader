@@ -166,8 +166,13 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
     }
   public void stateUpdate(final ObdCommandJob job) {
     final String cmdName = job.getCommand().getName();
-    final String cmdResult = job.getCommand().getFormattedResult();
+    String cmdResult = "";
     final String cmdID = LookUpCommand(cmdName);
+
+    if (job.getState().equals(ObdCommandJob.ObdCommandJobState.EXECUTION_ERROR))
+        cmdResult = job.getCommand().getResult();
+    else
+        cmdResult = job.getCommand().getFormattedResult();
 
     if ( vv.findViewWithTag(cmdID) != null ) {
         TextView existingTV = (TextView) vv.findViewWithTag(cmdID);
