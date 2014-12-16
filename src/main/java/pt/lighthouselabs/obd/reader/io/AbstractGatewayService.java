@@ -56,6 +56,9 @@ public abstract class AbstractGatewayService extends RoboService {
     return isRunning;
   }
 
+  public boolean queueEmpty() {
+  return jobsQueue.isEmpty();
+  }
 
 
   public class AbstractGatewayServiceBinder extends Binder {

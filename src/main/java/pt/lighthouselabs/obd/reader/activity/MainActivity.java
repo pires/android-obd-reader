@@ -101,11 +101,11 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
   };
   private final Runnable mQueueCommands = new Runnable() {
     public void run() {
-      if (service!=null && service.isRunning()) {
+      if (service!=null && service.isRunning() && service.queueEmpty()) {
         queueCommands();
       }
-      // run again in 2s
-      new Handler().postDelayed(mQueueCommands, 2000);
+      // run again in period defined in preferences
+      new Handler().postDelayed(mQueueCommands, ConfigActivity.getUpdatePeriod(prefs));
     }
   };
   @InjectView(R.id.compass_text)
@@ -178,7 +178,6 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
         TextView existingTV = (TextView) vv.findViewWithTag(cmdID);
         existingTV.setText(cmdResult);
     }
-    else if (cmdResult.equals("41 00 00 00"))   {}    //not an interesting response,do nothing
     else addTableRow(cmdID, cmdName, cmdResult);
 
     if (UPLOAD) {
