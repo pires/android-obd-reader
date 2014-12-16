@@ -104,8 +104,8 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
       if (service!=null && service.isRunning() && service.queueEmpty()) {
         queueCommands();
       }
-      // run again in 2s
-      new Handler().postDelayed(mQueueCommands, 2000);
+      // run again in period defined in preferences
+      new Handler().postDelayed(mQueueCommands, ConfigActivity.getUpdatePeriod(prefs));
     }
   };
   @InjectView(R.id.compass_text)
