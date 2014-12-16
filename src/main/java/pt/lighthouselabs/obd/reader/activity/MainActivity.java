@@ -8,8 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -26,6 +24,7 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup.MarginLayoutParams;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -111,10 +110,10 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
   };
   @InjectView(R.id.compass_text)
   private TextView compass;
-  @InjectView(R.id.rpm_text)
-  private TextView tvRpm;
-  @InjectView(R.id.spd_text)
-  private TextView tvSpeed;
+
+  @InjectView(R.id.vehicle_view)
+  private LinearLayout vv;
+
   @InjectView(R.id.data_table)
   private TableLayout tl;
   @Inject
@@ -160,26 +159,31 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
       }
     });
   }
-
+   public static String LookUpCommand(String txt) {
+        for (AvailableCommandNames item : AvailableCommandNames.values()) {
+            if (item.getValue().equals(txt)) return item.name();
+        }  return txt;
+    }
   public void stateUpdate(final ObdCommandJob job) {
     final String cmdName = job.getCommand().getName();
-    final String cmdResult = job.getCommand().getFormattedResult();
-    if (AvailableCommandNames.ENGINE_RPM.getValue().equals(cmdName))
-      tvRpm.setText(cmdResult);
-    else if (AvailableCommandNames.SPEED.getValue().equals(
-        cmdName))
-      tvSpeed.setText(cmdResult);
-    else if (AvailableCommandNames.MAF.getValue().equals(cmdName))
-      addTableRow(cmdName, cmdResult);
-    else if (AvailableCommandNames.EQUIV_RATIO.getValue().equals(cmdName))
-      addTableRow(cmdName, cmdResult);
-    else if (cmdResult.equals("41 00 00 00"))  {} //not an interesting response,do nothing
+    String cmdResult = "";
+    final String cmdID = LookUpCommand(cmdName);
+
+    if (job.getState().equals(ObdCommandJob.ObdCommandJobState.EXECUTION_ERROR))
+        cmdResult = job.getCommand().getResult();
     else
-      addTableRow(cmdName, cmdResult);
+        cmdResult = job.getCommand().getFormattedResult();
+
+    if ( vv.findViewWithTag(cmdID) != null ) {
+        TextView existingTV = (TextView) vv.findViewWithTag(cmdID);
+        existingTV.setText(cmdResult);
+    }
+    else if (cmdResult.equals("41 00 00 00"))   {}    //not an interesting response,do nothing
+    else addTableRow(cmdID, cmdName, cmdResult);
 
     if (UPLOAD) {
       Map<String, String> commandResult = new HashMap<String, String>();
-      commandResult.put(cmdName, cmdResult);
+      commandResult.put(cmdID, cmdResult);
       // TODO get coords from GPS, if enabled, and set VIN properly
       ObdReading reading = new ObdReading(0d, 0d, System.currentTimeMillis(), "UNDEFINED_VIN", commandResult);
       new UploadAsyncTask().execute(reading);
@@ -353,14 +357,8 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
     return true;
   }
 
-  private void addTableRow(String key, String val) {
-        TextView existingTV = (TextView) tl.findViewWithTag(key);
-        if  (existingTV != null) {
-            if (existingTV.getText() == val) existingTV.setTypeface(Typeface.DEFAULT);
-            else existingTV.setTypeface(Typeface.DEFAULT_BOLD);
-            existingTV.setText(val);
-        }
-        else {
+  private void addTableRow(String id, String key, String val) {
+
     TableRow tr = new TableRow(this);
     MarginLayoutParams params = new ViewGroup.MarginLayoutParams(
         LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -374,13 +372,12 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
     TextView value = new TextView(this);
     value.setGravity(Gravity.LEFT);
     value.setText(val);
-    value.setTag(key);
+    value.setTag(id);
     tr.addView(name);
     tr.addView(value);
-    tl.addView(tr, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
-        LayoutParams.WRAP_CONTENT));
+    tl.addView(tr, params);
   }
-  }
+
 
   /**
    *

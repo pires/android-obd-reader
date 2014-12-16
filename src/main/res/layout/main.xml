@@ -15,12 +15,11 @@
 
         <TextView
       	  android:text="0"
-      	  android:id="@+id/fuel_econ_text"
+      	  android:tag="SPEED"
       	  android:textSize="115px"
       	  android:gravity="bottom|right"/>
       	<TextView
-      	  android:text="l/100km"
-      	  android:id="@+id/avg_fuel_econ_lbl"
+      	  android:tag=""
       	  android:gravity="bottom|left"/>
       	<TextView
       	  android:id="@+id/compass_text"
@@ -40,17 +39,15 @@
       	android:layout_margin="2dip"
         >
       	<TextView
-      	  android:id="@+id/inst_fuel_econ_text"
+      	  android:tag="FUEL_CONSUMPTION"
       	  android:text="0l/100km"/>
       	<TextView
-      	  android:id="@+id/run_time_text"
+      	  android:tag="ENGINE_RUNTIME"
       	  android:text="00:00:00"/>
       	<TextView
-      	  android:id="@+id/rpm_text"
+          android:tag="ENGINE_RPM"
       	  android:text=""/>
-      	<TextView
-      	  android:id="@+id/spd_text"
-      	  android:text=""/>
+
       </TableRow>
     </TableLayout>
 	<ScrollView

@@ -30,6 +30,7 @@ import pt.lighthouselabs.obd.commands.protocol.SelectProtocolObdCommand;
 import pt.lighthouselabs.obd.commands.control.TroubleCodesObdCommand;
 import pt.lighthouselabs.obd.enums.ObdProtocols;
 import pt.lighthouselabs.obd.reader.R;
+import pt.lighthouselabs.obd.exceptions.UnableToConnectException;
 
 public class TroubleCodesActivity extends Activity {
 
@@ -220,6 +221,10 @@ public class TroubleCodesActivity extends Activity {
           mHandler.obtainMessage(OBD_COMMAND_FAILURE).sendToTarget();
           return null;
         } catch (InterruptedException e) {
+          e.printStackTrace();
+          mHandler.obtainMessage(OBD_COMMAND_FAILURE).sendToTarget();
+          return null;
+        } catch (UnableToConnectException e) {
           e.printStackTrace();
           mHandler.obtainMessage(OBD_COMMAND_FAILURE).sendToTarget();
           return null;

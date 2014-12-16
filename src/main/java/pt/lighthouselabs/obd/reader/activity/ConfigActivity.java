@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Set;
 
 import pt.lighthouselabs.obd.commands.ObdCommand;
+import pt.lighthouselabs.obd.enums.ObdProtocols;
 import pt.lighthouselabs.obd.reader.R;
 import pt.lighthouselabs.obd.reader.config.ObdConfig;
 
@@ -37,6 +38,7 @@ public class ConfigActivity extends PreferenceActivity implements
   public static final String VOLUMETRIC_EFFICIENCY_KEY = "volumetric_efficiency_preference";
   public static final String IMPERIAL_UNITS_KEY = "imperial_units_preference";
   public static final String COMMANDS_SCREEN_KEY = "obd_commands_screen";
+  public static final String PROTOCOLS_LIST_KEY = "obd_protocols_preference";
   public static final String ENABLE_GPS_KEY = "enable_gps_preference";
   public static final String MAX_FUEL_ECON_KEY = "max_fuel_econ_preference";
   public static final String CONFIG_READER_KEY = "reader_config_preference";
@@ -144,6 +146,9 @@ public class ConfigActivity extends PreferenceActivity implements
     ArrayList<CharSequence> vals = new ArrayList<CharSequence>();
     ListPreference listBtDevices = (ListPreference) getPreferenceScreen()
         .findPreference(BLUETOOTH_LIST_KEY);
+    ArrayList<CharSequence> protocolStrings = new ArrayList<CharSequence>();
+    ListPreference listProtocols = (ListPreference) getPreferenceScreen()
+              .findPreference(PROTOCOLS_LIST_KEY);
     String[] prefKeys = new String[]{ENGINE_DISPLACEMENT_KEY,
         VOLUMETRIC_EFFICIENCY_KEY, UPDATE_PERIOD_KEY, MAX_FUEL_ECON_KEY};
     for (String prefKey : prefKeys) {
@@ -167,6 +172,16 @@ public class ConfigActivity extends PreferenceActivity implements
       cpref.setChecked(true);
       cmdScr.addPreference(cpref);
     }
+
+    /*
+     * Available OBD protocols
+     *
+     */
+    for (ObdProtocols protocol: ObdProtocols.values()){
+          protocolStrings.add(protocol.name());
+    }
+    listProtocols.setEntries(protocolStrings.toArray(new CharSequence[0]));
+    listProtocols.setEntryValues(protocolStrings.toArray(new CharSequence[0]));
 
     /*
      * Let's use this device Bluetooth adapter to select which paired OBD-II
