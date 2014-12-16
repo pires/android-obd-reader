@@ -101,7 +101,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
   };
   private final Runnable mQueueCommands = new Runnable() {
     public void run() {
-      if (service!=null && service.isRunning()) {
+      if (service!=null && service.isRunning() && service.queueEmpty()) {
         queueCommands();
       }
       // run again in 2s
