@@ -178,7 +178,6 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
         TextView existingTV = (TextView) vv.findViewWithTag(cmdID);
         existingTV.setText(cmdResult);
     }
-    else if (cmdResult.equals("41 00 00 00"))   {}    //not an interesting response,do nothing
     else addTableRow(cmdID, cmdName, cmdResult);
 
     if (UPLOAD) {
