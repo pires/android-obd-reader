@@ -19,62 +19,75 @@ import java.util.Map;
 /**
  * DTO for OBD readings.
  */
-public class ObdReading {
-  private double latitude, longitude;
-  private long timestamp;
-  private String vin;
-  private Map<String, String> readings;
+public class ObdReading
+{
+    private double latitude, longitude;
+    private long timestamp;
+    private String vin;
+    private Map<String, String> readings;
 
-  public ObdReading(){
-    readings = new HashMap<String, String>();
-  }
+    public ObdReading()
+    {
+        readings = new HashMap<String, String>();
+    }
 
-  public ObdReading(double latitude, double longitude, long timestamp, String vin, Map<String, String> readings) {
-    this.latitude = latitude;
-    this.longitude = longitude;
-    this.timestamp = timestamp;
-    this.vin = vin;
-    this.readings = readings;
-  }
+    public ObdReading(double latitude, double longitude, long timestamp, String vin, Map<String, String> readings)
+    {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.timestamp = timestamp;
+        this.vin = vin;
+        this.readings = readings;
+    }
 
-  public double getLatitude() {
-    return latitude;
-  }
+    public double getLatitude()
+    {
+        return latitude;
+    }
 
-  public void setLatitude(double latitude) {
-    this.latitude = latitude;
-  }
+    public void setLatitude(double latitude)
+    {
+        this.latitude = latitude;
+    }
 
-  public double getLongitude() {
-    return longitude;
-  }
+    public double getLongitude()
+    {
+        return longitude;
+    }
 
-  public void setLongitude(double longitude) {
-    this.longitude = longitude;
-  }
+    public void setLongitude(double longitude)
+    {
+        this.longitude = longitude;
+    }
 
-  public long getTimestamp() {
-    return timestamp;
-  }
+    public long getTimestamp()
+    {
+        return timestamp;
+    }
 
-  public void setTimestamp(long timestamp) {
-    this.timestamp = timestamp;
-  }
+    public void setTimestamp(long timestamp)
+    {
+        this.timestamp = timestamp;
+    }
 
-  public String getVin() {
-    return vin;
-  }
+    public String getVin()
+    {
+        return vin;
+    }
 
-  public void setVin(String vin) {
-    this.vin = vin;
-  }
+    public void setVin(String vin)
+    {
+        this.vin = vin;
+    }
 
-  public Map<String, String> getReadings() {
-    return readings;
-  }
+    public Map<String, String> getReadings()
+    {
+        return readings;
+    }
 
-  public void setReadings(Map<String, String> readings) {
-    this.readings = readings;
-  }
+    public void setReadings(Map<String, String> readings)
+    {
+        this.readings = readings;
+    }
 
 }
