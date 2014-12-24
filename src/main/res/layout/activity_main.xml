@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    android:id="@+id/vehicle_view"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#dddddd"
+        android:stretchColumns="1,3">
+
+        <TableRow
+            android:layout_margin="2dip">
+
+            <TextView
+                android:gravity="bottom|right"
+                android:tag="SPEED"
+                android:text="0"
+                android:textSize="60sp"
+                android:layout_marginLeft="10dp"/>
+
+            <TextView
+                android:gravity="bottom|left"
+                android:tag=""/>
+
+            <TextView
+                android:id="@+id/compass_text"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:text="N"
+                android:textSize="60sp"/>
+        </TableRow>
+    </TableLayout>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#dddddd"
+        android:stretchColumns="*">
+
+        <TableRow
+            android:layout_margin="4dip">
+
+            <TextView
+                android:tag="FUEL_CONSUMPTION"
+                android:text="FC: 0l/100km"/>
+
+            <TextView
+                android:tag="ENGINE_RUNTIME"
+                android:text="ER: 00:00:00"/>
+
+            <TextView
+                android:tag="ENGINE_RPM"
+                android:text="E-RPM:"/>
+
+        </TableRow>
+    </TableLayout>
+
+    <ScrollView
+        android:id="@+id/data_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableLayout
+            android:id="@+id/data_table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="*">
+        </TableLayout>
+    </ScrollView>
+</LinearLayout>

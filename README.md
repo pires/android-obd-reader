@@ -26,6 +26,8 @@ If you want to upload data to a server, for now, check the following:
 * [OBD Server](https://github.com/pires/obd-server/) - a simple implementation of a RESTful app, compiled into a runnable JAR.
 * Enable the upload functionality, by defining ```private static final boolean UPLOAD = true;``` in ```MainActivity.java```;
 * Set proper endpoint address and port in class ```UploadAsyncTask``` defined in ```MainActivity.java```.
+* If you are testing on emulator don't forget that localhost address of Genymotion is http://10.0.3.2:8080 and
+localhost address of Android AVD is http://10.0.2.2:8080 ("/obd" should be added to base address)
 
 ## Troubleshooting ##
 
