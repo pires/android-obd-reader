@@ -80,19 +80,11 @@ public class ObdGatewayService extends AbstractGatewayService {
 
       // TODO kill this service gracefully
       stopService();
-    }
+      } else {
 
     final BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
     dev = btAdapter.getRemoteDevice(remoteDevice);
 
-    /*
-     * TODO clean
-     *
-     * Get more preferences
-     */
-    boolean imperialUnits = prefs.getBoolean(ConfigActivity.IMPERIAL_UNITS_KEY,
-        false);
-    ArrayList<ObdCommand> cmds = ConfigActivity.getObdCommands(prefs);
 
     /*
      * Establish Bluetooth connection
@@ -125,6 +117,17 @@ public class ObdGatewayService extends AbstractGatewayService {
       // in case of failure, stop this service.
       stopService();
     }
+    }
+
+     /*
+     * TODO clean
+     *
+     * Get more preferences
+     */
+          boolean imperialUnits = prefs.getBoolean(ConfigActivity.IMPERIAL_UNITS_KEY,
+                  false);
+          ArrayList<ObdCommand> cmds = ConfigActivity.getObdCommands(prefs);
+
   }
 
   /**
