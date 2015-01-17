@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import com.google.inject.Inject;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -134,7 +135,11 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
       service = ((AbstractGatewayService.AbstractGatewayServiceBinder)binder).getService();
       service.setContext(MainActivity.this);
       Log.d(TAG, "Starting the live data");
-      service.startService();
+      try { service.startService(); }
+      catch ( IOException ioe) {
+          Log.e(TAG, "Failure Starting the live data");
+          doUnbindService();
+        }
 
     }
 

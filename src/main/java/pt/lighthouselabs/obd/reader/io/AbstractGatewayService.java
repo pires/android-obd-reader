@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.google.inject.Inject;
 
+import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -128,6 +129,6 @@ public abstract class AbstractGatewayService extends RoboService {
   }
 
   abstract protected void executeQueue();
-  abstract public void startService();
+  abstract public void startService() throws IOException;
   abstract public void stopService();
 }
