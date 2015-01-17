@@ -134,10 +134,10 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
       isServiceBound = true;
       service = ((AbstractGatewayService.AbstractGatewayServiceBinder)binder).getService();
       service.setContext(MainActivity.this);
-      Log.d(TAG, "Starting the live data");
+      Log.d(TAG, "Starting live data");
       try { service.startService(); }
       catch ( IOException ioe) {
-          Log.e(TAG, "Failure Starting the live data");
+          Log.e(TAG, "Failure Starting live data");
           doUnbindService();
         }
 
