@@ -139,7 +139,7 @@ public class ObdGatewayService extends AbstractGatewayService {
    */
   private void startObdConnection() throws IOException {
     Log.d(TAG, "Starting OBD connection..");
-
+    isRunning = true;
     try {
       // Instantiate a BluetoothSocket for the remote device and connect it.
       sock = dev.createRfcommSocketToServiceRecord(MY_UUID);
@@ -186,7 +186,7 @@ public class ObdGatewayService extends AbstractGatewayService {
     queueCounter = 0L;
     Log.d(TAG, "Initialization jobs queued.");
 
-    isRunning = true;
+
   }
 
   /**
