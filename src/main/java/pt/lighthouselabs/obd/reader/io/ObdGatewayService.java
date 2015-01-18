@@ -67,7 +67,7 @@ public class ObdGatewayService extends AbstractGatewayService {
   private BluetoothSocket sock = null;
   private BluetoothSocket sockFallback = null;
 
-  public void startService() {
+  public void startService() throws IOException {
     Log.d(TAG, "Starting service..");
 
     // get the remote Bluetooth device
@@ -80,6 +80,7 @@ public class ObdGatewayService extends AbstractGatewayService {
 
       // TODO kill this service gracefully
       stopService();
+      throw new IOException();
       } else {
 
     final BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -116,6 +117,7 @@ public class ObdGatewayService extends AbstractGatewayService {
 
       // in case of failure, stop this service.
       stopService();
+      throw new IOException();
     }
     }
 
@@ -139,7 +141,7 @@ public class ObdGatewayService extends AbstractGatewayService {
    */
   private void startObdConnection() throws IOException {
     Log.d(TAG, "Starting OBD connection..");
-
+    isRunning = true;
     try {
       // Instantiate a BluetoothSocket for the remote device and connect it.
       sock = dev.createRfcommSocketToServiceRecord(MY_UUID);
@@ -157,7 +159,7 @@ public class ObdGatewayService extends AbstractGatewayService {
       } catch (Exception e2) {
         Log.e(TAG, "Couldn't fallback while establishing Bluetooth connection. Stopping app..", e2);
         stopService();
-        return;
+        throw new IOException();
       }
     }
 
@@ -186,7 +188,7 @@ public class ObdGatewayService extends AbstractGatewayService {
     queueCounter = 0L;
     Log.d(TAG, "Initialization jobs queued.");
 
-    isRunning = true;
+
   }
 
   /**
