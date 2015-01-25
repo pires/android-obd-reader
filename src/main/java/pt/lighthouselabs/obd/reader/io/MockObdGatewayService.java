@@ -67,8 +67,7 @@ public class MockObdGatewayService extends AbstractGatewayService {
     */
     protected void executeQueue() {
       Log.d(TAG, "Executing queue..");
-      isQueueRunning = true;
-      while (!jobsQueue.isEmpty()) {
+      while (!Thread.currentThread().isInterrupted()) {
           ObdCommandJob job = null;
           try {
             job = jobsQueue.take();
@@ -83,6 +82,8 @@ public class MockObdGatewayService extends AbstractGatewayService {
             } else {
               Log.e(TAG, "Job state was not new, so it shouldn't be in queue. BUG ALERT!");
             }
+          } catch (InterruptedException i) {
+              Thread.currentThread().interrupt();
           } catch (Exception e) {
             e.printStackTrace();
             job.setState(ObdCommandJobState.EXECUTION_ERROR);
@@ -102,8 +103,6 @@ public class MockObdGatewayService extends AbstractGatewayService {
 
           }
       }
-      // will run next time a job is queued
-      isQueueRunning = false;
     }
 
 
