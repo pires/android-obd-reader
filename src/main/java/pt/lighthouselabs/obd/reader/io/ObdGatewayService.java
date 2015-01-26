@@ -194,10 +194,9 @@ public class ObdGatewayService extends AbstractGatewayService {
   /**
    * Runs the queue until the service is stopped
    */
-  protected void executeQueue() {
+  protected void executeQueue() throws InterruptedException{
     Log.d(TAG, "Executing queue..");
-    isQueueRunning = true;
-    while (!jobsQueue.isEmpty()) {
+    while (!Thread.currentThread().isInterrupted()) {
       ObdCommandJob job = null;
       try {
         job = jobsQueue.take();
@@ -213,6 +212,8 @@ public class ObdGatewayService extends AbstractGatewayService {
           // log not new job
           Log.e(TAG,
               "Job state was not new, so it shouldn't be in queue. BUG ALERT!");
+            } catch (InterruptedException i) {
+                Thread.currentThread().interrupt();
       } catch (Exception e) {
         job.setState(ObdCommandJobState.EXECUTION_ERROR);
         Log.e(TAG, "Failed to run command. -> " + e.getMessage());
@@ -228,8 +229,6 @@ public class ObdGatewayService extends AbstractGatewayService {
         });
       }
     }
-    // will run next time a job is queued
-    isQueueRunning = false;
   }
 
   /**
