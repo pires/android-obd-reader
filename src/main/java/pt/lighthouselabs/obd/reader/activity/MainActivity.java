@@ -198,26 +198,6 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    // get Bluetooth device
-    final BluetoothAdapter btAdapter = BluetoothAdapter
-        .getDefaultAdapter();
-
-    preRequisites = btAdapter == null ? false : true;
-    if (preRequisites)
-      preRequisites = btAdapter.isEnabled();
-
-    if (!preRequisites) {
-      showDialog(BLUETOOTH_DISABLED);
-      Toast.makeText(this, "BT is disabled, will use Mock service instead", Toast.LENGTH_SHORT).show();
-    } else {
-      Toast.makeText(this, "Blutooth ok", Toast.LENGTH_SHORT).show();
-    }
-
-
-    // get Orientation sensor
-    orientSensor = sensorManager.getSensorList(Sensor.TYPE_ORIENTATION).get(0);
-    if (orientSensor == null)
-      showDialog(NO_ORIENTATION_SENSOR);
   }
 
   @Override
@@ -260,6 +240,26 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
     wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK,
         "ObdReader");
 
+    // get Bluetooth device
+    final BluetoothAdapter btAdapter = BluetoothAdapter
+        .getDefaultAdapter();
+
+    preRequisites = btAdapter == null ? false : true;
+    if (preRequisites)
+      preRequisites = btAdapter.isEnabled();
+
+    if (!preRequisites) {
+      showDialog(BLUETOOTH_DISABLED);
+      Toast.makeText(this, "Bluetooth is disabled, will use Mock service instead", Toast.LENGTH_SHORT).show();
+    } else {
+      Toast.makeText(this, "Bluetooth ok", Toast.LENGTH_SHORT).show();
+    }
+
+
+    // get Orientation sensor
+    orientSensor = sensorManager.getSensorList(Sensor.TYPE_ORIENTATION).get(0);
+    if (orientSensor == null)
+      showDialog(NO_ORIENTATION_SENSOR);
   }
 
   private void updateConfig() {
