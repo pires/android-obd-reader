@@ -250,9 +250,9 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
 
       if (!preRequisites) {
           showDialog(BLUETOOTH_DISABLED);
-          Toast.makeText(this, "BT is disabled, will use Mock service instead", Toast.LENGTH_SHORT).show();
+          Toast.makeText(this, "Bluetooth is disabled, will use Mock service instead", Toast.LENGTH_SHORT).show();
       } else {
-          Toast.makeText(this, "Blutooth ok", Toast.LENGTH_SHORT).show();
+          Toast.makeText(this, "Bluetooth ok", Toast.LENGTH_SHORT).show();
       }
 
 
