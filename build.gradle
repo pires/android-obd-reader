@@ -30,7 +30,7 @@ android {
 
 dependencies {
     compile 'com.android.support:appcompat-v7:19.1.0'
-    compile 'pt.lighthouselabs.obd:obd-java-api:0.7'
+    compile 'pt.lighthouselabs.obd:obd-java-api:0.8'
     compile 'org.roboguice:roboguice:3.0b-experimental'
     compile 'com.squareup.retrofit:retrofit:1.6.1'
 }
