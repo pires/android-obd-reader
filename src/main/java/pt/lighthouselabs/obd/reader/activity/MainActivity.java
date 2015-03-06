@@ -34,6 +34,7 @@ import com.google.inject.Inject;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import pt.lighthouselabs.obd.commands.ObdCommand;
@@ -255,11 +256,12 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
       Toast.makeText(this, "Bluetooth ok", Toast.LENGTH_SHORT).show();
     }
 
-
     // get Orientation sensor
-    orientSensor = sensorManager.getSensorList(Sensor.TYPE_ORIENTATION).get(0);
-    if (orientSensor == null)
-      showDialog(NO_ORIENTATION_SENSOR);
+    List<Sensor> sensors = sensorManager.getSensorList(Sensor.TYPE_ORIENTATION);
+    if (sensors.size() > 0)
+        orientSensor = sensors.get(0);
+    else
+        showDialog(NO_ORIENTATION_SENSOR);
   }
 
   private void updateConfig() {
