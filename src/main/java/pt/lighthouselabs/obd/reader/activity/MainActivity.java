@@ -199,13 +199,19 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
+    // get Orientation sensor
+    List<Sensor> sensors = sensorManager.getSensorList(Sensor.TYPE_ORIENTATION);
+    if (sensors.size() > 0)
+        orientSensor = sensors.get(0);
+    else
+        showDialog(NO_ORIENTATION_SENSOR);
+
   }
 
   @Override
   protected void onStart() {
     super.onStart();
     Log.d(TAG, "Entered onStart...");
-
   }
 
   @Override
@@ -256,13 +262,6 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
     } else {
       Toast.makeText(this, "Bluetooth ok", Toast.LENGTH_SHORT).show();
     }
-
-    // get Orientation sensor
-    List<Sensor> sensors = sensorManager.getSensorList(Sensor.TYPE_ORIENTATION);
-    if (sensors.size() > 0)
-        orientSensor = sensors.get(0);
-    else
-        showDialog(NO_ORIENTATION_SENSOR);
   }
 
   private void updateConfig() {
