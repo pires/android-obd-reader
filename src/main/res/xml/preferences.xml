@@ -55,6 +55,14 @@
       android:summaryOn="Turn off GPS"
       android:dialogTitle="Enable GPS"/>
 
+    <CheckBoxPreference
+      android:key="enable_bluetooth_preference"
+      android:defaultValue="false"
+      android:title="Enable Bluetooth"
+      android:summaryOff="Turn on Bluetooth"
+      android:summaryOn="Turn off Bluetooth"
+      android:dialogTitle="Enable Bluetooth"/>
+
     <EditTextPreference
       android:key="update_period_preference"
       android:defaultValue="4"
