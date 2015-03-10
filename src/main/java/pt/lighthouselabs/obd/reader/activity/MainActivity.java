@@ -64,6 +64,8 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
   // TODO make this configurable
   private static final boolean UPLOAD = false;
 
+  private static boolean bluetoothDefaultIsEnable = false;
+
   private static final String TAG = MainActivity.class.getName();
   private static final int NO_BLUETOOTH_ID = 0;
   private static final int BLUETOOTH_DISABLED = 1;
@@ -199,6 +201,10 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
+    final BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+    if(btAdapter != null)
+      bluetoothDefaultIsEnable = btAdapter.isEnabled();
+
     // get Orientation sensor
     List<Sensor> sensors = sensorManager.getSensorList(Sensor.TYPE_ORIENTATION);
     if (sensors.size() > 0)
@@ -222,6 +228,11 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
     if (isServiceBound) {
       doUnbindService();
     }
+
+    final BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+    if(btAdapter != null && btAdapter.isEnabled() && !bluetoothDefaultIsEnable );
+      btAdapter.disable();
+
   }
 
   @Override
