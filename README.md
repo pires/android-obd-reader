@@ -7,8 +7,8 @@ I'm still migrating things over here, so keep with me :-)
 
 ## Prerequisites ##
 - JDK 7
-- Android Studio 0.8.1
-- Gradle 1.12
+- Android Studio 1.1.0
+- Gradle 2.2.1
 - Android SDK (API 19, Build tools 19.1)
 
 ## Test with device ##

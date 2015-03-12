@@ -34,6 +34,7 @@ import com.google.inject.Inject;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import pt.lighthouselabs.obd.commands.ObdCommand;
@@ -62,6 +63,8 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
 
   // TODO make this configurable
   private static final boolean UPLOAD = false;
+
+  private static boolean bluetoothDefaultIsEnable = false;
 
   private static final String TAG = MainActivity.class.getName();
   private static final int NO_BLUETOOTH_ID = 0;
@@ -198,13 +201,23 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
+    final BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+    if(btAdapter != null)
+      bluetoothDefaultIsEnable = btAdapter.isEnabled();
+
+    // get Orientation sensor
+    List<Sensor> sensors = sensorManager.getSensorList(Sensor.TYPE_ORIENTATION);
+    if (sensors.size() > 0)
+        orientSensor = sensors.get(0);
+    else
+        showDialog(NO_ORIENTATION_SENSOR);
+
   }
 
   @Override
   protected void onStart() {
     super.onStart();
     Log.d(TAG, "Entered onStart...");
-
   }
 
   @Override
@@ -215,6 +228,11 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
     if (isServiceBound) {
       doUnbindService();
     }
+
+    final BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+    if(btAdapter != null && btAdapter.isEnabled() && !bluetoothDefaultIsEnable );
+      btAdapter.disable();
+
   }
 
   @Override
@@ -244,9 +262,10 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
     final BluetoothAdapter btAdapter = BluetoothAdapter
         .getDefaultAdapter();
 
-    preRequisites = btAdapter == null ? false : true;
-    if (preRequisites)
-      preRequisites = btAdapter.isEnabled();
+    preRequisites = btAdapter != null && btAdapter.isEnabled();
+    if ( !preRequisites && prefs.getBoolean(ConfigActivity.ENABLE_BT_KEY, false)) {
+         preRequisites = btAdapter.enable();
+    }
 
     if (!preRequisites) {
       showDialog(BLUETOOTH_DISABLED);
@@ -254,12 +273,6 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
     } else {
       Toast.makeText(this, "Bluetooth ok", Toast.LENGTH_SHORT).show();
     }
-
-
-    // get Orientation sensor
-    orientSensor = sensorManager.getSensorList(Sensor.TYPE_ORIENTATION).get(0);
-    if (orientSensor == null)
-      showDialog(NO_ORIENTATION_SENSOR);
   }
 
   private void updateConfig() {

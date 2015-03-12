@@ -40,6 +40,7 @@ public class ConfigActivity extends PreferenceActivity implements
   public static final String COMMANDS_SCREEN_KEY = "obd_commands_screen";
   public static final String PROTOCOLS_LIST_KEY = "obd_protocols_preference";
   public static final String ENABLE_GPS_KEY = "enable_gps_preference";
+  public static final String ENABLE_BT_KEY = "enable_bluetooth_preference";
   public static final String MAX_FUEL_ECON_KEY = "max_fuel_econ_preference";
   public static final String CONFIG_READER_KEY = "reader_config_preference";
 
