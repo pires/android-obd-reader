@@ -63,7 +63,7 @@ import roboguice.inject.InjectView;
 public class MainActivity extends RoboActivity implements ObdProgressListener {
 
   private static boolean bluetoothDefaultIsEnable = false;
-
+  public Map<String, String> commandResult = new HashMap<String, String>();
   private static final String TAG = MainActivity.class.getName();
   private static final int NO_BLUETOOTH_ID = 0;
   private static final int BLUETOOTH_DISABLED = 1;
@@ -105,6 +105,15 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
     public void run() {
       if (service!=null && service.isRunning() && service.queueEmpty()) {
         queueCommands();
+        if (prefs.getBoolean(ConfigActivity.UPLOAD_DATA_KEY, false)) {
+          // TODO get coords from GPS, if enabled
+          final String vin = prefs.getString(ConfigActivity.VEHICLE_ID_KEY, "UNDEFINED_VIN");
+          Map<String, String> temp = new HashMap<String, String>();
+          temp.putAll(commandResult);
+          ObdReading reading = new ObdReading(0d, 0d, System.currentTimeMillis(), vin, temp);
+          new UploadAsyncTask().execute(reading);
+        }
+        commandResult.clear();
       }
       // run again in period defined in preferences
       new Handler().postDelayed(mQueueCommands, ConfigActivity.getUpdatePeriod(prefs));
@@ -186,14 +195,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
     }
     else addTableRow(cmdID, cmdName, cmdResult);
 
-    if (prefs.getBoolean(ConfigActivity.UPLOAD_DATA_KEY, false)) {
-      Map<String, String> commandResult = new HashMap<String, String>();
-      commandResult.put(cmdID, cmdResult);
-      // TODO get coords from GPS, if enabled
-      final String vin = prefs.getString(ConfigActivity.VEHICLE_ID_KEY, "UNDEFINED_VIN");
-      ObdReading reading = new ObdReading(0d, 0d, System.currentTimeMillis(), vin, commandResult);
-      new UploadAsyncTask().execute(reading);
-    }
+    commandResult.put(cmdID, cmdResult);
   }
 
   @Override
