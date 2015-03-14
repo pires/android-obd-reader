@@ -24,8 +24,8 @@ gradle clean build installDebug
 
 If you want to upload data to a server, for now, check the following:
 * [OBD Server](https://github.com/pires/obd-server/) - a simple implementation of a RESTful app, compiled into a runnable JAR.
-* Enable the upload functionality, by defining ```private static final boolean UPLOAD = true;``` in ```MainActivity.java```;
-* Set proper endpoint address and port in class ```UploadAsyncTask``` defined in ```MainActivity.java```.
+* Enable the upload functionality in preferences
+* Set proper endpoint address and port in preferences.
 
 ## Troubleshooting ##
 
