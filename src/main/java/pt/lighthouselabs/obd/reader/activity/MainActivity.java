@@ -53,6 +53,7 @@ import pt.lighthouselabs.obd.reader.net.ObdReading;
 import pt.lighthouselabs.obd.reader.net.ObdService;
 import pt.lighthouselabs.obd.reader.config.ObdConfig;
 import retrofit.RestAdapter;
+import retrofit.RetrofitError;
 import retrofit.client.Response;
 import roboguice.activity.RoboActivity;
 import roboguice.inject.ContentView;
@@ -61,11 +62,8 @@ import roboguice.inject.InjectView;
 @ContentView(R.layout.main)
 public class MainActivity extends RoboActivity implements ObdProgressListener {
 
-  // TODO make this configurable
-  private static final boolean UPLOAD = false;
-
   private static boolean bluetoothDefaultIsEnable = false;
-
+  public Map<String, String> commandResult = new HashMap<String, String>();
   private static final String TAG = MainActivity.class.getName();
   private static final int NO_BLUETOOTH_ID = 0;
   private static final int BLUETOOTH_DISABLED = 1;
@@ -107,6 +105,15 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
     public void run() {
       if (service!=null && service.isRunning() && service.queueEmpty()) {
         queueCommands();
+        if (prefs.getBoolean(ConfigActivity.UPLOAD_DATA_KEY, false)) {
+          // TODO get coords from GPS, if enabled
+          final String vin = prefs.getString(ConfigActivity.VEHICLE_ID_KEY, "UNDEFINED_VIN");
+          Map<String, String> temp = new HashMap<String, String>();
+          temp.putAll(commandResult);
+          ObdReading reading = new ObdReading(0d, 0d, System.currentTimeMillis(), vin, temp);
+          new UploadAsyncTask().execute(reading);
+        }
+        commandResult.clear();
       }
       // run again in period defined in preferences
       new Handler().postDelayed(mQueueCommands, ConfigActivity.getUpdatePeriod(prefs));
@@ -188,13 +195,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
     }
     else addTableRow(cmdID, cmdName, cmdResult);
 
-    if (UPLOAD) {
-      Map<String, String> commandResult = new HashMap<String, String>();
-      commandResult.put(cmdID, cmdResult);
-      // TODO get coords from GPS, if enabled, and set VIN properly
-      ObdReading reading = new ObdReading(0d, 0d, System.currentTimeMillis(), "UNDEFINED_VIN", commandResult);
-      new UploadAsyncTask().execute(reading);
-    }
+    commandResult.put(cmdID, cmdResult);
   }
 
   @Override
@@ -441,14 +442,20 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
     protected Void doInBackground(ObdReading... readings) {
       Log.d(TAG, "Uploading " + readings.length + " readings..");
       // instantiate reading service client
+      final String endpoint = prefs.getString(ConfigActivity.UPLOAD_URL_KEY, "");
       RestAdapter restAdapter = new RestAdapter.Builder()
-          .setEndpoint("http://server_ip:8080/obd")
+          .setEndpoint(endpoint)
           .build();
       ObdService service = restAdapter.create(ObdService.class);
       // upload readings
       for (ObdReading reading : readings) {
-        Response response = service.uploadReading(reading);
-        assert response.getStatus() == 200;
+        try {
+          Response response = service.uploadReading(reading);
+          assert response.getStatus() == 200;
+        }
+        catch  (RetrofitError re)
+        {Log.e(TAG, re.toString());}
+
       }
       Log.d(TAG, "Done");
       return null;
