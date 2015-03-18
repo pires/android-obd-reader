@@ -47,7 +47,11 @@
       	<TextView
           android:tag="ENGINE_RPM"
       	  android:text=""/>
-
+      </TableRow>
+      <TableRow>
+          <TextView
+              android:tag="GPS_POS"
+              android:text="GPS not fix"/>
       </TableRow>
     </TableLayout>
 	<ScrollView
