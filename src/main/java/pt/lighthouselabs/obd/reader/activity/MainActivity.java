@@ -233,15 +233,17 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
 
   private boolean gpsInit() {
     mLocService = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-    mLocProvider = mLocService.getProvider(LocationManager.GPS_PROVIDER);
-    if (mLocProvider == null) {
-      showDialog(NO_GPS_SUPPORT);
-      Log.e(TAG, "Unable to get GPS PROVIDER");
-      // todo disable gps controls into Preferences
-      return false;
+    if(mLocService != null ) {
+      mLocProvider = mLocService.getProvider(LocationManager.GPS_PROVIDER);
+      if (mLocProvider != null) {
+        mLocService.addGpsStatusListener(this);
+        return true;
+      }
     }
-    mLocService.addGpsStatusListener(this);
-    return true;
+    showDialog(NO_GPS_SUPPORT);
+    Log.e(TAG, "Unable to get GPS PROVIDER");
+    // todo disable gps controls into Preferences
+    return false;
   }
 
   @Override
@@ -271,8 +273,10 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
   protected void onDestroy() {
     super.onDestroy();
 
-    mLocService.removeGpsStatusListener(this);
-    mLocService.removeUpdates(this);
+    if(mLocService != null) {
+      mLocService.removeGpsStatusListener(this);
+      mLocService.removeUpdates(this);
+    }
 
     releaseWakeLockIfHeld();
     if (isServiceBound) {
@@ -550,7 +554,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
   }
 
   private synchronized void gpsStart() {
-    if (!mGpsIsStarted) {
+    if (!mGpsIsStarted && mLocProvider != null && mLocService != null) {
       mLocService.requestLocationUpdates(mLocProvider.getName(), gpsMinTime, gpsMinDistance, this);
       mGpsIsStarted = true;
     }
