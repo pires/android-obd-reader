@@ -12,6 +12,11 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.GpsStatus;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.location.LocationProvider;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -39,9 +44,6 @@ import java.util.Map;
 
 import pt.lighthouselabs.obd.commands.ObdCommand;
 
-
-
-
 import pt.lighthouselabs.obd.enums.AvailableCommandNames;
 import pt.lighthouselabs.obd.reader.ObdProgressListener;
 import pt.lighthouselabs.obd.reader.R;
@@ -59,11 +61,25 @@ import roboguice.activity.RoboActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
 
+// Some code taken from https://github.com/barbeau/gpstest
+
 @ContentView(R.layout.main)
-public class MainActivity extends RoboActivity implements ObdProgressListener {
+public class MainActivity extends RoboActivity implements ObdProgressListener, LocationListener, GpsStatus.Listener {
 
   private static boolean bluetoothDefaultIsEnable = false;
+
   public Map<String, String> commandResult = new HashMap<String, String>();
+
+  boolean mGpsIsStarted = false;
+  private LocationManager mLocService;
+  private LocationProvider mLocProvider;
+  private GpsStatus mGpsStatus;
+  private Location mLastLocation;
+
+  // todo movo to Preferences
+  private long gpsMinTime = 1000; // Min Time between location updates, in milliseconds
+  private float gpsMinDistance = 3; // Min Distance between location updates, in meters
+
   private static final String TAG = MainActivity.class.getName();
   private static final int NO_BLUETOOTH_ID = 0;
   private static final int BLUETOOTH_DISABLED = 1;
@@ -73,6 +89,8 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
   private static final int GET_DTC = 5;
   private static final int TABLE_ROW_MARGIN = 7;
   private static final int NO_ORIENTATION_SENSOR = 8;
+  private static final int NO_GPS_SUPPORT = 9;
+
   private final SensorEventListener orientListener = new SensorEventListener() {
     public void onSensorChanged(SensorEvent event) {
       float x = event.values[0];
@@ -101,16 +119,32 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
       // do nothing
     }
   };
+
   private final Runnable mQueueCommands = new Runnable() {
     public void run() {
       if (service!=null && service.isRunning() && service.queueEmpty()) {
         queueCommands();
+
+        double lat = 0;
+        double lon = 0;
+        if(mGpsIsStarted && mLastLocation != null) {
+          lat = mLastLocation.getLatitude();
+          lon = mLastLocation.getLongitude();
+
+          TextView gpsPos = (TextView) vv.findViewWithTag("GPS_POS");
+          StringBuffer sb = new StringBuffer();
+          sb.append("Lat: ");
+          sb.append(mLastLocation.getLatitude());
+          sb.append(" Lon: ");
+          sb.append(mLastLocation.getLongitude());
+          gpsPos.setText(sb.toString());
+        }
+
         if (prefs.getBoolean(ConfigActivity.UPLOAD_DATA_KEY, false)) {
-          // TODO get coords from GPS, if enabled
           final String vin = prefs.getString(ConfigActivity.VEHICLE_ID_KEY, "UNDEFINED_VIN");
           Map<String, String> temp = new HashMap<String, String>();
           temp.putAll(commandResult);
-          ObdReading reading = new ObdReading(0d, 0d, System.currentTimeMillis(), vin, temp);
+          ObdReading reading = new ObdReading(lat, lon, System.currentTimeMillis(), vin, temp);
           new UploadAsyncTask().execute(reading);
         }
         commandResult.clear();
@@ -135,7 +169,6 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
   private SharedPreferences prefs;
   private boolean isServiceBound;
 
-
   private AbstractGatewayService service;
   private ServiceConnection serviceConn = new ServiceConnection() {
     @Override
@@ -150,7 +183,6 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
           Log.e(TAG, "Failure Starting live data");
           doUnbindService();
         }
-
     }
 
     // This method is *only* called when the connection to the service is lost unexpectedly
@@ -179,6 +211,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
             if (item.getValue().equals(txt)) return item.name();
         }  return txt;
     }
+
   public void stateUpdate(final ObdCommandJob job) {
     final String cmdName = job.getCommand().getName();
     String cmdResult = "";
@@ -198,6 +231,19 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
     commandResult.put(cmdID, cmdResult);
   }
 
+  private boolean gpsInit() {
+    mLocService = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+    mLocProvider = mLocService.getProvider(LocationManager.GPS_PROVIDER);
+    if (mLocProvider == null) {
+      showDialog(NO_GPS_SUPPORT);
+      Log.e(TAG, "Unable to get GPS PROVIDER");
+      // todo disable gps controls into Preferences
+      return false;
+    }
+    mLocService.addGpsStatusListener(this);
+    return true;
+  }
+
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -212,7 +258,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
         orientSensor = sensors.get(0);
     else
         showDialog(NO_ORIENTATION_SENSOR);
-
+    gpsInit();
   }
 
   @Override
@@ -225,6 +271,9 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
   protected void onDestroy() {
     super.onDestroy();
 
+    mLocService.removeGpsStatusListener(this);
+    mLocService.removeUpdates(this);
+
     releaseWakeLockIfHeld();
     if (isServiceBound) {
       doUnbindService();
@@ -233,7 +282,6 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
     final BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
     if(btAdapter != null && btAdapter.isEnabled() && !bluetoothDefaultIsEnable );
       btAdapter.disable();
-
   }
 
   @Override
@@ -326,12 +374,17 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
     // start command execution
     new Handler().post(mQueueCommands);
 
+    if(prefs.getBoolean(ConfigActivity.ENABLE_GPS_KEY, false))
+      gpsStart();
+
     // screen won't turn off until wakeLock.release()
     wakeLock.acquire();
   }
 
   private void stopLiveData() {
     Log.d(TAG, "Stopping live data..");
+
+    gpsStop();
 
     doUnbindService();
 
@@ -349,6 +402,9 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
         return build.create();
       case NO_ORIENTATION_SENSOR:
         build.setMessage("Orientation sensor missing?");
+        return build.create();
+      case NO_GPS_SUPPORT:
+        build.setMessage("Sorry, your device doesn't support GPS.");
         return build.create();
     }
     return null;
@@ -395,7 +451,6 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
     tr.addView(value);
     tl.addView(tr, params);
   }
-
 
   /**
    *
@@ -463,4 +518,48 @@ public class MainActivity extends RoboActivity implements ObdProgressListener {
 
   }
 
+  public void onLocationChanged(Location location) {
+    mLastLocation = location;
+  }
+
+  public void onStatusChanged(String provider, int status, Bundle extras) {
+  }
+
+  public void onProviderEnabled(String provider) {
+  }
+
+  public void onProviderDisabled(String provider) {
+  }
+
+  public void onGpsStatusChanged(int event) {
+    mGpsStatus = mLocService.getGpsStatus(mGpsStatus);
+
+    switch (event) {
+      case GpsStatus.GPS_EVENT_STARTED:
+        Toast.makeText(this, "GPS_EVENT_STARTED.", Toast.LENGTH_LONG).show();
+        break;
+      case GpsStatus.GPS_EVENT_STOPPED:
+        Toast.makeText(this, "GPS_EVENT_STOPPED.", Toast.LENGTH_LONG).show();
+        break;
+      case GpsStatus.GPS_EVENT_FIRST_FIX:
+        Toast.makeText(this, "GPS_EVENT_FIRST_FIX.", Toast.LENGTH_LONG).show();
+        break;
+      case GpsStatus.GPS_EVENT_SATELLITE_STATUS:
+        break;
+    }
+  }
+
+  private synchronized void gpsStart() {
+    if (!mGpsIsStarted) {
+      mLocService.requestLocationUpdates(mLocProvider.getName(), gpsMinTime, gpsMinDistance, this);
+      mGpsIsStarted = true;
+    }
+  }
+
+  private synchronized void gpsStop() {
+    if (mGpsIsStarted) {
+      mLocService.removeUpdates(this);
+      mGpsIsStarted = false;
+    }
+  }
 }
