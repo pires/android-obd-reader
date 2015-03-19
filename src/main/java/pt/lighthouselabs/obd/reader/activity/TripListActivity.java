@@ -50,11 +50,6 @@ public class TripListActivity
 
     triplog = TripLog.getInstance(this.getApplicationContext());
     records = triplog.readAllRecords();
-
-    ArrayList<String> trips = new ArrayList<String>();
-    for (TripRecord record : records) {
-      trips.add(record.getStartDate() + " / " + record.getEndDate());
-    }
     adapter = new TripListAdapter(this, records);
     lv.setAdapter(adapter);
     registerForContextMenu(lv);
