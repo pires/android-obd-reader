@@ -7,6 +7,6 @@ import pt.lighthouselabs.obd.reader.io.ObdCommandJob;
  */
 public interface ObdProgressListener {
 
-	void stateUpdate(final ObdCommandJob job);
-	
+  void stateUpdate(final ObdCommandJob job);
+
 }

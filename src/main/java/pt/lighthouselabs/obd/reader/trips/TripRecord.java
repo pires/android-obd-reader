@@ -34,13 +34,13 @@ public class TripRecord {
     return speed;
   }
 
+  public void setSpeedMax(String value) {
+    setSpeedMax(Integer.parseInt(value));
+  }
+
   public void setSpeedMax(int value) {
     if (this.speed < value)
       speed = value;
-  }
-
-  public void setSpeedMax(String value) {
-    setSpeedMax(Integer.parseInt(value));
   }
 
   /**
@@ -107,14 +107,14 @@ public class TripRecord {
     return this.engineRpmMax;
   }
 
+  public void setEngineRpmMax(String value) {
+    setEngineRpmMax(Integer.parseInt(value));
+  }
+
   public void setEngineRpmMax(Integer value) {
     if (this.engineRpmMax < value) {
       this.engineRpmMax = value;
     }
-  }
-
-  public void setEngineRpmMax(String value) {
-    setEngineRpmMax(Integer.parseInt(value));
   }
 
   /**
@@ -134,6 +134,10 @@ public class TripRecord {
     engineRuntime = new Date(value);
   }
 
+  public Date getEngineRuntime() {
+    return engineRuntime;
+  }
+
   public void setEngineRuntime(String value) {
     DateFormat format = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
     try {
@@ -141,9 +145,5 @@ public class TripRecord {
     } catch (ParseException e) {
       e.printStackTrace();
     }
-  }
-
-  public Date getEngineRuntime() {
-    return engineRuntime;
   }
 }

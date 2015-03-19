@@ -71,7 +71,7 @@ public class TripListAdapter extends ArrayAdapter<TripRecord> {
     String rpmMax = String.valueOf(record.getEngineRpmMax());
     rowEngine.setText("Engine Runtime: " + engineRuntime + "\tMax RPM: " + rpmMax);
 
-    rowOther.setText("Max speed: " +String.valueOf(record.getSpeedMax()));
+    rowOther.setText("Max speed: " + String.valueOf(record.getSpeedMax()));
     return view;
   }
 
