@@ -17,7 +17,7 @@ public class ConfirmDialog {
     String message;
 
     switch (id) {
-      case DIALOG_CONFIRM_DELETE_ID: // Диалоговое окно About
+      case DIALOG_CONFIRM_DELETE_ID:
         title = "Delete trip record";
         message = "Are you sure?";
         return getDialog(id, title, message, context, listener);

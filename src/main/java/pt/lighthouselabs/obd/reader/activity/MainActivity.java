@@ -356,9 +356,10 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
     final BluetoothAdapter btAdapter = BluetoothAdapter
         .getDefaultAdapter();
 
-    preRequisites = btAdapter == null ? false : true;
-    if (preRequisites)
-      preRequisites = btAdapter.isEnabled();
+    preRequisites = btAdapter != null && btAdapter.isEnabled();
+    if (!preRequisites && prefs.getBoolean(ConfigActivity.ENABLE_BT_KEY, false)) {
+      preRequisites = btAdapter.enable();
+    }
 
     if (!preRequisites) {
       showDialog(BLUETOOTH_DISABLED);
