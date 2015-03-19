@@ -366,13 +366,6 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
     } else {
       Toast.makeText(this, "Bluetooth ok", Toast.LENGTH_SHORT).show();
     }
-
-    // get Orientation sensor
-    List<Sensor> sensors = sensorManager.getSensorList(Sensor.TYPE_ORIENTATION);
-    if (sensors.size() > 0)
-        orientSensor = sensors.get(0);
-    else
-        showDialog(NO_ORIENTATION_SENSOR);
   }
 
   private void updateConfig() {
