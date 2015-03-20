@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by elagin on 13.03.15.
+ * Some code taken from https://github.com/wdkapps/FillUp
  */
 public class TripLog {
 
@@ -36,6 +36,7 @@ public class TripLog {
   private static final String RECORD_RPM_MAX = "rmpMax";
   private static final String RECORD_SPEED_MAX = "speedMax";
   private static final String RECORD_ENGINE_RUNTIME = "engineRuntime";
+
   /// array of all column names for RECORDS_TABLE
   private static final String[] RECORDS_TABLE_COLUMNS = new String[]{
       RECORD_ID,
@@ -52,8 +53,8 @@ public class TripLog {
           RECORD_START_DATE + " integer not null, " +
           RECORD_END_DATE + " integer, " +
           RECORD_SPEED_MAX + " integer, " +
-          RECORD_RPM_MAX + " integer" +
-          RECORD_ENGINE_RUNTIME + " integer" +
+          RECORD_RPM_MAX + " integer, " +
+          RECORD_ENGINE_RUNTIME + " text" +
           ");"
   };
   /// singleton instance
@@ -159,7 +160,7 @@ public class TripLog {
     values.put(RECORD_RPM_MAX, record.getEngineRpmMax());
     values.put(RECORD_SPEED_MAX, record.getSpeedMax());
     if (record.getEngineRuntime() != null)
-      values.put(RECORD_ENGINE_RUNTIME, record.getEngineRuntime().getTime());
+      values.put(RECORD_ENGINE_RUNTIME, record.getEngineRuntime());
     return values;
   }
 
@@ -243,19 +244,19 @@ public class TripLog {
     final String tag = TAG + ".getRecordFromCursor()";
     TripRecord record = null;
     if (c != null) {
+      record = new TripRecord();
       int id = c.getInt(c.getColumnIndex(RECORD_ID));
       long startDate = c.getLong(c.getColumnIndex(RECORD_START_DATE));
       long endTime = c.getLong(c.getColumnIndex(RECORD_END_DATE));
       int engineRpmMax = c.getInt(c.getColumnIndex(RECORD_RPM_MAX));
       int speedMax = c.getInt(c.getColumnIndex(RECORD_SPEED_MAX));
-      long engineRuntime = c.getLong(c.getColumnIndex(RECORD_ENGINE_RUNTIME));
-      record = new TripRecord();
       record.setID(id);
       record.setStartDate(new Date(startDate));
       record.setEndDate(new Date(endTime));
       record.setEngineRpmMax(engineRpmMax);
       record.setSpeedMax(speedMax);
-      record.setEngineRuntime(engineRuntime);
+      if(!c.isNull(c.getColumnIndex(RECORD_ENGINE_RUNTIME)))
+        record.setEngineRuntime(c.getString(c.getColumnIndex(RECORD_ENGINE_RUNTIME)));
     }
     return record;
   }

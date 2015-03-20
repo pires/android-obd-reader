@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import pt.lighthouselabs.obd.reader.R;
@@ -21,23 +20,17 @@ import roboguice.activity.RoboActivity;
 import static pt.lighthouselabs.obd.reader.activity.ConfirmDialog.createDialog;
 
 /**
- * Some code taken into https://github.com/wdkapps/FillUp
+ * Some code taken from https://github.com/wdkapps/FillUp
  */
 
 public class TripListActivity
     extends RoboActivity
     implements ConfirmDialog.Listener {
 
-  /**
-   * DESCRIPTION:
-   * Dialog box integer ID constants
-   *
-   * @see #onCreateDialog(int)
-   */
-
   private List<TripRecord> records;
   private TripLog triplog = null;
   private TripListAdapter adapter = null;
+
   /// the currently selected row from the list of records
   private int selectedRow;
 

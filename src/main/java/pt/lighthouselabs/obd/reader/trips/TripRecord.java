@@ -1,14 +1,9 @@
 package pt.lighthouselabs.obd.reader.trips;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-/**
- * Created by elagin on 13.03.15.
- */
 public class TripRecord {
 
   /// record id for database use (primary key)
@@ -24,7 +19,7 @@ public class TripRecord {
 
   private Integer speed = 0;
 
-  private Date engineRuntime;
+  private String engineRuntime;
 
   public TripRecord() {
     startDate = new Date();
@@ -130,20 +125,11 @@ public class TripRecord {
     return sdf.format(this.startDate);
   }
 
-  public void setEngineRuntime(Long value) {
-    engineRuntime = new Date(value);
-  }
-
-  public Date getEngineRuntime() {
-    return engineRuntime;
-  }
-
   public void setEngineRuntime(String value) {
-    DateFormat format = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
-    try {
-      engineRuntime = format.parse(value);
-    } catch (ParseException e) {
-      e.printStackTrace();
-    }
+    engineRuntime = value;
+  }
+
+  public String getEngineRuntime() {
+    return engineRuntime;
   }
 }

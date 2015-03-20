@@ -12,14 +12,11 @@ import java.util.List;
 
 import pt.lighthouselabs.obd.reader.R;
 
-/**
- * Created by pavel on 13.03.15.
- */
 public class TripListAdapter extends ArrayAdapter<TripRecord> {
   /// the Android Activity owning the ListView
   private final Activity activity;
 
-  /// a list of gasoline records for display
+  /// a list of trip records for display
   private final List<TripRecord> records;
 
   /**
@@ -37,7 +34,7 @@ public class TripListAdapter extends ArrayAdapter<TripRecord> {
 
   /**
    * DESCRIPTION:
-   * Constructs and populates a View for display of the GasRecord date at the index
+   * Constructs and populates a View for display of the TripRecord at the index
    * of the List specified by the position parameter.
    *
    * @see android.widget.ArrayAdapter#getView(int, android.view.View, android.view.ViewGroup)
@@ -64,11 +61,11 @@ public class TripListAdapter extends ArrayAdapter<TripRecord> {
     startDate.setText(record.getStartDateString());
     columnDuration.setText(calcDiffTime(record.getStartDate(), record.getEndDate()));
 
-    String engineRuntime = calcDiffTime(new Date(0), record.getEngineRuntime());
-    if (engineRuntime.length() == 0) {
-      engineRuntime = "00:00:00";
-    }
     String rpmMax = String.valueOf(record.getEngineRpmMax());
+
+    String engineRuntime = record.getEngineRuntime();
+    if(engineRuntime == null)
+      engineRuntime = "None";
     rowEngine.setText("Engine Runtime: " + engineRuntime + "\tMax RPM: " + rpmMax);
 
     rowOther.setText("Max speed: " + String.valueOf(record.getSpeedMax()));
