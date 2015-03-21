@@ -7,4 +7,6 @@
   <string name="service_stopped">OBD connection has stopped.</string>
   <string name="notification_label">Tap to open OBD-Reader.</string>
   <string name="title_activity_trouble_codes">Trouble Codes</string>
+  <string name="pref_upload_category_title">Data Upload</string>
+  <string name="pref_upload_category">upload_category</string>
 </resources>
