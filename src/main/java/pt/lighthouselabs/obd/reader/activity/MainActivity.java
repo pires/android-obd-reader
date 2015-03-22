@@ -66,6 +66,9 @@ import roboguice.activity.RoboActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
 
+import static pt.lighthouselabs.obd.reader.activity.ConfigActivity.getGpsDistanceUpdatePeriod;
+import static pt.lighthouselabs.obd.reader.activity.ConfigActivity.getGpsUpdatePeriod;
+
 // Some code taken from https://github.com/barbeau/gpstest
 
 @ContentView(R.layout.main)
@@ -80,10 +83,6 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
   private LocationProvider mLocProvider;
   private GpsStatus mGpsStatus;
   private Location mLastLocation;
-
-  // todo movo to Preferences
-  private long gpsMinTime = 1000; // Min Time between location updates, in milliseconds
-  private float gpsMinDistance = 3; // Min Distance between location updates, in meters
 
   private static final String TAG = MainActivity.class.getName();
   private static final int NO_BLUETOOTH_ID = 0;
@@ -164,7 +163,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
         commandResult.clear();
       }
       // run again in period defined in preferences
-      new Handler().postDelayed(mQueueCommands, ConfigActivity.getUpdatePeriod(prefs));
+      new Handler().postDelayed(mQueueCommands, ConfigActivity.getObdUpdatePeriod(prefs));
     }
   };
   @InjectView(R.id.compass_text)
@@ -613,7 +612,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
 
   private synchronized void gpsStart() {
     if (!mGpsIsStarted && mLocProvider != null && mLocService != null) {
-      mLocService.requestLocationUpdates(mLocProvider.getName(), gpsMinTime, gpsMinDistance, this);
+      mLocService.requestLocationUpdates(mLocProvider.getName(), getGpsUpdatePeriod(prefs), getGpsDistanceUpdatePeriod(prefs), this);
       mGpsIsStarted = true;
     }
   }
