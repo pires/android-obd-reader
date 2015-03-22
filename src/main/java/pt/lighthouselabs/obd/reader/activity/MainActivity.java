@@ -126,6 +126,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
 
         double lat = 0;
         double lon = 0;
+        final int posLen = 7;
         if(mGpsIsStarted && mLastLocation != null) {
           lat = mLastLocation.getLatitude();
           lon = mLastLocation.getLongitude();
@@ -133,9 +134,9 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
           TextView gpsPos = (TextView) vv.findViewWithTag("GPS_POS");
           StringBuffer sb = new StringBuffer();
           sb.append("Lat: ");
-          sb.append(mLastLocation.getLatitude());
+          sb.append(String.valueOf(mLastLocation.getLatitude()).substring(0, posLen));
           sb.append(" Lon: ");
-          sb.append(mLastLocation.getLongitude());
+          sb.append(String.valueOf(mLastLocation.getLongitude()).substring(0, posLen));
           gpsPos.setText(sb.toString());
         }
 

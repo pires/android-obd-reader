@@ -40,7 +40,8 @@
         android:title="Bluetooth Devices"/>
   </PreferenceCategory>
   <PreferenceCategory
-      android:title="Bluetooth">
+      android:title="GPS"
+      android:key="@string/pref_gps_category" >
     <CheckBoxPreference
         android:defaultValue="false"
         android:dialogTitle="Enable GPS"
