@@ -126,7 +126,9 @@ public class TripRecord {
   }
 
   public void setEngineRuntime(String value) {
-    engineRuntime = value;
+    if(!value.equals("00:00:00")) {
+      this.engineRuntime = value;
+    }
   }
 
   public String getEngineRuntime() {
