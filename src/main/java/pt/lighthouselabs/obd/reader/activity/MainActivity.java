@@ -38,15 +38,19 @@ import android.widget.Toast;
 import com.google.inject.Inject;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import pt.lighthouselabs.obd.commands.ObdCommand;
-
+import pt.lighthouselabs.obd.commands.SpeedObdCommand;
+import pt.lighthouselabs.obd.commands.engine.EngineRPMObdCommand;
+import pt.lighthouselabs.obd.commands.engine.EngineRuntimeObdCommand;
 import pt.lighthouselabs.obd.enums.AvailableCommandNames;
 import pt.lighthouselabs.obd.reader.ObdProgressListener;
 import pt.lighthouselabs.obd.reader.R;
+import pt.lighthouselabs.obd.reader.trips.TripLog;
 import pt.lighthouselabs.obd.reader.io.AbstractGatewayService;
 import pt.lighthouselabs.obd.reader.io.MockObdGatewayService;
 import pt.lighthouselabs.obd.reader.io.ObdCommandJob;
@@ -54,6 +58,7 @@ import pt.lighthouselabs.obd.reader.io.ObdGatewayService;
 import pt.lighthouselabs.obd.reader.net.ObdReading;
 import pt.lighthouselabs.obd.reader.net.ObdService;
 import pt.lighthouselabs.obd.reader.config.ObdConfig;
+import pt.lighthouselabs.obd.reader.trips.TripRecord;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -89,8 +94,17 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
   private static final int TABLE_ROW_MARGIN = 7;
   private static final int NO_ORIENTATION_SENSOR = 8;
   private static final int NO_GPS_SUPPORT = 9;
+  private static final int TRIPS_LIST = 10;
+  private static final int SAVE_TRIP_NOT_AVAIBLE = 11;
 
-  private final SensorEventListener orientListener = new SensorEventListener() {
+  /// the trip log
+  private TripLog triplog;
+  private TripRecord currentTrip;
+
+  private Context context;
+
+    private final SensorEventListener orientListener = new SensorEventListener() {
+
     public void onSensorChanged(SensorEvent event) {
       float x = event.values[0];
       String dir = "";
@@ -184,7 +198,12 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
         }
     }
 
-    // This method is *only* called when the connection to the service is lost unexpectedly
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+      return super.clone();
+    }
+
+      // This method is *only* called when the connection to the service is lost unexpectedly
     // and *not* when the client unbinds (http://developer.android.com/guide/components/bound-services.html)
     // So the isServiceBound attribute should also be set to false when we unbind from the service.
     @Override
@@ -226,8 +245,8 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
         existingTV.setText(cmdResult);
     }
     else addTableRow(cmdID, cmdName, cmdResult);
-
     commandResult.put(cmdID, cmdResult);
+    updateTripStatistic(job, cmdID);
   }
 
   private boolean gpsInit() {
@@ -245,6 +264,22 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
     return false;
   }
 
+  private void updateTripStatistic(final ObdCommandJob job, final String cmdID) {
+
+    if(currentTrip != null) {
+      if (cmdID.equals(AvailableCommandNames.SPEED.toString())) {
+        SpeedObdCommand command = (SpeedObdCommand)job.getCommand();
+        currentTrip.setSpeedMax(command.getMetricSpeed());
+      } else if (cmdID.equals(AvailableCommandNames.ENGINE_RPM.toString())) {
+        EngineRPMObdCommand command = (EngineRPMObdCommand)job.getCommand();
+        currentTrip.setEngineRpmMax(command.getRPM());
+      } else if( cmdID.endsWith(AvailableCommandNames.ENGINE_RUNTIME.toString())) {
+        EngineRuntimeObdCommand command =(EngineRuntimeObdCommand)job.getCommand();
+        currentTrip.setEngineRuntime(command.getFormattedResult());
+      }
+    }
+  }
+
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -260,6 +295,10 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
     else
         showDialog(NO_ORIENTATION_SENSOR);
     gpsInit();
+
+    context = this.getApplicationContext();
+    // create a log instance for use by this application
+    triplog = TripLog.getInstance(context);
   }
 
   @Override
@@ -281,6 +320,8 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
     if (isServiceBound) {
       doUnbindService();
     }
+
+    endTrip();
 
     final BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
     if(btAdapter != null && btAdapter.isEnabled() && !bluetoothDefaultIsEnable )
@@ -315,8 +356,8 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
         .getDefaultAdapter();
 
     preRequisites = btAdapter != null && btAdapter.isEnabled();
-    if ( !preRequisites && prefs.getBoolean(ConfigActivity.ENABLE_BT_KEY, false)) {
-         preRequisites = btAdapter.enable();
+    if (!preRequisites && prefs.getBoolean(ConfigActivity.ENABLE_BT_KEY, false)) {
+      preRequisites = btAdapter.enable();
     }
 
     if (!preRequisites) {
@@ -335,6 +376,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
     menu.add(0, START_LIVE_DATA, 0, "Start Live Data");
     menu.add(0, STOP_LIVE_DATA, 0, "Stop Live Data");
     menu.add(0, GET_DTC, 0, "Get DTC");
+    menu.add(0, TRIPS_LIST, 0, getString(R.string.menu_trip_list));
     menu.add(0, SETTINGS, 0, "Settings");
     return true;
   }
@@ -358,6 +400,9 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
       case GET_DTC:
         getTroubleCodes();
         return true;
+      case TRIPS_LIST:
+        startActivity(new Intent(this, TripListActivity.class));
+        return true;
       // case COMMAND_ACTIVITY:
       // staticCommand();
       // return true;
@@ -371,8 +416,13 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
 
   private void startLiveData() {
     Log.d(TAG, "Starting live data..");
+
     tl.removeAllViews(); //start fresh
     doBindService();
+
+    currentTrip = triplog.startTrip();
+    if(currentTrip == null)
+      showDialog(SAVE_TRIP_NOT_AVAIBLE);
 
     // start command execution
     new Handler().post(mQueueCommands);
@@ -390,8 +440,16 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
     gpsStop();
 
     doUnbindService();
+    endTrip();
 
     releaseWakeLockIfHeld();
+  }
+
+  protected void endTrip() {
+    if(currentTrip != null) {
+      currentTrip.setEndDate(new Date());
+      triplog.updateRecord(currentTrip);
+    }
   }
 
   protected Dialog onCreateDialog(int id) {
@@ -408,6 +466,9 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
         return build.create();
       case NO_GPS_SUPPORT:
         build.setMessage("Sorry, your device doesn't support GPS.");
+        return build.create();
+      case SAVE_TRIP_NOT_AVAIBLE:
+        build.setMessage("Sorry, trip will not be saved.");
         return build.create();
     }
     return null;
@@ -525,14 +586,11 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
     mLastLocation = location;
   }
 
-  public void onStatusChanged(String provider, int status, Bundle extras) {
-  }
+  public void onStatusChanged(String provider, int status, Bundle extras) { }
 
-  public void onProviderEnabled(String provider) {
-  }
+  public void onProviderEnabled(String provider) { }
 
-  public void onProviderDisabled(String provider) {
-  }
+  public void onProviderDisabled(String provider) { }
 
   public void onGpsStatusChanged(int event) {
     mGpsStatus = mLocService.getGpsStatus(mGpsStatus);

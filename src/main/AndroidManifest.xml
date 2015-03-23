@@ -41,6 +41,11 @@
       android:label="@string/title_activity_trouble_codes">
     </activity>
 
+    <activity
+      android:name=".activity.TripListActivity"
+      android:label="@string/title_activity_trips_list">
+    </activity>
+
     <service
       android:name=".io.ObdGatewayService"
       android:exported="false"/>
