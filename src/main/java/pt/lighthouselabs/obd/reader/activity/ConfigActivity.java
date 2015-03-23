@@ -3,7 +3,10 @@ package pt.lighthouselabs.obd.reader.activity;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.location.LocationManager;
+import android.location.LocationProvider;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
@@ -12,6 +15,7 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.widget.Toast;
 
@@ -190,6 +194,8 @@ public class ConfigActivity extends PreferenceActivity implements
      */
     addPreferencesFromResource(R.xml.preferences);
 
+    checkGps();
+
     ArrayList<CharSequence> pairedDeviceStrings = new ArrayList<CharSequence>();
     ArrayList<CharSequence> vals = new ArrayList<CharSequence>();
     ListPreference listBtDevices = (ListPreference) getPreferenceScreen()
@@ -308,4 +314,22 @@ public class ConfigActivity extends PreferenceActivity implements
     return false;
   }
 
+  private void checkGps() {
+    LocationManager mLocService = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+    if(mLocService != null ) {
+      LocationProvider mLocProvider = mLocService.getProvider(LocationManager.GPS_PROVIDER);
+      if (mLocProvider == null) {
+        hideGPSCategory();
+      }
+    }
+  }
+
+  private void hideGPSCategory() {
+    PreferenceScreen preferenceScreen = getPreferenceScreen();
+    PreferenceCategory preferenceCategory = (PreferenceCategory) findPreference(getResources().getString(R.string.pref_gps_category));
+    if(preferenceCategory != null) {
+      preferenceCategory.removeAll();
+      preferenceScreen.removePreference((Preference) preferenceCategory);
+    }
+  }
 }
