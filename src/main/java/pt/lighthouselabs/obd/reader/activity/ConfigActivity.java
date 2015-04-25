@@ -3,7 +3,10 @@ package pt.lighthouselabs.obd.reader.activity;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.location.LocationManager;
+import android.location.LocationProvider;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
@@ -12,6 +15,7 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.widget.Toast;
 
@@ -32,7 +36,7 @@ public class ConfigActivity extends PreferenceActivity implements
   public static final String BLUETOOTH_LIST_KEY = "bluetooth_list_preference";
   public static final String UPLOAD_URL_KEY = "upload_url_preference";
   public static final String UPLOAD_DATA_KEY = "upload_data_preference";
-  public static final String UPDATE_PERIOD_KEY = "update_period_preference";
+  public static final String OBD_UPDATE_PERIOD_KEY = "obd_update_period_preference";
   public static final String VEHICLE_ID_KEY = "vehicle_id_preference";
   public static final String ENGINE_DISPLACEMENT_KEY = "engine_displacement_preference";
   public static final String VOLUMETRIC_EFFICIENCY_KEY = "volumetric_efficiency_preference";
@@ -40,6 +44,8 @@ public class ConfigActivity extends PreferenceActivity implements
   public static final String COMMANDS_SCREEN_KEY = "obd_commands_screen";
   public static final String PROTOCOLS_LIST_KEY = "obd_protocols_preference";
   public static final String ENABLE_GPS_KEY = "enable_gps_preference";
+  public static final String GPS_UPDATE_PERIOD_KEY = "gps_update_period_preference";
+  public static final String GPS_DISTANCE_PERIOD_KEY = "gps_distance_period_preference";
   public static final String ENABLE_BT_KEY = "enable_bluetooth_preference";
   public static final String MAX_FUEL_ECON_KEY = "max_fuel_econ_preference";
   public static final String CONFIG_READER_KEY = "reader_config_preference";
@@ -48,9 +54,9 @@ public class ConfigActivity extends PreferenceActivity implements
    * @param prefs
    * @return
    */
-  public static int getUpdatePeriod(SharedPreferences prefs) {
+  public static int getObdUpdatePeriod(SharedPreferences prefs) {
     String periodString = prefs
-        .getString(ConfigActivity.UPDATE_PERIOD_KEY, "4"); // 4 as in seconds
+        .getString(ConfigActivity.OBD_UPDATE_PERIOD_KEY, "4"); // 4 as in seconds
     int period = 4000; // by default 4000ms
 
     try {
@@ -135,6 +141,51 @@ public class ConfigActivity extends PreferenceActivity implements
     return cmds;
   }
 
+  /**
+   * Minimum time between location updates, in milliseconds
+   * @param prefs
+   * @return
+   */
+  public static int getGpsUpdatePeriod(SharedPreferences prefs) {
+    String periodString = prefs
+        .getString(ConfigActivity.GPS_UPDATE_PERIOD_KEY, "1"); // 4 as in seconds
+    int period = 1000; // by default 4000ms
+
+    try {
+      period = Integer.parseInt(periodString) * 1000;
+    } catch (Exception e) {
+    }
+
+    if (period <= 0) {
+      period = 1000;
+    }
+
+    return period;
+  }
+
+  /**
+   * Min Distance between location updates, in meters
+   * @param prefs
+   * @return
+   */
+  public static int getGpsDistanceUpdatePeriod(SharedPreferences prefs) {
+    String periodString = prefs
+        .getString(ConfigActivity.GPS_DISTANCE_PERIOD_KEY, "5"); // 4 as in meters
+    int period = 5; // by default 5 meters
+
+    try {
+      period = Integer.parseInt(periodString);
+    } catch (Exception e) {
+    }
+
+    if (period <= 0) {
+      period = 5;
+    }
+
+    return period;
+  }
+
+
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
@@ -142,6 +193,8 @@ public class ConfigActivity extends PreferenceActivity implements
      * Read preferences resources available at res/xml/preferences.xml
      */
     addPreferencesFromResource(R.xml.preferences);
+
+    checkGps();
 
     ArrayList<CharSequence> pairedDeviceStrings = new ArrayList<CharSequence>();
     ArrayList<CharSequence> vals = new ArrayList<CharSequence>();
@@ -151,7 +204,7 @@ public class ConfigActivity extends PreferenceActivity implements
     ListPreference listProtocols = (ListPreference) getPreferenceScreen()
               .findPreference(PROTOCOLS_LIST_KEY);
     String[] prefKeys = new String[]{ENGINE_DISPLACEMENT_KEY,
-        VOLUMETRIC_EFFICIENCY_KEY, UPDATE_PERIOD_KEY, MAX_FUEL_ECON_KEY};
+        VOLUMETRIC_EFFICIENCY_KEY, OBD_UPDATE_PERIOD_KEY, MAX_FUEL_ECON_KEY};
     for (String prefKey : prefKeys) {
       EditTextPreference txtPref = (EditTextPreference) getPreferenceScreen()
           .findPreference(prefKey);
@@ -244,10 +297,10 @@ public class ConfigActivity extends PreferenceActivity implements
    * @param newValue   the value to be validated and set if valid
    */
   public boolean onPreferenceChange(Preference preference, Object newValue) {
-    if (UPDATE_PERIOD_KEY.equals(preference.getKey())
+    if (OBD_UPDATE_PERIOD_KEY.equals(preference.getKey())
         || VOLUMETRIC_EFFICIENCY_KEY.equals(preference.getKey())
         || ENGINE_DISPLACEMENT_KEY.equals(preference.getKey())
-        || UPDATE_PERIOD_KEY.equals(preference.getKey())
+        || OBD_UPDATE_PERIOD_KEY.equals(preference.getKey())
         || MAX_FUEL_ECON_KEY.equals(preference.getKey())) {
       try {
         Double.parseDouble(newValue.toString());
@@ -261,4 +314,22 @@ public class ConfigActivity extends PreferenceActivity implements
     return false;
   }
 
+  private void checkGps() {
+    LocationManager mLocService = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+    if(mLocService != null ) {
+      LocationProvider mLocProvider = mLocService.getProvider(LocationManager.GPS_PROVIDER);
+      if (mLocProvider == null) {
+        hideGPSCategory();
+      }
+    }
+  }
+
+  private void hideGPSCategory() {
+    PreferenceScreen preferenceScreen = getPreferenceScreen();
+    PreferenceCategory preferenceCategory = (PreferenceCategory) findPreference(getResources().getString(R.string.pref_gps_category));
+    if(preferenceCategory != null) {
+      preferenceCategory.removeAll();
+      preferenceScreen.removePreference((Preference) preferenceCategory);
+    }
+  }
 }
