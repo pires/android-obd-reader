@@ -33,7 +33,6 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.inject.Inject;
 
@@ -81,7 +80,6 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
   boolean mGpsIsStarted = false;
   private LocationManager mLocService;
   private LocationProvider mLocProvider;
-  private GpsStatus mGpsStatus;
   private Location mLastLocation;
 
   private static final String TAG = MainActivity.class.getName();
@@ -95,7 +93,16 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
   private static final int NO_ORIENTATION_SENSOR = 8;
   private static final int NO_GPS_SUPPORT = 9;
   private static final int TRIPS_LIST = 10;
-  private static final int SAVE_TRIP_NOT_AVAIBLE = 11;
+  private static final int SAVE_TRIP_NOT_AVAILABLE = 11;
+  private static final int BLUETOOTH_OK = 12;
+  private static final int BLUETOOTH_CONNECTING = 13;
+  private static final int BLUETOOTH_CONNECTED = 14;
+  private static final int BLUETOOTH_ERROR_CONNECTING = 15;
+  private static final int GPS_FIX = 16;
+  private static final int GPS_NO_FIX = 17;
+  private static final int GPS_STOPPED = 18;
+  private static final int GPS_STARTED  = 19;
+  private static final int GPS_READY  = 20;
 
   /// the trip log
   private TripLog triplog;
@@ -145,15 +152,13 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
           lat = mLastLocation.getLatitude();
           lon = mLastLocation.getLongitude();
 
-          TextView gpsPos = (TextView) vv.findViewWithTag("GPS_POS");
           StringBuffer sb = new StringBuffer();
           sb.append("Lat: ");
           sb.append(String.valueOf(mLastLocation.getLatitude()).substring(0, posLen));
           sb.append(" Lon: ");
           sb.append(String.valueOf(mLastLocation.getLongitude()).substring(0, posLen));
-          gpsPos.setText(sb.toString());
+          gpsStatusTextView.setText(sb.toString());
         }
-
         if (prefs.getBoolean(ConfigActivity.UPLOAD_DATA_KEY, false)) {
           final String vin = prefs.getString(ConfigActivity.VEHICLE_ID_KEY, "UNDEFINED_VIN");
           Map<String, String> temp = new HashMap<String, String>();
@@ -169,6 +174,12 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
   };
   @InjectView(R.id.compass_text)
   private TextView compass;
+
+  @InjectView(R.id.BT_STATUS)
+  private TextView btStatusTextView;
+
+  @InjectView(R.id.GPS_POS)
+  private TextView gpsStatusTextView ;
 
   @InjectView(R.id.vehicle_view)
   private LinearLayout vv;
@@ -187,14 +198,19 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
   private ServiceConnection serviceConn = new ServiceConnection() {
     @Override
     public void onServiceConnected(ComponentName className, IBinder binder) {
-      Log.d(TAG, className.toString()  + " service is bound");
+      Log.d(TAG, className.toString() + " service is bound");
       isServiceBound = true;
       service = ((AbstractGatewayService.AbstractGatewayServiceBinder)binder).getService();
       service.setContext(MainActivity.this);
       Log.d(TAG, "Starting live data");
-      try { service.startService(); }
+      try {
+        service.startService();
+        if (preRequisites)
+          UpdateStatusText(BLUETOOTH_CONNECTED);
+      }
       catch ( IOException ioe) {
           Log.e(TAG, "Failure Starting live data");
+          UpdateStatusText(BLUETOOTH_ERROR_CONNECTING);
           doUnbindService();
         }
     }
@@ -252,13 +268,17 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
 
   private boolean gpsInit() {
     mLocService = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-    if(mLocService != null ) {
+    if(mLocService != null) {
       mLocProvider = mLocService.getProvider(LocationManager.GPS_PROVIDER);
       if (mLocProvider != null) {
         mLocService.addGpsStatusListener(this);
-        return true;
+        if (mLocService.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+          UpdateStatusText(GPS_READY);
+          return true;
+        }
       }
     }
+    UpdateStatusText(NO_GPS_SUPPORT);
     showDialog(NO_GPS_SUPPORT);
     Log.e(TAG, "Unable to get GPS PROVIDER");
     // todo disable gps controls into Preferences
@@ -295,7 +315,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
         orientSensor = sensors.get(0);
     else
         showDialog(NO_ORIENTATION_SENSOR);
-    gpsInit();
+
 
     context = this.getApplicationContext();
     // create a log instance for use by this application
@@ -361,11 +381,13 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
       preRequisites = btAdapter.enable();
     }
 
+    gpsInit();
+
     if (!preRequisites) {
       showDialog(BLUETOOTH_DISABLED);
-      Toast.makeText(this, "Bluetooth is disabled, will use Mock service instead", Toast.LENGTH_SHORT).show();
+      UpdateStatusText(BLUETOOTH_DISABLED);
     } else {
-      Toast.makeText(this, "Bluetooth ok", Toast.LENGTH_SHORT).show();
+      UpdateStatusText(BLUETOOTH_OK);
     }
   }
 
@@ -423,7 +445,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
 
     currentTrip = triplog.startTrip();
     if(currentTrip == null)
-      showDialog(SAVE_TRIP_NOT_AVAIBLE);
+      showDialog(SAVE_TRIP_NOT_AVAILABLE);
 
     // start command execution
     new Handler().post(mQueueCommands);
@@ -460,20 +482,63 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
         build.setMessage("Sorry, your device doesn't support Bluetooth.");
         return build.create();
       case BLUETOOTH_DISABLED:
-        build.setMessage("You have Bluetooth disabled. Please enable it!");
+        build.setMessage("You have Bluetooth disabled. Please enable it (using Mock service)");
         return build.create();
       case NO_ORIENTATION_SENSOR:
         build.setMessage("Orientation sensor missing?");
         return build.create();
       case NO_GPS_SUPPORT:
-        build.setMessage("Sorry, your device doesn't support GPS.");
+        build.setMessage("Sorry, your device doesn't support or has disabled GPS.");
         return build.create();
-      case SAVE_TRIP_NOT_AVAIBLE:
+      case SAVE_TRIP_NOT_AVAILABLE:
         build.setMessage("Sorry, trip will not be saved.");
         return build.create();
     }
     return null;
   }
+
+   public Void UpdateStatusText(int id) {
+    switch (id) {
+      case NO_BLUETOOTH_ID:
+        btStatusTextView.setText("unavailable");
+        break;
+      case BLUETOOTH_DISABLED:
+        btStatusTextView.setText("disabled");
+        break;
+      case BLUETOOTH_OK:
+        btStatusTextView.setText("ready");
+        break;
+      case BLUETOOTH_CONNECTING:
+        btStatusTextView.setText("connecting...");
+        break;
+      case BLUETOOTH_CONNECTED:
+        btStatusTextView.setText("connected");
+        break;
+      case BLUETOOTH_ERROR_CONNECTING:
+        btStatusTextView.setText("connection failed");
+        break;
+      case GPS_FIX:
+        gpsStatusTextView.setText("fix acquired");
+        break;
+      case GPS_NO_FIX:
+        gpsStatusTextView.setText("fix not acquired");
+        break;
+      case GPS_STARTED:
+        gpsStatusTextView.setText("started");
+        break;
+      case GPS_STOPPED:
+        gpsStatusTextView.setText("stopped");
+        break;
+      case GPS_READY:
+        gpsStatusTextView.setText("ready");
+        break;
+      case NO_GPS_SUPPORT:
+        gpsStatusTextView.setText("not available");
+        break;
+    }
+    return null;
+  }
+
 
   public boolean onPrepareOptionsMenu(Menu menu) {
     MenuItem startItem = menu.findItem(START_LIVE_DATA);
@@ -533,6 +598,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
     if (!isServiceBound) {
       Log.d(TAG, "Binding OBD service..");
       if(preRequisites) {
+        UpdateStatusText(BLUETOOTH_CONNECTING);
         Intent serviceIntent = new Intent(this, ObdGatewayService.class);
         bindService(serviceIntent, serviceConn, Context.BIND_AUTO_CREATE);
       } else {
@@ -546,6 +612,8 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
     if (isServiceBound) {
       if (service.isRunning()) {
         service.stopService();
+        if (preRequisites)
+          UpdateStatusText(BLUETOOTH_OK);
       }
       Log.d(TAG, "Unbinding OBD service..");
       unbindService(serviceConn);
@@ -594,17 +662,16 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
   public void onProviderDisabled(String provider) { }
 
   public void onGpsStatusChanged(int event) {
-    mGpsStatus = mLocService.getGpsStatus(mGpsStatus);
 
     switch (event) {
       case GpsStatus.GPS_EVENT_STARTED:
-        Toast.makeText(this, "GPS_EVENT_STARTED.", Toast.LENGTH_LONG).show();
+        UpdateStatusText(GPS_STARTED);
         break;
       case GpsStatus.GPS_EVENT_STOPPED:
-        Toast.makeText(this, "GPS_EVENT_STOPPED.", Toast.LENGTH_LONG).show();
+        UpdateStatusText(GPS_STOPPED);
         break;
       case GpsStatus.GPS_EVENT_FIRST_FIX:
-        Toast.makeText(this, "GPS_EVENT_FIRST_FIX.", Toast.LENGTH_LONG).show();
+        UpdateStatusText(GPS_FIX);
         break;
       case GpsStatus.GPS_EVENT_SATELLITE_STATUS:
         break;
@@ -612,9 +679,12 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
   }
 
   private synchronized void gpsStart() {
-    if (!mGpsIsStarted && mLocProvider != null && mLocService != null) {
+    if (!mGpsIsStarted && mLocProvider != null && mLocService != null && mLocService.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
       mLocService.requestLocationUpdates(mLocProvider.getName(), getGpsUpdatePeriod(prefs), getGpsDistanceUpdatePeriod(prefs), this);
       mGpsIsStarted = true;
+    } else if (mGpsIsStarted && mLocProvider != null && mLocService != null) {
+    } else {
+      UpdateStatusText(NO_GPS_SUPPORT);
     }
   }
 
@@ -622,6 +692,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
     if (mGpsIsStarted) {
       mLocService.removeUpdates(this);
       mGpsIsStarted = false;
+      UpdateStatusText(GPS_STOPPED);
     }
   }
 }
