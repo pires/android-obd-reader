@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="5dp">
+    android:layout_margin="@dimen/activity_horizontal_margin">
 
   <TableRow
       android:layout_width="fill_parent"
@@ -18,7 +18,7 @@
         android:layout_weight="2"
         android:tag="SPEED"
         android:text="0"
-        android:textSize="60sp"
+        android:textSize="@dimen/abc_text_size_display_3_material"
         />
 
     <TextView
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:tag=""
-        />
+        android:textSize="@dimen/abc_text_size_display_3_material"/>
 
     <TextView
         android:id="@+id/compass_text"
@@ -35,7 +35,7 @@
         android:layout_weight="1"
         android:gravity="end"
         android:text="N"
-        android:textSize="60sp"
+        android:textSize="@dimen/abc_text_size_display_3_material"
         />
   </TableRow>
 
@@ -75,14 +75,15 @@
       android:layout_height="0dp"
       android:layout_gravity="top"
       android:layout_weight="1"
-      >
+      android:outlineProvider="bounds"
+      android:elevation="2dp"
+      android:layout_margin="10dp">
 
     <TableLayout
         android:id="@+id/data_table"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:stretchColumns="*"
-        android:gravity="center"
         >
     </TableLayout>
   </ScrollView>
@@ -96,14 +97,16 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="GPS"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:textSize="@dimen/abc_text_size_medium_material"/>
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="Bluetooth"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:textSize="@dimen/abc_text_size_medium_material"/>
   </TableRow>
   <TableRow
       android:layout_width="fill_parent"
