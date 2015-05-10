@@ -1,69 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  	android:id="@+id/vehicle_view"
+<LinearLayout
+    android:id="@+id/vehicle_view"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:padding="5dp">
+
+  <TableRow
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      >
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:tag="SPEED"
+        android:text="0"
+        android:textSize="60sp"
+        />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:tag=""
+        />
+
+    <TextView
+        android:id="@+id/compass_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="end"
+        android:text="N"
+        android:textSize="60sp"
+        />
+  </TableRow>
+
+  <TableRow
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      >
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:tag="FUEL_CONSUMPTION"
+        android:text="0l/100km"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:tag="ENGINE_RUNTIME"
+        android:text="00:00:00"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:tag="ENGINE_RPM"
+        android:text=""
+        android:gravity="center"/>
+  </TableRow>
+
+  <ScrollView
+      android:id="@+id/data_scroll"
+      android:layout_width="fill_parent"
+      android:layout_height="0dp"
+      android:layout_gravity="top"
+      android:layout_weight="1"
+      >
+
     <TableLayout
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content"
-      android:stretchColumns="1,3"
-      android:background="#dddddd">
-      <TableRow
-      	android:layout_margin="2dip"
-          >
-
-        <TextView
-      	  android:text="0"
-      	  android:tag="SPEED"
-      	  android:textSize="115px"
-      	  android:gravity="bottom|right"/>
-      	<TextView
-      	  android:tag=""
-      	  android:gravity="bottom|left"/>
-      	<TextView
-      	  android:id="@+id/compass_text"
-      	  android:text="N"
-      	  android:gravity="center"
-      	  android:layout_marginRight="10px"
-      	  android:textSize="115px"/>
-      </TableRow>
-    </TableLayout>
-
-  <TableLayout
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content"
-      android:stretchColumns="*"
-      android:background="#dddddd">
-      <TableRow
-      	android:layout_margin="2dip"
+        android:id="@+id/data_table"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="*"
+        android:gravity="center"
         >
-      	<TextView
-      	  android:tag="FUEL_CONSUMPTION"
-      	  android:text="0l/100km"/>
-      	<TextView
-      	  android:tag="ENGINE_RUNTIME"
-      	  android:text="00:00:00"/>
-      	<TextView
-          android:tag="ENGINE_RPM"
-      	  android:text=""/>
-      </TableRow>
-      <TableRow>
-          <TextView
-              android:tag="GPS_POS"
-              android:text="GPS not fix"/>
-      </TableRow>
     </TableLayout>
-	<ScrollView
-	  android:id="@+id/data_scroll"
-	  android:layout_width="fill_parent"
-	  android:layout_height="wrap_content">
-		<TableLayout
-		  android:id="@+id/data_table"
-		  android:layout_width="fill_parent"
-		  android:layout_height="fill_parent"
-		  android:stretchColumns="*"
-            >
-		</TableLayout>
-	</ScrollView>            
+  </ScrollView>
+  <TableRow
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      >
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="GPS"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Bluetooth"
+        android:gravity="center"/>
+  </TableRow>
+  <TableRow
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      >
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:id="@+id/GPS_POS"
+        android:text=""
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:id="@+id/BT_STATUS"
+        android:text=""
+        android:gravity="center"/>
+  </TableRow>
 </LinearLayout>
