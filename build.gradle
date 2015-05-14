@@ -4,7 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.1.0'
+        classpath 'com.android.tools.build:gradle:1.2.3'
     }
 }
 apply plugin: 'com.android.application'
@@ -20,7 +20,7 @@ android {
 
     defaultConfig {
         minSdkVersion 10
-        targetSdkVersion 19
+        targetSdkVersion 21
     }
 
     lintOptions {
@@ -29,7 +29,7 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:19.1.0'
+    compile 'com.android.support:appcompat-v7:22.1.1'
     compile 'pt.lighthouselabs.obd:obd-java-api:0.8'
     compile 'org.roboguice:roboguice:3.0b-experimental'
     compile 'com.squareup.retrofit:retrofit:1.6.1'
