@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="192"
+   height="192"
+   viewBox="0 0 192 192"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="btcar.svg"
+   inkscape:export-filename="/media/XXX/data/Work/android-obd-reader-cleaner/src/main/res/drawable-xxhdpi/ic_btcar.png"
+   inkscape:export-xdpi="67.5"
+   inkscape:export-ydpi="67.5"
+   enable-background="new">
+  <title
+     id="title3859">btcar</title>
+  <metadata
+     id="metadata110">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>btcar</dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>nomwerp</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by/3.0/" />
+        <dc:contributor>
+          <cc:Agent>
+            <dc:title>basic sprites from https://github.com/google/material-design-icons &quot; released under an Attribution 4.0 International license.&quot;</dc:title>
+          </cc:Agent>
+        </dc:contributor>
+        <dc:source>pt.lighthouselabs.obd.reader</dc:source>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by/3.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs108">
+    <linearGradient
+       id="linearGradient3926">
+      <stop
+         id="stop3928"
+         offset="0"
+         style="stop-color:#4fc3f7;stop-opacity:1;" />
+      <stop
+         style="stop-color:#2196f3;stop-opacity:1;"
+         offset="0.1"
+         id="stop4374" />
+      <stop
+         id="stop4372"
+         offset="0.89999998"
+         style="stop-color:#2196f3;stop-opacity:1;" />
+      <stop
+         id="stop3930"
+         offset="1"
+         style="stop-color:#0288d1;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3912"
+       osb:paint="solid">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop3914" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3889">
+      <stop
+         style="stop-color:#000000;stop-opacity:0.23529412;"
+         offset="0"
+         id="stop3891" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop3893" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient4546">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop4548" />
+      <stop
+         style="stop-color:#efefef;stop-opacity:1;"
+         offset="1"
+         id="stop4550" />
+    </linearGradient>
+    <filter
+       style="color-interpolation-filters:sRGB;"
+       inkscape:label="Drop Shadow"
+       id="filter3119">
+      <feFlood
+         flood-opacity="0.5"
+         flood-color="rgb(0,0,0)"
+         result="flood"
+         id="feFlood3121" />
+      <feComposite
+         in="flood"
+         in2="SourceGraphic"
+         operator="in"
+         result="composite1"
+         id="feComposite3123" />
+      <feGaussianBlur
+         in="composite"
+         stdDeviation="4"
+         result="blur"
+         id="feGaussianBlur3125" />
+      <feOffset
+         dx="0"
+         dy="4"
+         result="offset"
+         id="feOffset3127" />
+      <feComposite
+         in="SourceGraphic"
+         in2="offset"
+         operator="over"
+         result="composite2"
+         id="feComposite3129" />
+    </filter>
+    <linearGradient
+       id="linearGradient3931-8">
+      <stop
+         id="stop3933-5"
+         offset="0"
+         style="stop-color:#ffffff;stop-opacity:0.1;" />
+      <stop
+         id="stop3935-1"
+         offset="1"
+         style="stop-color:#ffffff;stop-opacity:0;" />
+    </linearGradient>
+    <radialGradient
+       r="63.796909"
+       fy="36.083038"
+       fx="47.295944"
+       cy="36.083038"
+       cx="47.295944"
+       gradientTransform="matrix(1.6183789,1.7088049,-1.469694,1.719496,40.488271,-156.86418)"
+       gradientUnits="userSpaceOnUse"
+       id="radialGradient3216"
+       xlink:href="#linearGradient3931-8"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient3787-8">
+      <stop
+         id="stop3789-8"
+         offset="0"
+         style="stop-color:#303f9f;stop-opacity:1;" />
+      <stop
+         id="stop3791-1"
+         offset="1"
+         style="stop-color:#1a237e;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="translate(7.004703,-45.850896)"
+       y2="81.553444"
+       x2="97.001396"
+       y1="-4.4550462"
+       x1="18.613329"
+       spreadMethod="pad"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3250"
+       xlink:href="#linearGradient3787-8"
+       inkscape:collect="always" />
+    <filter
+       style="color-interpolation-filters:sRGB;"
+       inkscape:label="Drop Shadow"
+       id="filter4455">
+      <feFlood
+         flood-opacity="0.3"
+         flood-color="rgb(0,0,0)"
+         result="flood"
+         id="feFlood4457" />
+      <feComposite
+         in="flood"
+         in2="SourceGraphic"
+         operator="in"
+         result="composite1"
+         id="feComposite4459" />
+      <feGaussianBlur
+         in="composite"
+         stdDeviation="2"
+         result="blur"
+         id="feGaussianBlur4461" />
+      <feOffset
+         dx="0"
+         dy="4"
+         result="offset"
+         id="feOffset4463" />
+      <feComposite
+         in="SourceGraphic"
+         in2="offset"
+         operator="over"
+         result="composite2"
+         id="feComposite4465" />
+    </filter>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath4542">
+      <use
+         transform="translate(0,-78)"
+         height="192"
+         width="192"
+         id="use4544"
+         xlink:href="#rect3028"
+         y="0"
+         x="0"
+         style="display:inline" />
+    </clipPath>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4546"
+       id="linearGradient4552"
+       x1="80"
+       y1="-214"
+       x2="144"
+       y2="-150"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4546"
+       id="linearGradient4560"
+       gradientUnits="userSpaceOnUse"
+       x1="80"
+       y1="-214"
+       x2="144"
+       y2="-150" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4546"
+       id="linearGradient4562"
+       gradientUnits="userSpaceOnUse"
+       x1="80"
+       y1="-214"
+       x2="144"
+       y2="-150" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4546"
+       id="linearGradient4564"
+       gradientUnits="userSpaceOnUse"
+       x1="80"
+       y1="-214"
+       x2="144"
+       y2="-150" />
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath3908">
+      <rect
+         inkscape:export-ydpi="67.5"
+         inkscape:export-xdpi="67.5"
+         inkscape:export-filename="/media/XXX/data/Work/android-obd-reader-cleaner/src/main/res/drawable-xxhdpi/rect3028.png"
+         ry="13.894737"
+         y="8"
+         x="32"
+         height="176"
+         width="128"
+         id="rect3910"
+         style="fill:#2892c3;fill-opacity:1;fill-rule:nonzero;stroke:none;display:inline;filter:url(#filter4455)" />
+    </clipPath>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3926"
+       id="linearGradient4551"
+       gradientUnits="userSpaceOnUse"
+       x1="88"
+       y1="4"
+       x2="88"
+       y2="188" />
+    <filter
+       style="color-interpolation-filters:sRGB;"
+       inkscape:label="Drop Shadow"
+       id="filter4601">
+      <feFlood
+         flood-opacity="0.3"
+         flood-color="rgb(0,0,0)"
+         result="flood"
+         id="feFlood4603" />
+      <feComposite
+         in="flood"
+         in2="SourceGraphic"
+         operator="in"
+         result="composite1"
+         id="feComposite4605" />
+      <feGaussianBlur
+         in="composite"
+         stdDeviation="3"
+         result="blur"
+         id="feGaussianBlur4607" />
+      <feOffset
+         dx="0"
+         dy="4"
+         result="offset"
+         id="feOffset4609" />
+      <feComposite
+         in="SourceGraphic"
+         in2="offset"
+         operator="over"
+         result="fbSourceGraphic"
+         id="feComposite4611" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix4613" />
+      <feFlood
+         id="feFlood4615"
+         flood-opacity="0.3"
+         flood-color="rgb(0,0,0)"
+         result="flood"
+         in="fbSourceGraphic" />
+      <feComposite
+         id="feComposite4617"
+         in2="fbSourceGraphic"
+         in="flood"
+         operator="in"
+         result="composite1" />
+      <feGaussianBlur
+         id="feGaussianBlur4619"
+         in="composite"
+         stdDeviation="3"
+         result="blur" />
+      <feOffset
+         id="feOffset4621"
+         dx="0"
+         dy="4"
+         result="offset" />
+      <feComposite
+         id="feComposite4623"
+         in2="offset"
+         in="fbSourceGraphic"
+         operator="over"
+         result="composite2" />
+    </filter>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3889"
+       id="linearGradient3838"
+       x1="80.386497"
+       y1="-47.005421"
+       x2="234.86546"
+       y2="-47.005421"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1488"
+     inkscape:window-height="879"
+     id="namedview106"
+     showgrid="true"
+     units="px"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="4.0000001"
+     inkscape:cx="75.736021"
+     inkscape:cy="97.447096"
+     inkscape:window-x="109"
+     inkscape:window-y="-3"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer4"
+     inkscape:snap-grids="true"
+     borderlayer="false"
+     inkscape:showpageshadow="false"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:snap-global="true"
+     inkscape:snap-center="false"
+     inkscape:snap-object-midpoints="false">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3022"
+       empspacing="4"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true"
+       dotted="true"
+       spacingx="2px"
+       spacingy="2px" />
+  </sodipodi:namedview>
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="Layer"
+     style="display:inline">
+    <rect
+       style="fill:#2196f3;fill-opacity:1;fill-rule:nonzero;stroke:url(#linearGradient4551);stroke-linejoin:miter;stroke-width:4;stroke-miterlimit:4;stroke-dasharray:none;stroke-linecap:butt"
+       id="rect3028"
+       width="128"
+       height="176"
+       x="32"
+       y="8"
+       ry="13.894737"
+       inkscape:export-filename="/media/XXX/data/Work/android-obd-reader-cleaner/src/main/res/drawable-xxhdpi/rect3028.png"
+       inkscape:export-xdpi="67.5"
+       inkscape:export-ydpi="67.5" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer5"
+     inkscape:label="shadow"
+     style="display:inline;opacity:0.5">
+    <g
+       id="g3106"
+       clip-path="url(#clipPath3908)">
+      <path
+         id="path20"
+         transform="matrix(1.0761218,0,0,1.0761218,-28.743851,212.63079)"
+         style="fill:url(#linearGradient3838);fill-opacity:1.0;stroke:none;display:inline"
+         d="m 140.80758,-101.24595 c -1.71545,-1.13464 -1.68665,-1.47135 -4.24322,-1.47135 l -42.617698,0 c -2.557103,0 -4.687941,1.66311 -5.501559,3.99941 l -8.058607,23.719326 0.224037,32.149017 c 0.0044,0.631841 0.246218,1.748082 0.977252,2.505643 14.608221,15.138324 36.896495,38.8725105 48.307955,48.3310376 50.45629,-7.51753113 63.97927,-16.2665946 104.96973,0.7193251 z"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cssccssccc" />
+    </g>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="backgound"
+     style="display:inline"
+     transform="translate(0,78)">
+    <svg
+       width="24"
+       height="24"
+       viewBox="0 0 24 24"
+       id="ic_drive_eta_24px"
+       y="120"
+       version="1.1"
+       inkscape:version="0.48.5 r10040"
+       inkscape:transform-center-x="92.96125"
+       inkscape:transform-center-y="111.33507"
+       style="fill:url(#linearGradient4552);fill-opacity:1"
+       clip-path="none"
+       mask="none"
+       inkscape:export-filename="/media/XXX/data/Work/android-obd-reader-cleaner/src/main/res/drawable-xxhdpi/ic_drive_eta_24px.png"
+       inkscape:export-xdpi="67.5"
+       inkscape:export-ydpi="67.5">
+      <g
+         id="g2985"
+         style="fill:url(#linearGradient4552);fill-opacity:1"
+         transform="matrix(1.0761218,0,0,1.0761218,-28.743851,14.630795)" />
+    </svg>
+    <svg
+       inkscape:export-ydpi="67.5"
+       inkscape:export-xdpi="67.5"
+       inkscape:export-filename="/media/XXX/data/Work/android-obd-reader-cleaner/src/main/res/drawable-xxhdpi/ic_drive_eta_24px.png"
+       mask="none"
+       clip-path="none"
+       style="fill:url(#linearGradient4564);fill-opacity:1"
+       inkscape:transform-center-y="111.33507"
+       inkscape:transform-center-x="92.96125"
+       inkscape:version="0.48.5 r10040"
+       version="1.1"
+       y="120"
+       id="svg4554"
+       viewBox="0 0 24 24"
+       height="24"
+       width="24">
+      <g
+         transform="matrix(1.0761218,0,0,1.0761218,-28.743851,14.630795)"
+         style="fill:url(#linearGradient4562);fill-opacity:1"
+         id="g4556">
+        <path
+           style="fill:url(#linearGradient4560);fill-opacity:1;stroke:#000000;stroke-width:0.5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+           d="m 143.17308,-98.73399 c -0.78878,-2.32689 -2.99786,-3.98332 -5.60031,-3.98332 l -43.382698,0 c -2.602974,0 -4.772091,1.65643 -5.600314,3.98332 l -8.203262,23.623845 0,31.551043 c 0,2.169106 1.774746,3.943888 3.943881,3.943888 l 3.943879,0 c 2.169126,0 3.943888,-1.776583 3.943888,-3.943888 l 0,-3.943878 47.326566,0 0,3.943878 c 0,2.1687 1.77474,3.943888 3.94388,3.943888 l 3.94387,0 c 2.16914,0 3.94389,-1.774752 3.94389,-3.943888 l 0,-31.551043 z m -48.983008,39.399367 c -3.27341,0 -5.915816,-2.642396 -5.915816,-5.915817 0,-3.273421 2.642406,-5.915827 5.915816,-5.915827 3.273421,0 5.915828,2.642406 5.915828,5.915827 0,3.273421 -2.642407,5.915817 -5.915828,5.915817 z m 43.382698,0 c -3.27342,0 -5.91583,-2.642396 -5.91583,-5.915817 0,-3.273421 2.64241,-5.915827 5.91583,-5.915827 3.27341,0 5.91582,2.642406 5.91582,5.915827 0,3.273421 -2.64241,5.915817 -5.91582,5.915817 z m -49.298514,-19.7194 5.915816,-17.74747 43.382698,0 5.91582,17.74747 z"
+           id="path4558"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="cssccssssccssssccssssssssssccccc" />
+      </g>
+    </svg>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="foreground"
+     style="display:inline"
+     transform="translate(0,78)">
+    <path
+       sodipodi:nodetypes="ccsccccsccccccccccccccccccccccccccc"
+       inkscape:connector-curvature="0"
+       id="path8"
+       d="m 72.955891,-8.3218962 9.278181,9.2781803 c 1.119782,-2.8794342 1.759656,-6.0388156 1.759656,-9.3181731 0,-3.279356 -0.639874,-6.358753 -1.719664,-9.238189 z m 21.155857,-21.1958448 -5.039017,5.039012 c 2.519507,4.839052 3.919237,10.277985 3.919237,16.0768484 0,5.7988624 -1.43972,11.2777883 -3.919237,16.0768486 l 4.799057,4.79906 c 3.87924,-6.158794 6.158792,-13.4373675 6.158792,-21.2358379 -0.04,-7.5585181 -2.199562,-14.6771231 -5.918832,-20.7559311 z M 78.83474,-25.518525 55.999215,-48.354049 52,-48.354049 52,-18 33.643598,-36.356401 28.004703,-30.717506 50.36032,-8.361889 28.004703,13.993729 33.643598,19.632624 52,1.2762229 l 0,30.3540461 3.999215,0 L 78.83474,8.794748 61.63811,-8.361889 z m -18.836309,-7.518527 7.518528,7.518527 L 59.998431,-18 z m 7.518528,41.8318 -7.518528,7.518527 0,-15.0370521 z"
+       style="fill:url(#linearGradient3250);fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       transform="matrix(0.93757345,0,0,0.93757345,39.747064,-13.294894)" />
+  </g>
+  <svg
+     width="24"
+     height="24"
+     viewBox="0 0 24 24"
+     id="ic_bluetooth_audio_24px"
+     y="24"
+     version="1.1"
+     inkscape:version="0.48.5 r10040"
+     transform="translate(8.521323,6.743886)"
+     style="filter:url(#filter3119)">
+    <g
+       id="g2988" />
+  </svg>
+  <g
+     inkscape:groupmode="layer"
+     id="layer1"
+     inkscape:label="finish"
+     style="display:inline"
+     transform="translate(0,78)"
+     sodipodi:insensitive="true">
+    <rect
+       style="fill:url(#radialGradient3216);fill-opacity:1;stroke:none"
+       id="rect3921"
+       width="192"
+       height="192"
+       x="1.4210855e-14"
+       y="-78"
+       ry="0"
+       inkscape:export-filename="/media/XXX/data/Work/android-obd-reader-cleaner/src/main/res/drawable-xxhdpi/rect3921.png"
+       inkscape:export-xdpi="67.5"
+       inkscape:export-ydpi="67.5"
+       mask="none"
+       clip-path="url(#clipPath4542)" />
+  </g>
+</svg>
