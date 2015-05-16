@@ -1,15 +1,17 @@
 android-obd-reader
 ========================
 
+![logo](/src/main/res/drawable-xxhdpi/ic_btcar.png)
+
 Android OBD-II reader designed to connect with Bluetooth Elm327 OBD reader.
 
-I'm still migrating things over here, so keep with me :-)
+![screenshot](/Screenshot.png)
 
 ## Prerequisites ##
 - JDK 7
 - Android Studio 1.1.0
 - Gradle 2.2.1
-- Android SDK (API 19, Build tools 19.1)
+- Android SDK (API 21, Build tools 21.1.2)
 
 ## Test with device ##
 
@@ -49,3 +51,4 @@ AT SP 0
 * Samsung Galaxy Nexus (Android 4.3)
 * LG Nexus 5 (Android 4.4.4)
 * Nexus 7 2013 WiFi (Android 4.4.4)
+* Samsung Galaxy S4 Active I9295 (Android 5.0.2)
