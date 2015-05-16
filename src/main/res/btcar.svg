@@ -366,6 +366,70 @@
        x2="234.86546"
        y2="-47.005421"
        gradientUnits="userSpaceOnUse" />
+    <filter
+       style="color-interpolation-filters:sRGB;"
+       inkscape:label="Drop Shadow"
+       id="filter3087">
+      <feFlood
+         flood-opacity="0.3"
+         flood-color="rgb(0,0,0)"
+         result="flood"
+         id="feFlood3089" />
+      <feComposite
+         in="flood"
+         in2="SourceGraphic"
+         operator="in"
+         result="composite1"
+         id="feComposite3091" />
+      <feGaussianBlur
+         in="composite"
+         stdDeviation="2"
+         result="blur"
+         id="feGaussianBlur3093" />
+      <feOffset
+         dx="0"
+         dy="4"
+         result="offset"
+         id="feOffset3095" />
+      <feComposite
+         in="SourceGraphic"
+         in2="offset"
+         operator="over"
+         result="composite2"
+         id="feComposite3097" />
+    </filter>
+    <filter
+       style="color-interpolation-filters:sRGB;"
+       inkscape:label="Drop Shadow"
+       id="filter3963">
+      <feFlood
+         flood-opacity="0.2"
+         flood-color="rgb(0,0,0)"
+         result="flood"
+         id="feFlood3965" />
+      <feComposite
+         in="flood"
+         in2="SourceGraphic"
+         operator="in"
+         result="composite1"
+         id="feComposite3967" />
+      <feGaussianBlur
+         in="composite"
+         stdDeviation="4"
+         result="blur"
+         id="feGaussianBlur3969" />
+      <feOffset
+         dx="0"
+         dy="4"
+         result="offset"
+         id="feOffset3971" />
+      <feComposite
+         in="SourceGraphic"
+         in2="offset"
+         operator="over"
+         result="composite2"
+         id="feComposite3973" />
+    </filter>
   </defs>
   <sodipodi:namedview
      pagecolor="#ffffff"
@@ -385,9 +449,9 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:zoom="4.0000001"
-     inkscape:cx="75.736021"
-     inkscape:cy="97.447096"
+     inkscape:zoom="3.0741592"
+     inkscape:cx="96"
+     inkscape:cy="99.087286"
      inkscape:window-x="109"
      inkscape:window-y="-3"
      inkscape:window-maximized="1"
@@ -417,7 +481,7 @@
      inkscape:label="Layer"
      style="display:inline">
     <rect
-       style="fill:#2196f3;fill-opacity:1;fill-rule:nonzero;stroke:url(#linearGradient4551);stroke-linejoin:miter;stroke-width:4;stroke-miterlimit:4;stroke-dasharray:none;stroke-linecap:butt"
+       style="fill:#2196f3;fill-opacity:1;fill-rule:nonzero;stroke:url(#linearGradient4551);stroke-linejoin:miter;stroke-width:4;stroke-miterlimit:4;stroke-dasharray:none;stroke-linecap:butt;filter:url(#filter3963)"
        id="rect3028"
        width="128"
        height="176"
