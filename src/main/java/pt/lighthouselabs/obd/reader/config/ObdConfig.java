@@ -20,7 +20,6 @@ import pt.lighthouselabs.obd.commands.fuel.FuelTrimObdCommand;
 import pt.lighthouselabs.obd.commands.pressure.BarometricPressureObdCommand;
 import pt.lighthouselabs.obd.commands.pressure.FuelPressureObdCommand;
 import pt.lighthouselabs.obd.commands.pressure.IntakeManifoldPressureObdCommand;
-import pt.lighthouselabs.obd.commands.protocol.ObdResetCommand;
 import pt.lighthouselabs.obd.commands.temperature.AirIntakeTemperatureObdCommand;
 import pt.lighthouselabs.obd.commands.temperature.AmbientAirTemperatureObdCommand;
 import pt.lighthouselabs.obd.commands.temperature.EngineCoolantTemperatureObdCommand;
@@ -33,8 +32,6 @@ public final class ObdConfig {
 
   public static ArrayList<ObdCommand> getCommands() {
     ArrayList<ObdCommand> cmds = new ArrayList<ObdCommand>();
-    // Protocol
-    cmds.add(new ObdResetCommand());
 
     // Control
     cmds.add(new CommandEquivRatioObdCommand());
