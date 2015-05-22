@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">Configuración</string>
+    <string name="command_list">Elegir comando</string>
+    <string name="menu_item_trip_delete">Borrar</string>
+    <string name="notification_label">Presionar para abrir OBD-Reader</string>
+    <string name="service_started">La conexión OBD ha comenzado.</string>
+    <string name="service_stopped">La conexión OBD se ha detenido.</string>
+    <string name="title_activity_trips_list">Lista de Viajes</string>
+    <string name="title_activity_trouble_codes">Códigos de Error</string>
+    <string name="menu_trip_list">Viajes</string>
+    <string name="pref_upload_category_title">Carga de datos</string>
+</resources>
