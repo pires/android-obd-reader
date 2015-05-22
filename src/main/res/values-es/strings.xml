@@ -10,8 +10,12 @@
     <string name="title_activity_trouble_codes">Códigos de Error</string>
     <string name="menu_trip_list">Viajes</string>
     <string name="pref_upload_category_title">Carga de datos</string>
-    <string name="dialog_loading_body">Cargando aplicación, por favor espere...</string>
-    <string name="dialog_loading_title">Cargando...</string>
+    <string name="dialog_loading_body">Cargando aplicación, por favor espere…</string>
+    <string name="dialog_loading_title">Cargando…</string>
     <string name="menu_settings">Configuración</string>
     <string name="menu_get_dtc">Obtener DTC</string>
+    <string name="menu_start_live_data">Iniciar datos en vivo</string>
+    <string name="menu_stop_live_data">Detener datos en vivo</string>
+    <string name="title_pref_commands">Comandos OBD</string>
+    <string name="title_pref_obd">Preferencias OBD</string>
 </resources>
