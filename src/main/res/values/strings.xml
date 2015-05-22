@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="app_name">Android OBD-II Reader</string>
+  <string name="app_name" translatable="false">Android OBD-II Reader</string>
   <string name="action_settings">Settings</string>
   <string name="command_list">Choose a command</string>
   <string name="service_started">OBD connection has started.</string>
@@ -8,9 +8,9 @@
   <string name="notification_label">Tap to open OBD-Reader.</string>
   <string name="title_activity_trouble_codes">Trouble Codes</string>
   <string name="pref_upload_category_title">Data Upload</string>
-  <string name="pref_upload_category">upload_category</string>
+  <string name="pref_upload_category" translatable="false">upload_category</string>
   <string name="title_activity_trips_list">TripsList</string>
   <string name="menu_trip_list">Trips</string>
   <string name="menu_item_trip_delete">Delete</string>
-  <string name="pref_gps_category">gps_category</string>
+  <string name="pref_gps_category" translatable="false">gps_category</string>
 </resources>
