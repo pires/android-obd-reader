@@ -396,11 +396,11 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
   }
 
   public boolean onCreateOptionsMenu(Menu menu) {
-    menu.add(0, START_LIVE_DATA, 0, "Start Live Data");
-    menu.add(0, STOP_LIVE_DATA, 0, "Stop Live Data");
-    menu.add(0, GET_DTC, 0, "Get DTC");
+    menu.add(0, START_LIVE_DATA, 0, getString(R.string.menu_start_live_data));
+    menu.add(0, STOP_LIVE_DATA, 0, getString(R.string.menu_stop_live_data));
+    menu.add(0, GET_DTC, 0, getString(R.string.menu_get_dtc));
     menu.add(0, TRIPS_LIST, 0, getString(R.string.menu_trip_list));
-    menu.add(0, SETTINGS, 0, "Settings");
+    menu.add(0, SETTINGS, 0, getString(R.string.menu_settings));
     return true;
   }
 

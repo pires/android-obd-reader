@@ -10,4 +10,8 @@
     <string name="title_activity_trouble_codes">Códigos de Error</string>
     <string name="menu_trip_list">Viajes</string>
     <string name="pref_upload_category_title">Carga de datos</string>
+    <string name="dialog_loading_body">Cargando aplicación, por favor espere...</string>
+    <string name="dialog_loading_title">Cargando...</string>
+    <string name="menu_settings">Configuración</string>
+    <string name="menu_get_dtc">Obtener DTC</string>
 </resources>

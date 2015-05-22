@@ -13,4 +13,16 @@
   <string name="menu_trip_list">Trips</string>
   <string name="menu_item_trip_delete">Delete</string>
   <string name="pref_gps_category" translatable="false">gps_category</string>
+  <string name="dialog_loading_title">Loading…</string>
+  <string name="dialog_loading_body">Loading application View, please wait…</string>
+  <string name="menu_start_live_data">Start Live Data</string>
+  <string name="menu_stop_live_data">Stop Live Data</string>
+  <string name="menu_settings">Settings</string>
+  <string name="menu_get_dtc">Get DTC</string>
+  <string name="text_gps" translatable="false">GPS</string>
+  <string name="text_bluetooth">Bluetooth</string>
+  <string name="text_neutral" translatable="false">N</string>
+  <string name="text_zero" translatable="false">0</string>
+  <string name="text_consumption_default">0l/100km</string>
+  <string name="text_runtime_default">00:00:00</string>
 </resources>

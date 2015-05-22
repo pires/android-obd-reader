@@ -30,8 +30,7 @@ import pt.lighthouselabs.obd.reader.config.ObdConfig;
 /**
  * Configuration pt.lighthouselabs.obd.reader.activity.
  */
-public class ConfigActivity extends PreferenceActivity implements
-    OnPreferenceChangeListener {
+public class ConfigActivity extends PreferenceActivity implements OnPreferenceChangeListener {
 
   public static final String BLUETOOTH_LIST_KEY = "bluetooth_list_preference";
   public static final String UPLOAD_URL_KEY = "upload_url_preference";
@@ -76,8 +75,7 @@ public class ConfigActivity extends PreferenceActivity implements
    * @return
    */
   public static double getVolumetricEfficieny(SharedPreferences prefs) {
-    String veString = prefs.getString(ConfigActivity.VOLUMETRIC_EFFICIENCY_KEY,
-        ".85");
+    String veString = prefs.getString(ConfigActivity.VOLUMETRIC_EFFICIENCY_KEY, ".85");
     double ve = 0.85;
     try {
       ve = Double.parseDouble(veString);
@@ -91,8 +89,7 @@ public class ConfigActivity extends PreferenceActivity implements
    * @return
    */
   public static double getEngineDisplacement(SharedPreferences prefs) {
-    String edString = prefs.getString(ConfigActivity.ENGINE_DISPLACEMENT_KEY,
-        "1.6");
+    String edString = prefs.getString(ConfigActivity.ENGINE_DISPLACEMENT_KEY, "1.6");
     double ed = 1.6;
     try {
       ed = Double.parseDouble(edString);
