@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              android:paddingBottom="6dip"
-              android:paddingTop="4dip" >
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="6dip"
+    android:paddingTop="4dip">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,15 +16,13 @@
             android:id="@+id/startDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.25"
-            android:gravity="left" />
+            android:layout_weight="0.25" />
 
         <TextView
             android:id="@+id/columnDuration"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.25"
-            android:gravity="right" />
+            android:layout_weight="0.25" />
 
     </LinearLayout>
 
@@ -33,7 +32,7 @@
         android:layout_height="wrap_content"
         android:gravity="left"
         android:paddingLeft="15dp"
-        android:singleLine="true"/>
+        android:singleLine="true" />
 
     <TextView
         android:id="@+id/rowOther"
@@ -41,6 +40,6 @@
         android:layout_height="wrap_content"
         android:gravity="left"
         android:paddingLeft="15dp"
-        android:singleLine="true"/>
+        android:singleLine="true" />
 
 </LinearLayout>

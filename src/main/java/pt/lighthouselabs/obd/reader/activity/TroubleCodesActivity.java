@@ -139,9 +139,9 @@ public class TroubleCodesActivity extends Activity {
       //Set the progress dialog to display a horizontal progress bar
       progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
       //Set the dialog title to 'Loading...'
-      progressDialog.setTitle("Loading...");
+      progressDialog.setTitle(getString(R.string.dialog_loading_title));
       //Set the dialog message to 'Loading application View, please wait...'
-      progressDialog.setMessage("Loading application View, please wait...");
+      progressDialog.setMessage(getString(R.string.dialog_loading_body));
       //This dialog can't be canceled by pressing the back key
       progressDialog.setCancelable(false);
       //This dialog isn't indeterminate
