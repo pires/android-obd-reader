@@ -90,19 +90,19 @@ public class TroubleCodesActivity extends Activity {
       Log.d(TAG, "Message received on handler");
       switch (msg.what) {
         case NO_BLUETOOTH_DEVICE_SELECTED:
-          makeToast("No bluetooth device selected!");
+          makeToast(getString(R.string.text_bluetooth_nodevice));
           finish();
           break;
         case CANNOT_CONNECT_TO_DEVICE:
-          makeToast("Cannot connect to bluetooth device!");
+          makeToast(getString(R.string.text_bluetooth_error_connecting));
           finish();
           break;
         case OBD_COMMAND_FAILURE:
-          makeToast("Obd command failure!");
+          makeToast(getString(R.string.text_obd_command_failure));
           finish();
           break;
         case NO_DATA:
-          makeToast("No DTC stored");
+          makeToast(getString(R.string.text_dtc_no_data));
           finish();
           break;
         case DATA_OK:

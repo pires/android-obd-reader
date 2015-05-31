@@ -73,7 +73,7 @@ public class ObdGatewayService extends AbstractGatewayService {
     // get the remote Bluetooth device
     final String remoteDevice = prefs.getString(ConfigActivity.BLUETOOTH_LIST_KEY, null);
     if (remoteDevice == null || "".equals(remoteDevice)) {
-      Toast.makeText(ctx, "No Bluetooth device selected", Toast.LENGTH_LONG).show();
+      Toast.makeText(ctx, getString(R.string.text_bluetooth_nodevice), Toast.LENGTH_LONG).show();
 
       // log error
       Log.e(TAG, "No Bluetooth device has been selected.");
@@ -104,7 +104,7 @@ public class ObdGatewayService extends AbstractGatewayService {
     Log.d(TAG, "Stopping Bluetooth discovery.");
     btAdapter.cancelDiscovery();
 
-    showNotification("Tap to open OBD-Reader", "Starting OBD connection..", R.drawable.ic_launcher, true, true, false);
+    showNotification(getString(R.string.notification_action), getString(R.string.service_starting), R.drawable.ic_btcar, true, true, false);
 
     try {
       startObdConnection();
@@ -119,6 +119,7 @@ public class ObdGatewayService extends AbstractGatewayService {
       stopService();
       throw new IOException();
     }
+    showNotification(getString(R.string.notification_action), getString(R.string.service_started), R.drawable.ic_btcar, true, true, false);
     }
 
      /*
