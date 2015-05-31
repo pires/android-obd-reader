@@ -46,6 +46,22 @@ AT H0
 AT SP 0
 ```
 
+## building with custom obd-java-api ##
+this project uses [obd-java-api](https://github.com/pires/obd-java-api/), to use a custom version of this library do the following:
+
+* clone obd-java-api it into your project folder:
+`git clone https://github.com/pires/obd-java-api.git`
+
+* create obd-java-api/build.gradle with the following content:
+`apply plugin: 'java'`
+
+* in main build.gradle change
+`compile 'pt.lighthouselabs.obd:obd-java-api:0.8'`
+to
+`compile project(':obd-java-api')`
+
+* in settings.gradle add include `:obd-java-api`
+
 ## Tested on ##
 
 * Samsung Galaxy Nexus (Android 4.3)
