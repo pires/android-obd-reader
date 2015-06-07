@@ -190,7 +190,7 @@ public class TroubleCodesActivity extends Activity {
 
         try {
           // Let's configure the connection.
-          Log.d(TAG, "Queing jobs for connection configuration..");
+          Log.d(TAG, "Queueing jobs for connection configuration..");
 
           onProgressUpdate(1);
 

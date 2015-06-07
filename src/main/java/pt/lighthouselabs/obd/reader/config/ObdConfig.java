@@ -31,7 +31,7 @@ import pt.lighthouselabs.obd.enums.FuelTrim;
 public final class ObdConfig {
 
   public static ArrayList<ObdCommand> getCommands() {
-    ArrayList<ObdCommand> cmds = new ArrayList<ObdCommand>();
+    ArrayList<ObdCommand> cmds = new ArrayList<>();
 
     // Control
     cmds.add(new CommandEquivRatioObdCommand());

@@ -26,7 +26,7 @@ public class ObdReading {
   private Map<String, String> readings;
 
   public ObdReading(){
-    readings = new HashMap<String, String>();
+    readings = new HashMap<>();
   }
 
   public ObdReading(double latitude, double longitude, long timestamp, String vin, Map<String, String> readings) {

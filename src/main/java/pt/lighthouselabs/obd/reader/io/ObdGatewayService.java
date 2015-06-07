@@ -127,8 +127,6 @@ public class ObdGatewayService extends AbstractGatewayService {
      *
      * Get more preferences
      */
-          boolean imperialUnits = prefs.getBoolean(ConfigActivity.IMPERIAL_UNITS_KEY,
-                  false);
           ArrayList<ObdCommand> cmds = ConfigActivity.getObdCommands(prefs);
 
   }
@@ -165,7 +163,7 @@ public class ObdGatewayService extends AbstractGatewayService {
     }
 
     // Let's configure the connection.
-    Log.d(TAG, "Queing jobs for connection configuration..");
+    Log.d(TAG, "Queueing jobs for connection configuration..");
     queueJob(new ObdCommandJob(new ObdResetCommand()));
     queueJob(new ObdCommandJob(new EchoOffObdCommand()));
 
@@ -190,6 +188,21 @@ public class ObdGatewayService extends AbstractGatewayService {
     Log.d(TAG, "Initialization jobs queued.");
 
 
+  }
+
+  /**
+   * This method will add a job to the queue while setting its ID to the
+   * internal queue counter.
+   *
+   * @param job the job to queue.
+   */
+  @Override
+  public void queueJob(ObdCommandJob job){
+    // This is a good place to enforce the imperial units option
+    job.getCommand().useImperialUnits(prefs.getBoolean(ConfigActivity.IMPERIAL_UNITS_KEY, false));
+
+    // Now we can pass it along
+    super.queueJob(job);
   }
 
   /**

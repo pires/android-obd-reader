@@ -104,7 +104,7 @@ public class ConfigActivity extends PreferenceActivity implements OnPreferenceCh
    */
   public static ArrayList<ObdCommand> getObdCommands(SharedPreferences prefs) {
     ArrayList<ObdCommand> cmds = ObdConfig.getCommands();
-    ArrayList<ObdCommand> ucmds = new ArrayList<ObdCommand>();
+    ArrayList<ObdCommand> ucmds = new ArrayList<>();
     for (int i = 0; i < cmds.size(); i++) {
       ObdCommand cmd = cmds.get(i);
       boolean selected = prefs.getBoolean(cmd.getName(), true);
@@ -193,11 +193,11 @@ public class ConfigActivity extends PreferenceActivity implements OnPreferenceCh
 
     checkGps();
 
-    ArrayList<CharSequence> pairedDeviceStrings = new ArrayList<CharSequence>();
-    ArrayList<CharSequence> vals = new ArrayList<CharSequence>();
+    ArrayList<CharSequence> pairedDeviceStrings = new ArrayList<>();
+    ArrayList<CharSequence> vals = new ArrayList<>();
     ListPreference listBtDevices = (ListPreference) getPreferenceScreen()
         .findPreference(BLUETOOTH_LIST_KEY);
-    ArrayList<CharSequence> protocolStrings = new ArrayList<CharSequence>();
+    ArrayList<CharSequence> protocolStrings = new ArrayList<>();
     ListPreference listProtocols = (ListPreference) getPreferenceScreen()
               .findPreference(PROTOCOLS_LIST_KEY);
     String[] prefKeys = new String[]{ENGINE_DISPLACEMENT_KEY,
@@ -246,7 +246,7 @@ public class ConfigActivity extends PreferenceActivity implements OnPreferenceCh
 
       // we shouldn't get here, still warn user
       Toast.makeText(this, "This device does not support Bluetooth.",
-          Toast.LENGTH_LONG);
+          Toast.LENGTH_LONG).show();
 
       return;
     }
@@ -265,7 +265,7 @@ public class ConfigActivity extends PreferenceActivity implements OnPreferenceCh
         if (mBtAdapter == null || !mBtAdapter.isEnabled()) {
           Toast.makeText(thisActivity,
               "This device does not support Bluetooth or it is disabled.",
-              Toast.LENGTH_LONG);
+              Toast.LENGTH_LONG).show();
           return false;
         }
         return true;
