@@ -91,7 +91,7 @@ public class TripLog {
    *
    * @param assertion - an asserted boolean condition.
    * @param tag       - a tag String identifying the calling method.
-   * @param mdg       - an error message to display/log.
+   * @param msg       - an error message to display/log.
    * @throws RuntimeException if the assertion is false
    */
   private void ASSERT(boolean assertion, String tag, String msg) {
@@ -174,7 +174,7 @@ public class TripLog {
     //update();
 
     final String tag = TAG + ".readAllRecords()";
-    List<TripRecord> list = new ArrayList<TripRecord>();
+    List<TripRecord> list = new ArrayList<>();
     Cursor cursor = null;
 
     try {
@@ -211,7 +211,7 @@ public class TripLog {
    * DESCRIPTION:
    * Deletes a specified trip record from the log.
    *
-   * @param record - the TripRecord to delete.
+   * @param id - the TripRecord to delete.
    * @return boolean flag indicating success/failure (true=success)
    */
   public boolean deleteTrip(long id) {

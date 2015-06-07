@@ -31,7 +31,7 @@ public abstract class AbstractGatewayService extends RoboService {
   private final IBinder binder = new AbstractGatewayServiceBinder();
   protected boolean isQueueRunning = false;
   protected Long queueCounter = 0L;
-  protected BlockingQueue<ObdCommandJob> jobsQueue = new LinkedBlockingQueue<ObdCommandJob>();
+  protected BlockingQueue<ObdCommandJob> jobsQueue = new LinkedBlockingQueue<>();
   // Run the executeQueue in a different thread to lighten the UI thread
   Thread t = new Thread(new Runnable() {
     @Override

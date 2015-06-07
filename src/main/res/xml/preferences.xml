@@ -8,8 +8,8 @@
             android:defaultValue="false"
             android:dialogTitle="Enable Data Upload"
             android:key="upload_data_preference"
-            android:summaryOff="Disable http data upload"
-            android:summaryOn="Enable http data upload"
+            android:summaryOff="Enable http data upload"
+            android:summaryOn="Disable http data upload"
             android:title="Enable Data Upload" />
         <EditTextPreference
             android:defaultValue="http://www.example.com/obd/get_data.php"
