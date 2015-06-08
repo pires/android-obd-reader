@@ -20,11 +20,8 @@ local.properties
 .classpath
 .project
 
-# Gradle stuff
-.gradle
-gradle/
-gradle*
-
 # Idea project files 
 *.iml
 .idea
+
+.gradle

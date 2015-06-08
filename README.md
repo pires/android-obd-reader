@@ -9,9 +9,9 @@ Android OBD-II reader designed to connect with Bluetooth Elm327 OBD reader.
 
 ## Prerequisites ##
 - JDK 7
-- Android Studio 1.1.0
-- Gradle 2.2.1
+- Android Studio 1.2.1.1 or newer
 - Android SDK (API 21, Build tools 21.1.2)
+- [OBD Java API](https://github.com/pires/obd-java-api/) (already included)
 
 ## Test with device ##
 
@@ -46,25 +46,43 @@ AT H0
 AT SP 0
 ```
 
-## building with custom obd-java-api ##
-this project uses [obd-java-api](https://github.com/pires/obd-java-api/), to use a custom version of this library do the following:
+## Building with custom `obd-java-api`
 
-* clone obd-java-api it into your project folder:
-`git clone https://github.com/pires/obd-java-api.git`
+This project depends on a [pure-Java OBD library](https://github.com/pires/obd-java-api/). For testing with a custom version of it, do the following:
 
-* create obd-java-api/build.gradle with the following content:
-`apply plugin: 'java'`
+* Clone obd-java-api it into your project folder:
 
-* in main build.gradle change
-`compile 'pt.lighthouselabs.obd:obd-java-api:0.8'`
+```
+git clone https://github.com/pires/obd-java-api.git
+```
+
+* Create `obd-java-api/build.gradle` with the following content:
+
+```
+apply plugin: 'java'
+```
+
+* Edit `main build.gradle` and change:
+
+```
+compile 'pt.lighthouselabs.obd:obd-java-api:0.9'`
+```
+
 to
-`compile project(':obd-java-api')`
 
-* in settings.gradle add include `:obd-java-api`
+```
+compile project(':obd-java-api')
+```
+
+* Edit `settings.gradle` and add:
+
+```
+include ':obd-java-api'
+```
 
 ## Tested on ##
 
 * Samsung Galaxy Nexus (Android 4.3)
-* LG Nexus 5 (Android 4.4.4)
+* LG Nexus 5 (Android 5.1)
 * Nexus 7 2013 WiFi (Android 4.4.4)
 * Samsung Galaxy S4 Active I9295 (Android 5.0.2)
