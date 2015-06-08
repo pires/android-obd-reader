@@ -1,4 +1,4 @@
-package pt.lighthouselabs.obd.reader.config;
+package com.github.pires.obd.reader.config;
 
 import java.util.ArrayList;
 

@@ -11,7 +11,7 @@
  * the License.
  */
 
-package pt.lighthouselabs.obd.reader.net;
+package com.github.pires.obd.reader.net;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,6 +1,6 @@
-package pt.lighthouselabs.obd.reader;
+package com.github.pires.obd.reader.io;
 
-import pt.lighthouselabs.obd.reader.io.ObdCommandJob;
+import com.github.pires.obd.reader.io.ObdCommandJob;
 
 /**
  * TODO put description

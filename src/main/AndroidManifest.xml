@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
-  package="pt.lighthouselabs.obd.reader"
+  package="com.github.pires.obd.reader"
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:versionCode="12"
   android:versionName="2.0-rc1">
@@ -19,7 +19,7 @@
     android:label="@string/app_name"
     android:theme="@style/AppTheme">
     <activity
-      android:name=".activity.MainActivity"
+      android:name="com.github.pires.obd.reader.activity.MainActivity"
       android:configChanges="orientation|screenSize"
       android:label="@string/app_name">
       <intent-filter>
@@ -29,24 +29,24 @@
       </intent-filter>
     </activity>
     <activity
-      android:name=".activity.ConfigActivity"
+      android:name="com.github.pires.obd.reader.activity.ConfigActivity"
       android:label="@string/app_name">
     </activity>
     <activity
-      android:name=".activity.TroubleCodesActivity"
+      android:name="com.github.pires.obd.reader.activity.TroubleCodesActivity"
       android:label="@string/title_activity_trouble_codes">
     </activity>
 
     <activity
-      android:name=".activity.TripListActivity"
+      android:name="com.github.pires.obd.reader.activity.TripListActivity"
       android:label="@string/title_activity_trips_list">
     </activity>
 
     <service
-      android:name=".io.ObdGatewayService"
+      android:name="com.github.pires.obd.reader.io.ObdGatewayService"
       android:exported="false"/>
     <service
-      android:name=".io.MockObdGatewayService"
+      android:name="com.github.pires.obd.reader.io.MockObdGatewayService"
       android:exported="false" />
   </application>
 

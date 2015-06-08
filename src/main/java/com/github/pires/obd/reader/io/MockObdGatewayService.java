@@ -1,13 +1,9 @@
-package pt.lighthouselabs.obd.reader.io;
+package com.github.pires.obd.reader.io;
 
-import android.content.SharedPreferences;
 import android.util.Log;
-
-import com.google.inject.Inject;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.StringBufferInputStream;
 
 import pt.lighthouselabs.obd.commands.protocol.EchoOffObdCommand;
 import pt.lighthouselabs.obd.commands.protocol.LineFeedOffObdCommand;
@@ -16,8 +12,8 @@ import pt.lighthouselabs.obd.commands.protocol.SelectProtocolObdCommand;
 import pt.lighthouselabs.obd.commands.protocol.TimeoutObdCommand;
 import pt.lighthouselabs.obd.commands.temperature.AmbientAirTemperatureObdCommand;
 import pt.lighthouselabs.obd.enums.ObdProtocols;
-import pt.lighthouselabs.obd.reader.activity.MainActivity;
-import pt.lighthouselabs.obd.reader.io.ObdCommandJob.ObdCommandJobState;
+import com.github.pires.obd.reader.activity.MainActivity;
+import com.github.pires.obd.reader.io.ObdCommandJob.ObdCommandJobState;
 
 /**
  * This service is primarily responsible for establishing and maintaining a

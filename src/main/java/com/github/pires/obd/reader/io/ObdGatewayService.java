@@ -1,17 +1,11 @@
-package pt.lighthouselabs.obd.reader.io;
+package com.github.pires.obd.reader.io;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Binder;
 import android.os.IBinder;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -21,8 +15,6 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.UUID;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 
 import pt.lighthouselabs.obd.commands.ObdCommand;
 import pt.lighthouselabs.obd.commands.protocol.EchoOffObdCommand;
@@ -32,11 +24,10 @@ import pt.lighthouselabs.obd.commands.protocol.SelectProtocolObdCommand;
 import pt.lighthouselabs.obd.commands.protocol.TimeoutObdCommand;
 import pt.lighthouselabs.obd.commands.temperature.AmbientAirTemperatureObdCommand;
 import pt.lighthouselabs.obd.enums.ObdProtocols;
-import pt.lighthouselabs.obd.reader.R;
-import pt.lighthouselabs.obd.reader.activity.ConfigActivity;
-import pt.lighthouselabs.obd.reader.activity.MainActivity;
-import pt.lighthouselabs.obd.reader.io.ObdCommandJob.ObdCommandJobState;
-import roboguice.service.RoboService;
+import com.github.pires.obd.reader.R;
+import com.github.pires.obd.reader.activity.ConfigActivity;
+import com.github.pires.obd.reader.activity.MainActivity;
+import com.github.pires.obd.reader.io.ObdCommandJob.ObdCommandJobState;
 
 /**
  * This service is primarily responsible for establishing and maintaining a

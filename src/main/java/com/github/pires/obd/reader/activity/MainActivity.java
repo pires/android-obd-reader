@@ -1,4 +1,4 @@
-package pt.lighthouselabs.obd.reader.activity;
+package com.github.pires.obd.reader.activity;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -47,17 +47,17 @@ import pt.lighthouselabs.obd.commands.SpeedObdCommand;
 import pt.lighthouselabs.obd.commands.engine.EngineRPMObdCommand;
 import pt.lighthouselabs.obd.commands.engine.EngineRuntimeObdCommand;
 import pt.lighthouselabs.obd.enums.AvailableCommandNames;
-import pt.lighthouselabs.obd.reader.ObdProgressListener;
-import pt.lighthouselabs.obd.reader.R;
-import pt.lighthouselabs.obd.reader.trips.TripLog;
-import pt.lighthouselabs.obd.reader.io.AbstractGatewayService;
-import pt.lighthouselabs.obd.reader.io.MockObdGatewayService;
-import pt.lighthouselabs.obd.reader.io.ObdCommandJob;
-import pt.lighthouselabs.obd.reader.io.ObdGatewayService;
-import pt.lighthouselabs.obd.reader.net.ObdReading;
-import pt.lighthouselabs.obd.reader.net.ObdService;
-import pt.lighthouselabs.obd.reader.config.ObdConfig;
-import pt.lighthouselabs.obd.reader.trips.TripRecord;
+import com.github.pires.obd.reader.io.ObdProgressListener;
+import com.github.pires.obd.reader.R;
+import com.github.pires.obd.reader.trips.TripLog;
+import com.github.pires.obd.reader.io.AbstractGatewayService;
+import com.github.pires.obd.reader.io.MockObdGatewayService;
+import com.github.pires.obd.reader.io.ObdCommandJob;
+import com.github.pires.obd.reader.io.ObdGatewayService;
+import com.github.pires.obd.reader.net.ObdReading;
+import com.github.pires.obd.reader.net.ObdService;
+import com.github.pires.obd.reader.config.ObdConfig;
+import com.github.pires.obd.reader.trips.TripRecord;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -65,8 +65,8 @@ import roboguice.activity.RoboActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
 
-import static pt.lighthouselabs.obd.reader.activity.ConfigActivity.getGpsDistanceUpdatePeriod;
-import static pt.lighthouselabs.obd.reader.activity.ConfigActivity.getGpsUpdatePeriod;
+import static com.github.pires.obd.reader.activity.ConfigActivity.getGpsDistanceUpdatePeriod;
+import static com.github.pires.obd.reader.activity.ConfigActivity.getGpsUpdatePeriod;
 
 // Some code taken from https://github.com/barbeau/gpstest
 

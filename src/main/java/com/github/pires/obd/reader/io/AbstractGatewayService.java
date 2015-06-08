@@ -1,4 +1,4 @@
-package pt.lighthouselabs.obd.reader.io;
+package com.github.pires.obd.reader.io;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import pt.lighthouselabs.obd.reader.activity.MainActivity;
+import com.github.pires.obd.reader.activity.MainActivity;
 import roboguice.service.RoboService;
 
 

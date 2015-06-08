@@ -1,4 +1,4 @@
-package pt.lighthouselabs.obd.reader.trips;
+package com.github.pires.obd.reader.trips;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

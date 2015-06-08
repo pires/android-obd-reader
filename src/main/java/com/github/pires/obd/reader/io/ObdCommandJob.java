@@ -1,7 +1,7 @@
 /*
  * TODO put header
  */
-package pt.lighthouselabs.obd.reader.io;
+package com.github.pires.obd.reader.io;
 
 import pt.lighthouselabs.obd.commands.ObdCommand;
 

@@ -1,4 +1,4 @@
-package pt.lighthouselabs.obd.reader.activity;
+package com.github.pires.obd.reader.activity;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

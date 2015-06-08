@@ -43,7 +43,7 @@
             <dc:title>basic sprites from https://github.com/google/material-design-icons &quot; released under an Attribution 4.0 International license.&quot;</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:source>pt.lighthouselabs.obd.reader</dc:source>
+        <dc:source>com.github.pires.obd.reader</dc:source>
       </cc:Work>
       <cc:License
          rdf:about="http://creativecommons.org/licenses/by/3.0/">

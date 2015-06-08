@@ -1,4 +1,4 @@
-package pt.lighthouselabs.obd.reader.trips;
+package com.github.pires.obd.reader.trips;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.Date;
 import java.util.List;
 
-import pt.lighthouselabs.obd.reader.R;
+import com.github.pires.obd.reader.R;
 
 public class TripListAdapter extends ArrayAdapter<TripRecord> {
   /// the Android Activity owning the ListView

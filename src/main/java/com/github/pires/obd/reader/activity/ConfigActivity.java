@@ -1,4 +1,4 @@
-package pt.lighthouselabs.obd.reader.activity;
+package com.github.pires.obd.reader.activity;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -24,11 +24,11 @@ import java.util.Set;
 
 import pt.lighthouselabs.obd.commands.ObdCommand;
 import pt.lighthouselabs.obd.enums.ObdProtocols;
-import pt.lighthouselabs.obd.reader.R;
-import pt.lighthouselabs.obd.reader.config.ObdConfig;
+import com.github.pires.obd.reader.R;
+import com.github.pires.obd.reader.config.ObdConfig;
 
 /**
- * Configuration pt.lighthouselabs.obd.reader.activity.
+ * Configuration com.github.pires.obd.reader.activity.
  */
 public class ConfigActivity extends PreferenceActivity implements OnPreferenceChangeListener {
 

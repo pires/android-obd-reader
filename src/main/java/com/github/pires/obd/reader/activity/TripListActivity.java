@@ -1,4 +1,4 @@
-package pt.lighthouselabs.obd.reader.activity;
+package com.github.pires.obd.reader.activity;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -11,13 +11,13 @@ import android.widget.ListView;
 
 import java.util.List;
 
-import pt.lighthouselabs.obd.reader.R;
-import pt.lighthouselabs.obd.reader.trips.TripListAdapter;
-import pt.lighthouselabs.obd.reader.trips.TripLog;
-import pt.lighthouselabs.obd.reader.trips.TripRecord;
+import com.github.pires.obd.reader.R;
+import com.github.pires.obd.reader.trips.TripListAdapter;
+import com.github.pires.obd.reader.trips.TripLog;
+import com.github.pires.obd.reader.trips.TripRecord;
 import roboguice.activity.RoboActivity;
 
-import static pt.lighthouselabs.obd.reader.activity.ConfirmDialog.createDialog;
+import static com.github.pires.obd.reader.activity.ConfirmDialog.createDialog;
 
 /**
  * Some code taken from https://github.com/wdkapps/FillUp

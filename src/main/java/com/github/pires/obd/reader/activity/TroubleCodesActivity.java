@@ -1,4 +1,4 @@
-package pt.lighthouselabs.obd.reader.activity;
+package com.github.pires.obd.reader.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -29,7 +29,7 @@ import pt.lighthouselabs.obd.commands.protocol.ObdResetCommand;
 import pt.lighthouselabs.obd.commands.protocol.SelectProtocolObdCommand;
 import pt.lighthouselabs.obd.commands.control.TroubleCodesObdCommand;
 import pt.lighthouselabs.obd.enums.ObdProtocols;
-import pt.lighthouselabs.obd.reader.R;
+import com.github.pires.obd.reader.R;
 import pt.lighthouselabs.obd.exceptions.UnableToConnectException;
 import pt.lighthouselabs.obd.exceptions.MisunderstoodCommandException;
 
