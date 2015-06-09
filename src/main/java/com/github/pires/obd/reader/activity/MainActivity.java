@@ -61,6 +61,7 @@ import com.github.pires.obd.reader.trips.TripRecord;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import roboguice.RoboGuice;
 import roboguice.activity.RoboActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
@@ -72,6 +73,10 @@ import static com.github.pires.obd.reader.activity.ConfigActivity.getGpsUpdatePe
 
 @ContentView(R.layout.main)
 public class MainActivity extends RoboActivity implements ObdProgressListener, LocationListener, GpsStatus.Listener {
+
+  static {
+    RoboGuice.setUseAnnotationDatabases(false);
+  }
 
   private static boolean bluetoothDefaultIsEnable = false;
 
