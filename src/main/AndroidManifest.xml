@@ -2,8 +2,8 @@
 <manifest
   package="com.github.pires.obd.reader"
   xmlns:android="http://schemas.android.com/apk/res/android"
-  android:versionCode="12"
-  android:versionName="2.0-rc1">
+  android:versionCode="13"
+  android:versionName="2.0-RC2">
 
   <uses-permission android:name="android.permission.BLUETOOTH"/>
   <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
