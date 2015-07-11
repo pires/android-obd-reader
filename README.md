@@ -67,7 +67,7 @@ apply plugin: 'java'
 * Edit `main build.gradle` and change:
 
 ```
-compile 'pt.lighthouselabs.obd:obd-java-api:0.9'`
+compile 'com.github.pires:obd-java-api:1.0-RC2'`
 ```
 
 to

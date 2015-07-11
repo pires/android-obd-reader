@@ -3,7 +3,7 @@
  */
 package com.github.pires.obd.reader.io;
 
-import pt.lighthouselabs.obd.commands.ObdCommand;
+import com.github.pires.obd.commands.ObdCommand;
 
 /**
  * This class represents a job that ObdGatewayService will have to execute and
@@ -19,11 +19,8 @@ public class ObdCommandJob {
 
   /**
    * Default ctor.
-   * 
-   * @param id
-   *          the ID of the job.
-   * @param command
-   *          the ObCommand to encapsulate.
+   *
+   * @param command the ObCommand to encapsulate.
    */
   public ObdCommandJob(ObdCommand command) {
     _command = command;
@@ -51,9 +48,8 @@ public class ObdCommandJob {
 
   /**
    * Sets a new job state.
-   * 
-   * @param the
-   *          new job state.
+   *
+   * @param state the new job state.
    */
   public void setState(ObdCommandJobState state) {
     _state = state;
