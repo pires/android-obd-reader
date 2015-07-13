@@ -54,17 +54,17 @@ public class ConfigActivity extends PreferenceActivity implements OnPreferenceCh
    * @return
    */
   public static int getObdUpdatePeriod(SharedPreferences prefs) {
-    String periodString = prefs
-        .getString(ConfigActivity.OBD_UPDATE_PERIOD_KEY, "4"); // 4 as in seconds
+    String periodString = prefs.
+            getString(ConfigActivity.OBD_UPDATE_PERIOD_KEY, "4"); // 4 as in seconds
     int period = 4000; // by default 4000ms
 
     try {
-      period = Integer.parseInt(periodString) * 1000;
+      period = (int) (Double.parseDouble(periodString) * 1000);
     } catch (Exception e) {
     }
 
     if (period <= 0) {
-      period = 250;
+      period = 4000;
     }
 
     return period;
@@ -145,11 +145,11 @@ public class ConfigActivity extends PreferenceActivity implements OnPreferenceCh
    */
   public static int getGpsUpdatePeriod(SharedPreferences prefs) {
     String periodString = prefs
-        .getString(ConfigActivity.GPS_UPDATE_PERIOD_KEY, "1"); // 4 as in seconds
-    int period = 1000; // by default 4000ms
+        .getString(ConfigActivity.GPS_UPDATE_PERIOD_KEY, "1"); // 1 as in seconds
+    int period = 1000; // by default 1000ms
 
     try {
-      period = Integer.parseInt(periodString) * 1000;
+      period = (int) (Double.parseDouble(periodString) * 1000);
     } catch (Exception e) {
     }
 
@@ -165,13 +165,13 @@ public class ConfigActivity extends PreferenceActivity implements OnPreferenceCh
    * @param prefs
    * @return
    */
-  public static int getGpsDistanceUpdatePeriod(SharedPreferences prefs) {
+  public static float getGpsDistanceUpdatePeriod(SharedPreferences prefs) {
     String periodString = prefs
-        .getString(ConfigActivity.GPS_DISTANCE_PERIOD_KEY, "5"); // 4 as in meters
-    int period = 5; // by default 5 meters
+        .getString(ConfigActivity.GPS_DISTANCE_PERIOD_KEY, "5"); // 5 as in meters
+    float period = 5; // by default 5 meters
 
     try {
-      period = Integer.parseInt(periodString);
+      period =  Float.parseFloat(periodString);
     } catch (Exception e) {
     }
 
@@ -294,13 +294,15 @@ public class ConfigActivity extends PreferenceActivity implements OnPreferenceCh
    * @param newValue   the value to be validated and set if valid
    */
   public boolean onPreferenceChange(Preference preference, Object newValue) {
+
     if (OBD_UPDATE_PERIOD_KEY.equals(preference.getKey())
         || VOLUMETRIC_EFFICIENCY_KEY.equals(preference.getKey())
         || ENGINE_DISPLACEMENT_KEY.equals(preference.getKey())
-        || OBD_UPDATE_PERIOD_KEY.equals(preference.getKey())
-        || MAX_FUEL_ECON_KEY.equals(preference.getKey())) {
+        || MAX_FUEL_ECON_KEY.equals(preference.getKey())
+        || GPS_UPDATE_PERIOD_KEY.equals(preference.getKey())
+        || GPS_DISTANCE_PERIOD_KEY.equals(preference.getKey())){
       try {
-        Double.parseDouble(newValue.toString());
+        Double.parseDouble(newValue.toString().replace(",","."));
         return true;
       } catch (Exception e) {
         Toast.makeText(this,
