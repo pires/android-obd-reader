@@ -57,6 +57,7 @@
     <string name="status_obd_ready">OK</string>
     <string name="status_obd_data">receiving data&#8230;</string>
     <string name="status_obd_disconnected">disconnected</string>
+    <string name="status_obd_no_support">NA</string>
     <string name="pref_upload_title">Enable Data Upload</string>
     <string name="pref_upload_summaryOff">Enable http data upload</string>
     <string name="pref_upload_summaryOn">Disable http data upload</string>
