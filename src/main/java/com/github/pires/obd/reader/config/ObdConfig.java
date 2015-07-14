@@ -1,29 +1,29 @@
 package com.github.pires.obd.reader.config;
 
-import java.util.ArrayList;
+import com.github.pires.obd.commands.ObdCommand;
+import com.github.pires.obd.commands.SpeedObdCommand;
+import com.github.pires.obd.commands.control.CommandEquivRatioObdCommand;
+import com.github.pires.obd.commands.control.DtcNumberObdCommand;
+import com.github.pires.obd.commands.control.TimingAdvanceObdCommand;
+import com.github.pires.obd.commands.control.TroubleCodesObdCommand;
+import com.github.pires.obd.commands.engine.EngineLoadObdCommand;
+import com.github.pires.obd.commands.engine.EngineRPMObdCommand;
+import com.github.pires.obd.commands.engine.EngineRuntimeObdCommand;
+import com.github.pires.obd.commands.engine.MassAirFlowObdCommand;
+import com.github.pires.obd.commands.engine.ThrottlePositionObdCommand;
+import com.github.pires.obd.commands.fuel.FindFuelTypeObdCommand;
+import com.github.pires.obd.commands.fuel.FuelEconomyObdCommand;
+import com.github.pires.obd.commands.fuel.FuelLevelObdCommand;
+import com.github.pires.obd.commands.fuel.FuelTrimObdCommand;
+import com.github.pires.obd.commands.pressure.BarometricPressureObdCommand;
+import com.github.pires.obd.commands.pressure.FuelPressureObdCommand;
+import com.github.pires.obd.commands.pressure.IntakeManifoldPressureObdCommand;
+import com.github.pires.obd.commands.temperature.AirIntakeTemperatureObdCommand;
+import com.github.pires.obd.commands.temperature.AmbientAirTemperatureObdCommand;
+import com.github.pires.obd.commands.temperature.EngineCoolantTemperatureObdCommand;
+import com.github.pires.obd.enums.FuelTrim;
 
-import pt.lighthouselabs.obd.commands.ObdCommand;
-import pt.lighthouselabs.obd.commands.SpeedObdCommand;
-import pt.lighthouselabs.obd.commands.control.CommandEquivRatioObdCommand;
-import pt.lighthouselabs.obd.commands.control.DtcNumberObdCommand;
-import pt.lighthouselabs.obd.commands.control.TimingAdvanceObdCommand;
-import pt.lighthouselabs.obd.commands.control.TroubleCodesObdCommand;
-import pt.lighthouselabs.obd.commands.engine.EngineLoadObdCommand;
-import pt.lighthouselabs.obd.commands.engine.EngineRPMObdCommand;
-import pt.lighthouselabs.obd.commands.engine.EngineRuntimeObdCommand;
-import pt.lighthouselabs.obd.commands.engine.MassAirFlowObdCommand;
-import pt.lighthouselabs.obd.commands.engine.ThrottlePositionObdCommand;
-import pt.lighthouselabs.obd.commands.fuel.FindFuelTypeObdCommand;
-import pt.lighthouselabs.obd.commands.fuel.FuelEconomyObdCommand;
-import pt.lighthouselabs.obd.commands.fuel.FuelLevelObdCommand;
-import pt.lighthouselabs.obd.commands.fuel.FuelTrimObdCommand;
-import pt.lighthouselabs.obd.commands.pressure.BarometricPressureObdCommand;
-import pt.lighthouselabs.obd.commands.pressure.FuelPressureObdCommand;
-import pt.lighthouselabs.obd.commands.pressure.IntakeManifoldPressureObdCommand;
-import pt.lighthouselabs.obd.commands.temperature.AirIntakeTemperatureObdCommand;
-import pt.lighthouselabs.obd.commands.temperature.AmbientAirTemperatureObdCommand;
-import pt.lighthouselabs.obd.commands.temperature.EngineCoolantTemperatureObdCommand;
-import pt.lighthouselabs.obd.enums.FuelTrim;
+import java.util.ArrayList;
 
 /**
  * TODO put description
@@ -37,7 +37,7 @@ public final class ObdConfig {
     cmds.add(new CommandEquivRatioObdCommand());
     cmds.add(new DtcNumberObdCommand());
     cmds.add(new TimingAdvanceObdCommand());
-    cmds.add(new TroubleCodesObdCommand(0));
+    cmds.add(new TroubleCodesObdCommand());
 
     // Engine
     cmds.add(new EngineLoadObdCommand());

@@ -19,13 +19,13 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.Set;
-
-import pt.lighthouselabs.obd.commands.ObdCommand;
-import pt.lighthouselabs.obd.enums.ObdProtocols;
+import com.github.pires.obd.commands.ObdCommand;
+import com.github.pires.obd.enums.ObdProtocols;
 import com.github.pires.obd.reader.R;
 import com.github.pires.obd.reader.config.ObdConfig;
+
+import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * Configuration com.github.pires.obd.reader.activity.

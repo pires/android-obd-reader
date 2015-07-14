@@ -9,29 +9,28 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.github.pires.obd.commands.control.TroubleCodesObdCommand;
+import com.github.pires.obd.commands.protocol.EchoOffObdCommand;
+import com.github.pires.obd.commands.protocol.LineFeedOffObdCommand;
+import com.github.pires.obd.commands.protocol.ObdResetCommand;
+import com.github.pires.obd.commands.protocol.SelectProtocolObdCommand;
+import com.github.pires.obd.enums.ObdProtocols;
+import com.github.pires.obd.exceptions.MisunderstoodCommandException;
+import com.github.pires.obd.exceptions.UnableToConnectException;
+import com.github.pires.obd.reader.R;
 import com.google.inject.Inject;
 
 import java.io.IOException;
 import java.util.UUID;
-
-import pt.lighthouselabs.obd.commands.protocol.EchoOffObdCommand;
-import pt.lighthouselabs.obd.commands.protocol.LineFeedOffObdCommand;
-import pt.lighthouselabs.obd.commands.protocol.ObdResetCommand;
-import pt.lighthouselabs.obd.commands.protocol.SelectProtocolObdCommand;
-import pt.lighthouselabs.obd.commands.control.TroubleCodesObdCommand;
-import pt.lighthouselabs.obd.enums.ObdProtocols;
-import com.github.pires.obd.reader.R;
-import pt.lighthouselabs.obd.exceptions.UnableToConnectException;
-import pt.lighthouselabs.obd.exceptions.MisunderstoodCommandException;
 
 public class TroubleCodesActivity extends Activity {
 
@@ -122,11 +121,11 @@ public class TroubleCodesActivity extends Activity {
 
 
   public class ModifiedTroubleCodesObdCommand extends TroubleCodesObdCommand {
-      @Override
-      public String getResult() {
-          // remove unwanted response from output since this results in erroneous error codes
+    @Override
+    public String getResult() {
+      // remove unwanted response from output since this results in erroneous error codes
       return rawData.replace("SEARCHING...", "");
-      }
+    }
   }
 
 

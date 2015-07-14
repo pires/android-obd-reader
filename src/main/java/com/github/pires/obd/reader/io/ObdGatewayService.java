@@ -9,25 +9,24 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.github.pires.obd.commands.ObdCommand;
+import com.github.pires.obd.commands.protocol.EchoOffObdCommand;
+import com.github.pires.obd.commands.protocol.LineFeedOffObdCommand;
+import com.github.pires.obd.commands.protocol.ObdResetCommand;
+import com.github.pires.obd.commands.protocol.SelectProtocolObdCommand;
+import com.github.pires.obd.commands.protocol.TimeoutObdCommand;
+import com.github.pires.obd.commands.temperature.AmbientAirTemperatureObdCommand;
+import com.github.pires.obd.enums.ObdProtocols;
+import com.github.pires.obd.reader.R;
+import com.github.pires.obd.reader.activity.ConfigActivity;
+import com.github.pires.obd.reader.activity.MainActivity;
+import com.github.pires.obd.reader.io.ObdCommandJob.ObdCommandJobState;
 import com.google.inject.Inject;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.UUID;
-
-import pt.lighthouselabs.obd.commands.ObdCommand;
-import pt.lighthouselabs.obd.commands.protocol.EchoOffObdCommand;
-import pt.lighthouselabs.obd.commands.protocol.LineFeedOffObdCommand;
-import pt.lighthouselabs.obd.commands.protocol.ObdResetCommand;
-import pt.lighthouselabs.obd.commands.protocol.SelectProtocolObdCommand;
-import pt.lighthouselabs.obd.commands.protocol.TimeoutObdCommand;
-import pt.lighthouselabs.obd.commands.temperature.AmbientAirTemperatureObdCommand;
-import pt.lighthouselabs.obd.enums.ObdProtocols;
-import com.github.pires.obd.reader.R;
-import com.github.pires.obd.reader.activity.ConfigActivity;
-import com.github.pires.obd.reader.activity.MainActivity;
-import com.github.pires.obd.reader.io.ObdCommandJob.ObdCommandJobState;
 
 /**
  * This service is primarily responsible for establishing and maintaining a
@@ -72,10 +71,10 @@ public class ObdGatewayService extends AbstractGatewayService {
       // TODO kill this service gracefully
       stopService();
       throw new IOException();
-      } else {
+    } else {
 
-    final BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
-    dev = btAdapter.getRemoteDevice(remoteDevice);
+      final BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+      dev = btAdapter.getRemoteDevice(remoteDevice);
 
 
     /*
@@ -92,25 +91,25 @@ public class ObdGatewayService extends AbstractGatewayService {
      * http://developer.android.com/reference/android/bluetooth/BluetoothAdapter
      * .html#cancelDiscovery()
      */
-    Log.d(TAG, "Stopping Bluetooth discovery.");
-    btAdapter.cancelDiscovery();
+      Log.d(TAG, "Stopping Bluetooth discovery.");
+      btAdapter.cancelDiscovery();
 
-    showNotification(getString(R.string.notification_action), getString(R.string.service_starting), R.drawable.ic_btcar, true, true, false);
+      showNotification(getString(R.string.notification_action), getString(R.string.service_starting), R.drawable.ic_btcar, true, true, false);
 
-    try {
-      startObdConnection();
-    } catch (Exception e) {
-      Log.e(
-          TAG,
-          "There was an error while establishing connection. -> "
-              + e.getMessage()
-      );
+      try {
+        startObdConnection();
+      } catch (Exception e) {
+        Log.e(
+            TAG,
+            "There was an error while establishing connection. -> "
+                + e.getMessage()
+        );
 
-      // in case of failure, stop this service.
-      stopService();
-      throw new IOException();
-    }
-    showNotification(getString(R.string.notification_action), getString(R.string.service_started), R.drawable.ic_btcar, true, true, false);
+        // in case of failure, stop this service.
+        stopService();
+        throw new IOException();
+      }
+      showNotification(getString(R.string.notification_action), getString(R.string.service_started), R.drawable.ic_btcar, true, true, false);
     }
 
      /*
@@ -118,7 +117,7 @@ public class ObdGatewayService extends AbstractGatewayService {
      *
      * Get more preferences
      */
-          ArrayList<ObdCommand> cmds = ConfigActivity.getObdCommands(prefs);
+    ArrayList<ObdCommand> cmds = ConfigActivity.getObdCommands(prefs);
 
   }
 
@@ -169,7 +168,7 @@ public class ObdGatewayService extends AbstractGatewayService {
     queueJob(new ObdCommandJob(new TimeoutObdCommand(62)));
 
     // Get protocol from preferences
-    String protocol = prefs.getString(ConfigActivity.PROTOCOLS_LIST_KEY,"AUTO");
+    final String protocol = prefs.getString(ConfigActivity.PROTOCOLS_LIST_KEY, "AUTO");
     queueJob(new ObdCommandJob(new SelectProtocolObdCommand(ObdProtocols.valueOf(protocol))));
 
     // Job for returning dummy data
@@ -188,7 +187,7 @@ public class ObdGatewayService extends AbstractGatewayService {
    * @param job the job to queue.
    */
   @Override
-  public void queueJob(ObdCommandJob job){
+  public void queueJob(ObdCommandJob job) {
     // This is a good place to enforce the imperial units option
     job.getCommand().useImperialUnits(prefs.getBoolean(ConfigActivity.IMPERIAL_UNITS_KEY, false));
 
@@ -199,7 +198,7 @@ public class ObdGatewayService extends AbstractGatewayService {
   /**
    * Runs the queue until the service is stopped
    */
-  protected void executeQueue() throws InterruptedException{
+  protected void executeQueue() throws InterruptedException {
     Log.d(TAG, "Executing queue..");
     while (!Thread.currentThread().isInterrupted()) {
       ObdCommandJob job = null;
@@ -217,15 +216,17 @@ public class ObdGatewayService extends AbstractGatewayService {
           // log not new job
           Log.e(TAG,
               "Job state was not new, so it shouldn't be in queue. BUG ALERT!");
-            } catch (InterruptedException i) {
-                Thread.currentThread().interrupt();
+      } catch (InterruptedException i) {
+        Thread.currentThread().interrupt();
       } catch (Exception e) {
-        job.setState(ObdCommandJobState.EXECUTION_ERROR);
+        if (job != null) {
+          job.setState(ObdCommandJobState.EXECUTION_ERROR);
+        }
         Log.e(TAG, "Failed to run command. -> " + e.getMessage());
       }
 
       if (job != null) {
-        final ObdCommandJob job2=job;
+        final ObdCommandJob job2 = job;
         ((MainActivity) ctx).runOnUiThread(new Runnable() {
           @Override
           public void run() {
@@ -237,8 +238,8 @@ public class ObdGatewayService extends AbstractGatewayService {
   }
 
   /**
-  * Stop OBD connection and queue processing.
-  */
+   * Stop OBD connection and queue processing.
+   */
   public void stopService() {
     Log.d(TAG, "Stopping service..");
 
