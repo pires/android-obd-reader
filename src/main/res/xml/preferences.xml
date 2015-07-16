@@ -116,4 +116,19 @@
             android:title="@string/title_pref_commands_title">
         </PreferenceScreen>
     </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/title_pref_full_logging">
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="enable_full_logging"
+            android:summary="@string/pref_enable_full_logging_summary"
+            android:title="@string/pref_enable_full_logging_title">
+        </CheckBoxPreference>
+        <EditTextPreference
+            android:defaultValue="@string/default_dirname_full_logging"
+            android:dialogTitle="@string/pref_dirname_dialogTitle"
+            android:key="dirname_full_logging"
+            android:summary="@string/pref_dirname_summary"
+            android:title="@string/pref_dirname_title" />
+    </PreferenceCategory>
 </PreferenceScreen>
