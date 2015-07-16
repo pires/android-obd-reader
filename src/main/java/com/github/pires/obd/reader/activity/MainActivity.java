@@ -34,9 +34,11 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.github.pires.obd.reader.io.LogCSVWriter;
 import com.google.inject.Inject;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -85,6 +87,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
   boolean mGpsIsStarted = false;
   private LocationManager mLocService;
   private LocationProvider mLocProvider;
+  private LogCSVWriter myCSVWriter;
   private Location mLastLocation;
 
   private static final String TAG = MainActivity.class.getName();
@@ -157,11 +160,20 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
           gpsStatusTextView.setText(sb.toString());
         }
         if (prefs.getBoolean(ConfigActivity.UPLOAD_DATA_KEY, false)) {
+          // Upload the current reading by http
           final String vin = prefs.getString(ConfigActivity.VEHICLE_ID_KEY, "UNDEFINED_VIN");
           Map<String, String> temp = new HashMap<String, String>();
           temp.putAll(commandResult);
           ObdReading reading = new ObdReading(lat, lon, System.currentTimeMillis(), vin, temp);
           new UploadAsyncTask().execute(reading);
+
+        } else if (prefs.getBoolean(ConfigActivity.ENABLE_FULL_LOGGING_KEY, false)){
+          // Write the current reading to CSV
+          final String vin = prefs.getString(ConfigActivity.VEHICLE_ID_KEY, "UNDEFINED_VIN");
+          Map<String, String> temp = new HashMap<String, String>();
+          temp.putAll(commandResult);
+          ObdReading reading = new ObdReading(lat, lon, System.currentTimeMillis(), vin, temp);
+          myCSVWriter.writeLineCSV(reading);
         }
         commandResult.clear();
       }
@@ -461,6 +473,18 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
 
     // screen won't turn off until wakeLock.release()
     wakeLock.acquire();
+
+    if(prefs.getBoolean(ConfigActivity.ENABLE_FULL_LOGGING_KEY,false)) {
+
+      // Create the CSV Logger
+      long mils = System.currentTimeMillis();
+      SimpleDateFormat sdf = new SimpleDateFormat("_dd_MM_yyyy_HH_mm_ss");
+
+      myCSVWriter = new LogCSVWriter("Log" + sdf.format(new Date(mils)).toString() + ".csv",
+              prefs.getString(ConfigActivity.DIRECTORY_FULL_LOGGING_KEY,
+                      getString(R.string.default_dirname_full_logging))
+      );
+    }
   }
 
   private void stopLiveData() {
@@ -472,6 +496,10 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
     endTrip();
 
     releaseWakeLockIfHeld();
+
+    if(myCSVWriter != null){
+      myCSVWriter.closeLogCSVWriter();
+    }
   }
 
   protected void endTrip() {
