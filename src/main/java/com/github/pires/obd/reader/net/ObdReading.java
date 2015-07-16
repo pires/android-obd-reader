@@ -15,6 +15,7 @@ package com.github.pires.obd.reader.net;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * DTO for OBD readings.
@@ -22,14 +23,15 @@ import java.util.Map;
 public class ObdReading {
   private double latitude, longitude;
   private long timestamp;
-  private String vin;
+  private String vin; // vehicle id
   private Map<String, String> readings;
 
   public ObdReading(){
     readings = new HashMap<>();
   }
 
-  public ObdReading(double latitude, double longitude, long timestamp, String vin, Map<String, String> readings) {
+  public ObdReading(double latitude, double longitude, long timestamp,
+                    String vin, Map<String, String> readings) {
     this.latitude = latitude;
     this.longitude = longitude;
     this.timestamp = timestamp;
@@ -75,6 +77,14 @@ public class ObdReading {
 
   public void setReadings(Map<String, String> readings) {
     this.readings = readings;
+  }
+  
+  public String toString(){
+
+    return "lat:" + latitude + ";" +
+            "long:" + longitude + ";" +
+            "vin:" + vin + ";" +
+            "readings:" + readings.toString().substring(10).replace("}","").replace(",",";");
   }
 
 }
