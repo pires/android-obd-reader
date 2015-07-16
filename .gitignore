@@ -25,3 +25,7 @@ local.properties
 .idea
 
 .gradle
+
+src/main/java/com/github/pires/obd/reader/database/FullLogDbHelper.java
+
+src/main/res/drawable-xhdpi/background.png
