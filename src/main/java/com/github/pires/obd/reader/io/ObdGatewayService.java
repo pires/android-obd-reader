@@ -17,6 +17,7 @@ import com.github.pires.obd.commands.protocol.SelectProtocolObdCommand;
 import com.github.pires.obd.commands.protocol.TimeoutObdCommand;
 import com.github.pires.obd.commands.temperature.AmbientAirTemperatureObdCommand;
 import com.github.pires.obd.enums.ObdProtocols;
+import com.github.pires.obd.exceptions.UnsupportedCommandException;
 import com.github.pires.obd.reader.R;
 import com.github.pires.obd.reader.activity.ConfigActivity;
 import com.github.pires.obd.reader.activity.MainActivity;
@@ -218,6 +219,11 @@ public class ObdGatewayService extends AbstractGatewayService {
               "Job state was not new, so it shouldn't be in queue. BUG ALERT!");
       } catch (InterruptedException i) {
         Thread.currentThread().interrupt();
+      } catch (UnsupportedCommandException u) {
+        if (job != null) {
+          job.setState(ObdCommandJobState.NOT_SUPPORTED);
+        }
+        Log.d(TAG, "Command not supported. -> " + u.getMessage());
       } catch (Exception e) {
         if (job != null) {
           job.setState(ObdCommandJobState.EXECUTION_ERROR);

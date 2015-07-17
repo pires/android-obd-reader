@@ -63,7 +63,8 @@ public class ObdCommandJob {
     RUNNING,
     FINISHED,
     EXECUTION_ERROR,
-    QUEUE_ERROR
+    QUEUE_ERROR,
+    NOT_SUPPORTED
   }
 
 }
