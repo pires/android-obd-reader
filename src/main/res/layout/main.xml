@@ -58,23 +58,17 @@
         android:text=""/>
   </TableRow>
 
-  <ScrollView
-      android:id="@+id/data_scroll"
+  <GridView
+      android:id="@+id/gridView"
       android:layout_width="fill_parent"
       android:layout_height="0dp"
       android:layout_gravity="top"
       android:layout_margin="10dp"
       android:layout_weight="1"
+      android:columnWidth="100dp"
       android:elevation="2dp"
-      android:outlineProvider="bounds">
-
-    <TableLayout
-        android:id="@+id/data_table"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:stretchColumns="*">
-    </TableLayout>
-  </ScrollView>
+      android:numColumns="auto_fit"
+      android:outlineProvider="bounds" />
 
   <TableRow
       android:layout_width="fill_parent"

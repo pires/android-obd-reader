@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingBottom="1dip"
+    android:paddingTop="1dip"
+    android:textAlignment="center">
+
+
+  <TableRow
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/rowDescription"
+        android:layout_width="wrap_content"
+        android:layout_weight=".25"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:paddingLeft="5dp"
+        android:singleLine="false"
+        android:textSize="@dimen/abc_text_size_small_material" />
+  </TableRow>
+
+  <TableRow
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/rowResult"
+        android:layout_width="wrap_content"
+        android:layout_weight=".25"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:paddingLeft="5dp"
+        android:singleLine="false"
+        android:textSize="@dimen/abc_text_size_large_material"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/rowUnit"
+        android:layout_width="wrap_content"
+        android:layout_weight=".25"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:paddingLeft="5dp"
+        android:singleLine="true"
+        android:textSize="@dimen/abc_text_size_small_material" />
+  </TableRow>
+
+</TableLayout>
