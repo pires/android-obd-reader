@@ -7,46 +7,45 @@
     android:paddingTop="1dip"
     android:textAlignment="center">
 
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-  <TableRow
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/rowDescription"
+            android:layout_width="wrap_content"
+            android:layout_weight=".25"
+            android:minHeight="35dp"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:paddingLeft="5dp"
+            android:singleLine="false" />
+    </TableRow>
 
-    <TextView
-        android:id="@+id/rowDescription"
-        android:layout_width="wrap_content"
-        android:layout_weight=".25"
-        android:layout_height="wrap_content"
-        android:gravity="left"
-        android:paddingLeft="5dp"
-        android:singleLine="false"
-        android:textSize="@dimen/abc_text_size_small_material" />
-  </TableRow>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-  <TableRow
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/rowResult"
+            android:layout_width="wrap_content"
+            android:layout_weight=".25"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:paddingLeft="5dp"
+            android:singleLine="true"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/rowResult"
-        android:layout_width="wrap_content"
-        android:layout_weight=".25"
-        android:layout_height="wrap_content"
-        android:gravity="left"
-        android:paddingLeft="5dp"
-        android:singleLine="true"
-        android:textSize="@dimen/abc_text_size_large_material"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/rowUnit"
+            android:layout_width="wrap_content"
+            android:layout_weight=".25"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:paddingLeft="5dp"
+            android:singleLine="true" />
+    </TableRow>
 
-    <TextView
-        android:id="@+id/rowUnit"
-        android:layout_width="wrap_content"
-        android:layout_weight=".25"
-        android:layout_height="wrap_content"
-        android:gravity="left"
-        android:paddingLeft="5dp"
-        android:singleLine="true"
-        android:textSize="@dimen/abc_text_size_small_material" />
-  </TableRow>
-
+    <TextView android:layout_span="2" android:layout_height="1px"
+        android:layout_width="fill_parent" android:text=""></TextView>
 </TableLayout>
