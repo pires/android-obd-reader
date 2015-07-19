@@ -10,7 +10,7 @@
 
   <TableRow
       android:layout_width="match_parent"
-      android:layout_height="match_parent">
+      android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/rowDescription"
@@ -25,7 +25,7 @@
 
   <TableRow
       android:layout_width="match_parent"
-      android:layout_height="match_parent">
+      android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/rowResult"
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:gravity="left"
         android:paddingLeft="5dp"
-        android:singleLine="false"
+        android:singleLine="true"
         android:textSize="@dimen/abc_text_size_large_material"
         android:textStyle="bold" />
 

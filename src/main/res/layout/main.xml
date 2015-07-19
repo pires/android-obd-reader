@@ -68,7 +68,8 @@
       android:columnWidth="100dp"
       android:elevation="2dp"
       android:numColumns="auto_fit"
-      android:outlineProvider="bounds" />
+      android:outlineProvider="bounds"
+      android:stretchMode="spacingWidthUniform"/>
 
   <TableRow
       android:layout_width="fill_parent"
