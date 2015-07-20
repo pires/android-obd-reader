@@ -88,3 +88,5 @@ include ':obd-java-api'
 * LG Nexus 5 (Android 5.1)
 * Nexus 7 2013 WiFi (Android 4.4.4)
 * Samsung Galaxy S4 Active I9295 (Android 5.0.2)
+* Samsung Galaxy S6 Edge SM-925F (Android 5.0.2)
+* Samsung Galaxy Note 3
