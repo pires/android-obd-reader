@@ -156,16 +156,20 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
 
         double lat = 0;
         double lon = 0;
+        double alt = 0;
         final int posLen = 7;
         if (mGpsIsStarted && mLastLocation != null) {
           lat = mLastLocation.getLatitude();
           lon = mLastLocation.getLongitude();
+          alt = mLastLocation.getAltitude();
 
           StringBuffer sb = new StringBuffer();
           sb.append("Lat: ");
           sb.append(String.valueOf(mLastLocation.getLatitude()).substring(0, posLen));
           sb.append(" Lon: ");
           sb.append(String.valueOf(mLastLocation.getLongitude()).substring(0, posLen));
+          sb.append(" Alt: ");
+          sb.append(String.valueOf(mLastLocation.getAltitude()).substring(0, posLen));
           gpsStatusTextView.setText(sb.toString());
         }
         if (prefs.getBoolean(ConfigActivity.UPLOAD_DATA_KEY, false)) {

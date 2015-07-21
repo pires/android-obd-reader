@@ -21,21 +21,22 @@ import java.util.regex.Pattern;
  * DTO for OBD readings.
  */
 public class ObdReading {
-  private double latitude, longitude;
+  private double latitude, longitude, altitude;
   private long timestamp;
-  private String vin; // vehicle id
+  private String vehicleid; // vehicle id
   private Map<String, String> readings;
 
   public ObdReading(){
     readings = new HashMap<>();
   }
 
-  public ObdReading(double latitude, double longitude, long timestamp,
-                    String vin, Map<String, String> readings) {
+  public ObdReading(double latitude, double longitude, double altitude, long timestamp,
+                    String vehicleid, Map<String, String> readings) {
     this.latitude = latitude;
     this.longitude = longitude;
+    this.altitude = altitude;
     this.timestamp = timestamp;
-    this.vin = vin;
+    this.vehicleid = vehicleid;
     this.readings = readings;
   }
 
@@ -45,6 +46,14 @@ public class ObdReading {
 
   public void setLatitude(double latitude) {
     this.latitude = latitude;
+  }
+
+  public double getAltitude() {
+    return altitude;
+  }
+
+  public void setAltitude(double altitude) {
+    this.altitude = altitude;
   }
 
   public double getLongitude() {
@@ -64,11 +73,11 @@ public class ObdReading {
   }
 
   public String getVin() {
-    return vin;
+    return vehicleid;
   }
 
-  public void setVin(String vin) {
-    this.vin = vin;
+  public void setVin(String vehicleid) {
+    this.vehicleid = vehicleid;
   }
 
   public Map<String, String> getReadings() {
@@ -83,7 +92,8 @@ public class ObdReading {
 
     return "lat:" + latitude + ";" +
             "long:" + longitude + ";" +
-            "vin:" + vin + ";" +
+            "alt:" + altitude + ";" +
+            "vehicleid:" + vehicleid + ";" +
             "readings:" + readings.toString().substring(10).replace("}","").replace(",",";");
   }
 

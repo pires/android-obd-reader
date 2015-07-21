@@ -1,0 +1,921 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="dtc_keys">
+        <item>P0010</item>
+        <item>P0011</item>
+        <item>P0012</item>
+        <item>P0013</item>
+        <item>P0014</item>
+        <item>P0015</item>
+        <item>P0016</item>
+        <item>P0017</item>
+        <item>P0020</item>
+        <item>P0021</item>
+        <item>P0022</item>
+        <item>P0023</item>
+        <item>P0024</item>
+        <item>P0025</item>
+        <item>P0030</item>
+        <item>P0031</item>
+        <item>P0032</item>
+        <item>P0036</item>
+        <item>P0037</item>
+        <item>P0038</item>
+        <item>P0040</item>
+        <item>P0041</item>
+        <item>P0050</item>
+        <item>P0051</item>
+        <item>P0052</item>
+        <item>P0056</item>
+        <item>P0057</item>
+        <item>P0058</item>
+        <item>P0070</item>
+        <item>P0071</item>
+        <item>P0072</item>
+        <item>P0073</item>
+        <item>P0080</item>
+        <item>P0100</item>
+        <item>P0111</item>
+        <item>P0112</item>
+        <item>P0113</item>
+        <item>P0117</item>
+        <item>P0118</item>
+        <item>P0122</item>
+        <item>P0128</item>
+        <item>P0131</item>
+        <item>P0132</item>
+        <item>P0135</item>
+        <item>P0138</item>
+        <item>P0139</item>
+        <item>P0140</item>
+        <item>P0141</item>
+        <item>P0151</item>
+        <item>P0152</item>
+        <item>P0153</item>
+        <item>P0155</item>
+        <item>P0157</item>
+        <item>P0158</item>
+        <item>P0159</item>
+        <item>P0160</item>
+        <item>P0161</item>
+        <item>P0170</item>
+        <item>P0171</item>
+        <item>P0172</item>
+        <item>P0173</item>
+        <item>P0174</item>
+        <item>P0175</item>
+        <item>P0201</item>
+        <item>P0202</item>
+        <item>P0203</item>
+        <item>P0204</item>
+        <item>P0205</item>
+        <item>P0206</item>
+        <item>P0221</item>
+        <item>P0222</item>
+        <item>P0223</item>
+        <item>P0261</item>
+        <item>P0262</item>
+        <item>P0264</item>
+        <item>P0265</item>
+        <item>P0267</item>
+        <item>P0268</item>
+        <item>P0270</item>
+        <item>P0271</item>
+        <item>P0273</item>
+        <item>P0274</item>
+        <item>P0276</item>
+        <item>P0300</item>
+        <item>P0301</item>
+        <item>P0302</item>
+        <item>P0303</item>
+        <item>P0304</item>
+        <item>P0305</item>
+        <item>P0306</item>
+        <item>P0313</item>
+        <item>P0326</item>
+        <item>P0327</item>
+        <item>P0328</item>
+        <item>P0335</item>
+        <item>P0340</item>
+        <item>P0341</item>
+        <item>P0344</item>
+        <item>P0348</item>
+        <item>P0351</item>
+        <item>P0352</item>
+        <item>P0353</item>
+        <item>P0354</item>
+        <item>P0355</item>
+        <item>P0356</item>
+        <item>P0365</item>
+        <item>P0368</item>
+        <item>P0369</item>
+        <item>P0370</item>
+        <item>P0373</item>
+        <item>P0420</item>
+        <item>P0430</item>
+        <item>P0440</item>
+        <item>P0441</item>
+        <item>P0442</item>
+        <item>P0444</item>
+        <item>P0458</item>
+        <item>P0459</item>
+        <item>P0461</item>
+        <item>P0462</item>
+        <item>P0463</item>
+        <item>P0475</item>
+        <item>P0477</item>
+        <item>P0478</item>
+        <item>P0480</item>
+        <item>P0491</item>
+        <item>P0492</item>
+        <item>P0500</item>
+        <item>P0560</item>
+        <item>P0571</item>
+        <item>P0597</item>
+        <item>P0598</item>
+        <item>P0599</item>
+        <item>P0601</item>
+        <item>P0603</item>
+        <item>P0604</item>
+        <item>P0620</item>
+        <item>P0645</item>
+        <item>P0646</item>
+        <item>P0647</item>
+        <item>P0668</item>
+        <item>P0669</item>
+        <item>P0686</item>
+        <item>P0687</item>
+        <item>P0691</item>
+        <item>P0692</item>
+        <item>P0703</item>
+        <item>P0709</item>
+        <item>P0710</item>
+        <item>P0711</item>
+        <item>P0712</item>
+        <item>P0713</item>
+        <item>P0715</item>
+        <item>P0720</item>
+        <item>P0721</item>
+        <item>P0722</item>
+        <item>P0727</item>
+        <item>P0731</item>
+        <item>P0732</item>
+        <item>P0733</item>
+        <item>P0734</item>
+        <item>P0735</item>
+        <item>P0740</item>
+        <item>P0741</item>
+        <item>P0742</item>
+        <item>P0743</item>
+        <item>P0745</item>
+        <item>P0748</item>
+        <item>P0750</item>
+        <item>P0751</item>
+        <item>P0752</item>
+        <item>P0753</item>
+        <item>P0755</item>
+        <item>P0756</item>
+        <item>P0757</item>
+        <item>P0758</item>
+        <item>P0760</item>
+        <item>P0761</item>
+        <item>P0762</item>
+        <item>P0763</item>
+        <item>P0775</item>
+        <item>P0795</item>
+        <item>P1000</item>
+        <item>P1004</item>
+        <item>P1006</item>
+        <item>P1012</item>
+        <item>P1014</item>
+        <item>P1017</item>
+        <item>P1019</item>
+        <item>P1020</item>
+        <item>P1023</item>
+        <item>P1024</item>
+        <item>P1030</item>
+        <item>P1041</item>
+        <item>P1048</item>
+        <item>P1049</item>
+        <item>P1055</item>
+        <item>P1056</item>
+        <item>P1057</item>
+        <item>P1062</item>
+        <item>P1078</item>
+        <item>P1083</item>
+        <item>P1084</item>
+        <item>P1085</item>
+        <item>P1086</item>
+        <item>P1087</item>
+        <item>P1088</item>
+        <item>P1090</item>
+        <item>P1091</item>
+        <item>P1092</item>
+        <item>P1093</item>
+        <item>P1094</item>
+        <item>P1095</item>
+        <item>P1096</item>
+        <item>P1097</item>
+        <item>P1098</item>
+        <item>P1104</item>
+        <item>P1105</item>
+        <item>P1112</item>
+        <item>P1116</item>
+        <item>P1117</item>
+        <item>P1118</item>
+        <item>P1120</item>
+        <item>P1121</item>
+        <item>P1122</item>
+        <item>P1123</item>
+        <item>P1124</item>
+        <item>P1130</item>
+        <item>P1131</item>
+        <item>P1132</item>
+        <item>P1134</item>
+        <item>P1135</item>
+        <item>P1136</item>
+        <item>P1137</item>
+        <item>P1138</item>
+        <item>P1139</item>
+        <item>P1140</item>
+        <item>P1145</item>
+        <item>P1151</item>
+        <item>P1152</item>
+        <item>P1153</item>
+        <item>P1155</item>
+        <item>P1156</item>
+        <item>P1157</item>
+        <item>P1159</item>
+        <item>P1160</item>
+        <item>P1161</item>
+        <item>P1162</item>
+        <item>P1163</item>
+        <item>P1164</item>
+        <item>P1165</item>
+        <item>P1171</item>
+        <item>P1172</item>
+        <item>P1173</item>
+        <item>P1174</item>
+        <item>P1175</item>
+        <item>P1176</item>
+        <item>P1177</item>
+        <item>P1178</item>
+        <item>P1179</item>
+        <item>P1180</item>
+        <item>P1181</item>
+        <item>P1182</item>
+        <item>P1183</item>
+        <item>P1186</item>
+        <item>P1187</item>
+        <item>P1188</item>
+        <item>P1189</item>
+        <item>P1190</item>
+        <item>P1191</item>
+        <item>P1192</item>
+        <item>P1193</item>
+        <item>P1197</item>
+        <item>P1198</item>
+        <item>P1214</item>
+        <item>P1215</item>
+        <item>P1216</item>
+        <item>P1217</item>
+        <item>P1221</item>
+        <item>P1222</item>
+        <item>P1223</item>
+        <item>P1230</item>
+        <item>P1234</item>
+        <item>P1236</item>
+        <item>P1244</item>
+        <item>P1271</item>
+        <item>P1283</item>
+        <item>P1284</item>
+        <item>P1285</item>
+        <item>P1287</item>
+        <item>P1288</item>
+        <item>P1289</item>
+        <item>P1300</item>
+        <item>P1301</item>
+        <item>P1302</item>
+        <item>P1303</item>
+        <item>P1304</item>
+        <item>P1305</item>
+        <item>P1306</item>
+        <item>P1313</item>
+        <item>P1314</item>
+        <item>P1317</item>
+        <item>P1327</item>
+        <item>P1328</item>
+        <item>P1332</item>
+        <item>P1333</item>
+        <item>P1340</item>
+        <item>P1341</item>
+        <item>P1342</item>
+        <item>P1343</item>
+        <item>P1344</item>
+        <item>P1345</item>
+        <item>P1346</item>
+        <item>P1347</item>
+        <item>P1348</item>
+        <item>P1349</item>
+        <item>P1350</item>
+        <item>P1351</item>
+        <item>P1352</item>
+        <item>P1353</item>
+        <item>P1354</item>
+        <item>P1355</item>
+        <item>P1356</item>
+        <item>P1357</item>
+        <item>P1358</item>
+        <item>P1359</item>
+        <item>P1360</item>
+        <item>P1361</item>
+        <item>P1362</item>
+        <item>P1363</item>
+        <item>P1364</item>
+        <item>P1365</item>
+        <item>P1383</item>
+        <item>P1384</item>
+        <item>P1385</item>
+        <item>P1386</item>
+        <item>P1396</item>
+        <item>P1397</item>
+        <item>P1400</item>
+        <item>P1401</item>
+        <item>P1402</item>
+        <item>P1403</item>
+        <item>P1404</item>
+        <item>P1405</item>
+        <item>P1406</item>
+        <item>P1407</item>
+        <item>P1408</item>
+        <item>P1413</item>
+        <item>P1414</item>
+        <item>P1415</item>
+        <item>P1417</item>
+        <item>P1419</item>
+        <item>P1420</item>
+        <item>P1421</item>
+        <item>P1422</item>
+        <item>P1424</item>
+        <item>P1432</item>
+        <item>P1434</item>
+        <item>P1438</item>
+        <item>P1439</item>
+        <item>P1440</item>
+        <item>P1441</item>
+        <item>P1442</item>
+        <item>P1443</item>
+        <item>P1444</item>
+        <item>P1445</item>
+        <item>P1446</item>
+        <item>P1447</item>
+        <item>P1448</item>
+        <item>P1449</item>
+        <item>P1450</item>
+        <item>P1451</item>
+        <item>P1452</item>
+        <item>P1453</item>
+        <item>P1454</item>
+        <item>P1457</item>
+        <item>P1459</item>
+        <item>P1460</item>
+        <item>P1461</item>
+        <item>P1462</item>
+        <item>P1463</item>
+        <item>P1464</item>
+        <item>P1465</item>
+        <item>P1466</item>
+        <item>P1467</item>
+        <item>P1468</item>
+        <item>P1470</item>
+        <item>P1472</item>
+        <item>P1473</item>
+        <item>P1475</item>
+        <item>P1476</item>
+        <item>P1477</item>
+        <item>P1478</item>
+        <item>P1500</item>
+        <item>P1501</item>
+        <item>P1502</item>
+        <item>P1503</item>
+        <item>P1504</item>
+        <item>P1505</item>
+        <item>P1506</item>
+        <item>P1507</item>
+        <item>P1508</item>
+        <item>P1509</item>
+        <item>P1510</item>
+        <item>P1511</item>
+        <item>P1512</item>
+        <item>P1513</item>
+        <item>P1515</item>
+        <item>P1520</item>
+        <item>P1521</item>
+        <item>P1522</item>
+        <item>P1523</item>
+        <item>P1524</item>
+        <item>P1525</item>
+        <item>P1526</item>
+        <item>P1527</item>
+        <item>P1528</item>
+        <item>P1529</item>
+        <item>P1530</item>
+        <item>P1531</item>
+        <item>P1532</item>
+        <item>P1533</item>
+        <item>P1534</item>
+        <item>P1540</item>
+        <item>P1541</item>
+        <item>P1542</item>
+        <item>P1543</item>
+        <item>P1544</item>
+        <item>P1545</item>
+        <item>P1546</item>
+        <item>P1550</item>
+        <item>P1551</item>
+        <item>P1552</item>
+        <item>P1553</item>
+        <item>P1554</item>
+        <item>P1556</item>
+        <item>P1560</item>
+        <item>P1561</item>
+        <item>P1562</item>
+        <item>P1563</item>
+        <item>P1564</item>
+        <item>P1565</item>
+        <item>P1569</item>
+        <item>P2096</item>
+        <item>P2098</item>
+        <item>P2183</item>
+        <item>P2185</item>
+        <item>P2195</item>
+        <item>P2196</item>
+        <item>P2270</item>
+        <item>P2271</item>
+        <item>P2272</item>
+        <item>P2273</item>
+        <item>P2418</item>
+        <item>P2440</item>
+        <item>U0100</item>
+    </string-array>
+    <string-array name="dtc_values">
+        <item>Variable Camshaft Timing A Circuit Continuity Bank 1</item>
+        <item>A Camshaft Position Timing Over-Advanced or System Performance Bank 1</item>
+        <item>A Camshaft Position Timing Over-Retarded Bank 1</item>
+        <item>Variable Camshaft Timing B Circuit Continuity Bank 1</item>
+        <item>B Camshaft Position Timing Over-Advanced or System Performance Bank 1</item>
+        <item>B Camshaft Position Timing Over-Retarded Bank 1</item>
+        <item>Crankshaft Position Camshaft Position Correlation Bank 1 Sensor A</item>
+        <item>Crankshaft Position Camshaft Position Correlation Bank 1 Sensor B</item>
+        <item>Variable Camshaft Timing A Circuit Continuity Bank 2</item>
+        <item>A Camshaft Position Timing Over-Advanced or System Performance Bank 2</item>
+        <item>A Camshaft Position Timing Over-Retarded Bank 2</item>
+        <item>Variable Camshaft Timing B Circuit Continuity Bank 2</item>
+        <item>B Camshaft Position Timing Over-Advanced or System Performance Bank 2</item>
+        <item>B Camshaft Position Timing Over-Retarded Bank 2</item>
+        <item>HO2S 11 Heater Control Circuit</item>
+        <item>HO2S 11 Heater Control Circuit Low</item>
+        <item>HO2S 11 Heater Control Circuit High</item>
+        <item>HO2S 12 Heater Control Circuit</item>
+        <item>HO2S 12 Heater Control Circuit Low</item>
+        <item>HO2S 12 Heater Control Circuit High</item>
+        <item>O2 Sensor Signal Wires Swapped- HO2S11 with HO2S21</item>
+        <item>O2 Sensor Signal Wires Swapped- HO2S12 with HO2S22</item>
+        <item>HO2S 21 Heater Control Circuit</item>
+        <item>HO2S 21 Heater Control Circuit Low</item>
+        <item>HO2S 21 Heater Control Circuit High</item>
+        <item>HO2S 22 Heater Control Circuit</item>
+        <item>HO2S 22 Heater Control Circuit Low</item>
+        <item>HO2S 22 Heater Control Circuit High</item>
+        <item>Ambient Air Temperature Sensor Malfunction</item>
+        <item>Ambient Sensor Rationality Check</item>
+        <item>Ambient Sensor Circuit Low</item>
+        <item>Ambient Sensor Circuit High</item>
+        <item>Exhaust Valve Control Solenoid Circuit High</item>
+        <item>Mass Air Sensor Signal</item>
+        <item>Intake Air Temperature Circuit Range/Performance Bank 1</item>
+        <item>Intake Air Temperature Sensor 1 Circuit Low Bank 1</item>
+        <item>Intake Air Temperature Sensor 1 Circuit High Bank 1</item>
+        <item>Engine Coolant Temperature Sensor 1 Circuit Low</item>
+        <item>Engine Coolant Temperature Sensor 1 Circuit High</item>
+        <item>Throttle Position Sensor/Switch A Circuit Low Input</item>
+        <item>Thermostat Low Coolant Temperature</item>
+        <item>O2 Sensor Fault</item>
+        <item>O2 Sensor Circuit High Voltage Bank 1 Sensor 1</item>
+        <item>O2 Sensor Heater Circuit Malfunction Bank 1 Sensor 1</item>
+        <item>O2 Sensor Circuit High Voltage Bank 1 Sensor 2</item>
+        <item>O2 Sensor Circuit Slow Response Bank 1 Sensor 2</item>
+        <item>O2 Sensor Circuit Low Voltage Bank 1 Sensor 2</item>
+        <item>O2 Sensor Heater Circuit Malfunction Bank 1 Sensor 2</item>
+        <item>O2 Sensor Circuit Low Voltage Bank 2 Sensor 1</item>
+        <item>O2 Sensor Circuit High Voltage Bank 2 Sensor 1</item>
+        <item>O2 Sensor Circuit Slow Response Bank 2 Sensor 1</item>
+        <item>O2 Sensor Heater Circuit Bank 2 Sensor 1</item>
+        <item>O2 Sensor Circuit Low Voltage Bank 2 Sensor 2</item>
+        <item>O2 Sensor Circuit High Voltage Bank 2 Sensor 2</item>
+        <item>O2 Sensor Circuit Slow Response Bank 2 Sensor 2</item>
+        <item>O2 Sensor Circuit No Activity Detected Bank 2 Sensor 2</item>
+        <item>O2 Sensor Heater Circuit Malfunction Bank 2 Sensor 2</item>
+        <item>Fuel Trim Bank 1</item>
+        <item>Mixture Control System Too Lean</item>
+        <item>Mixture Control System Too Rich Bank 1</item>
+        <item>Fuel Trim Malfunction Bank 2</item>
+        <item>Mixture Control 2 System Too Lean Bank 2</item>
+        <item>Mixture Control 2 System Too Rich Bank 2</item>
+        <item>Fuel Injector Cylinder 1 Activation</item>
+        <item>Fuel Injector Cylinder 2 Activation</item>
+        <item>Fuel Injector Cylinder 3 Activation</item>
+        <item>Fuel Injector Cylinder 4 Activation</item>
+        <item>Fuel Injector Cylinder 5 Activation</item>
+        <item>Fuel Injector Cylinder 6 Activation</item>
+        <item>Throttle Valve Potentiometer 2 Plausibility To Air Mass</item>
+        <item>Throttle Valve Potentiometer 2</item>
+        <item>Throttle Valve Ponteniometer 2</item>
+        <item>Fuel Injector Cylinder 1 Activation</item>
+        <item>Fuel Injector Cylinder 1 Activation</item>
+        <item>Fuel Injector Cylinder 2 Activation</item>
+        <item>Fuel Injector Cylinder 2 Activation</item>
+        <item>Fuel Injector Cylinder 3 Activation</item>
+        <item>Fuel Injector Cylinder 3 Activation</item>
+        <item>Fuel Injector Cylinder 4 Activation</item>
+        <item>Fuel Injector Cylinder 4 Activation</item>
+        <item>Fuel Injector Cylinder 5 Activation</item>
+        <item>Fuel Injector Cylinder 5 Activation</item>
+        <item>Fuel Injector Cylinder 6 Activation</item>
+        <item>Combustion Misfires Several Cylinders</item>
+        <item>Misfire cylinder 1</item>
+        <item>Misfire Cylinder 2</item>
+        <item>Misfire Cylinder 3</item>
+        <item>Misfire Cylinder 4</item>
+        <item>Misfire Cylinder 5</item>
+        <item>Misfire Cylinder 6</item>
+        <item>Misfire Detected With Low Fuel</item>
+        <item>Knock Sensor Signal 1</item>
+        <item>Knock Sensor Circuit Sensor 1 Error</item>
+        <item>Knock sensor 1 Circuit High Input</item>
+        <item>Crankshaft Position Sensor A Circuit</item>
+        <item>Camshaft Sensor Inlet Signal</item>
+        <item>Camshaft Sensor Inlet Signal</item>
+        <item>Camshaft Sensor A Synchronization</item>
+        <item>Camshaft Position Sensor A Circuit High Input Bank 2</item>
+        <item>Ignition Coil Cylinder 1</item>
+        <item>Ignition Coil Cylinder 2</item>
+        <item>Ignition Coil Cylinder 3</item>
+        <item>Ignition Coil Cylinder 4</item>
+        <item>Ignition Coil Cylinder 5</item>
+        <item>Ignition Coil Cylinder 6</item>
+        <item>Camshaft Position Sensor B Circuit Bank 1</item>
+        <item>Camshaft Position Sensor B Circuit High Bank 1</item>
+        <item>Camshaft Position Sensor B Circuit Intermittent Bank 1</item>
+        <item>Timing Reference High Resolution Signal A Malfunction</item>
+        <item>Timing Reference High Resolution Signal A Intermittent/Erratic Pulses</item>
+        <item>Catalytic Converter Conversion</item>
+        <item>Catalytic Converter Conversion 2</item>
+        <item>Tank Venting System Function</item>
+        <item>Tank Venting System Function</item>
+        <item>Evaporative Emission System Leak Detected Small Leak</item>
+        <item>Evaporative Emission Control System Purge Control Valve Circuit Open</item>
+        <item>Evaporative Emission Purge Solenoid Control Circuit Low Voltage</item>
+        <item>Evaporative Emission Purge Solenoid Control Circuit High Voltage</item>
+        <item>Fuel Level Sensor Circuit Range/Performance</item>
+        <item>Fuel Level Sensor A Circuit Low</item>
+        <item>Fuel Level Sensor A Circuit High</item>
+        <item>Exhaust Gas Flap Activation</item>
+        <item>Exhaust Gas Flap Activation Low</item>
+        <item>Exhaust Gas Flap Activation High</item>
+        <item>Cooling Fan 1 Control Circuit Malfunction</item>
+        <item>Mass Air Flow Sensor Low Flow Limit Detected Bank 1</item>
+        <item>Mass Air Flow Sensor Low Flow Limit Detected- Bank 2</item>
+        <item>Vehicle Speed Sensor Signal Error</item>
+        <item>System Voltage Malfunction</item>
+        <item>Brake Light Switch Plausibility</item>
+        <item>Thermostat Heater Control Circuit Open</item>
+        <item>Thermostat Heater Control Circuit Low</item>
+        <item>Thermostat Heater Control Circuit High</item>
+        <item>ECM Self Check Fault</item>
+        <item>ECM Self Check Fault</item>
+        <item>ECM Self Check Fault</item>
+        <item>Generator Control Circuit Malfunction</item>
+        <item>Air Conditioning Copmressor Activation</item>
+        <item>Air Conditioning Clutch Relay Circuit Low</item>
+        <item>Air Conditioning Clutch Relay Circuit High</item>
+        <item>DME Internal Fault Interior Temperature Sensor Signal</item>
+        <item>DME Internal Fault Interior Temperature Sensor Signal</item>
+        <item>Engine Control Module Power Relay Control Circuit Low</item>
+        <item>Engine Control Module Power Relay Control Circuit High</item>
+        <item>Electric Fan Activation</item>
+        <item>Electric Fan Activation</item>
+        <item>Brake Light Switch Plausibility</item>
+        <item>Transmission Range Sensor Circuit Intermittent</item>
+        <item>Transmission Fluid Temperature Sensor Circuit Malfunction</item>
+        <item>Transmission Fluid Temperature Sensor Range Performance</item>
+        <item>Transmission Fluid Temperature Sensor Low Input</item>
+        <item>Transmission Fluid Temperature Sensor High Input</item>
+        <item>Transmission Input/Turbine Speed Sensor A Circuit Malfunction</item>
+        <item>Output Speed Sensor Circuit</item>
+        <item>Output Speed Sensor Range/Performance</item>
+        <item>Output Speed Sensor No Signal</item>
+        <item>Engine Speed Input Circuit No Signal</item>
+        <item>Gear 1 Incorrect ratio</item>
+        <item>Gear 2 Incorrect ratio</item>
+        <item>Gear 3 Incorrect ratio</item>
+        <item>Gear 4 Incorrect ratio</item>
+        <item>Gear 5 Incorrect ratio</item>
+        <item>Torque Converter Clutch Circuit Open</item>
+        <item>Torque Converter Clutch Circuit Stuck Off</item>
+        <item>Torque Converter Clutch Stuck On</item>
+        <item>Torque Converter Clutch Circuit Open</item>
+        <item>Pressure Control Solenoid</item>
+        <item>Pressure Control Solenoid A Performance</item>
+        <item>Shift Solenoid A Malfunction</item>
+        <item>Shift Solenoid A Open Circuit</item>
+        <item>Shift Solenoid A Circuit Continuity</item>
+        <item>Shift Solenoid A Circuit Continuity</item>
+        <item>Shift Solenoid B Malfunction</item>
+        <item>Shift Solenoid B Open Circuit</item>
+        <item>Shift Solenoid B Circuit Continuity</item>
+        <item>Shift Solenoid B Circuit Continuity</item>
+        <item>Shift Solenoid C Malfunction</item>
+        <item>Shift Solenoid C Performance</item>
+        <item>Shift Solenoid C Circuit Continuity</item>
+        <item>Shift Solenoid C Circuit Continuity</item>
+        <item>Pressure Control Solenoid 2 Malfunction</item>
+        <item>Pressure Control Solenoid Valve 3</item>
+        <item>Secondary AIR Delivery</item>
+        <item>Valvetronic Eccentric Shaft Sensor Guide</item>
+        <item>Valvetronic Eccentric Shaft Sensor Guide</item>
+        <item>Valvetronic Eccentric Shaft Sensor Reference</item>
+        <item>Valvetronic Eccentric Shaft Sensor Reference</item>
+        <item>Valvetronic Eccentric Shaft Sensor Plausibility</item>
+        <item>Valvetronic Eccentric Shaft Sensor Power Supply</item>
+        <item>Valvetronic Eccentric Shaft Sensor Power Supply</item>
+        <item>Valvetronic Adjustment Range</item>
+        <item>Valvetronic Adjustment Range</item>
+        <item>Valvetronics Monitoring Sluggish Movement</item>
+        <item>Valvetronic Internal Fault</item>
+        <item>Valvetronics Actuator Motor Activation</item>
+        <item>Valvetronics Actuator Motor Activation</item>
+        <item>Valvetronics Actuator Motor Power Supply</item>
+        <item>Valvetronics Actuator Motor Power Supply</item>
+        <item>Valvetronic Relay Activation</item>
+        <item>Valvetronics Power Limitation</item>
+        <item>Valvetronics Actuator Motor Overload</item>
+        <item>Fuel Control Mixture Lean Bank 1 Sensor 1</item>
+        <item>Fuel Control Mixture Rich Bank 1 Sensor 1</item>
+        <item>Fuel Control Mixture Lean Bank 2 Sensor 1</item>
+        <item>Fuel Control Mixture Rich Bank 2 Sensor 1</item>
+        <item>O2 Sensor Circuit Slow Response in Lean Control Range Bank 1 Sensor 1</item>
+        <item>O2 Sensor Circuit Slow Response in Rich Control Range Bank 1 Sensor 1</item>
+        <item>Pre-Catalyst Fuel Trim Too Lean Bank 1</item>
+        <item>Pre-Catalyst Fuel Trim Too Rich Bank 1</item>
+        <item>Pre-Catalyst Fuel Trim Too Lean Bank 2</item>
+        <item>Pre-Catalyst Fuel Trim Too Rich Bank 2</item>
+        <item>O2 Sensor Circuit Slow Response in Rich Control Range Bank 2 Sensor 1</item>
+        <item>O2 Sensor Circuit Slow Switching From Lean to Rich Bank 1 Sensor 1</item>
+        <item>O2 Sensor Circuit Slow Switching From Lean to Rich Bank 2 Sensor 1</item>
+        <item>O2 Sensor Circuit Slow Response after Coast Down Fuel Cutoff Bank 1 Sensor 1</item>
+        <item>O2 Sensor Circuit Slow Response after Coast Down Fuel Cutoff Bank 2 Sensor 2</item>
+        <item>Differential Pressure Sensor Intake Manifold Plausibility</item>
+        <item>Differential Pressure Sensor Intake Manifold Plausibility</item>
+        <item>Engine Coolant Temperature Radiator Outlet Sensor High Input</item>
+        <item>Mass Or Volume Air Flow Circuit Range/Performance Problem Bank 2</item>
+        <item>Mass Or Volume Air Flow Circuit Low Input Bank 2</item>
+        <item>Mass Or Volume Air Flow Circuit High Input Bank 2</item>
+        <item>Pedal Position Sensor Circuit</item>
+        <item>Pedal Position 1 Range/Performance Problem</item>
+        <item>Pedal Position 1 Low Input</item>
+        <item>Pedal Position 1 High Input</item>
+        <item>Differential Pressure Sensor Intake Manifold Adaptation</item>
+        <item>Oxygen Sensor Behind Catalytic Converter Ageing</item>
+        <item>Oxygen Sensor Behind Catalytic Converter 2 Ageing</item>
+        <item>O2 Sensor Heater Control Circuit Bank 1 Sensor 1</item>
+        <item>O2 Sensor Heater Circuit Signal Intermittent Bank 1 Sensor 2</item>
+        <item>O2 Sensor Heater Circuit Low Voltage Bank 1 Sensor 1</item>
+        <item>O2 Sensor Heater Circuit High Voltage Bank 1 Sensor 1</item>
+        <item>O2 Sensor Heater Circuit Signal Intermittent Bank 1 Sensor 2</item>
+        <item>O2 Sensor Heater Circuit Low Voltage Bank 1 Sensor 2</item>
+        <item>O2 Sensor Heater Circuit High Voltage Bank 1 Sensor 2</item>
+        <item>Mass or Volume Air Flow Circuit Range/Performance Problem</item>
+        <item>Solenoid Valve Running Losses Control Circuit Electrical</item>
+        <item>O2 Sensor Heater Circuit Signal Intermittent Bank 2 Sensor 1</item>
+        <item>O2 Sensor Heater Circuit Low Voltage Bank 2 Sensor 1</item>
+        <item>O2 Sensor Heater Circuit High Voltage Bank 2 Sensor 1</item>
+        <item>O2 Sensor Heater Circuit Intermittent Bank 2 Sensor 2</item>
+        <item>O2 Sensor Heater Circuit Low Voltage Bank 2 Sensor 2</item>
+        <item>O2 Sensor Heater Circuit High Voltage Bank 2 Sensor 2</item>
+        <item>Fuel Trim Additve Bank 1 High</item>
+        <item>Fuel Trim Additve Bank 2 Low</item>
+        <item>Fuel Trim Additve Bank 2 High</item>
+        <item>Fuel Trim Additve Per Ignition Bank 1 Low</item>
+        <item>Fuel Trim Additve Per Ignition Bank 1 High</item>
+        <item>Fuel Trim Additve Per Ignition Bank 2 Low</item>
+        <item>Fuel Trim Additve Per Ignition Bank 2 High</item>
+        <item>Ambient Pressure Sensor Learned Value Error</item>
+        <item>Ambient Pressure Sensor Rationality Check</item>
+        <item>Ambient Pressure Sensor Rationality Check</item>
+        <item>Fuel Trim Adaptation Additve Bank 1 Malfunction</item>
+        <item>Fuel Trim Adaptation Additve Bank 2 Malfunction</item>
+        <item>O2 Sensor Slow Response Bank 1</item>
+        <item>O2 Sensor Slow Response Bank 2</item>
+        <item>O2 Sensor Signal Circuit Slow Switching From Rich to Lean Bank 1 Sensor 1</item>
+        <item>O2 Sensor Signal Circuit Slow Switching From Rich to Lean Bank 2 Sensor 1</item>
+        <item>O2 Sensor Signal Circuit Slow Switching From Rich to Lean Bank 1 Sensor 2</item>
+        <item>O2 Sensor Signal Circuit Slow Switching From Rich to Lean Bank 2 Sensor 2</item>
+        <item>O2 Sensor Bank 1 Sensor 2 Open Circuit During Coast Down Fuel Cut-off</item>
+        <item>O2 Sensor Bank 2 Sensor 2 Open Circuit During Coast Down Fuel Cut-off</item>
+        <item>O2 Sensor Heater Control Circuit Bank 1 Sensor 2</item>
+        <item>O2 Sensor Heater Control Circuit Bank 2 Sensor 2</item>
+        <item>Fuel Control Bank 1 Sensor 1</item>
+        <item>Fuel Control Bank 2 Sensor 1</item>
+        <item>Pre-Catalyst Fuel Trim System Bank 1</item>
+        <item>Pre-Catalyst Fuel Trim System Bank 2</item>
+        <item>Post-catalyst Fuel Trim System Bank 1</item>
+        <item>Post-catalyst Fuel Trim System Bank 2</item>
+        <item>Differential Pressure Sensor Intake Manifold Signal</item>
+        <item>Differential Pressure Sensor Intake Manifold Signal</item>
+        <item>Fuel Pump</item>
+        <item>Fuel Pump</item>
+        <item>Fuel Pump</item>
+        <item>Fuel Pump</item>
+        <item>Pedal Position Sensor 2 Range/Performance Problem</item>
+        <item>Pedal Position Sensor 2 Low Input</item>
+        <item>Pedal Position Sensor 2 High Input</item>
+        <item>Fuel Pump Relay Activation</item>
+        <item>Fuel Pump Relay Activation</item>
+        <item>Fuel Pump Relay Activation</item>
+        <item>Fuel Pump Emergency Shutoff</item>
+        <item>Ambient Air Pressure Sensor Electrical</item>
+        <item>Switching Solenoid for Air Assisted Injection Valves Bank 1 Control Circuit Electrical</item>
+        <item>Switching Solenoid for Air Assisted Injection Valves Bank 1 Control Circuit Signal Low</item>
+        <item>Switching Solenoid for Air Assisted Injection Valves Bank 1 Control Circuit Signal High</item>
+        <item>Switching Solenoid for Air Assisted Injection Valves Bank 2 Control Circuit Electrical</item>
+        <item>Switching Solenoid for Air Assisted Injection Valves Bank 2 Control Circuit Signal Low</item>
+        <item>Switching Solenoid for Air Assisted Injection Valves Bank 2 Control Circuit Signal High</item>
+        <item>Camshaft Sensor Inlet Gap Loss</item>
+        <item>Misfiring Cylinder 1</item>
+        <item>Misfiring Cylinder 2</item>
+        <item>Misfiring Cylinder 3</item>
+        <item>Misfiring Cylinder 4</item>
+        <item>Misfiring Cylinder 5</item>
+        <item>Misfiring Cylinder 6</item>
+        <item>A Camshaft Position Plausibility</item>
+        <item>Fuel System Error</item>
+        <item>"B" Camshaft Position Plausibility</item>
+        <item>Knock Sensor 2 Low Input</item>
+        <item>Knock Sensor 2 High Input</item>
+        <item>Knock Sensor 4 Low Input</item>
+        <item>Knock Sensor 4 High Input</item>
+        <item>Multiple Cylinder Misfire During Start</item>
+        <item>Multiple Cylinder Misfire With Fuel Cut-off</item>
+        <item>Misfire During Start Cylinder 1</item>
+        <item>Misfire Cylinder 1 With Fuel Cut-off</item>
+        <item>Misfire During Start Cylinder 2</item>
+        <item>Misfire Cylinder 2 With Fuel Cut-off</item>
+        <item>Misfire During Start Cylinder 3</item>
+        <item>Misfire Cylinder 3 With Fuel Cut-off</item>
+        <item>Misfire During Start Cylinder 4</item>
+        <item>Misfire Cylinder 4 With Fuel Cut-Off</item>
+        <item>Misfire During Start Cylinder 5</item>
+        <item>Misfire Cylinder 5 With Fuel Cut-Off</item>
+        <item>Misfire During Start Cylinder 6</item>
+        <item>Misfire Cylinder 6 With Fuel Cut-Off</item>
+        <item>Misfire During Start Cylinder 7</item>
+        <item>Misfire Cylinder 7 With Fuel Cut-Off</item>
+        <item>Misfire During Start Cylinder 8</item>
+        <item>Misfire Cylinder 8 With Fuel Cut-Off</item>
+        <item>Misfire During Start Cylinder 9</item>
+        <item>Misfire Cylinder 9 With Fuel Cut-Off</item>
+        <item>Misfire During Start Cylinder 10</item>
+        <item>Misfire Cylinder 10 With Fuel Cut-Off</item>
+        <item>Misfire During Start Cylinder 11</item>
+        <item>Misfire Cylinder 11 With Fuel Cut-Off</item>
+        <item>Misfire During Start Cylinder 12</item>
+        <item>Misfire Cylinder 12 With Fuel Cut-Off</item>
+        <item>Firing Voltage Supply</item>
+        <item>Knock Sensor 3 Circuit</item>
+        <item>Knock Sensor 4 Circuit</item>
+        <item>Control Module Self-test, Knock Control Baseline Test Bank 1</item>
+        <item>Crankshaft Position Sensor Segment Timing Plausibility</item>
+        <item>Camshaft Position Sensor B Circuit Bank 1</item>
+        <item>Heated Catalyst Battery Voltage or Current too Low During Heating Bank 1</item>
+        <item>Heated Catalyst Current Too High During Heating Bank 1</item>
+        <item>Heated Catalyst Power Switch Overtemperature Condition Bank 1</item>
+        <item>Carbon Canister Shut Off Valve Control Circuit Electrical</item>
+        <item>Heated Catalyst Current too High During Heating Bank 2</item>
+        <item>Heated Catalyst Power Switch Overtemperature Condition Bank 2</item>
+        <item>Heated Catalyst Internal Control Module Checksum/ROM Error</item>
+        <item>Tank Fill Level Right Signal</item>
+        <item>Tank Fill Level Left Signal</item>
+        <item>Secondary Air Injection Pump Relay Control Circuit Signal Low</item>
+        <item>Secondary Air Injection System Monitor Circuit High</item>
+        <item>Air Mass System</item>
+        <item>Throttle Control Incorrect Air Supply</item>
+        <item>Secondary Air System Air Mass Flow Sensor Disconnected or Stuck Signal</item>
+        <item>Secondary Air Valve Control Circuit Electrical</item>
+        <item>Secondary Air System Bank 1</item>
+        <item>Secondary Air System Bank 2</item>
+        <item>Air Mass System</item>
+        <item>Secondary Air Injection System Incorrect Flow Detected</item>
+        <item>DMTL System Fault</item>
+        <item>Purge Control Valve Control Open Circuit</item>
+        <item>Purge Control Valve Control Circuit Signal Low</item>
+        <item>Purge Control Valve Control Circuit Signal High</item>
+        <item>Leakage Diagnostic Pump Control Open Circuit</item>
+        <item>Leakage Diagnostic Pump Control Circuit Signal Low</item>
+        <item>Leakage Diagnostic Pump Control Circuit Signal High</item>
+        <item>Diagnostic Module Tank Leakage Pump Control Open Circuit</item>
+        <item>Diagnostic Module Tank Leakage Pump Control Circuit Signal Low</item>
+        <item>Diagnostic Module Tank Leakage Pump Control Circuit Signal High</item>
+        <item>Diagnostic Module Tank Leakage Pump Too High During Switching</item>
+        <item>Diagnostic Module Tank Leakage Pump Too Low During Switching</item>
+        <item>Diagnostic Module Tank Leakage Pump Too High</item>
+        <item>Diagnostic Module Tank Leakage Switching Solenoid Open Circuit</item>
+        <item>Diagnostic Module Tank Leakage Switching Solenoid Control Circuit Signal Low</item>
+        <item>Diagnostic Module Tank Leakage Switching Solenoid Control Circuit Signal High</item>
+        <item>Secondary Air Injection Pump Relay Control Circuit Electrical</item>
+        <item>Secondary Air Injection Pump With Series Resistor Control Circuit Electrical</item>
+        <item>Heated Catalyst Heater Power Switch Temperature Sensor Electrical Bank 1</item>
+        <item>Heated Catalyst Heater Power Supply Open Circuit Bank 2</item>
+        <item>Heated Catalyst Heater Power Switch Temperature Sensor Electrical Bank 2</item>
+        <item>Heated Catalyst Gate Voltage Signal Low</item>
+        <item>Heated Catalyst Internal Control Module Checksum/ROM Error</item>
+        <item>Heated Catalyst Battery Temperature Sensor 1 Electrical</item>
+        <item>Heated Catalyst Battery Temperature Sensor 2 Electrical</item>
+        <item>Heated Catalyst Battery Temperature Sensor 1 or 2 Plausibility</item>
+        <item>Heated Catalyst Power Switch Temperature Sensor Plausibility</item>
+        <item>Heated Catalyst Comparison Battery Voltages of Power Switches Plausibility</item>
+        <item>Heated Catalyst Battery Disconnecting Switch Plausibility</item>
+        <item>Leakage Diagnostic Pump Control Circuit Electrical</item>
+        <item>Diagnostic Module Tank Leakage Switching Solenoid Control Circuit Electrical</item>
+        <item>Diagnostic Module Tank Leakage Pump Current Plausibility</item>
+        <item>Leakage Diagnostic Pump Reed Switch Did Not Close</item>
+        <item>Leakage Diagnostic Pump Clamped Tube</item>
+        <item>Leakage Diagnostic Pump Reed Switch Did Not Open</item>
+        <item>Evaporative Emissions System Leak Detected</item>
+        <item>Idle Speed Control Valve Stuck Open</item>
+        <item>Idle Speed Control Valve Stuck Closed</item>
+        <item>Idle Speed Control Valve Closing Solenoid Control Circuit Signal High or Low</item>
+        <item>Idle Speed Control Valve Closing Solenoid Control Circuit Signal Low</item>
+        <item>Idle Speed Control Valve Closing Solenoid Control Open Circuit</item>
+        <item>Idle Speed Control Valve Closing Solenoid Control Circuit Electrial</item>
+        <item>Idle Speed Control Valve Open Solenoid Control Circuit Signal High</item>
+        <item>Idle Speed Control Valve Open Solenoid Control Circuit Signal Low</item>
+        <item>Idle Speed Control Valve Opening Solenoid Control Open Circuit</item>
+        <item>Idle Speed Control Valve Opening Solenoid Control Circuit Electrial</item>
+        <item>Idle Speed Control Valve Stuck</item>
+        <item>DISA Control Circuit Electrical</item>
+        <item>DISA Control Circuit Signal Low</item>
+        <item>DISA Control Circuit Signal High</item>
+        <item>System Time Plausibility</item>
+        <item>Camshaft Position Actuator B Bank 1</item>
+        <item>Oil Condition Sensor</item>
+        <item>Camshaft Position Actuator A Bank 2</item>
+        <item>Camshaft Position Actuator A Signal Low Bank 1</item>
+        <item>Camshaft Position Actuator A Signal High Bank 1</item>
+        <item>Camshaft Position Actuator A Control Open Circuit Bank 1</item>
+        <item>Camshaft Position Actuator A Control Open Circuit Bank 2</item>
+        <item>Camshaft Position Actuator A Control Circuit Signal Low Bank 1</item>
+        <item>Camshaft Position Actuator A Control Circuit Signal High Bank 1</item>
+        <item>Camshaft Position Actuator B Control Circuit Signal Low Bank 1</item>
+        <item>Camshaft Position Actuator B Control Circuit Signal High Bank 1</item>
+        <item>Camshaft Position Actuator B Control Open Circuit Bank 1</item>
+        <item>Camshaft Position Actuator B Control Open Circuit Bank 2</item>
+        <item>Camshaft Position Actuator B Control Circuit Signal Low Bank 2</item>
+        <item>Camshaft Position Actuator B Control Circuit Signal High Bank 2</item>
+        <item>Pedal Position Sensor</item>
+        <item>Pedal Position Sensor Double Error</item>
+        <item>Pedal Position Sensor Electrical</item>
+        <item>Pedal Position Sensor</item>
+        <item>Pedal Position Sensor</item>
+        <item>Pedal Position Sensor</item>
+        <item>Pedal Position Sensor</item>
+        <item>Idle Speed Control Valve Closing Solenoid Control Circuit Electrical</item>
+        <item>Camshaft Position Actuator A Control Open Circuit Bank 1</item>
+        <item>Camshaft Position Actuator A Control Open Circuit Bank 1</item>
+        <item>Crankshaft Exhaust Camshaft Correlation</item>
+        <item>Crankshaft Inlet Camshaft</item>
+        <item>Camshaft Position Actuator A Control Open Circuit Bank 1</item>
+        <item>Camshaft Position Actuator B Control Open Circuit Bank 1</item>
+        <item>Idle Speed Control During Cold Start Plausibility</item>
+        <item>Idle Speed Control During Cold Start Plausibility</item>
+        <item>Cruise Control Switch Multifunction Steering Wheel</item>
+        <item>Control Module Selection</item>
+        <item>Camshaft Position Actuator B Control Open Circuit Bank 1</item>
+        <item>Camshaft Position Actuator A Control Open Circuit Bank 2</item>
+        <item>Post Catalyst Fuel Trim System Too Lean Bank 1</item>
+        <item>Oxygen Sensor Before Catalytic Converter 2 Trim Control</item>
+        <item>Coolant Temperature Sensor at Radiator Outlet Rational Fault</item>
+        <item>Coolant Temperature Sensor at Radiator Outlet Signal High</item>
+        <item>O2 Sensor Signal Stuck Lean Bank 1 Sensor 1</item>
+        <item>O2 Sensor Signal Stuck Rich Bank 1 Sensor 1</item>
+        <item>O2 Sensor Signal Biased/Stuck Lean Bank 1 Sensor 2</item>
+        <item>O2 Sensor Signal Biased/Stuck Rich Bank 1 Sensor 2</item>
+        <item>O2 Sensor Signal Biased/Stuck Lean Bank 2 Sensor 2</item>
+        <item>O2 Sensor Signal Biased/Stuck Rich Bank 2 Sensor 2</item>
+        <item>DMTL Solenoid Valve Activation</item>
+        <item>Secondary Air Injection System Switching Valve Stuck Open</item>
+        <item>Lost Communication With Engine Control Module</item>
+    </string-array>
+
+</resources>

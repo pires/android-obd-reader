@@ -100,6 +100,7 @@ public class LogCSVWriter {
             crl = reading.getTimestamp() + ";" +
                     reading.getLatitude() + ";" +
                     reading.getLongitude() + ";" +
+                    reading.getAltitude() + ";" +
                     reading.getVin() + ";";
 
 
