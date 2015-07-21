@@ -23,15 +23,9 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
-import android.view.ViewGroup.MarginLayoutParams;
-import android.widget.LinearLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
+import android.widget.GridView;
 import android.widget.TextView;
 
 import com.github.pires.obd.commands.ObdCommand;
@@ -39,31 +33,25 @@ import com.github.pires.obd.commands.SpeedObdCommand;
 import com.github.pires.obd.commands.engine.EngineRPMObdCommand;
 import com.github.pires.obd.commands.engine.EngineRuntimeObdCommand;
 import com.github.pires.obd.enums.AvailableCommandNames;
-import com.github.pires.obd.reader.io.LogCSVWriter;
-import com.google.inject.Inject;
-
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import com.github.pires.obd.reader.io.ObdProgressListener;
 import com.github.pires.obd.reader.R;
 import com.github.pires.obd.reader.config.ObdConfig;
 import com.github.pires.obd.reader.io.AbstractGatewayService;
+import com.github.pires.obd.reader.io.LogCSVWriter;
 import com.github.pires.obd.reader.io.MockObdGatewayService;
 import com.github.pires.obd.reader.io.ObdCommandJob;
 import com.github.pires.obd.reader.io.ObdGatewayService;
 import com.github.pires.obd.reader.io.ObdProgressListener;
 import com.github.pires.obd.reader.net.ObdReading;
 import com.github.pires.obd.reader.net.ObdService;
+import com.github.pires.obd.reader.result.ResultListAdapter;
+import com.github.pires.obd.reader.result.ResultRecord;
 import com.github.pires.obd.reader.trips.TripLog;
 import com.github.pires.obd.reader.trips.TripRecord;
 import com.google.inject.Inject;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -116,6 +104,9 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
   /// the trip log
   private TripLog triplog;
   private TripRecord currentTrip;
+
+  private ArrayList<ResultRecord> resultList = new ArrayList<>();
+  private ResultListAdapter resultListAdapter = null;
 
   private Context context;
 
@@ -206,11 +197,9 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
   @InjectView(R.id.GPS_POS)
   private TextView gpsStatusTextView;
 
-  @InjectView(R.id.vehicle_view)
-  private LinearLayout vv;
+  @InjectView(R.id.gridView)
+  private GridView gv;
 
-  @InjectView(R.id.data_table)
-  private TableLayout tl;
   @Inject
   private SensorManager sensorManager;
   @Inject
@@ -277,6 +266,8 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
     final String cmdName = job.getCommand().getName();
     String cmdResult = "";
     final String cmdID = LookUpCommand(cmdName);
+    // todo get unit from new api job.getCommand().getResultUnit():
+    final String cmdUnit = "";
 
     if (job.getState().equals(ObdCommandJob.ObdCommandJobState.EXECUTION_ERROR)) {
       cmdResult = job.getCommand().getResult();
@@ -290,10 +281,19 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
       obdStatusTextView.setText(getString(R.string.status_obd_data));
     }
 
-    if (vv.findViewWithTag(cmdID) != null) {
-      TextView existingTV = (TextView) vv.findViewWithTag(cmdID);
-      existingTV.setText(cmdResult);
-    } else addTableRow(cmdID, cmdName, cmdResult);
+    Boolean isNewCommand = true;
+    for (ResultRecord result : resultList) {
+      if (result.id.equals(cmdID)) {
+        result.Update(cmdResult);
+        isNewCommand = false;
+        break;
+      }
+    }
+    if (isNewCommand) {
+      ResultRecord record = new ResultRecord(cmdID, cmdName, cmdResult, cmdUnit);
+      resultList.add(record);
+    }
+    resultListAdapter.notifyDataSetChanged();
     commandResult.put(cmdID, cmdResult);
     updateTripStatistic(job, cmdID);
   }
@@ -352,6 +352,9 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
     context = this.getApplicationContext();
     // create a log instance for use by this application
     triplog = TripLog.getInstance(context);
+
+    resultListAdapter = new ResultListAdapter(this, resultList);
+    gv.setAdapter(resultListAdapter);
   }
 
   @Override
@@ -472,7 +475,8 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
   private void startLiveData() {
     Log.d(TAG, "Starting live data..");
 
-    tl.removeAllViews(); //start fresh
+    resultList.clear();
+    resultListAdapter.notifyDataSetChanged();
     doBindService();
 
     currentTrip = triplog.startTrip();
@@ -568,26 +572,6 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
     return true;
   }
 
-  private void addTableRow(String id, String key, String val) {
-
-    TableRow tr = new TableRow(this);
-    MarginLayoutParams params = new ViewGroup.MarginLayoutParams(
-        LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-    params.setMargins(TABLE_ROW_MARGIN, TABLE_ROW_MARGIN, TABLE_ROW_MARGIN,
-        TABLE_ROW_MARGIN);
-    tr.setLayoutParams(params);
-
-    TextView name = new TextView(this);
-    name.setGravity(Gravity.RIGHT);
-    name.setText(key + ": ");
-    TextView value = new TextView(this);
-    value.setGravity(Gravity.LEFT);
-    value.setText(val);
-    value.setTag(id);
-    tr.addView(name);
-    tr.addView(value);
-    tl.addView(tr, params);
-  }
 
   /**
    *
