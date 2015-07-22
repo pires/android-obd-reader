@@ -16,7 +16,7 @@ import android.location.GpsStatus;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.location.LocationProvider; 
+import android.location.LocationProvider;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -84,7 +84,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
     private static final int TABLE_ROW_MARGIN = 7;
     private static final int NO_ORIENTATION_SENSOR = 8;
     private static final int NO_GPS_SUPPORT = 9;
-    private static final int TRIPS_LIST = 10;
+  private static final int TRIPS_LIST = 10;
     private static final int SAVE_TRIP_NOT_AVAILABLE = 11;
     private static boolean bluetoothDefaultIsEnable = false;
 
