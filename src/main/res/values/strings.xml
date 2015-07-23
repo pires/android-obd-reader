@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name" translatable="false">Android OBD-II Reader</string>
     <string name="action_settings">Settings</string>
+    <string name="action_clear_codes">Clear Codes</string>
     <string name="notification_action">Tap to open OBD-Reader</string>
     <string name="command_list">Choose a command</string>
     <string name="service_starting">Starting OBD connection..</string>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">Android OBD-II Reader</string>
+    <string name="action_settings">设置</string>
+    <string name="action_clear_codes">清理代码</string>
+    <string name="notification_action">点击打开 Android OBD-II Reader</string>
+    <string name="command_list">选择一条指令</string>
+    <string name="service_starting">正在开启 OBD 连接..</string>
+    <string name="service_started">OBD 连接已经开启.</string>
+    <string name="service_stopped">OBD 连接已经关闭.</string>
+    <string name="notification_label">点击打开 OBD-Reader.</string>
+    <string name="title_activity_trouble_codes">故障码</string>
+    <string name="pref_upload_category_title">数据上传</string>
+    <string name="pref_upload_category" translatable="false">上传参数</string>
+    <string name="title_activity_trips_list">行程列表</string>
+    <string name="menu_trip_list">行程</string>
+    <string name="menu_item_trip_delete">删除</string>
+    <string name="pref_gps_category" translatable="false">GPS参数</string>
+    <string name="dialog_loading_title">载入中…</string>
+    <string name="dialog_loading_body">正在载入应用, 请等待…</string>
+    <string name="menu_start_live_data">开启实时数据</string>
+    <string name="menu_stop_live_data">停止实时数据</string>
+    <string name="menu_settings">设置</string>
+    <string name="menu_get_dtc">获取 DTC 信息</string>
+    <string name="text_gps" translatable="false">GPS</string>
+    <string name="text_obd" translatable="false">OBD</string>
+    <string name="text_bluetooth" translatable="false">蓝牙</string>
+    <string name="text_orientation_default" translatable="false">北</string>
+    <string name="text_zero" translatable="false">0</string>
+    <string name="text_consumption_default" translatable="false">0l/100km</string>
+    <string name="text_runtime_default" translatable="false">00:00:00</string>
+    <string name="title_pref_obd">OBD 设置</string>
+    <string name="title_pref_commands">OBD 指令</string>
+    <string name="title_pref_bluetooth" translatable="false">蓝牙</string>
+    <string name="title_pref_gps" translatable="false">GPS</string>
+    <string name="text_no_bluetooth_id">对不起, 您的设备不支持蓝牙</string>
+    <string name="text_bluetooth_disabled">您的蓝牙还没有打开. 请打卡它 (使用模拟服务)</string>
+    <string name="text_bluetooth_nodevice">没有蓝牙设备可选</string>
+    <string name="text_bluetooth_error_connecting">不能连接到蓝牙设备!</string>
+    <string name="text_no_orientation_sensor">方向传感器不存在?</string>
+    <string name="text_no_gps_support">对不起, 您的设备不支持或者您还没有打开GPS.</string>
+    <string name="text_save_trip_not_available">对不起, 行程没有保存.</string>
+    <string name="text_obd_command_failure">OBD 指令失败!</string>
+    <string name="text_dtc_no_data">没有 DTC 存储</string>
+    <string name="status_no_bluetooth_id">不可用的</string>
+    <string name="status_bluetooth_disabled">未打开的</string>
+    <string name="status_bluetooth_ok">准备中</string>
+    <string name="status_bluetooth_connecting">连接中&#8230;</string>
+    <string name="status_bluetooth_connected">已连接</string>
+    <string name="status_bluetooth_error_connecting">连接失败</string>
+    <string name="status_gps_fix">已确定</string>
+    <string name="status_gps_no_fix">未确定</string>
+    <string name="status_gps_started">开始</string>
+    <string name="status_gps_stopped">结束</string>
+    <string name="status_gps_ready">准备中</string>
+    <string name="status_gps_no_support">不可用</string>
+    <string name="status_gps_not_used">未使用</string>
+    <string name="status_obd_ready">OK</string>
+    <string name="status_obd_data">接收数据&#8230;</string>
+    <string name="status_obd_disconnected">未连接</string>
+    <string name="status_obd_no_support">NA</string>
+    <!-- preferences setting strings-->
+    <!-- upload_category-->
+    <string name="pref_upload_title">数据下载</string>
+    <string name="pref_upload_summaryOff">打开网络数据下载</string>
+    <string name="pref_upload_summaryOn">关闭网络数据下载</string>
+    <string name="pref_upload_url_title">下载链接</string>
+    <string name="pref_upload_url_summary">用于接收更新的数据</string>
+    <string name="pref_vehicle_id_title">设备 ID</string>
+    <string name="pref_vehicle_id_summary">用于上传数据的唯一设备id</string>
+    <!--Bluetooth-->
+    <string name="pref_bluetooth_title">蓝牙</string>
+    <string name="pref_bluetooth_summaryOff">打开蓝牙</string>
+    <string name="pref_bluetooth_summaryOn">关闭蓝牙</string>
+    <string name="pref_bluetooth_list_devices_summary">蓝牙设备</string>
+    <string name="pref_bluetooth_list_devices_title">已配对的蓝牙设备</string>
+    <!--GPS-->
+    <string name="pref_gps_category_title">GPS</string>
+    <string name="pref_gps_category_summaryOff">打开GPS</string>
+    <string name="pref_gps_category_summaryOn">关闭GPS</string>
+    <string name="pref_gps_update_period_title">更新周期（秒）</string>
+    <string name="pref_gps_update_period_summary">查询新位置之间的时间（秒）</string>
+    <string name="pref_gps_distance_period_title">更新距离（米）</string>
+    <string name="pref_gps_distance_period_summary">查询新位置之间的距离（米）</string>
+    <!--OBD Preferences-->
+    <string name="pref_obd_protocols_title">OBD协议</string>
+    <string name="pref_obd_protocols_summary">选择OBD协议</string>
+    <string name="pref_imperial_units_title">英制单位</string>
+    <string name="pref_imperial_units_summaryOff">关闭英制单位</string>
+    <string name="pref_imperial_units_summaryOn">打开公制单位</string>
+    <string name="pref_obd_update_period_title">更新周期（秒）</string>
+    <string name="pref_obd_update_period_summary">查询车辆数据的间隔时间（秒）</string>
+    <string name="pref_max_fuel_econ_title">最大燃油经济性的价值</string>
+    <string name="pref_max_fuel_econ_summary">任何燃油经济性值大于该会抛出</string>
+    <string name="pref_volumetric_efficiency_dialog_title">容积效率（如0.85）</string>
+    <string name="pref_volumetric_efficiency_summary">用于没有MAF传感器的经济性燃油车辆</string>
+    <string name="pref_volumetric_efficiency_title">容积效率</string>
+    <string name="pref_engine_displacement_title">发动机排量（升）</string>
+    <string name="pref_engine_displacement_summary">用于没有MAF传感器的经济性燃油车辆</string>
+    <string name="pref_reader_config_title">阅读器配置命令</string>
+    <string name="pref_reader_config_summary">配置蓝牙读写器命令</string>
+    <string name="title_pref_commands_summary">选择你想实时显示的汽车数据</string>
+    <!--OBD Commands-->
+    <string name="title_pref_commands_title">OBD指令</string>
+    <string name="title_pref_full_logging" >完整日志记录配置</string>
+    <string name="pref_enable_full_logging_summary" >开启离线日志记录并上传</string>
+    <string name="pref_enable_full_logging_title" >开启离线日志记录</string>
+    <string name="default_dirname_full_logging">OBDReader日志</string>
+    <string name="pref_dirname_dialogTitle">选择需要保存日志的目录名</string>
+    <string name="pref_dirname_title">目录名</string>
+    <string name="pref_dirname_summary">保存文件的目录名</string>
+</resources>

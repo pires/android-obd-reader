@@ -177,7 +177,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
           final String vin = prefs.getString(ConfigActivity.VEHICLE_ID_KEY, "UNDEFINED_VIN");
           Map<String, String> temp = new HashMap<String, String>();
           temp.putAll(commandResult);
-          ObdReading reading = new ObdReading(lat, lon, System.currentTimeMillis(), vin, temp);
+          ObdReading reading = new ObdReading(lat, lon, alt, System.currentTimeMillis(), vin, temp);
           new UploadAsyncTask().execute(reading);
 
         } else if (prefs.getBoolean(ConfigActivity.ENABLE_FULL_LOGGING_KEY, false)){
@@ -185,7 +185,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
           final String vin = prefs.getString(ConfigActivity.VEHICLE_ID_KEY, "UNDEFINED_VIN");
           Map<String, String> temp = new HashMap<String, String>();
           temp.putAll(commandResult);
-          ObdReading reading = new ObdReading(lat, lon, System.currentTimeMillis(), vin, temp);
+          ObdReading reading = new ObdReading(lat, lon, alt, System.currentTimeMillis(), vin, temp);
           myCSVWriter.writeLineCSV(reading);
         }
         commandResult.clear();
