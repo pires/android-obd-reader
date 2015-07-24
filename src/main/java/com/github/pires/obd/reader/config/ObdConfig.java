@@ -68,6 +68,9 @@ public final class ObdConfig {
     cmds.add(new FuelTrimObdCommand(FuelTrim.LONG_TERM_BANK_2));
     cmds.add(new FuelTrimObdCommand(FuelTrim.SHORT_TERM_BANK_1));
     cmds.add(new FuelTrimObdCommand(FuelTrim.SHORT_TERM_BANK_2));
+    cmds.add(new FuelAirCommanded());
+    cmds.add(new FuelAirWidebandCommanded());
+    cmds.add(new EngineOilTempObdCommand());
 
     // Pressure
     cmds.add(new BarometricPressureObdCommand());
