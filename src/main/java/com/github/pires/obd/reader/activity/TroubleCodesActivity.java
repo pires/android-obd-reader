@@ -42,117 +42,22 @@ import java.util.UUID;
 
 public class TroubleCodesActivity extends Activity {
 
-  private ProgressDialog progressDialog;
-
   private static final String TAG = TroubleCodesActivity.class.getName();
-
   private static final UUID MY_UUID = UUID
       .fromString("00001101-0000-1000-8000-00805F9B34FB");
-
   private static final int NO_BLUETOOTH_DEVICE_SELECTED = 0;
   private static final int CANNOT_CONNECT_TO_DEVICE = 1;
   private static final int OBD_COMMAND_FAILURE = 2;
   private static final int NO_DATA = 3;
   private static final int DATA_OK = 4;
   private static final int CLEAR_DTC = 5;
-  private String remoteDevice;
-  private GetTroubleCodesTask gtct;
-
   @Inject
   SharedPreferences prefs;
-
+  private ProgressDialog progressDialog;
+  private String remoteDevice;
+  private GetTroubleCodesTask gtct;
   private BluetoothDevice dev = null;
   private BluetoothSocket sock = null;
-
-
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-      super.onCreate(savedInstanceState);
-      prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
-      if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-          setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-      } else {
-          setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-      }
-
-      remoteDevice = prefs.getString(ConfigActivity.BLUETOOTH_LIST_KEY, null);
-      if (remoteDevice == null || "".equals(remoteDevice)) {
-          Log.e(TAG, "No Bluetooth device has been selected.");
-          mHandler.obtainMessage(NO_BLUETOOTH_DEVICE_SELECTED).sendToTarget();
-      } else {
-          gtct = new GetTroubleCodesTask();
-          gtct.execute(remoteDevice);
-      }
-  }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu items for use in the action bar
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.trouble_codes, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle presses on the action bar items
-        switch (item.getItemId()) {
-            case R.id.action_clear_codes:
-                try {
-                    sock = dev.createRfcommSocketToServiceRecord(MY_UUID);
-                    sock.connect();
-
-                } catch (Exception e) {
-                    Log.e(
-                            TAG,
-                            "There was an error while establishing connection. -> "
-                                    + e.getMessage()
-                    );
-                    Log.d(TAG, "Message received on handler here");
-                    mHandler.obtainMessage(CANNOT_CONNECT_TO_DEVICE).sendToTarget();
-                    return true;
-                }
-                try {
-
-                    Log.d("TESTRESET", "Trying reset");
-                    //new ObdResetCommand().run(sock.getInputStream(), sock.getOutputStream());
-                    ResetTroubleCodes clear = new ResetTroubleCodes();
-                    clear.run(sock.getInputStream(), sock.getOutputStream());
-                    String result = clear.getFormattedResult();
-                    Log.d("TESTRESET", "Trying reset result: " + result);
-                } catch (Exception e) {
-                    Log.e(
-                            TAG,
-                            "There was an error while establishing connection. -> "
-                                    + e.getMessage()
-                    );
-                }
-                gtct.closeSocket(sock);
-                // Refresh main activity upon close of dialog box
-                Intent refresh = new Intent(this, TroubleCodesActivity.class);
-                startActivity(refresh);
-                this.finish(); //
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-    Map<String,String> getDict(int keyId, int valId) {
-        String[] keys = getResources().getStringArray(keyId);
-        String[] vals = getResources().getStringArray(valId);
-
-        Map<String,String> dict = new HashMap<String,String>();
-        for (int i = 0, l = keys.length; i < l; i++) {
-            dict.put(keys[i], vals[i]);
-        }
-
-        return dict;
-    }
-  public void makeToast(String text) {
-    Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
-    toast.show();
-  }
-
   private Handler mHandler = new Handler() {
 
     @Override
@@ -183,23 +88,114 @@ public class TroubleCodesActivity extends Activity {
     }
   };
 
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+    if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+      setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+    } else {
+      setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
+
+    remoteDevice = prefs.getString(ConfigActivity.BLUETOOTH_LIST_KEY, null);
+    if (remoteDevice == null || "".equals(remoteDevice)) {
+      Log.e(TAG, "No Bluetooth device has been selected.");
+      mHandler.obtainMessage(NO_BLUETOOTH_DEVICE_SELECTED).sendToTarget();
+    } else {
+      gtct = new GetTroubleCodesTask();
+      gtct.execute(remoteDevice);
+    }
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    // Inflate the menu items for use in the action bar
+    MenuInflater inflater = getMenuInflater();
+    inflater.inflate(R.menu.trouble_codes, menu);
+    return super.onCreateOptionsMenu(menu);
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    // Handle presses on the action bar items
+    switch (item.getItemId()) {
+      case R.id.action_clear_codes:
+        try {
+          sock = dev.createRfcommSocketToServiceRecord(MY_UUID);
+          sock.connect();
+
+        } catch (Exception e) {
+          Log.e(
+              TAG,
+              "There was an error while establishing connection. -> "
+                  + e.getMessage()
+          );
+          Log.d(TAG, "Message received on handler here");
+          mHandler.obtainMessage(CANNOT_CONNECT_TO_DEVICE).sendToTarget();
+          return true;
+        }
+        try {
+
+          Log.d("TESTRESET", "Trying reset");
+          //new ObdResetCommand().run(sock.getInputStream(), sock.getOutputStream());
+          ResetTroubleCodes clear = new ResetTroubleCodes();
+          clear.run(sock.getInputStream(), sock.getOutputStream());
+          String result = clear.getFormattedResult();
+          Log.d("TESTRESET", "Trying reset result: " + result);
+        } catch (Exception e) {
+          Log.e(
+              TAG,
+              "There was an error while establishing connection. -> "
+                  + e.getMessage()
+          );
+        }
+        gtct.closeSocket(sock);
+        // Refresh main activity upon close of dialog box
+        Intent refresh = new Intent(this, TroubleCodesActivity.class);
+        startActivity(refresh);
+        this.finish(); //
+        return true;
+      default:
+        return super.onOptionsItemSelected(item);
+    }
+  }
+
+  Map<String, String> getDict(int keyId, int valId) {
+    String[] keys = getResources().getStringArray(keyId);
+    String[] vals = getResources().getStringArray(valId);
+
+    Map<String, String> dict = new HashMap<String, String>();
+    for (int i = 0, l = keys.length; i < l; i++) {
+      dict.put(keys[i], vals[i]);
+    }
+
+    return dict;
+  }
+
+  public void makeToast(String text) {
+    Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
+    toast.show();
+  }
+
   private void dataOk(String res) {
     ListView lv = (ListView) findViewById(R.id.listView);
-      Map<String,String> dtcVals = getDict(R.array.dtc_keys, R.array.dtc_values);
-      //TODO replace below codes (res) with aboce dtcVals
-      //String tmpVal = dtcVals.get(res.split("\n"));
-      //String[] dtcCodes = new String[]{};
-      ArrayList<String> dtcCodes = new ArrayList<String>();
-      //int i =1;
-      if (!res.isEmpty()) {
-          for (String dtcCode : res.split("\n")) {
-              dtcCodes.add(dtcCode + " : " + dtcVals.get(dtcCode));
-              Log.d("TEST", dtcCode + " : " + dtcVals.get(dtcCode));
-          }
-      }else{
-          dtcCodes.add("There are no errors");
+    Map<String, String> dtcVals = getDict(R.array.dtc_keys, R.array.dtc_values);
+    //TODO replace below codes (res) with aboce dtcVals
+    //String tmpVal = dtcVals.get(res.split("\n"));
+    //String[] dtcCodes = new String[]{};
+    ArrayList<String> dtcCodes = new ArrayList<String>();
+    //int i =1;
+    if (!res.isEmpty()) {
+      for (String dtcCode : res.split("\n")) {
+        dtcCodes.add(dtcCode + " : " + dtcVals.get(dtcCode));
+        Log.d("TEST", dtcCode + " : " + dtcVals.get(dtcCode));
       }
-    ArrayAdapter<String> myarrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,dtcCodes);
+    } else {
+      dtcCodes.add("There are no errors");
+    }
+    ArrayAdapter<String> myarrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dtcCodes);
     lv.setAdapter(myarrayAdapter);
     lv.setTextFilterEnabled(true);
   }
@@ -212,13 +208,13 @@ public class TroubleCodesActivity extends Activity {
       return rawData.replace("SEARCHING...", "");
     }
   }
+
   public class ClearDTC extends ResetTroubleCodes {
     @Override
     public String getResult() {
       return rawData;
     }
   }
-
 
 
   private class GetTroubleCodesTask extends AsyncTask<String, Integer, String> {
@@ -324,26 +320,28 @@ public class TroubleCodesActivity extends Activity {
           mHandler.obtainMessage(OBD_COMMAND_FAILURE).sendToTarget();
           return null;
         } catch (Exception e) {
-            mHandler.obtainMessage(OBD_COMMAND_FAILURE).sendToTarget();
+          mHandler.obtainMessage(OBD_COMMAND_FAILURE).sendToTarget();
         } finally {
 
-            // close socket
-              closeSocket(sock);
+          // close socket
+          closeSocket(sock);
         }
 
       }
 
-        return result;
+      return result;
     }
+
     public void closeSocket(BluetoothSocket sock) {
-        if (sock != null)
-            // close socket
-            try {
-                sock.close();
-            } catch (IOException e) {
-                Log.e(TAG, e.getMessage());
-            }
+      if (sock != null)
+        // close socket
+        try {
+          sock.close();
+        } catch (IOException e) {
+          Log.e(TAG, e.getMessage());
+        }
     }
+
     @Override
     protected void onProgressUpdate(Integer... values) {
       super.onProgressUpdate(values);

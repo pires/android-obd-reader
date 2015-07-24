@@ -36,16 +36,6 @@ public class TripLog {
   private static final String RECORD_RPM_MAX = "rmpMax";
   private static final String RECORD_SPEED_MAX = "speedMax";
   private static final String RECORD_ENGINE_RUNTIME = "engineRuntime";
-
-  /// array of all column names for RECORDS_TABLE
-  private static final String[] RECORDS_TABLE_COLUMNS = new String[]{
-      RECORD_ID,
-      RECORD_START_DATE,
-      RECORD_END_DATE,
-      RECORD_SPEED_MAX,
-      RECORD_ENGINE_RUNTIME,
-      RECORD_RPM_MAX
-  };
   /// SQL commands to create the database
   public static final String[] DATABASE_CREATE = new String[]{
       "create table " + RECORDS_TABLE + " ( " +
@@ -56,6 +46,15 @@ public class TripLog {
           RECORD_RPM_MAX + " integer, " +
           RECORD_ENGINE_RUNTIME + " text" +
           ");"
+  };
+  /// array of all column names for RECORDS_TABLE
+  private static final String[] RECORDS_TABLE_COLUMNS = new String[]{
+      RECORD_ID,
+      RECORD_START_DATE,
+      RECORD_END_DATE,
+      RECORD_SPEED_MAX,
+      RECORD_ENGINE_RUNTIME,
+      RECORD_RPM_MAX
   };
   /// singleton instance
   private static TripLog instance;
@@ -255,7 +254,7 @@ public class TripLog {
       record.setEndDate(new Date(endTime));
       record.setEngineRpmMax(engineRpmMax);
       record.setSpeedMax(speedMax);
-      if(!c.isNull(c.getColumnIndex(RECORD_ENGINE_RUNTIME)))
+      if (!c.isNull(c.getColumnIndex(RECORD_ENGINE_RUNTIME)))
         record.setEngineRuntime(c.getString(c.getColumnIndex(RECORD_ENGINE_RUNTIME)));
     }
     return record;

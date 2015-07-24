@@ -96,9 +96,9 @@
     <string name="pref_reader_config_summary">Commands to configure bluetooth reader, separate with new line</string>
     <string name="title_pref_commands_summary">Select the commands you would like to see in real-time.</string>
     <string name="title_pref_commands_title">OBD Commands</string>
-    <string name="title_pref_full_logging" > Full logging configuration </string>
-    <string name="pref_enable_full_logging_summary" > Enables full offline logging with upload</string>
-    <string name="pref_enable_full_logging_title" > Enable full logging </string>
+    <string name="title_pref_full_logging"> Full logging configuration </string>
+    <string name="pref_enable_full_logging_summary"> Enables full offline logging with upload</string>
+    <string name="pref_enable_full_logging_title"> Enable full logging </string>
     <string name="default_dirname_full_logging">OBDReaderLogs</string>
     <string name="pref_dirname_dialogTitle">Choose the name of the directory to save the logs</string>
     <string name="pref_dirname_title">Directory name</string>

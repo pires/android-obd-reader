@@ -1,54 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
-  package="com.github.pires.obd.reader"
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:versionCode="13"
-  android:versionName="2.0-RC2">
+    package="com.github.pires.obd.reader"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:versionCode="13"
+    android:versionName="2.0-RC2">
 
-  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-  <uses-permission android:name="android.permission.BLUETOOTH"/>
-  <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-  <uses-permission android:name="android.permission.INTERNET"/>
-  <uses-permission android:name="android.permission.WAKE_LOCK" />
-  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-  <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
 
-  <application
-    android:allowBackup="true"
-    android:icon="@drawable/ic_btcar"
-    android:label="@string/app_name"
-    android:theme="@style/AppTheme">
-    <activity
-      android:name="com.github.pires.obd.reader.activity.MainActivity"
-      android:configChanges="orientation|screenSize"
-      android:label="@string/app_name">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN"/>
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_btcar"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name="com.github.pires.obd.reader.activity.MainActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
 
-        <category android:name="android.intent.category.LAUNCHER"/>
-      </intent-filter>
-    </activity>
-    <activity
-      android:name="com.github.pires.obd.reader.activity.ConfigActivity"
-      android:label="@string/app_name">
-    </activity>
-    <activity
-      android:name="com.github.pires.obd.reader.activity.TroubleCodesActivity"
-      android:label="@string/title_activity_trouble_codes">
-    </activity>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.github.pires.obd.reader.activity.ConfigActivity"
+            android:label="@string/app_name">
+        </activity>
+        <activity
+            android:name="com.github.pires.obd.reader.activity.TroubleCodesActivity"
+            android:label="@string/title_activity_trouble_codes">
+        </activity>
 
-    <activity
-      android:name="com.github.pires.obd.reader.activity.TripListActivity"
-      android:label="@string/title_activity_trips_list">
-    </activity>
+        <activity
+            android:name="com.github.pires.obd.reader.activity.TripListActivity"
+            android:label="@string/title_activity_trips_list">
+        </activity>
 
-    <service
-      android:name="com.github.pires.obd.reader.io.ObdGatewayService"
-      android:exported="false"/>
-    <service
-      android:name="com.github.pires.obd.reader.io.MockObdGatewayService"
-      android:exported="false" />
-  </application>
+        <service
+            android:name="com.github.pires.obd.reader.io.ObdGatewayService"
+            android:exported="false"/>
+        <service
+            android:name="com.github.pires.obd.reader.io.MockObdGatewayService"
+            android:exported="false"/>
+    </application>
 
 </manifest>

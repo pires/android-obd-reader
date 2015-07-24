@@ -39,20 +39,10 @@ import com.github.pires.obd.commands.SpeedObdCommand;
 import com.github.pires.obd.commands.engine.EngineRPMObdCommand;
 import com.github.pires.obd.commands.engine.EngineRuntimeObdCommand;
 import com.github.pires.obd.enums.AvailableCommandNames;
-import com.github.pires.obd.reader.io.LogCSVWriter;
-import com.google.inject.Inject;
-
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import com.github.pires.obd.reader.io.ObdProgressListener;
 import com.github.pires.obd.reader.R;
 import com.github.pires.obd.reader.config.ObdConfig;
 import com.github.pires.obd.reader.io.AbstractGatewayService;
+import com.github.pires.obd.reader.io.LogCSVWriter;
 import com.github.pires.obd.reader.io.MockObdGatewayService;
 import com.github.pires.obd.reader.io.ObdCommandJob;
 import com.github.pires.obd.reader.io.ObdGatewayService;
@@ -64,6 +54,7 @@ import com.github.pires.obd.reader.trips.TripRecord;
 import com.google.inject.Inject;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -85,20 +76,6 @@ import static com.github.pires.obd.reader.activity.ConfigActivity.getGpsUpdatePe
 @ContentView(R.layout.main)
 public class MainActivity extends RoboActivity implements ObdProgressListener, LocationListener, GpsStatus.Listener {
 
-  static {
-    RoboGuice.setUseAnnotationDatabases(false);
-  }
-
-  private static boolean bluetoothDefaultIsEnable = false;
-
-  public Map<String, String> commandResult = new HashMap<String, String>();
-
-  boolean mGpsIsStarted = false;
-  private LocationManager mLocService;
-  private LocationProvider mLocProvider;
-  private LogCSVWriter myCSVWriter;
-  private Location mLastLocation;
-
   private static final String TAG = MainActivity.class.getName();
   private static final int NO_BLUETOOTH_ID = 0;
   private static final int BLUETOOTH_DISABLED = 1;
@@ -111,14 +88,25 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
   private static final int NO_GPS_SUPPORT = 9;
   private static final int TRIPS_LIST = 10;
   private static final int SAVE_TRIP_NOT_AVAILABLE = 11;
+  private static boolean bluetoothDefaultIsEnable = false;
 
+  static {
+    RoboGuice.setUseAnnotationDatabases(false);
+  }
 
+  public Map<String, String> commandResult = new HashMap<String, String>();
+  boolean mGpsIsStarted = false;
+  private LocationManager mLocService;
+  private LocationProvider mLocProvider;
+  private LogCSVWriter myCSVWriter;
+  private Location mLastLocation;
   /// the trip log
   private TripLog triplog;
   private TripRecord currentTrip;
 
   private Context context;
-
+  @InjectView(R.id.compass_text)
+  private TextView compass;
   private final SensorEventListener orientListener = new SensorEventListener() {
 
     public void onSensorChanged(SensorEvent event) {
@@ -148,7 +136,24 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
       // do nothing
     }
   };
-
+  @InjectView(R.id.BT_STATUS)
+  private TextView btStatusTextView;
+  @InjectView(R.id.OBD_STATUS)
+  private TextView obdStatusTextView;
+  @InjectView(R.id.GPS_POS)
+  private TextView gpsStatusTextView;
+  @InjectView(R.id.vehicle_view)
+  private LinearLayout vv;
+  @InjectView(R.id.data_table)
+  private TableLayout tl;
+  @Inject
+  private SensorManager sensorManager;
+  @Inject
+  private PowerManager powerManager;
+  @Inject
+  private SharedPreferences prefs;
+  private boolean isServiceBound;
+  private AbstractGatewayService service;
   private final Runnable mQueueCommands = new Runnable() {
     public void run() {
       if (service != null && service.isRunning() && service.queueEmpty()) {
@@ -180,7 +185,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
           ObdReading reading = new ObdReading(lat, lon, alt, System.currentTimeMillis(), vin, temp);
           new UploadAsyncTask().execute(reading);
 
-        } else if (prefs.getBoolean(ConfigActivity.ENABLE_FULL_LOGGING_KEY, false)){
+        } else if (prefs.getBoolean(ConfigActivity.ENABLE_FULL_LOGGING_KEY, false)) {
           // Write the current reading to CSV
           final String vin = prefs.getString(ConfigActivity.VEHICLE_ID_KEY, "UNDEFINED_VIN");
           Map<String, String> temp = new HashMap<String, String>();
@@ -194,32 +199,9 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
       new Handler().postDelayed(mQueueCommands, ConfigActivity.getObdUpdatePeriod(prefs));
     }
   };
-  @InjectView(R.id.compass_text)
-  private TextView compass;
-
-  @InjectView(R.id.BT_STATUS)
-  private TextView btStatusTextView;
-
-  @InjectView(R.id.OBD_STATUS)
-  private TextView obdStatusTextView;
-
-  @InjectView(R.id.GPS_POS)
-  private TextView gpsStatusTextView;
-
-  @InjectView(R.id.vehicle_view)
-  private LinearLayout vv;
-
-  @InjectView(R.id.data_table)
-  private TableLayout tl;
-  @Inject
-  private SensorManager sensorManager;
-  @Inject
-  private PowerManager powerManager;
-  @Inject
-  private SharedPreferences prefs;
-  private boolean isServiceBound;
-
-  private AbstractGatewayService service;
+  private Sensor orientSensor = null;
+  private PowerManager.WakeLock wakeLock = null;
+  private boolean preRequisites = true;
   private ServiceConnection serviceConn = new ServiceConnection() {
     @Override
     public void onServiceConnected(ComponentName className, IBinder binder) {
@@ -254,9 +236,12 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
     }
   };
 
-  private Sensor orientSensor = null;
-  private PowerManager.WakeLock wakeLock = null;
-  private boolean preRequisites = true;
+  public static String LookUpCommand(String txt) {
+    for (AvailableCommandNames item : AvailableCommandNames.values()) {
+      if (item.getValue().equals(txt)) return item.name();
+    }
+    return txt;
+  }
 
   public void updateTextView(final TextView view, final String txt) {
     new Handler().post(new Runnable() {
@@ -264,13 +249,6 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
         view.setText(txt);
       }
     });
-  }
-
-  public static String LookUpCommand(String txt) {
-    for (AvailableCommandNames item : AvailableCommandNames.values()) {
-      if (item.getValue().equals(txt)) return item.name();
-    }
-    return txt;
   }
 
   public void stateUpdate(final ObdCommandJob job) {
@@ -490,15 +468,15 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
     // screen won't turn off until wakeLock.release()
     wakeLock.acquire();
 
-    if(prefs.getBoolean(ConfigActivity.ENABLE_FULL_LOGGING_KEY,false)) {
+    if (prefs.getBoolean(ConfigActivity.ENABLE_FULL_LOGGING_KEY, false)) {
 
       // Create the CSV Logger
       long mils = System.currentTimeMillis();
       SimpleDateFormat sdf = new SimpleDateFormat("_dd_MM_yyyy_HH_mm_ss");
 
       myCSVWriter = new LogCSVWriter("Log" + sdf.format(new Date(mils)).toString() + ".csv",
-              prefs.getString(ConfigActivity.DIRECTORY_FULL_LOGGING_KEY,
-                      getString(R.string.default_dirname_full_logging))
+          prefs.getString(ConfigActivity.DIRECTORY_FULL_LOGGING_KEY,
+              getString(R.string.default_dirname_full_logging))
       );
     }
   }
@@ -513,7 +491,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
 
     releaseWakeLockIfHeld();
 
-    if(myCSVWriter != null){
+    if (myCSVWriter != null) {
       myCSVWriter.closeLogCSVWriter();
     }
   }
@@ -630,36 +608,6 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
     }
   }
 
-  /**
-   * Uploading asynchronous task
-   */
-  private class UploadAsyncTask extends AsyncTask<ObdReading, Void, Void> {
-
-    @Override
-    protected Void doInBackground(ObdReading... readings) {
-      Log.d(TAG, "Uploading " + readings.length + " readings..");
-      // instantiate reading service client
-      final String endpoint = prefs.getString(ConfigActivity.UPLOAD_URL_KEY, "");
-      RestAdapter restAdapter = new RestAdapter.Builder()
-          .setEndpoint(endpoint)
-          .build();
-      ObdService service = restAdapter.create(ObdService.class);
-      // upload readings
-      for (ObdReading reading : readings) {
-        try {
-          Response response = service.uploadReading(reading);
-          assert response.getStatus() == 200;
-        } catch (RetrofitError re) {
-          Log.e(TAG, re.toString());
-        }
-
-      }
-      Log.d(TAG, "Done");
-      return null;
-    }
-
-  }
-
   public void onLocationChanged(Location location) {
     mLastLocation = location;
   }
@@ -706,5 +654,35 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
       mGpsIsStarted = false;
       gpsStatusTextView.setText(getString(R.string.status_gps_stopped));
     }
+  }
+
+  /**
+   * Uploading asynchronous task
+   */
+  private class UploadAsyncTask extends AsyncTask<ObdReading, Void, Void> {
+
+    @Override
+    protected Void doInBackground(ObdReading... readings) {
+      Log.d(TAG, "Uploading " + readings.length + " readings..");
+      // instantiate reading service client
+      final String endpoint = prefs.getString(ConfigActivity.UPLOAD_URL_KEY, "");
+      RestAdapter restAdapter = new RestAdapter.Builder()
+          .setEndpoint(endpoint)
+          .build();
+      ObdService service = restAdapter.create(ObdService.class);
+      // upload readings
+      for (ObdReading reading : readings) {
+        try {
+          Response response = service.uploadReading(reading);
+          assert response.getStatus() == 200;
+        } catch (RetrofitError re) {
+          Log.e(TAG, re.toString());
+        }
+
+      }
+      Log.d(TAG, "Done");
+      return null;
+    }
+
   }
 }

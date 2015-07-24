@@ -10,19 +10,19 @@
             android:key="upload_data_preference"
             android:summaryOff="@string/pref_upload_summaryOff"
             android:summaryOn="@string/pref_upload_summaryOn"
-            android:title="@string/pref_upload_title" />
+            android:title="@string/pref_upload_title"/>
         <EditTextPreference
             android:defaultValue="http://www.example.com/obd/get_data.php"
             android:dialogTitle="@string/pref_upload_url_title"
             android:key="upload_url_preference"
             android:summary="@string/pref_upload_url_summary"
-            android:title="@string/pref_upload_url_title"  />
+            android:title="@string/pref_upload_url_title"/>
         <EditTextPreference
             android:defaultValue=""
             android:dialogTitle="@string/pref_vehicle_id_title"
             android:key="vehicle_id_preference"
             android:summary="@string/pref_vehicle_id_summary"
-            android:title="@string/pref_vehicle_id_title" />
+            android:title="@string/pref_vehicle_id_title"/>
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/title_pref_bluetooth">
@@ -32,35 +32,35 @@
             android:key="enable_bluetooth_preference"
             android:summaryOff="@string/pref_bluetooth_summaryOff"
             android:summaryOn="@string/pref_bluetooth_summaryOn"
-            android:title="@string/pref_bluetooth_title" />
+            android:title="@string/pref_bluetooth_title"/>
         <ListPreference
             android:dialogTitle="@string/pref_bluetooth_list_devices_title"
             android:key="bluetooth_list_preference"
             android:summary="@string/pref_bluetooth_list_devices_summary"
-            android:title="@string/pref_bluetooth_list_devices_title" />
+            android:title="@string/pref_bluetooth_list_devices_title"/>
     </PreferenceCategory>
     <PreferenceCategory
-        android:title="@string/title_pref_gps"
-        android:key="@string/pref_gps_category">
+        android:key="@string/pref_gps_category"
+        android:title="@string/title_pref_gps">
         <CheckBoxPreference
             android:defaultValue="false"
             android:dialogTitle="@string/pref_gps_category_title"
             android:key="enable_gps_preference"
             android:summaryOff="@string/pref_gps_category_summaryOff"
             android:summaryOn="@string/pref_gps_category_summaryOn"
-            android:title="@string/pref_gps_category_title" />
+            android:title="@string/pref_gps_category_title"/>
         <EditTextPreference
             android:defaultValue="1"
             android:dialogTitle="@string/pref_gps_update_period_title"
             android:key="gps_update_period_preference"
             android:summary="@string/pref_gps_update_period_summary"
-            android:title="@string/pref_gps_update_period_title" />
+            android:title="@string/pref_gps_update_period_title"/>
         <EditTextPreference
             android:defaultValue="5"
             android:dialogTitle="@string/pref_gps_distance_period_title"
             android:key="gps_distance_period_preference"
             android:summary="@string/pref_gps_distance_period_summary"
-            android:title="@string/pref_gps_distance_period_title" />
+            android:title="@string/pref_gps_distance_period_title"/>
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/title_pref_obd">
@@ -69,44 +69,44 @@
             android:dialogTitle="@string/pref_obd_protocols_title"
             android:key="obd_protocols_preference"
             android:summary="@string/pref_obd_protocols_summary"
-            android:title="@string/pref_obd_protocols_title" />
+            android:title="@string/pref_obd_protocols_title"/>
         <CheckBoxPreference
             android:defaultValue="false"
             android:dialogTitle="@string/pref_imperial_units_title"
             android:key="imperial_units_preference"
             android:summaryOff="@string/pref_imperial_units_summaryOff"
             android:summaryOn="@string/pref_imperial_units_summaryOn"
-            android:title="@string/pref_imperial_units_title" />
+            android:title="@string/pref_imperial_units_title"/>
         <EditTextPreference
             android:defaultValue="4"
             android:dialogTitle="@string/pref_obd_update_period_title"
             android:key="obd_update_period_preference"
             android:summary="@string/pref_obd_update_period_summary"
-            android:title="@string/pref_obd_update_period_title" />
+            android:title="@string/pref_obd_update_period_title"/>
         <EditTextPreference
             android:defaultValue="70"
             android:dialogTitle="@string/pref_max_fuel_econ_title"
             android:key="max_fuel_econ_preference"
             android:summary="@string/pref_max_fuel_econ_summary"
-            android:title="@string/pref_max_fuel_econ_title" />
+            android:title="@string/pref_max_fuel_econ_title"/>
         <EditTextPreference
             android:defaultValue=".85"
             android:dialogTitle="@string/pref_volumetric_efficiency_dialog_title"
             android:key="volumetric_efficiency_preference"
             android:summary="@string/pref_volumetric_efficiency_summary"
-            android:title="@string/pref_volumetric_efficiency_title" />
+            android:title="@string/pref_volumetric_efficiency_title"/>
         <EditTextPreference
             android:defaultValue="1.6"
             android:dialogTitle="@string/pref_engine_displacement_title"
             android:key="engine_displacement_preference"
             android:summary="@string/pref_engine_displacement_summary"
-            android:title="@string/pref_engine_displacement_title" />
+            android:title="@string/pref_engine_displacement_title"/>
         <EditTextPreference
             android:defaultValue="atsp0\natz"
             android:dialogTitle="@string/pref_reader_config_title"
             android:key="reader_config_preference"
             android:summary="@string/pref_reader_config_summary"
-            android:title="@string/pref_reader_config_title" />
+            android:title="@string/pref_reader_config_title"/>
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/title_pref_commands">
@@ -129,6 +129,6 @@
             android:dialogTitle="@string/pref_dirname_dialogTitle"
             android:key="dirname_full_logging"
             android:summary="@string/pref_dirname_summary"
-            android:title="@string/pref_dirname_title" />
+            android:title="@string/pref_dirname_title"/>
     </PreferenceCategory>
 </PreferenceScreen>

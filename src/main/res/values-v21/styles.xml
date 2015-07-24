@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <style name="AppBaseTheme" parent="android:Theme.Material.Light">
+    <style name="AppBaseTheme" parent="android:Theme.Material.Light">
 
-    <!--    color for the app bar -->
-    <item name="android:colorPrimary">@color/primary</item>
-    <!--   darker variant for the status bar and contextual app bars -->
-    <item name="android:colorPrimaryDark">@color/primary_dark</item>
-    <!--   theme UI controls like checkboxes and text fields -->
-    <item name="android:colorAccent">@color/accent</item>
+        <!--    color for the app bar -->
+        <item name="android:colorPrimary">@color/primary</item>
+        <!--   darker variant for the status bar and contextual app bars -->
+        <item name="android:colorPrimaryDark">@color/primary_dark</item>
+        <!--   theme UI controls like checkboxes and text fields -->
+        <item name="android:colorAccent">@color/accent</item>
 
-  </style>
+    </style>
 
-  <!-- Application theme. -->
-  <style name="AppTheme" parent="AppBaseTheme">
-    <!-- All customizations that are NOT specific to a particular API-level can go here. -->
-  </style>
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
 
 </resources>

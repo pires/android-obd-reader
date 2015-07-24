@@ -102,9 +102,9 @@
     <string name="title_pref_commands_summary">选择你想实时显示的汽车数据</string>
     <!--OBD Commands-->
     <string name="title_pref_commands_title">OBD指令</string>
-    <string name="title_pref_full_logging" >完整日志记录配置</string>
-    <string name="pref_enable_full_logging_summary" >开启离线日志记录并上传</string>
-    <string name="pref_enable_full_logging_title" >开启离线日志记录</string>
+    <string name="title_pref_full_logging">完整日志记录配置</string>
+    <string name="pref_enable_full_logging_summary">开启离线日志记录并上传</string>
+    <string name="pref_enable_full_logging_title">开启离线日志记录</string>
     <string name="default_dirname_full_logging">OBDReader日志</string>
     <string name="pref_dirname_dialogTitle">选择需要保存日志的目录名</string>
     <string name="pref_dirname_title">目录名</string>

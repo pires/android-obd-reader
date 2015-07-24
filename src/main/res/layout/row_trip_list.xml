@@ -16,13 +16,13 @@
             android:id="@+id/startDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.25" />
+            android:layout_weight="0.25"/>
 
         <TextView
             android:id="@+id/columnDuration"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.25" />
+            android:layout_weight="0.25"/>
 
     </LinearLayout>
 
@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:gravity="left"
         android:paddingLeft="15dp"
-        android:singleLine="true" />
+        android:singleLine="true"/>
 
     <TextView
         android:id="@+id/rowOther"
@@ -40,6 +40,6 @@
         android:layout_height="wrap_content"
         android:gravity="left"
         android:paddingLeft="15dp"
-        android:singleLine="true" />
+        android:singleLine="true"/>
 
 </LinearLayout>

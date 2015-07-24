@@ -7,10 +7,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.github.pires.obd.reader.R;
+
 import java.util.Date;
 import java.util.List;
-
-import com.github.pires.obd.reader.R;
 
 public class TripListAdapter extends ArrayAdapter<TripRecord> {
   /// the Android Activity owning the ListView
@@ -64,7 +64,7 @@ public class TripListAdapter extends ArrayAdapter<TripRecord> {
     String rpmMax = String.valueOf(record.getEngineRpmMax());
 
     String engineRuntime = record.getEngineRuntime();
-    if(engineRuntime == null)
+    if (engineRuntime == null)
       engineRuntime = "None";
     rowEngine.setText("Engine Runtime: " + engineRuntime + "\tMax RPM: " + rpmMax);
 

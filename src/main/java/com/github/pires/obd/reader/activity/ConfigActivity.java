@@ -57,7 +57,7 @@ public class ConfigActivity extends PreferenceActivity implements OnPreferenceCh
    */
   public static int getObdUpdatePeriod(SharedPreferences prefs) {
     String periodString = prefs.
-            getString(ConfigActivity.OBD_UPDATE_PERIOD_KEY, "4"); // 4 as in seconds
+        getString(ConfigActivity.OBD_UPDATE_PERIOD_KEY, "4"); // 4 as in seconds
     int period = 4000; // by default 4000ms
 
     try {
@@ -142,6 +142,7 @@ public class ConfigActivity extends PreferenceActivity implements OnPreferenceCh
 
   /**
    * Minimum time between location updates, in milliseconds
+   *
    * @param prefs
    * @return
    */
@@ -164,6 +165,7 @@ public class ConfigActivity extends PreferenceActivity implements OnPreferenceCh
 
   /**
    * Min Distance between location updates, in meters
+   *
    * @param prefs
    * @return
    */
@@ -173,7 +175,7 @@ public class ConfigActivity extends PreferenceActivity implements OnPreferenceCh
     float period = 5; // by default 5 meters
 
     try {
-      period =  Float.parseFloat(periodString);
+      period = Float.parseFloat(periodString);
     } catch (Exception e) {
     }
 
@@ -201,7 +203,7 @@ public class ConfigActivity extends PreferenceActivity implements OnPreferenceCh
         .findPreference(BLUETOOTH_LIST_KEY);
     ArrayList<CharSequence> protocolStrings = new ArrayList<>();
     ListPreference listProtocols = (ListPreference) getPreferenceScreen()
-              .findPreference(PROTOCOLS_LIST_KEY);
+        .findPreference(PROTOCOLS_LIST_KEY);
     String[] prefKeys = new String[]{ENGINE_DISPLACEMENT_KEY,
         VOLUMETRIC_EFFICIENCY_KEY, OBD_UPDATE_PERIOD_KEY, MAX_FUEL_ECON_KEY};
     for (String prefKey : prefKeys) {
@@ -230,8 +232,8 @@ public class ConfigActivity extends PreferenceActivity implements OnPreferenceCh
      * Available OBD protocols
      *
      */
-    for (ObdProtocols protocol: ObdProtocols.values()){
-          protocolStrings.add(protocol.name());
+    for (ObdProtocols protocol : ObdProtocols.values()) {
+      protocolStrings.add(protocol.name());
     }
     listProtocols.setEntries(protocolStrings.toArray(new CharSequence[0]));
     listProtocols.setEntryValues(protocolStrings.toArray(new CharSequence[0]));
@@ -302,9 +304,9 @@ public class ConfigActivity extends PreferenceActivity implements OnPreferenceCh
         || ENGINE_DISPLACEMENT_KEY.equals(preference.getKey())
         || MAX_FUEL_ECON_KEY.equals(preference.getKey())
         || GPS_UPDATE_PERIOD_KEY.equals(preference.getKey())
-        || GPS_DISTANCE_PERIOD_KEY.equals(preference.getKey())){
+        || GPS_DISTANCE_PERIOD_KEY.equals(preference.getKey())) {
       try {
-        Double.parseDouble(newValue.toString().replace(",","."));
+        Double.parseDouble(newValue.toString().replace(",", "."));
         return true;
       } catch (Exception e) {
         Toast.makeText(this,
@@ -317,7 +319,7 @@ public class ConfigActivity extends PreferenceActivity implements OnPreferenceCh
 
   private void checkGps() {
     LocationManager mLocService = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-    if(mLocService != null ) {
+    if (mLocService != null) {
       LocationProvider mLocProvider = mLocService.getProvider(LocationManager.GPS_PROVIDER);
       if (mLocProvider == null) {
         hideGPSCategory();
@@ -328,7 +330,7 @@ public class ConfigActivity extends PreferenceActivity implements OnPreferenceCh
   private void hideGPSCategory() {
     PreferenceScreen preferenceScreen = getPreferenceScreen();
     PreferenceCategory preferenceCategory = (PreferenceCategory) findPreference(getResources().getString(R.string.pref_gps_category));
-    if(preferenceCategory != null) {
+    if (preferenceCategory != null) {
       preferenceCategory.removeAll();
       preferenceScreen.removePreference((Preference) preferenceCategory);
     }
