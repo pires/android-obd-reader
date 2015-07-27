@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:id="@+id/vehicle_view"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/vehicle_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/activity_horizontal_margin"
@@ -17,7 +17,7 @@
             android:layout_weight="2"
             android:tag="SPEED"
             android:text="@string/text_zero"
-            android:textSize="@dimen/abc_text_size_display_3_material"/>
+            android:textSize="@dimen/abc_text_size_display_3_material" />
 
         <TextView
             android:id="@+id/compass_text"
@@ -26,7 +26,7 @@
             android:layout_weight="1"
             android:gravity="end"
             android:text="@string/text_orientation_default"
-            android:textSize="@dimen/abc_text_size_display_3_material"/>
+            android:textSize="@dimen/abc_text_size_display_3_material" />
     </TableRow>
 
     <TableRow
@@ -39,7 +39,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:tag="FUEL_CONSUMPTION"
-            android:text="@string/text_consumption_default"/>
+            android:text="@string/text_consumption_default" />
 
         <TextView
             android:layout_width="0dp"
@@ -47,7 +47,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:tag="ENGINE_RUNTIME"
-            android:text="@string/text_runtime_default"/>
+            android:text="@string/text_runtime_default" />
 
         <TextView
             android:layout_width="0dp"
@@ -55,7 +55,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:tag="ENGINE_RPM"
-            android:text=""/>
+            android:text="" />
     </TableRow>
 
     <ScrollView
@@ -72,8 +72,7 @@
             android:id="@+id/data_table"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:stretchColumns="*">
-        </TableLayout>
+            android:stretchColumns="*"></TableLayout>
     </ScrollView>
 
     <TableRow
@@ -86,7 +85,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/text_gps"
-            android:textSize="@dimen/abc_text_size_medium_material"/>
+            android:textSize="@dimen/abc_text_size_medium_material" />
 
         <TextView
             android:layout_width="0dp"
@@ -94,7 +93,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/text_bluetooth"
-            android:textSize="@dimen/abc_text_size_medium_material"/>
+            android:textSize="@dimen/abc_text_size_medium_material" />
 
         <TextView
             android:layout_width="0dp"
@@ -102,7 +101,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/text_obd"
-            android:textSize="@dimen/abc_text_size_medium_material"/>
+            android:textSize="@dimen/abc_text_size_medium_material" />
 
 
     </TableRow>
@@ -117,7 +116,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text=""/>
+            android:text="" />
 
         <TextView
             android:id="@+id/BT_STATUS"
@@ -125,7 +124,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text=""/>
+            android:text="" />
 
         <TextView
             android:id="@+id/OBD_STATUS"
@@ -133,7 +132,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text=""/>
+            android:text="" />
     </TableRow>
 
 </LinearLayout>

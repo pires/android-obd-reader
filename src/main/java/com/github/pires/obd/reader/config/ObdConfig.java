@@ -39,58 +39,58 @@ import java.util.ArrayList;
  */
 public final class ObdConfig {
 
-  public static ArrayList<ObdCommand> getCommands() {
-    ArrayList<ObdCommand> cmds = new ArrayList<>();
+    public static ArrayList<ObdCommand> getCommands() {
+        ArrayList<ObdCommand> cmds = new ArrayList<>();
 
-    // Control
-    cmds.add(new CommandControlModuleVoltageObdCommand());
-    cmds.add(new CommandEquivRatioObdCommand());
-    cmds.add(new DistanceTraveledSinceCodesClearedObdCommand());
-    cmds.add(new DistanceTraveledWithMILOnObdCommand());
-    cmds.add(new DtcNumberObdCommand());
-    cmds.add(new TimingAdvanceObdCommand());
-    cmds.add(new TroubleCodesObdCommand());
-    cmds.add(new VinObdCommand());
+        // Control
+        cmds.add(new CommandControlModuleVoltageObdCommand());
+        cmds.add(new CommandEquivRatioObdCommand());
+        cmds.add(new DistanceTraveledSinceCodesClearedObdCommand());
+        cmds.add(new DistanceTraveledWithMILOnObdCommand());
+        cmds.add(new DtcNumberObdCommand());
+        cmds.add(new TimingAdvanceObdCommand());
+        cmds.add(new TroubleCodesObdCommand());
+        cmds.add(new VinObdCommand());
 
-    // Engine
-    cmds.add(new EngineLoadObdCommand());
-    cmds.add(new EngineRPMObdCommand());
-    cmds.add(new EngineRuntimeObdCommand());
-    cmds.add(new MassAirFlowObdCommand());
-    cmds.add(new ThrottlePositionObdCommand());
+        // Engine
+        cmds.add(new EngineLoadObdCommand());
+        cmds.add(new EngineRPMObdCommand());
+        cmds.add(new EngineRuntimeObdCommand());
+        cmds.add(new MassAirFlowObdCommand());
+        cmds.add(new ThrottlePositionObdCommand());
 
-    // Fuel
-    cmds.add(new FindFuelTypeObdCommand());
-    cmds.add(new FuelConsumptionRateObdCommand());
-    // cmds.add(new AverageFuelEconomyObdCommand());
-    cmds.add(new FuelEconomyObdCommand());
-    cmds.add(new FuelLevelObdCommand());
-    // cmds.add(new FuelEconomyMAPObdCommand());
-    // cmds.add(new FuelEconomyCommandedMAPObdCommand());
-    cmds.add(new FuelTrimObdCommand(FuelTrim.LONG_TERM_BANK_1));
-    cmds.add(new FuelTrimObdCommand(FuelTrim.LONG_TERM_BANK_2));
-    cmds.add(new FuelTrimObdCommand(FuelTrim.SHORT_TERM_BANK_1));
-    cmds.add(new FuelTrimObdCommand(FuelTrim.SHORT_TERM_BANK_2));
-    cmds.add(new FuelAirCommanded());
-    cmds.add(new FuelAirWidebandCommanded());
-    cmds.add(new EngineOilTempObdCommand());
+        // Fuel
+        cmds.add(new FindFuelTypeObdCommand());
+        cmds.add(new FuelConsumptionRateObdCommand());
+        // cmds.add(new AverageFuelEconomyObdCommand());
+        cmds.add(new FuelEconomyObdCommand());
+        cmds.add(new FuelLevelObdCommand());
+        // cmds.add(new FuelEconomyMAPObdCommand());
+        // cmds.add(new FuelEconomyCommandedMAPObdCommand());
+        cmds.add(new FuelTrimObdCommand(FuelTrim.LONG_TERM_BANK_1));
+        cmds.add(new FuelTrimObdCommand(FuelTrim.LONG_TERM_BANK_2));
+        cmds.add(new FuelTrimObdCommand(FuelTrim.SHORT_TERM_BANK_1));
+        cmds.add(new FuelTrimObdCommand(FuelTrim.SHORT_TERM_BANK_2));
+        cmds.add(new FuelAirCommanded());
+        cmds.add(new FuelAirWidebandCommanded());
+        cmds.add(new EngineOilTempObdCommand());
 
-    // Pressure
-    cmds.add(new BarometricPressureObdCommand());
-    cmds.add(new FuelPressureObdCommand());
-    cmds.add(new FuelRailPressureObdCommand());
-    cmds.add(new IntakeManifoldPressureObdCommand());
+        // Pressure
+        cmds.add(new BarometricPressureObdCommand());
+        cmds.add(new FuelPressureObdCommand());
+        cmds.add(new FuelRailPressureObdCommand());
+        cmds.add(new IntakeManifoldPressureObdCommand());
 
-    // Temperature
-    cmds.add(new AirIntakeTemperatureObdCommand());
-    cmds.add(new AmbientAirTemperatureObdCommand());
-    cmds.add(new EngineCoolantTemperatureObdCommand());
+        // Temperature
+        cmds.add(new AirIntakeTemperatureObdCommand());
+        cmds.add(new AmbientAirTemperatureObdCommand());
+        cmds.add(new EngineCoolantTemperatureObdCommand());
 
-    // Misc
-    cmds.add(new SpeedObdCommand());
+        // Misc
+        cmds.add(new SpeedObdCommand());
 
 
-    return cmds;
-  }
+        return cmds;
+    }
 
 }

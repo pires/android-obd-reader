@@ -22,7 +22,7 @@ import retrofit.http.PUT;
  */
 public interface ObdService {
 
-  @PUT("/")
-  Response uploadReading(@Body ObdReading reading);
+    @PUT("/")
+    Response uploadReading(@Body ObdReading reading);
 
 }
