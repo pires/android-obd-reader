@@ -10,12 +10,12 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.github.pires.obd.commands.ObdCommand;
-import com.github.pires.obd.commands.protocol.EchoOffObdCommand;
-import com.github.pires.obd.commands.protocol.LineFeedOffObdCommand;
+import com.github.pires.obd.commands.protocol.EchoOffCommand;
+import com.github.pires.obd.commands.protocol.LineFeedOffCommand;
 import com.github.pires.obd.commands.protocol.ObdResetCommand;
-import com.github.pires.obd.commands.protocol.SelectProtocolObdCommand;
-import com.github.pires.obd.commands.protocol.TimeoutObdCommand;
-import com.github.pires.obd.commands.temperature.AmbientAirTemperatureObdCommand;
+import com.github.pires.obd.commands.protocol.SelectProtocolCommand;
+import com.github.pires.obd.commands.protocol.TimeoutCommand;
+import com.github.pires.obd.commands.temperature.AmbientAirTemperatureCommand;
 import com.github.pires.obd.enums.ObdProtocols;
 import com.github.pires.obd.exceptions.UnsupportedCommandException;
 import com.github.pires.obd.reader.R;
@@ -156,7 +156,7 @@ public class ObdGatewayService extends AbstractGatewayService {
         // Let's configure the connection.
         Log.d(TAG, "Queueing jobs for connection configuration..");
         queueJob(new ObdCommandJob(new ObdResetCommand()));
-        queueJob(new ObdCommandJob(new EchoOffObdCommand()));
+        queueJob(new ObdCommandJob(new EchoOffCommand()));
 
     /*
      * Will send second-time based on tests.
@@ -164,16 +164,16 @@ public class ObdGatewayService extends AbstractGatewayService {
      * TODO this can be done w/o having to queue jobs by just issuing
      * command.run(), command.getResult() and validate the result.
      */
-        queueJob(new ObdCommandJob(new EchoOffObdCommand()));
-        queueJob(new ObdCommandJob(new LineFeedOffObdCommand()));
-        queueJob(new ObdCommandJob(new TimeoutObdCommand(62)));
+        queueJob(new ObdCommandJob(new EchoOffCommand()));
+        queueJob(new ObdCommandJob(new LineFeedOffCommand()));
+        queueJob(new ObdCommandJob(new TimeoutCommand(62)));
 
         // Get protocol from preferences
         final String protocol = prefs.getString(ConfigActivity.PROTOCOLS_LIST_KEY, "AUTO");
-        queueJob(new ObdCommandJob(new SelectProtocolObdCommand(ObdProtocols.valueOf(protocol))));
+        queueJob(new ObdCommandJob(new SelectProtocolCommand(ObdProtocols.valueOf(protocol))));
 
         // Job for returning dummy data
-        queueJob(new ObdCommandJob(new AmbientAirTemperatureObdCommand()));
+        queueJob(new ObdCommandJob(new AmbientAirTemperatureCommand()));
 
         queueCounter = 0L;
         Log.d(TAG, "Initialization jobs queued.");

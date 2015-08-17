@@ -2,7 +2,6 @@ package com.github.pires.obd.reader.config;
 
 import com.github.pires.obd.commands.ObdCommand;
 import com.github.pires.obd.commands.SpeedCommand;
-import com.github.pires.obd.commands.control.DistanceTraveledSinceCodesClearedCommand;
 import com.github.pires.obd.commands.control.DistanceTraveledWithMILOnCommand;
 import com.github.pires.obd.commands.control.DtcNumberCommand;
 import com.github.pires.obd.commands.control.EquivalentRatioCommand;
@@ -44,7 +43,6 @@ public final class ObdConfig {
         // Control
         cmds.add(new ModuleVoltageCommand());
         cmds.add(new EquivalentRatioCommand());
-        cmds.add(new DistanceTraveledSinceCodesClearedCommand());
         cmds.add(new DistanceTraveledWithMILOnCommand());
         cmds.add(new DtcNumberCommand());
         cmds.add(new TimingAdvanceCommand());

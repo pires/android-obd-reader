@@ -22,12 +22,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.github.pires.obd.commands.control.TroubleCodesObdCommand;
-import com.github.pires.obd.commands.protocol.EchoOffObdCommand;
-import com.github.pires.obd.commands.protocol.LineFeedOffObdCommand;
+
+import com.github.pires.obd.commands.control.TroubleCodesCommand;
+import com.github.pires.obd.commands.protocol.EchoOffCommand;
+import com.github.pires.obd.commands.protocol.LineFeedOffCommand;
 import com.github.pires.obd.commands.protocol.ObdResetCommand;
-import com.github.pires.obd.commands.protocol.ResetTroubleCodes;
-import com.github.pires.obd.commands.protocol.SelectProtocolObdCommand;
+
+import com.github.pires.obd.commands.protocol.ResetTroubleCodesCommand;
+import com.github.pires.obd.commands.protocol.SelectProtocolCommand;
 import com.github.pires.obd.enums.ObdProtocols;
 import com.github.pires.obd.exceptions.MisunderstoodCommandException;
 import com.github.pires.obd.exceptions.UnableToConnectException;
@@ -140,7 +142,7 @@ public class TroubleCodesActivity extends Activity {
 
                     Log.d("TESTRESET", "Trying reset");
                     //new ObdResetCommand().run(sock.getInputStream(), sock.getOutputStream());
-                    ResetTroubleCodes clear = new ResetTroubleCodes();
+                    ResetTroubleCodesCommand clear = new ResetTroubleCodesCommand();
                     clear.run(sock.getInputStream(), sock.getOutputStream());
                     String result = clear.getFormattedResult();
                     Log.d("TESTRESET", "Trying reset result: " + result);
@@ -201,7 +203,7 @@ public class TroubleCodesActivity extends Activity {
     }
 
 
-    public class ModifiedTroubleCodesObdCommand extends TroubleCodesObdCommand {
+    public class ModifiedTroubleCodesObdCommand extends TroubleCodesCommand {
         @Override
         public String getResult() {
             // remove unwanted response from output since this results in erroneous error codes
@@ -209,7 +211,7 @@ public class TroubleCodesActivity extends Activity {
         }
     }
 
-    public class ClearDTC extends ResetTroubleCodes {
+    public class ClearDTC extends ResetTroubleCodesCommand {
         @Override
         public String getResult() {
             return rawData;
@@ -285,15 +287,15 @@ public class TroubleCodesActivity extends Activity {
 
                     onProgressUpdate(2);
 
-                    new EchoOffObdCommand().run(sock.getInputStream(), sock.getOutputStream());
+                    new EchoOffCommand().run(sock.getInputStream(), sock.getOutputStream());
 
                     onProgressUpdate(3);
 
-                    new LineFeedOffObdCommand().run(sock.getInputStream(), sock.getOutputStream());
+                    new LineFeedOffCommand().run(sock.getInputStream(), sock.getOutputStream());
 
                     onProgressUpdate(4);
 
-                    new SelectProtocolObdCommand(ObdProtocols.AUTO).run(sock.getInputStream(), sock.getOutputStream());
+                    new SelectProtocolCommand(ObdProtocols.AUTO).run(sock.getInputStream(), sock.getOutputStream());
 
                     onProgressUpdate(5);
 
