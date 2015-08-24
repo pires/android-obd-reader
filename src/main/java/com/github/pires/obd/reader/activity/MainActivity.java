@@ -35,9 +35,9 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.github.pires.obd.commands.ObdCommand;
-import com.github.pires.obd.commands.SpeedObdCommand;
-import com.github.pires.obd.commands.engine.EngineRPMObdCommand;
-import com.github.pires.obd.commands.engine.EngineRuntimeObdCommand;
+import com.github.pires.obd.commands.SpeedCommand;
+import com.github.pires.obd.commands.engine.RPMCommand;
+import com.github.pires.obd.commands.engine.RuntimeCommand;
 import com.github.pires.obd.enums.AvailableCommandNames;
 import com.github.pires.obd.reader.R;
 import com.github.pires.obd.reader.config.ObdConfig;
@@ -299,13 +299,13 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
 
         if (currentTrip != null) {
             if (cmdID.equals(AvailableCommandNames.SPEED.toString())) {
-                SpeedObdCommand command = (SpeedObdCommand) job.getCommand();
+                SpeedCommand command = (SpeedCommand) job.getCommand();
                 currentTrip.setSpeedMax(command.getMetricSpeed());
             } else if (cmdID.equals(AvailableCommandNames.ENGINE_RPM.toString())) {
-                EngineRPMObdCommand command = (EngineRPMObdCommand) job.getCommand();
+                RPMCommand command = (RPMCommand) job.getCommand();
                 currentTrip.setEngineRpmMax(command.getRPM());
             } else if (cmdID.endsWith(AvailableCommandNames.ENGINE_RUNTIME.toString())) {
-                EngineRuntimeObdCommand command = (EngineRuntimeObdCommand) job.getCommand();
+                RuntimeCommand command = (RuntimeCommand) job.getCommand();
                 currentTrip.setEngineRuntime(command.getFormattedResult());
             }
         }
