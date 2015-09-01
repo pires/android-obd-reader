@@ -4,7 +4,7 @@
 
     <groupId>com.obdreader.android</groupId>
     <artifactId>android-obd-reader</artifactId>
-    <version>1.0.0.BUILD-SNAPSHOT</version>
+    <version>2.0-RC2</version>
     <packaging>apk</packaging>
 
     <name>OBD Java Reader</name>
@@ -35,7 +35,6 @@
                 <configuration>
                     <sdk>
                         <platform>${android-platform}</platform>
-                        <!--<path>/home/stanimir/android-sdk-linux</path>-->
                     </sdk>
                     <nativeLibrariesDirectory>ignored</nativeLibrariesDirectory>
                     <undeployBeforeDeploy>true</undeployBeforeDeploy>
@@ -57,8 +56,8 @@
         <dependency>
             <groupId>com.github.pires</groupId>
             <artifactId>obd-java-api</artifactId>
-            <!--<version>1.0-RC9-SNAPSHOT</version>-->
-            <version>1.0-RC6</version>
+            <version>1.0-RC9</version>
+            <!--<version>1.0-RC8</version>-->
         </dependency>
 
         <dependency>
