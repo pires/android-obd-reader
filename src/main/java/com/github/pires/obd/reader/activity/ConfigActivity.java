@@ -50,6 +50,7 @@ public class ConfigActivity extends PreferenceActivity implements OnPreferenceCh
     public static final String CONFIG_READER_KEY = "reader_config_preference";
     public static final String ENABLE_FULL_LOGGING_KEY = "enable_full_logging";
     public static final String DIRECTORY_FULL_LOGGING_KEY = "directory_full_logging";
+    public static final String ACRA_EMAIL_KEY = "acra_email";
 
     /**
      * @param prefs
@@ -184,6 +185,10 @@ public class ConfigActivity extends PreferenceActivity implements OnPreferenceCh
         }
 
         return period;
+    }
+
+    public static String getAcraEmail(SharedPreferences prefs) {
+        return prefs.getString(ConfigActivity.ACRA_EMAIL_KEY, null);
     }
 
 

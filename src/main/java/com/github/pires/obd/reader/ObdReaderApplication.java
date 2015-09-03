@@ -7,13 +7,6 @@ import org.acra.annotation.ReportsCrashes;
 
 import java.util.HashMap;
 
-/**
- * Created with IntelliJ IDEA.
- * User: stanimir
- * Date: 9/1/15
- * Time: 5:31 PM
- * developer STANIMIR MARINOV
- */
 @ReportsCrashes(logcatFilterByPid = true)
 public class ObdReaderApplication extends Application {
 

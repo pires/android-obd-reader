@@ -3,25 +3,13 @@ package com.github.pires.obd.reader.activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
-import android.content.SharedPreferences;
+import android.content.*;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.location.GpsStatus;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.location.LocationProvider;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.IBinder;
-import android.os.PowerManager;
+import android.location.*;
+import android.os.*;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -33,7 +21,6 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-
 import com.github.pires.obd.commands.ObdCommand;
 import com.github.pires.obd.commands.SpeedCommand;
 import com.github.pires.obd.commands.engine.RPMCommand;
@@ -41,25 +28,12 @@ import com.github.pires.obd.commands.engine.RuntimeCommand;
 import com.github.pires.obd.enums.AvailableCommandNames;
 import com.github.pires.obd.reader.R;
 import com.github.pires.obd.reader.config.ObdConfig;
-import com.github.pires.obd.reader.io.AbstractGatewayService;
-import com.github.pires.obd.reader.io.LogCSVWriter;
-import com.github.pires.obd.reader.io.MockObdGatewayService;
-import com.github.pires.obd.reader.io.ObdCommandJob;
-import com.github.pires.obd.reader.io.ObdGatewayService;
-import com.github.pires.obd.reader.io.ObdProgressListener;
+import com.github.pires.obd.reader.io.*;
 import com.github.pires.obd.reader.net.ObdReading;
 import com.github.pires.obd.reader.net.ObdService;
 import com.github.pires.obd.reader.trips.TripLog;
 import com.github.pires.obd.reader.trips.TripRecord;
 import com.google.inject.Inject;
-
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -67,6 +41,13 @@ import roboguice.RoboGuice;
 import roboguice.activity.RoboActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static com.github.pires.obd.reader.activity.ConfigActivity.getGpsDistanceUpdatePeriod;
 import static com.github.pires.obd.reader.activity.ConfigActivity.getGpsUpdatePeriod;
@@ -88,6 +69,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
     private static final int NO_GPS_SUPPORT = 9;
     private static final int TRIPS_LIST = 10;
     private static final int SAVE_TRIP_NOT_AVAILABLE = 11;
+    private static final int ACRA = 12;
     private static boolean bluetoothDefaultIsEnable = false;
 
     static {
@@ -411,6 +393,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
         menu.add(0, GET_DTC, 0, getString(R.string.menu_get_dtc));
         menu.add(0, TRIPS_LIST, 0, getString(R.string.menu_trip_list));
         menu.add(0, SETTINGS, 0, getString(R.string.menu_settings));
+        menu.add(0, ACRA, 0, getString(R.string.menu_acra_log));
         return true;
     }
 
@@ -435,6 +418,9 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
                 return true;
             case TRIPS_LIST:
                 startActivity(new Intent(this, TripListActivity.class));
+                return true;
+            case ACRA:
+                org.acra.ACRA.getErrorReporter().handleSilentException(new Exception("Developer Report"));
                 return true;
             // case COMMAND_ACTIVITY:
             // staticCommand();
