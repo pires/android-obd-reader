@@ -26,6 +26,7 @@ import static com.github.pires.obd.reader.activity.ConfigActivity.getAcraEmail;
 public class ACRAPostSender implements ReportSender {
 
     private final static String BASE_URL = "http://acra-rest1.rhcloud.com/acra.php?email=";
+    //private final static String BASE_URL = "http://10.0.2.2:80/acra/acra.php?XDEBUG_SESSION_START=16613&email=";
     private final static String SHARED_SECRET = "my_shared_secret";
     private Map<String, String> custom_data = null;
 
@@ -66,7 +67,7 @@ public class ACRAPostSender implements ReportSender {
                 parameters.add(new BasicNameValuePair("PRODUCT", report.get(ReportField.PRODUCT)));
                 parameters.add(new BasicNameValuePair("TOTAL_MEM_SIZE", report.get(ReportField.TOTAL_MEM_SIZE)));
                 parameters.add(new BasicNameValuePair("AVAILABLE_MEM_SIZE", report.get(ReportField.AVAILABLE_MEM_SIZE)));
-                parameters.add(new BasicNameValuePair("CUSTOM_DATA", report.get(ReportField.CUSTOM_DATA)));
+                //parameters.add(new BasicNameValuePair("CUSTOM_DATA", report.get(ReportField.CUSTOM_DATA)));
                 parameters.add(new BasicNameValuePair("STACK_TRACE", report.get(ReportField.STACK_TRACE)));
                 parameters.add(new BasicNameValuePair("INITIAL_CONFIGURATION", report.get(ReportField.INITIAL_CONFIGURATION)));
                 parameters.add(new BasicNameValuePair("CRASH_CONFIGURATION", report.get(ReportField.CRASH_CONFIGURATION)));
@@ -101,12 +102,14 @@ public class ACRAPostSender implements ReportSender {
     }
 
     private String getUrl(SharedPreferences prefs) {
-        String email = getAcraEmail(prefs);
-        if (email != null) {
-            Log.d("ACRA", "SEND to email:" + email);
-            String token = getToken();
-            String key = getKey(token);
-            return String.format("%s&token=%s&key=%s&", BASE_URL + email, token, key);
+        if (prefs != null) {
+            String email = getAcraEmail(prefs);
+            if (email != null) {
+                Log.d("ACRA", "SEND to email:" + email);
+                String token = getToken();
+                String key = getKey(token);
+                return String.format("%s&token=%s&key=%s&", BASE_URL + email, token, key);
+            }
         }
         return null;
     }
