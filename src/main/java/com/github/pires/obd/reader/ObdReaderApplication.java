@@ -18,6 +18,7 @@ public class ObdReaderApplication extends Application {
 
         HashMap<String,String> ACRAData = new HashMap<String,String>();
         ACRAData.put("my_app_info", "ODB Reader");
+        ACRAData.put("EMAIL_SERVICE", "MAILGUN");
         ACRA.getErrorReporter().setReportSender(new ACRAPostSender(ACRAData));
     }
 }
