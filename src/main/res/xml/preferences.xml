@@ -120,8 +120,14 @@
         <EditTextPreference
             android:defaultValue="@string/default_dirname_full_logging"
             android:dialogTitle="@string/pref_dirname_dialogTitle"
-            android:key="dirname_full_logging"
+            android:key="directory_full_logging"
             android:summary="@string/pref_dirname_summary"
             android:title="@string/pref_dirname_title" />
+        <EditTextPreference
+            android:defaultValue="@string/default_acra_email"
+            android:dialogTitle="@string/pref_acra_email_dialogTitle"
+            android:key="acra_email"
+            android:summary="@string/pref_acra_email_summary"
+            android:title="@string/pref_acra_email_title" />
     </PreferenceCategory>
 </PreferenceScreen>

@@ -80,6 +80,12 @@
         </dependency>
 
         <dependency>
+            <groupId>ch.acra</groupId>
+            <artifactId>acra</artifactId>
+            <version>4.6.2</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.roboguice</groupId>
             <artifactId>roboblender</artifactId>
             <version>3.0.1</version>

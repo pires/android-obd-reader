@@ -21,6 +21,7 @@
     <string name="menu_start_live_data">Start Live Data</string>
     <string name="menu_stop_live_data">Stop Live Data</string>
     <string name="menu_settings">Settings</string>
+    <string name="menu_acra_log">Send ACRA log</string>
     <string name="menu_get_dtc">Get DTC</string>
     <string name="text_gps" translatable="false">GPS</string>
     <string name="text_obd" translatable="false">OBD</string>
@@ -103,4 +104,8 @@
     <string name="pref_dirname_dialogTitle">Choose the name of the directory to save the logs</string>
     <string name="pref_dirname_title">Directory name</string>
     <string name="pref_dirname_summary">Name of the directory where to save the files</string>
+    <string name="default_acra_email">email@example.com</string>
+    <string name="pref_acra_email_dialogTitle">Write your Email to receive ACRA crash logs</string>
+    <string name="pref_acra_email_summary">Email to receive ACRA crash logs</string>
+    <string name="pref_acra_email_title">enable ACRA crash logs</string>
 </resources>

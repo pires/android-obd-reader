@@ -46,4 +46,5 @@ dependencies {
     compile 'org.roboguice:roboguice:3.+'
     provided 'org.roboguice:roboblender:3.+'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile 'ch.acra:acra:4.6.2'
 }
