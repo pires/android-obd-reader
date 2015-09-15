@@ -286,7 +286,7 @@ public class ObdGatewayService extends AbstractGatewayService {
         sb.append("\nModel: ").append(Build.MODEL);
         sb.append("\nRelease: ").append(Build.VERSION.RELEASE);
 
-        emailIntent.putExtra(Intent.EXTRA_TEXT, sb);
+        emailIntent.putExtra(Intent.EXTRA_TEXT, sb.toString());
 
         String fileName = "hazmat_logcat_"+System.currentTimeMillis()+".txt";
         File sdCard = Environment.getExternalStorageDirectory();
