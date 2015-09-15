@@ -288,7 +288,7 @@ public class ObdGatewayService extends AbstractGatewayService {
 
         emailIntent.putExtra(Intent.EXTRA_TEXT, sb.toString());
 
-        String fileName = "hazmat_logcat_"+System.currentTimeMillis()+".txt";
+        String fileName = "OBDReader_logcat_"+System.currentTimeMillis()+".txt";
         File sdCard = Environment.getExternalStorageDirectory();
         File dir = new File(sdCard.getAbsolutePath() + File.separator + "OBD2Logs");
         dir.mkdirs();
