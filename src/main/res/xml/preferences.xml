@@ -108,7 +108,7 @@
             android:defaultValue=""
             android:dialogTitle="@string/pref_dev_email_title"
             android:key="email"
-            android:summary="@string/pref_email_summary"
+            android:summary="@string/pref_dev_email_summary"
             android:title="@string/pref_dev_email_title"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/title_pref_commands">
