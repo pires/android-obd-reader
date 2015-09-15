@@ -280,7 +280,13 @@ public class ObdGatewayService extends AbstractGatewayService {
                 emailIntent.setType("text/plain");
         emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {"shaun@jvn.sx"}); //Change this to the correct email
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Hazmat Debug Logs");
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "FYI");
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append("\nManufacturer: ").append(Build.MANUFACTURER);
+        sb.append("\nModel: ").append(Build.MODEL);
+        sb.append("\nRelease: ").append(Build.VERSION.RELEASE);
+
+        emailIntent.putExtra(Intent.EXTRA_TEXT, sb);
 
         String fileName = "hazmat_logcat_"+System.currentTimeMillis()+".txt";
         File sdCard = Environment.getExternalStorageDirectory();
