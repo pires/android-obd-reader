@@ -274,5 +274,32 @@ public class ObdGatewayService extends AbstractGatewayService {
             return ObdGatewayService.this;
         }
     }
+    public static void saveLogcatToFile(Context context) {
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        emailIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                emailIntent.setType("text/plain");
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {"shaun@jvn.sx"}); //Change this to the correct email
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Hazmat Debug Logs");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "FYI");
 
+        String fileName = "hazmat_logcat_"+System.currentTimeMillis()+".txt";
+        File sdCard = Environment.getExternalStorageDirectory();
+        File dir = new File(sdCard.getAbsolutePath() + File.separator + "OBD2Logs");
+        dir.mkdirs();
+        File outputFile = new File(dir,fileName);
+        Uri uri = Uri.fromFile(outputFile);
+        emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
+
+        Log.d("savingFile", "Going to save logcat to " + outputFile);
+        //emailIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(Intent.createChooser(emailIntent, "Pick an Email provider").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+
+        try {
+            @SuppressWarnings("unused")
+            Process process = Runtime.getRuntime().exec("logcat -f "+outputFile.getAbsolutePath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
 }
