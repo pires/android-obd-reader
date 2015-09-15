@@ -274,11 +274,11 @@ public class ObdGatewayService extends AbstractGatewayService {
             return ObdGatewayService.this;
         }
     }
-    public static void saveLogcatToFile(Context context) {
+    public static void saveLogcatToFile(Context context, String devemail) {
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
         emailIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 emailIntent.setType("text/plain");
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {"shaun@jvn.sx"}); //Change this to the correct email
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{devemail});
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "OBD2 Reader Debug Logs");
         
         StringBuilder sb = new StringBuilder();
