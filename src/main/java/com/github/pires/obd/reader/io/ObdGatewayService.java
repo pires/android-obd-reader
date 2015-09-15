@@ -279,7 +279,7 @@ public class ObdGatewayService extends AbstractGatewayService {
         emailIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 emailIntent.setType("text/plain");
         emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {"shaun@jvn.sx"}); //Change this to the correct email
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Hazmat Debug Logs");
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "OBD2 Reader Debug Logs");
         
         StringBuilder sb = new StringBuilder();
         sb.append("\nManufacturer: ").append(Build.MANUFACTURER);
