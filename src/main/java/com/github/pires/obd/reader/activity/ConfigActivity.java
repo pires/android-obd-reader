@@ -50,6 +50,7 @@ public class ConfigActivity extends PreferenceActivity implements OnPreferenceCh
     public static final String CONFIG_READER_KEY = "reader_config_preference";
     public static final String ENABLE_FULL_LOGGING_KEY = "enable_full_logging";
     public static final String DIRECTORY_FULL_LOGGING_KEY = "directory_full_logging";
+    public static final String DEV_EMAIL_KEY = "dev_email";
 
     /**
      * @param prefs

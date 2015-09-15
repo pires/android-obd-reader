@@ -104,6 +104,12 @@
             android:key="reader_config_preference"
             android:summary="@string/pref_reader_config_summary"
             android:title="@string/pref_reader_config_title" />
+        <EditTextPreference
+            android:defaultValue=""
+            android:dialogTitle="@string/pref_dev_email_title"
+            android:key="dev_email"
+            android:summary="@string/pref_dev_email_summary"
+            android:title="@string/pref_dev_email_title"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/title_pref_commands">
         <PreferenceScreen

@@ -274,5 +274,38 @@ public class ObdGatewayService extends AbstractGatewayService {
             return ObdGatewayService.this;
         }
     }
+    public static void saveLogcatToFile(Context context, String devemail) {
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        emailIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                emailIntent.setType("text/plain");
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{devemail});
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "OBD2 Reader Debug Logs");
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append("\nManufacturer: ").append(Build.MANUFACTURER);
+        sb.append("\nModel: ").append(Build.MODEL);
+        sb.append("\nRelease: ").append(Build.VERSION.RELEASE);
 
+        emailIntent.putExtra(Intent.EXTRA_TEXT, sb.toString());
+
+        String fileName = "OBDReader_logcat_"+System.currentTimeMillis()+".txt";
+        File sdCard = Environment.getExternalStorageDirectory();
+        File dir = new File(sdCard.getAbsolutePath() + File.separator + "OBD2Logs");
+        dir.mkdirs();
+        File outputFile = new File(dir,fileName);
+        Uri uri = Uri.fromFile(outputFile);
+        emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
+
+        Log.d("savingFile", "Going to save logcat to " + outputFile);
+        //emailIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(Intent.createChooser(emailIntent, "Pick an Email provider").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+
+        try {
+            @SuppressWarnings("unused")
+            Process process = Runtime.getRuntime().exec("logcat -f "+outputFile.getAbsolutePath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
 }
