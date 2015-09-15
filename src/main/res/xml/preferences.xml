@@ -107,7 +107,7 @@
         <EditTextPreference
             android:defaultValue=""
             android:dialogTitle="@string/pref_dev_email_title"
-            android:key="email"
+            android:key="dev_email"
             android:summary="@string/pref_dev_email_summary"
             android:title="@string/pref_dev_email_title"/>
     </PreferenceCategory>
