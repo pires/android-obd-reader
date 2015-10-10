@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
@@ -497,7 +498,7 @@ final String devemail = prefs.getString(ConfigActivity.DEV_EMAIL_KEY,null);
                 public void onClick(DialogInterface dialog, int which) {
                     switch (which) {
                         case DialogInterface.BUTTON_POSITIVE:
-                            ObdGatewayService.saveLogcatToFile(getApplicationContext());
+                            ObdGatewayService.saveLogcatToFile(getApplicationContext(), devemail);
                             break;
 
                         case DialogInterface.BUTTON_NEGATIVE:
@@ -506,12 +507,10 @@ final String devemail = prefs.getString(ConfigActivity.DEV_EMAIL_KEY,null);
                     }
                 }
             };
-        }
-
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Where there issues?\nThen please send us the logs.\nSend Logs?").setPositiveButton("Yes", dialogClickListener)
                     .setNegativeButton("No", dialogClickListener).show();
-
+        }
 
         if (myCSVWriter != null) {
             myCSVWriter.closeLogCSVWriter();
