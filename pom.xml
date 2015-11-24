@@ -1,0 +1,90 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.obdreader.android</groupId>
+    <artifactId>android-obd-reader</artifactId>
+    <version>2.0-RC2</version>
+    <packaging>apk</packaging>
+
+    <name>OBD Java Reader</name>
+    <url>https://github.com/pires/android-obd-reader</url>
+
+    <properties>
+        <android-platform>21</android-platform>
+        <java.version>1.7</java.version>
+    </properties>
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.2</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <compilerArgument>-proc:none</compilerArgument>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.simpligility.maven.plugins</groupId>
+                <artifactId>android-maven-plugin</artifactId>
+                <version>4.3.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <sdk>
+                        <platform>${android-platform}</platform>
+                    </sdk>
+                    <nativeLibrariesDirectory>ignored</nativeLibrariesDirectory>
+                    <undeployBeforeDeploy>true</undeployBeforeDeploy>
+                    <extractDuplicates>true</extractDuplicates>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>android</groupId>
+            <artifactId>android</artifactId>
+            <version>5.1.1_r2</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.pires</groupId>
+            <artifactId>obd-java-api</artifactId>
+            <version>1.0-RC9</version>
+            <!--<version>1.0-RC8</version>-->
+        </dependency>
+
+        <dependency>
+            <groupId>com.android.support</groupId>
+            <artifactId>appcompat-v7</artifactId>
+            <version>22.2.1</version>
+            <type>aar</type>
+        </dependency>
+
+        <dependency>
+            <groupId>org.roboguice</groupId>
+            <artifactId>roboguice</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.squareup.retrofit</groupId>
+            <artifactId>retrofit</artifactId>
+            <version>1.9.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.roboguice</groupId>
+            <artifactId>roboblender</artifactId>
+            <version>3.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+</project>

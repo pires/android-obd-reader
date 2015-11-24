@@ -11,8 +11,8 @@ The latest releasse can be downloaded from [f-droid](https://f-droid.org/reposit
 
 ## Prerequisites ##
 - JDK 7
-- Android Studio 1.2.1.1 or newer
-- Android SDK (API 21, Build tools 21.1.2)
+- Android Studio 1.3.0 or newer
+- Android SDK (API 22, Build tools 23.0.1)
 - [OBD Java API](https://github.com/pires/obd-java-api/) (already included)
 
 ## Test with device ##
@@ -67,7 +67,7 @@ apply plugin: 'java'
 * Edit `main build.gradle` and change:
 
 ```
-compile 'com.github.pires:obd-java-api:1.0-RC2'`
+compile 'com.github.pires:obd-java-api:1.0-RC10'`
 ```
 
 to
@@ -84,8 +84,8 @@ include ':obd-java-api'
 
 ## Tested on ##
 
-* Samsung Galaxy Nexus (Android 4.3)
-* LG Nexus 5 (Android 5.1)
+* Samsung Galaxy Nexus (Android 4.4.1)
+* LG Nexus 5 (Android 6.0  Preview 3)
 * Nexus 7 2013 WiFi (Android 4.4.4)
 * Samsung Galaxy S4 Active I9295 (Android 5.0.2)
 * Samsung Galaxy S6 Edge SM-925F (Android 5.0.2)
