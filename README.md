@@ -10,8 +10,8 @@ Android OBD-II reader designed to connect with Bluetooth Elm327 OBD reader.
 The latest releasse can be downloaded from [f-droid](https://f-droid.org/repository/browse/?fdid=com.github.pires.obd.reader)
 
 ## Prerequisites ##
-- JDK 7
-- Android Studio 1.3.0 or newer
+- JDK 8
+- Android Studio 1.5.x or newer
 - Android SDK (API 22, Build tools 23.0.1)
 - [OBD Java API](https://github.com/pires/obd-java-api/) (already included)
 
@@ -67,7 +67,7 @@ apply plugin: 'java'
 * Edit `main build.gradle` and change:
 
 ```
-compile 'com.github.pires:obd-java-api:1.0-RC10'`
+compile 'com.github.pires:obd-java-api:1.0-RC12'`
 ```
 
 to
