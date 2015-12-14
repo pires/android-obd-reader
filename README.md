@@ -67,7 +67,7 @@ apply plugin: 'java'
 * Edit `main build.gradle` and change:
 
 ```
-compile 'com.github.pires:obd-java-api:1.0-RC13'`
+compile 'com.github.pires:obd-java-api:1.0-RC14'`
 ```
 
 to
