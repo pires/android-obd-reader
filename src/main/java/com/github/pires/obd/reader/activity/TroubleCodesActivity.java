@@ -32,6 +32,7 @@ import com.github.pires.obd.commands.protocol.ResetTroubleCodesCommand;
 import com.github.pires.obd.commands.protocol.SelectProtocolCommand;
 import com.github.pires.obd.enums.ObdProtocols;
 import com.github.pires.obd.exceptions.MisunderstoodCommandException;
+import com.github.pires.obd.exceptions.NoDataException;
 import com.github.pires.obd.exceptions.UnableToConnectException;
 import com.github.pires.obd.reader.R;
 import com.google.inject.Inject;
@@ -49,10 +50,15 @@ public class TroubleCodesActivity extends Activity {
             .fromString("00001101-0000-1000-8000-00805F9B34FB");
     private static final int NO_BLUETOOTH_DEVICE_SELECTED = 0;
     private static final int CANNOT_CONNECT_TO_DEVICE = 1;
-    private static final int OBD_COMMAND_FAILURE = 2;
     private static final int NO_DATA = 3;
     private static final int DATA_OK = 4;
     private static final int CLEAR_DTC = 5;
+    private static final int OBD_COMMAND_FAILURE = 10;
+    private static final int OBD_COMMAND_FAILURE_IO = 11;
+    private static final int OBD_COMMAND_FAILURE_UTC = 12;
+    private static final int OBD_COMMAND_FAILURE_IE = 13;
+    private static final int OBD_COMMAND_FAILURE_MIS = 14;
+    private static final int OBD_COMMAND_FAILURE_NODATA = 15;
     @Inject
     SharedPreferences prefs;
     private ProgressDialog progressDialog;
@@ -60,11 +66,11 @@ public class TroubleCodesActivity extends Activity {
     private GetTroubleCodesTask gtct;
     private BluetoothDevice dev = null;
     private BluetoothSocket sock = null;
-    private Handler mHandler = new Handler() {
+    private Handler mHandler = new Handler(new Handler.Callback() {
 
-        @Override
-        public void handleMessage(Message msg) {
-            Log.d(TAG, "Message received on handler");
+
+        public boolean handleMessage(Message msg) {
+             Log.d(TAG, "Message received on handler");
             switch (msg.what) {
                 case NO_BLUETOOTH_DEVICE_SELECTED:
                     makeToast(getString(R.string.text_bluetooth_nodevice));
@@ -74,21 +80,44 @@ public class TroubleCodesActivity extends Activity {
                     makeToast(getString(R.string.text_bluetooth_error_connecting));
                     finish();
                     break;
+
                 case OBD_COMMAND_FAILURE:
                     makeToast(getString(R.string.text_obd_command_failure));
                     finish();
                     break;
+                case OBD_COMMAND_FAILURE_IO:
+                    makeToast(getString(R.string.text_obd_command_failure) + " IO");
+                    finish();
+                    break;
+                case OBD_COMMAND_FAILURE_IE:
+                    makeToast(getString(R.string.text_obd_command_failure) + " IE");
+                    finish();
+                    break;
+                case OBD_COMMAND_FAILURE_MIS:
+                    makeToast(getString(R.string.text_obd_command_failure) + " MIS");
+                    finish();
+                    break;
+                case OBD_COMMAND_FAILURE_UTC:
+                    makeToast(getString(R.string.text_obd_command_failure) + " UTC");
+                    finish();
+                    break;
+                case OBD_COMMAND_FAILURE_NODATA:
+                    makeToastLong(getString(R.string.text_noerrors));
+                    //finish();
+                    break;
+
                 case NO_DATA:
                     makeToast(getString(R.string.text_dtc_no_data));
-                    finish();
+                    ///finish();
                     break;
                 case DATA_OK:
                     dataOk((String) msg.obj);
                     break;
 
             }
+            return false;
         }
-    };
+    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,7 +209,10 @@ public class TroubleCodesActivity extends Activity {
         Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
         toast.show();
     }
-
+    public void makeToastLong(String text) {
+        Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG);
+        toast.show();
+    }
     private void dataOk(String res) {
         ListView lv = (ListView) findViewById(R.id.listView);
         Map<String, String> dtcVals = getDict(R.array.dtc_keys, R.array.dtc_values);
@@ -189,7 +221,7 @@ public class TroubleCodesActivity extends Activity {
         //String[] dtcCodes = new String[]{};
         ArrayList<String> dtcCodes = new ArrayList<String>();
         //int i =1;
-        if (!res.isEmpty()) {
+        if (res != null) {
             for (String dtcCode : res.split("\n")) {
                 dtcCodes.add(dtcCode + " : " + dtcVals.get(dtcCode));
                 Log.d("TEST", dtcCode + " : " + dtcVals.get(dtcCode));
@@ -207,7 +239,7 @@ public class TroubleCodesActivity extends Activity {
         @Override
         public String getResult() {
             // remove unwanted response from output since this results in erroneous error codes
-            return rawData.replace("SEARCHING...", "");
+            return rawData.replace("SEARCHING...", "").replace("NODATA", "");
         }
     }
 
@@ -307,21 +339,30 @@ public class TroubleCodesActivity extends Activity {
 
                 } catch (IOException e) {
                     e.printStackTrace();
-                    mHandler.obtainMessage(OBD_COMMAND_FAILURE).sendToTarget();
+                    Log.e("DTCERR", e.getMessage());
+                    mHandler.obtainMessage(OBD_COMMAND_FAILURE_IO).sendToTarget();
                     return null;
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                    mHandler.obtainMessage(OBD_COMMAND_FAILURE).sendToTarget();
+                    Log.e("DTCERR", e.getMessage());
+                    mHandler.obtainMessage(OBD_COMMAND_FAILURE_IE).sendToTarget();
                     return null;
                 } catch (UnableToConnectException e) {
                     e.printStackTrace();
-                    mHandler.obtainMessage(OBD_COMMAND_FAILURE).sendToTarget();
+                    Log.e("DTCERR", e.getMessage());
+                    mHandler.obtainMessage(OBD_COMMAND_FAILURE_UTC).sendToTarget();
                     return null;
                 } catch (MisunderstoodCommandException e) {
                     e.printStackTrace();
-                    mHandler.obtainMessage(OBD_COMMAND_FAILURE).sendToTarget();
+                    Log.e("DTCERR", e.getMessage());
+                    mHandler.obtainMessage(OBD_COMMAND_FAILURE_MIS).sendToTarget();
+                    return null;
+                } catch (NoDataException e) {
+                    Log.e("DTCERR", e.getMessage());
+                    mHandler.obtainMessage(OBD_COMMAND_FAILURE_NODATA).sendToTarget();
                     return null;
                 } catch (Exception e) {
+                    Log.e("DTCERR", e.getMessage());
                     mHandler.obtainMessage(OBD_COMMAND_FAILURE).sendToTarget();
                 } finally {
 
@@ -353,15 +394,11 @@ public class TroubleCodesActivity extends Activity {
         @Override
         protected void onPostExecute(String result) {
             progressDialog.dismiss();
-            if (result == null) {
-                return;
-            }
-            if (result.contains("NODATA")) {
-                mHandler.obtainMessage(NO_DATA, result).sendToTarget();
-            } else {
-                mHandler.obtainMessage(DATA_OK, result).sendToTarget();
-                setContentView(R.layout.trouble_codes);
-            }
+
+
+            mHandler.obtainMessage(DATA_OK, result).sendToTarget();
+            setContentView(R.layout.trouble_codes);
+
         }
     }
 
