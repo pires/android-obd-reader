@@ -22,12 +22,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-
 import com.github.pires.obd.commands.control.TroubleCodesCommand;
 import com.github.pires.obd.commands.protocol.EchoOffCommand;
 import com.github.pires.obd.commands.protocol.LineFeedOffCommand;
 import com.github.pires.obd.commands.protocol.ObdResetCommand;
-
 import com.github.pires.obd.commands.protocol.ResetTroubleCodesCommand;
 import com.github.pires.obd.commands.protocol.SelectProtocolCommand;
 import com.github.pires.obd.enums.ObdProtocols;
@@ -35,9 +33,11 @@ import com.github.pires.obd.exceptions.MisunderstoodCommandException;
 import com.github.pires.obd.exceptions.NoDataException;
 import com.github.pires.obd.exceptions.UnableToConnectException;
 import com.github.pires.obd.reader.R;
+import com.github.pires.obd.reader.io.BluetoothManager;
 import com.google.inject.Inject;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,8 +46,6 @@ import java.util.UUID;
 public class TroubleCodesActivity extends Activity {
 
     private static final String TAG = TroubleCodesActivity.class.getName();
-    private static final UUID MY_UUID = UUID
-            .fromString("00001101-0000-1000-8000-00805F9B34FB");
     private static final int NO_BLUETOOTH_DEVICE_SELECTED = 0;
     private static final int CANNOT_CONNECT_TO_DEVICE = 1;
     private static final int NO_DATA = 3;
@@ -118,7 +116,7 @@ public class TroubleCodesActivity extends Activity {
             return false;
         }
     });
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -154,9 +152,7 @@ public class TroubleCodesActivity extends Activity {
         switch (item.getItemId()) {
             case R.id.action_clear_codes:
                 try {
-                    sock = dev.createRfcommSocketToServiceRecord(MY_UUID);
-                    sock.connect();
-
+                    sock = BluetoothManager.connect(dev);
                 } catch (Exception e) {
                     Log.e(
                             TAG,
@@ -294,9 +290,7 @@ public class TroubleCodesActivity extends Activity {
 
                 // Instantiate a BluetoothSocket for the remote device and connect it.
                 try {
-                    sock = dev.createRfcommSocketToServiceRecord(MY_UUID);
-                    sock.connect();
-
+                    sock = BluetoothManager.connect(dev);
                 } catch (Exception e) {
                     Log.e(
                             TAG,
