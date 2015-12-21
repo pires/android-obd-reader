@@ -26,6 +26,7 @@ import com.github.pires.obd.exceptions.UnsupportedCommandException;
 import com.github.pires.obd.reader.R;
 import com.github.pires.obd.reader.activity.ConfigActivity;
 import com.github.pires.obd.reader.activity.MainActivity;
+import com.github.pires.obd.reader.io.BluetoothManager;
 import com.github.pires.obd.reader.io.ObdCommandJob.ObdCommandJobState;
 import com.google.inject.Inject;
 
@@ -46,16 +47,6 @@ import java.util.UUID;
 public class ObdGatewayService extends AbstractGatewayService {
 
     private static final String TAG = ObdGatewayService.class.getName();
-    /*
-     * http://developer.android.com/reference/android/bluetooth/BluetoothDevice.html
-     * #createRfcommSocketToServiceRecord(java.util.UUID)
-     *
-     * "Hint: If you are connecting to a Bluetooth serial board then try using the
-     * well-known SPP UUID 00001101-0000-1000-8000-00805F9B34FB. However if you
-     * are connecting to an Android peer then please generate your own unique
-     * UUID."
-     */
-    private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private final IBinder binder = new ObdGatewayServiceBinder();
     @Inject
     SharedPreferences prefs;
@@ -139,24 +130,11 @@ public class ObdGatewayService extends AbstractGatewayService {
         Log.d(TAG, "Starting OBD connection..");
         isRunning = true;
         try {
-            // Instantiate a BluetoothSocket for the remote device and connect it.
-            sock = dev.createRfcommSocketToServiceRecord(MY_UUID);
-            sock.connect();
-        } catch (Exception e1) {
-            Log.e(TAG, "There was an error while establishing Bluetooth connection. Falling back..", e1);
-            Class<?> clazz = sock.getRemoteDevice().getClass();
-            Class<?>[] paramTypes = new Class<?>[]{Integer.TYPE};
-            try {
-                Method m = clazz.getMethod("createRfcommSocket", paramTypes);
-                Object[] params = new Object[]{Integer.valueOf(1)};
-                sockFallback = (BluetoothSocket) m.invoke(sock.getRemoteDevice(), params);
-                sockFallback.connect();
-                sock = sockFallback;
-            } catch (Exception e2) {
-                Log.e(TAG, "Couldn't fallback while establishing Bluetooth connection. Stopping app..", e2);
-                stopService();
-                throw new IOException();
-            }
+        	sock = BluetoothManager.connect(dev);
+        } catch (Exception e2) {
+        	Log.e(TAG, "There was an error while establishing Bluetooth connection. Stopping app..", e2);
+        	stopService();
+        	throw new IOException();
         }
 
         // Let's configure the connection.
