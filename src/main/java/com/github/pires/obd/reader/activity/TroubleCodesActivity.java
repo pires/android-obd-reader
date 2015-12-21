@@ -1,109 +1,405 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name" translatable="false">Android OBD-II Reader</string>
-    <string name="action_settings">Settings</string>
-    <string name="action_clear_codes">Clear Codes</string>
-    <string name="notification_action">Tap to open OBD-Reader</string>
-    <string name="command_list">Choose a command</string>
-    <string name="service_starting">Starting OBD connection..</string>
-    <string name="service_started">OBD connection has started.</string>
-    <string name="service_stopped">OBD connection has stopped.</string>
-    <string name="notification_label">Tap to open OBD-Reader.</string>
-    <string name="title_activity_trouble_codes">Trouble Codes</string>
-    <string name="pref_upload_category_title">Data Upload</string>
-    <string name="pref_upload_category" translatable="false">upload_category</string>
-    <string name="title_activity_trips_list">TripsList</string>
-    <string name="menu_trip_list">Trips</string>
-    <string name="menu_item_trip_delete">Delete</string>
-    <string name="pref_gps_category" translatable="false">gps_category</string>
-    <string name="dialog_loading_title">Loading…</string>
-    <string name="dialog_loading_body">Loading application View, please wait…</string>
-    <string name="menu_start_live_data">Start Live Data</string>
-    <string name="menu_stop_live_data">Stop Live Data</string>
-    <string name="menu_settings">Settings</string>
-    <string name="menu_get_dtc">Get DTC</string>
-    <string name="text_gps" translatable="false">GPS</string>
-    <string name="text_obd" translatable="false">OBD</string>
-    <string name="text_bluetooth" translatable="false">Bluetooth</string>
-    <string name="text_orientation_default" translatable="false">N</string>
-    <string name="text_zero" translatable="false">0</string>
-    <string name="text_consumption_default" translatable="false">0l/100km</string>
-    <string name="text_runtime_default" translatable="false">00:00:00</string>
-    <string name="title_pref_obd">OBD Preferences</string>
-    <string name="title_pref_commands">OBD Commands</string>
-    <string name="title_pref_bluetooth" translatable="false">Bluetooth</string>
-    <string name="title_pref_gps" translatable="false">GPS</string>
-    <string name="text_no_bluetooth_id">Sorry, your device doesn\'t support Bluetooth</string>
-    <string name="text_bluetooth_disabled">You have Bluetooth disabled. Please enable it (using Mock service)</string>
-    <string name="text_bluetooth_nodevice">No Bluetooth device selected</string>
-    <string name="text_bluetooth_error_connecting">Cannot connect to bluetooth device!</string>
-    <string name="text_no_orientation_sensor">Orientation sensor missing?</string>
-    <string name="text_no_gps_support">Sorry, your device doesn\'t support or has disabled GPS.</string>
-    <string name="text_save_trip_not_available">Sorry, trip will not be saved.</string>
-    <string name="text_obd_command_failure">OBD command failure!</string>
-    <string name="text_dtc_no_data">No DTC stored</string>
-    <string name="status_no_bluetooth_id">unavailable</string>
-    <string name="status_bluetooth_disabled">disabled</string>
-    <string name="status_bluetooth_ok">ready</string>
-    <string name="status_bluetooth_connecting">connecting&#8230;</string>
-    <string name="status_bluetooth_connected">connected</string>
-    <string name="status_bluetooth_error_connecting">connection failed</string>
-    <string name="status_gps_fix">fix acquired</string>
-    <string name="status_gps_no_fix">fix not acquired</string>
-    <string name="status_gps_started">started</string>
-    <string name="status_gps_stopped">stopped</string>
-    <string name="status_gps_ready">ready</string>
-    <string name="status_gps_no_support">not available</string>
-    <string name="status_gps_not_used">not used</string>
-    <string name="status_obd_ready">OK</string>
-    <string name="status_obd_data">receiving data&#8230;</string>
-    <string name="status_obd_disconnected">disconnected</string>
-    <string name="status_obd_no_support">NA</string>
-    <string name="pref_upload_title">Enable Data Upload</string>
-    <string name="pref_upload_summaryOff">Enable http data upload</string>
-    <string name="pref_upload_summaryOn">Disable http data upload</string>
-    <string name="pref_upload_url_title">Upload URL</string>
-    <string name="pref_upload_url_summary">POST URL that will accept real-time data</string>
-    <string name="pref_vehicle_id_title">Vehicle ID</string>
-    <string name="pref_vehicle_id_summary">Optional unique id of this vehicle, used with uploaded data</string>
-    <string name="pref_bluetooth_title">Enable Bluetooth</string>
-    <string name="pref_bluetooth_summaryOff">Turn on Bluetooth</string>
-    <string name="pref_bluetooth_summaryOn">Turn off Bluetooth</string>
-    <string name="pref_bluetooth_list_devices_summary">List of paired bluetooth devices.</string>
-    <string name="pref_bluetooth_list_devices_title">Bluetooth Devices</string>
-    <string name="pref_gps_category_title">Enable GPS</string>
-    <string name="pref_gps_category_summaryOff">Turn on GPS</string>
-    <string name="pref_gps_category_summaryOn">Turn off GPS</string>
-    <string name="pref_gps_update_period_title">Update Period in Seconds</string>
-    <string name="pref_gps_update_period_summary">The length of time between querying new position in seconds</string>
-    <string name="pref_gps_distance_period_title">Update Period in Meters</string>
-    <string name="pref_gps_distance_period_summary">Min Distance between location updates, in meters</string>
-    <string name="pref_obd_protocols_title">OBD Protocol</string>
-    <string name="pref_obd_protocols_summary">Select OBD Protocol to use</string>
-    <string name="pref_imperial_units_title">Imperial Units</string>
-    <string name="pref_imperial_units_summaryOff">Enable imperial units</string>
-    <string name="pref_imperial_units_summaryOn">Go back to metric units</string>
-    <string name="pref_obd_update_period_title">Update Period in Seconds</string>
-    <string name="pref_obd_update_period_summary">The length of time between querying vehicle data in seconds</string>
-    <string name="pref_max_fuel_econ_title">Maximum Fuel Economy Value</string>
-    <string name="pref_max_fuel_econ_summary">Any fuel economy values larger than this will be thrown out</string>
-    <string name="pref_volumetric_efficiency_dialog_title">Volumetric Efficiency (eg 0.85)</string>
-    <string name="pref_volumetric_efficiency_summary">Used for fuel economy on vehicles without MAF sensor</string>
-    <string name="pref_volumetric_efficiency_title">Volumetric Efficiency</string>
-    <string name="pref_engine_displacement_title">Engine Displacement (liters)</string>
-    <string name="pref_engine_displacement_summary">Used for fuel economy on vehicles without MAF sensor</string>
-    <string name="pref_reader_config_title">Reader Config Commands</string>
-    <string name="pref_reader_config_summary">Commands to configure bluetooth reader, separate with new line</string>
-    <string name="title_pref_commands_summary">Select the commands you would like to see in real-time.</string>
-    <string name="title_pref_commands_title">OBD Commands</string>
-    <string name="title_pref_full_logging"> Full logging configuration </string>
-    <string name="pref_enable_full_logging_summary"> Enables full offline logging with upload</string>
-    <string name="pref_enable_full_logging_title"> Enable full logging </string>
-    <string name="default_dirname_full_logging">OBDReaderLogs</string>
-    <string name="pref_dirname_dialogTitle">Choose the name of the directory to save the logs</string>
-    <string name="pref_dirname_title">Directory name</string>
-    <string name="pref_dirname_summary">Name of the directory where to save the files</string>
-    <string name="pref_dev_email_title">Developer Email</string>
-    <string name="pref_dev_email_summary">Logs will be email to the address</string>
-    <string name="text_noerrors">There were no errors found.!</string>
-</resources>
+package com.github.pires.obd.reader.activity;
+
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.preference.PreferenceManager;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
+
+
+import com.github.pires.obd.commands.control.TroubleCodesCommand;
+import com.github.pires.obd.commands.protocol.EchoOffCommand;
+import com.github.pires.obd.commands.protocol.LineFeedOffCommand;
+import com.github.pires.obd.commands.protocol.ObdResetCommand;
+
+import com.github.pires.obd.commands.protocol.ResetTroubleCodesCommand;
+import com.github.pires.obd.commands.protocol.SelectProtocolCommand;
+import com.github.pires.obd.enums.ObdProtocols;
+import com.github.pires.obd.exceptions.MisunderstoodCommandException;
+import com.github.pires.obd.exceptions.NoDataException;
+import com.github.pires.obd.exceptions.UnableToConnectException;
+import com.github.pires.obd.reader.R;
+import com.google.inject.Inject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+public class TroubleCodesActivity extends Activity {
+
+    private static final String TAG = TroubleCodesActivity.class.getName();
+    private static final UUID MY_UUID = UUID
+            .fromString("00001101-0000-1000-8000-00805F9B34FB");
+    private static final int NO_BLUETOOTH_DEVICE_SELECTED = 0;
+    private static final int CANNOT_CONNECT_TO_DEVICE = 1;
+    private static final int NO_DATA = 3;
+    private static final int DATA_OK = 4;
+    private static final int CLEAR_DTC = 5;
+    private static final int OBD_COMMAND_FAILURE = 10;
+    private static final int OBD_COMMAND_FAILURE_IO = 11;
+    private static final int OBD_COMMAND_FAILURE_UTC = 12;
+    private static final int OBD_COMMAND_FAILURE_IE = 13;
+    private static final int OBD_COMMAND_FAILURE_MIS = 14;
+    private static final int OBD_COMMAND_FAILURE_NODATA = 15;
+    @Inject
+    SharedPreferences prefs;
+    private ProgressDialog progressDialog;
+    private String remoteDevice;
+    private GetTroubleCodesTask gtct;
+    private BluetoothDevice dev = null;
+    private BluetoothSocket sock = null;
+    private Handler mHandler = new Handler(new Handler.Callback() {
+
+
+        public boolean handleMessage(Message msg) {
+             Log.d(TAG, "Message received on handler");
+            switch (msg.what) {
+                case NO_BLUETOOTH_DEVICE_SELECTED:
+                    makeToast(getString(R.string.text_bluetooth_nodevice));
+                    finish();
+                    break;
+                case CANNOT_CONNECT_TO_DEVICE:
+                    makeToast(getString(R.string.text_bluetooth_error_connecting));
+                    finish();
+                    break;
+
+                case OBD_COMMAND_FAILURE:
+                    makeToast(getString(R.string.text_obd_command_failure));
+                    finish();
+                    break;
+                case OBD_COMMAND_FAILURE_IO:
+                    makeToast(getString(R.string.text_obd_command_failure) + " IO");
+                    finish();
+                    break;
+                case OBD_COMMAND_FAILURE_IE:
+                    makeToast(getString(R.string.text_obd_command_failure) + " IE");
+                    finish();
+                    break;
+                case OBD_COMMAND_FAILURE_MIS:
+                    makeToast(getString(R.string.text_obd_command_failure) + " MIS");
+                    finish();
+                    break;
+                case OBD_COMMAND_FAILURE_UTC:
+                    makeToast(getString(R.string.text_obd_command_failure) + " UTC");
+                    finish();
+                    break;
+                case OBD_COMMAND_FAILURE_NODATA:
+                    makeToastLong(getString(R.string.text_noerrors));
+                    //finish();
+                    break;
+
+                case NO_DATA:
+                    makeToast(getString(R.string.text_dtc_no_data));
+                    ///finish();
+                    break;
+                case DATA_OK:
+                    dataOk((String) msg.obj);
+                    break;
+
+            }
+            return false;
+        }
+    });
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        } else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+
+        remoteDevice = prefs.getString(ConfigActivity.BLUETOOTH_LIST_KEY, null);
+        if (remoteDevice == null || "".equals(remoteDevice)) {
+            Log.e(TAG, "No Bluetooth device has been selected.");
+            mHandler.obtainMessage(NO_BLUETOOTH_DEVICE_SELECTED).sendToTarget();
+        } else {
+            gtct = new GetTroubleCodesTask();
+            gtct.execute(remoteDevice);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.trouble_codes, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.action_clear_codes:
+                try {
+                    sock = dev.createRfcommSocketToServiceRecord(MY_UUID);
+                    sock.connect();
+
+                } catch (Exception e) {
+                    Log.e(
+                            TAG,
+                            "There was an error while establishing connection. -> "
+                                    + e.getMessage()
+                    );
+                    Log.d(TAG, "Message received on handler here");
+                    mHandler.obtainMessage(CANNOT_CONNECT_TO_DEVICE).sendToTarget();
+                    return true;
+                }
+                try {
+
+                    Log.d("TESTRESET", "Trying reset");
+                    //new ObdResetCommand().run(sock.getInputStream(), sock.getOutputStream());
+                    ResetTroubleCodesCommand clear = new ResetTroubleCodesCommand();
+                    clear.run(sock.getInputStream(), sock.getOutputStream());
+                    String result = clear.getFormattedResult();
+                    Log.d("TESTRESET", "Trying reset result: " + result);
+                } catch (Exception e) {
+                    Log.e(
+                            TAG,
+                            "There was an error while establishing connection. -> "
+                                    + e.getMessage()
+                    );
+                }
+                gtct.closeSocket(sock);
+                // Refresh main activity upon close of dialog box
+                Intent refresh = new Intent(this, TroubleCodesActivity.class);
+                startActivity(refresh);
+                this.finish(); //
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    Map<String, String> getDict(int keyId, int valId) {
+        String[] keys = getResources().getStringArray(keyId);
+        String[] vals = getResources().getStringArray(valId);
+
+        Map<String, String> dict = new HashMap<String, String>();
+        for (int i = 0, l = keys.length; i < l; i++) {
+            dict.put(keys[i], vals[i]);
+        }
+
+        return dict;
+    }
+
+    public void makeToast(String text) {
+        Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
+        toast.show();
+    }
+    public void makeToastLong(String text) {
+        Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG);
+        toast.show();
+    }
+    private void dataOk(String res) {
+        ListView lv = (ListView) findViewById(R.id.listView);
+        Map<String, String> dtcVals = getDict(R.array.dtc_keys, R.array.dtc_values);
+        //TODO replace below codes (res) with aboce dtcVals
+        //String tmpVal = dtcVals.get(res.split("\n"));
+        //String[] dtcCodes = new String[]{};
+        ArrayList<String> dtcCodes = new ArrayList<String>();
+        //int i =1;
+        if (res != null) {
+            for (String dtcCode : res.split("\n")) {
+                dtcCodes.add(dtcCode + " : " + dtcVals.get(dtcCode));
+                Log.d("TEST", dtcCode + " : " + dtcVals.get(dtcCode));
+            }
+        } else {
+            dtcCodes.add("There are no errors");
+        }
+        ArrayAdapter<String> myarrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dtcCodes);
+        lv.setAdapter(myarrayAdapter);
+        lv.setTextFilterEnabled(true);
+    }
+
+
+    public class ModifiedTroubleCodesObdCommand extends TroubleCodesCommand {
+        @Override
+        public String getResult() {
+            // remove unwanted response from output since this results in erroneous error codes
+            return rawData.replace("SEARCHING...", "").replace("NODATA", "");
+        }
+    }
+
+    public class ClearDTC extends ResetTroubleCodesCommand {
+        @Override
+        public String getResult() {
+            return rawData;
+        }
+    }
+
+
+    private class GetTroubleCodesTask extends AsyncTask<String, Integer, String> {
+
+        @Override
+        protected void onPreExecute() {
+            //Create a new progress dialog
+            progressDialog = new ProgressDialog(TroubleCodesActivity.this);
+            //Set the progress dialog to display a horizontal progress bar
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            //Set the dialog title to 'Loading...'
+            progressDialog.setTitle(getString(R.string.dialog_loading_title));
+            //Set the dialog message to 'Loading application View, please wait...'
+            progressDialog.setMessage(getString(R.string.dialog_loading_body));
+            //This dialog can't be canceled by pressing the back key
+            progressDialog.setCancelable(false);
+            //This dialog isn't indeterminate
+            progressDialog.setIndeterminate(false);
+            //The maximum number of items is 100
+            progressDialog.setMax(5);
+            //Set the current progress to zero
+            progressDialog.setProgress(0);
+            //Display the progress dialog
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String result = "";
+
+            //Get the current thread's token
+            synchronized (this) {
+                Log.d(TAG, "Starting service..");
+                // get the remote Bluetooth device
+
+                final BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+                dev = btAdapter.getRemoteDevice(params[0]);
+
+                Log.d(TAG, "Stopping Bluetooth discovery.");
+                btAdapter.cancelDiscovery();
+
+                Log.d(TAG, "Starting OBD connection..");
+
+                // Instantiate a BluetoothSocket for the remote device and connect it.
+                try {
+                    sock = dev.createRfcommSocketToServiceRecord(MY_UUID);
+                    sock.connect();
+
+                } catch (Exception e) {
+                    Log.e(
+                            TAG,
+                            "There was an error while establishing connection. -> "
+                                    + e.getMessage()
+                    );
+                    Log.d(TAG, "Message received on handler here");
+                    mHandler.obtainMessage(CANNOT_CONNECT_TO_DEVICE).sendToTarget();
+                    return null;
+                }
+
+                try {
+                    // Let's configure the connection.
+                    Log.d(TAG, "Queueing jobs for connection configuration..");
+
+                    onProgressUpdate(1);
+
+                    new ObdResetCommand().run(sock.getInputStream(), sock.getOutputStream());
+
+
+                    onProgressUpdate(2);
+
+                    new EchoOffCommand().run(sock.getInputStream(), sock.getOutputStream());
+
+                    onProgressUpdate(3);
+
+                    new LineFeedOffCommand().run(sock.getInputStream(), sock.getOutputStream());
+
+                    onProgressUpdate(4);
+
+                    new SelectProtocolCommand(ObdProtocols.AUTO).run(sock.getInputStream(), sock.getOutputStream());
+
+                    onProgressUpdate(5);
+
+                    ModifiedTroubleCodesObdCommand tcoc = new ModifiedTroubleCodesObdCommand();
+                    tcoc.run(sock.getInputStream(), sock.getOutputStream());
+                    result = tcoc.getFormattedResult();
+
+                    onProgressUpdate(6);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.e("DTCERR", e.getMessage());
+                    mHandler.obtainMessage(OBD_COMMAND_FAILURE_IO).sendToTarget();
+                    return null;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    Log.e("DTCERR", e.getMessage());
+                    mHandler.obtainMessage(OBD_COMMAND_FAILURE_IE).sendToTarget();
+                    return null;
+                } catch (UnableToConnectException e) {
+                    e.printStackTrace();
+                    Log.e("DTCERR", e.getMessage());
+                    mHandler.obtainMessage(OBD_COMMAND_FAILURE_UTC).sendToTarget();
+                    return null;
+                } catch (MisunderstoodCommandException e) {
+                    e.printStackTrace();
+                    Log.e("DTCERR", e.getMessage());
+                    mHandler.obtainMessage(OBD_COMMAND_FAILURE_MIS).sendToTarget();
+                    return null;
+                } catch (NoDataException e) {
+                    Log.e("DTCERR", e.getMessage());
+                    mHandler.obtainMessage(OBD_COMMAND_FAILURE_NODATA).sendToTarget();
+                    return null;
+                } catch (Exception e) {
+                    Log.e("DTCERR", e.getMessage());
+                    mHandler.obtainMessage(OBD_COMMAND_FAILURE).sendToTarget();
+                } finally {
+
+                    // close socket
+                    closeSocket(sock);
+                }
+
+            }
+
+            return result;
+        }
+
+        public void closeSocket(BluetoothSocket sock) {
+            if (sock != null)
+                // close socket
+                try {
+                    sock.close();
+                } catch (IOException e) {
+                    Log.e(TAG, e.getMessage());
+                }
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+            progressDialog.setProgress(values[0]);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            progressDialog.dismiss();
+
+
+            mHandler.obtainMessage(DATA_OK, result).sendToTarget();
+            setContentView(R.layout.trouble_codes);
+
+        }
+    }
+
+}
