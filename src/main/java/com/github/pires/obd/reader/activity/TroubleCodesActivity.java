@@ -22,12 +22,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-
 import com.github.pires.obd.commands.control.TroubleCodesCommand;
 import com.github.pires.obd.commands.protocol.EchoOffCommand;
 import com.github.pires.obd.commands.protocol.LineFeedOffCommand;
 import com.github.pires.obd.commands.protocol.ObdResetCommand;
-
 import com.github.pires.obd.commands.protocol.ResetTroubleCodesCommand;
 import com.github.pires.obd.commands.protocol.SelectProtocolCommand;
 import com.github.pires.obd.enums.ObdProtocols;
@@ -38,6 +36,7 @@ import com.github.pires.obd.reader.R;
 import com.google.inject.Inject;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -66,10 +65,13 @@ public class TroubleCodesActivity extends Activity {
     private GetTroubleCodesTask gtct;
     private BluetoothDevice dev = null;
     private BluetoothSocket sock = null;
+    private BluetoothSocket sockFallback = null;
+    private boolean useFallback = false;
     private Handler mHandler = new Handler(new Handler.Callback() {
 
 
         public boolean handleMessage(Message msg) {
+
              Log.d(TAG, "Message received on handler");
             switch (msg.what) {
                 case NO_BLUETOOTH_DEVICE_SELECTED:
@@ -294,18 +296,24 @@ public class TroubleCodesActivity extends Activity {
 
                 // Instantiate a BluetoothSocket for the remote device and connect it.
                 try {
+                    // Instantiate a BluetoothSocket for the remote device and connect it.
                     sock = dev.createRfcommSocketToServiceRecord(MY_UUID);
                     sock.connect();
+                    useFallback = false;
+                } catch (Exception e1) {
+                    Log.e(TAG, "There was an error while establishing Bluetooth connection. Falling back..", e1);
+                    Class<?> clazz = sock.getRemoteDevice().getClass();
+                    Class<?>[] paramTypes = new Class<?>[]{Integer.TYPE};
+                    try {
+                        Method m = clazz.getMethod("createRfcommSocket", paramTypes);
+                        Object[] params2 = new Object[]{Integer.valueOf(1)};
+                        sockFallback = (BluetoothSocket) m.invoke(sock.getRemoteDevice(), params2);
+                        sockFallback.connect();
+                        useFallback = true;
+                    } catch (Exception e2) {
+                        Log.e(TAG, "Couldn't fallback while establishing Bluetooth connection. Stopping app..", e2);
 
-                } catch (Exception e) {
-                    Log.e(
-                            TAG,
-                            "There was an error while establishing connection. -> "
-                                    + e.getMessage()
-                    );
-                    Log.d(TAG, "Message received on handler here");
-                    mHandler.obtainMessage(CANNOT_CONNECT_TO_DEVICE).sendToTarget();
-                    return null;
+                    }
                 }
 
                 try {
