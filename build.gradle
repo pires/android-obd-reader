@@ -27,17 +27,16 @@ android {
         targetSdkVersion 21
         applicationId 'com.github.pires.obd.reader'
     }
-
     lintOptions {
         abortOnError false
     }
-
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    buildToolsVersion '23.0.1'
 }
 
 dependencies {
