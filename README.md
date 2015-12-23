@@ -48,6 +48,14 @@ AT H0
 AT SP 0
 ```
 
+One may need to turn off echo and headers depending on the dongle in use:
+```
+AT E0 - Turn echo off. Characters sent to ElmScan are not retransmitted back to the host computer.
+AT E1 - Turn echo on. This is the default state, characters are echoed back to the host computer.
+AT H0 - Turn headers off. This is the default state, header information and CRC byte are omitted.
+AT H1 - Turn headers on. Header information and CRC byte are displayed.
+```
+
 ## Building with custom `obd-java-api`
 
 This project depends on a [pure-Java OBD library](https://github.com/pires/obd-java-api/). For testing with a custom version of it, do the following:
