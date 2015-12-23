@@ -16324,28 +16324,28 @@
         <item>Fuel Composition Sensor Circuit High</item>
         <item>Water in Fuel Sensor High Input Conditions</item>
         <item>Fuel Temperature Sensor A Circuit</item>
-        <item>Engine Fuel Temperature Sensor 'A' Circuit Conditions</item>
+        <item>Engine Fuel Temperature Sensor A Circuit Conditions</item>
         <item>Fuel Temperature Sensor A Circuit Range/Performance</item>
-        <item>Engine Fuel Temperature Sensor 'A' Performance Conditions</item>
+        <item>Engine Fuel Temperature Sensor A Performance Conditions</item>
         <item>Fuel tank temperature sensor - range performance</item>
         <item>Fuel Temperature Sensor A Circuit Low</item>
         <item>CNG Temperature Sensor Low Input Conditions</item>
-        <item>Engine Fuel Temperature Sensor 'A' Circuit Low Conditions</item>
+        <item>Engine Fuel Temperature Sensor A Circuit Low Conditions</item>
         <item>Fuel Temperature Sensor Circuit Low Input Conditions</item>
         <item>Fuel tank temperature sensor - voltage low</item>
         <item>Fuel Temperature Sensor A Circuit High</item>
         <item>CNG Temperature Sensor High Input Conditions</item>
-        <item>Engine Fuel Temperature Sensor 'A' Circuit High Conditions</item>
+        <item>Engine Fuel Temperature Sensor A Circuit High Conditions</item>
         <item>Fuel Temperature Sensor Circuit High Input Conditions</item>
         <item>Fuel tank temperature sensor - voltage high</item>
         <item>Fuel Temperature Sensor A Circuit Intermittent</item>
         <item>Fuel Temperature Sensor B Circuit</item>
         <item>Fuel Temperature Sensor B Circuit Range/Performance</item>
-        <item>Engine Fuel Temperature Sensor 'B' Performance Conditions</item>
+        <item>Engine Fuel Temperature Sensor B Performance Conditions</item>
         <item>Fuel Temperature Sensor B Circuit Low</item>
-        <item>Engine Fuel Temperature Sensor 'B' Circuit Low Conditions</item>
+        <item>Engine Fuel Temperature Sensor B Circuit Low Conditions</item>
         <item>Fuel Temperature Sensor B Circuit High</item>
-        <item>Engine Fuel Temperature Sensor 'B' Circuit High Conditions</item>
+        <item>Engine Fuel Temperature Sensor B Circuit High Conditions</item>
         <item>Fuel Temperature Sensor B Circuit Intermittent</item>
         <item>Fuel Pressure Sensor B Circuit</item>
         <item>Fuel Pressure Sensor B Circuit Range/Performance</item>
@@ -16415,11 +16415,11 @@
         <item>Accelerator Pedal Position Sensor 2 Performance Conditions</item>
         <item>Throttle position (TP) sensor 1 &amp; 2 - range performance problem</item>
         <item>Throttle/Pedal Position Sensor/Switch B Circuit Low</item>
-        <item>Throttle Position Sensor 'B Circuit Low Conditions</item>
+        <item>Throttle Position Sensor B Circuit Low Conditions</item>
         <item>Accelerator Pedal Position Sensor 2 Low Input Conditions</item>
         <item>Throttle position (TP) sensor 1 - voltage low</item>
         <item>Throttle/Pedal Position Sensor/Switch B Circuit High</item>
-        <item>Throttle Position Sensor 'B Circuit High Conditions</item>
+        <item>Throttle Position Sensor B Circuit High Conditions</item>
         <item>Accelerator Pedal Position Sensor 2 High Input Conditions</item>
         <item>Throttle position (TP) sensor 1 - voltage high</item>
         <item>Throttle/Pedal Position Sensor/Switch B Circuit Intermittent</item>
@@ -16765,29 +16765,29 @@
         <item>Ignition Coil (Undetermined) Primary Circuit Conditions</item>
         <item>Ignition Coil A Primary/Secondary Circuit</item>
         <item>Ignition Coil 1 Primary Circuit Conditions</item>
-        <item>Ignition Coil 'A' or 1 Primary/Secondary Circuit Conditions</item>
+        <item>Ignition Coil A or 1 Primary/Secondary Circuit Conditions</item>
         <item>Ignition Control Circuit (Cylinders 1 &amp; 4) Conditions</item>
         <item>Ignition Coil B Primary/Secondary Circuit</item>
         <item>Ignition Coil 2 Primary Circuit Conditions</item>
-        <item>Ignition Coil 'B' or 2 Primary/Secondary Circuit Conditions</item>
+        <item>Ignition Coil B or 2 Primary/Secondary Circuit Conditions</item>
         <item>Ignition Control Circuit (Cylinders 2 &amp; 3) Conditions</item>
         <item>Ignition Coil C Primary/Secondary Circuit</item>
         <item>Ignition Coil 3 Primary Circuit Conditions</item>
-        <item>Ignition Coil 'C' or 3 Primary/Secondary Circuit Conditions</item>
+        <item>Ignition Coil C or 3 Primary/Secondary Circuit Conditions</item>
         <item>Ignition Coil D Primary/Secondary Circuit</item>
-        <item>Ignition Coil 'D' or 4 Primary/Secondary Circuit Conditions</item>
+        <item>Ignition Coil D or 4 Primary/Secondary Circuit Conditions</item>
         <item>Ignition Coil E Primary/Secondary Circuit</item>
-        <item>Ignition Coil 'E' or 5 Primary/Secondary Circuit Conditions</item>
+        <item>Ignition Coil E or 5 Primary/Secondary Circuit Conditions</item>
         <item>Ignition Coil F Primary/Secondary Circuit</item>
-        <item>Ignition Coil 'F or 6 Primary/Secondary Circuit Conditions</item>
+        <item>Ignition Coil F or 6 Primary/Secondary Circuit Conditions</item>
         <item>Ignition Coil G Primary/Secondary Circuit</item>
-        <item>Ignition Coil 'G' or 7 Primary/Secondary Circuit Conditions</item>
+        <item>Ignition Coil G or 7 Primary/Secondary Circuit Conditions</item>
         <item>Ignition Coil H Primary/Secondary Circuit</item>
-        <item>Ignition Coil 'H' or 8 Primary/Secondary Circuit Conditions</item>
+        <item>Ignition Coil H or 8 Primary/Secondary Circuit Conditions</item>
         <item>Ignition Coil I Primary/Secondary Circuit</item>
         <item>Ignition Coil I or 9 Primary/Secondary Circuit Conditions</item>
         <item>Ignition Coil J Primary/Secondary Circuit</item>
-        <item>Ignition Coil 'J' or 10 Primary/Secondary Circuit Conditions</item>
+        <item>Ignition Coil J or 10 Primary/Secondary Circuit Conditions</item>
         <item>Ignition Coil K Primary/Secondary Circuit</item>
         <item>Ignition Coil L Primary/Secondary Circuit</item>
         <item>Misfire Detected - Fueling Disabled</item>
@@ -16820,9 +16820,9 @@
         <item>Glow Plug Control Module Control Circuit High</item>
         <item>Crankshaft Position Sensor B Circuit</item>
         <item>Crankshaft Position Sensor Circuit Conditions</item>
-        <item>Crankshaft Position Sensor 'B' Circuit Conditions</item>
+        <item>Crankshaft Position Sensor B Circuit Conditions</item>
         <item>Crankshaft Position Sensor B Circuit Range/Performance</item>
-        <item>Crankshaft Position Sensor 'B' Performance Conditions</item>
+        <item>Crankshaft Position Sensor B Performance Conditions</item>
         <item>Crankshaft Position Sensor B Circuit Low</item>
         <item>Crankshaft Position Sensor B Circuit High</item>
         <item>Crankshaft Position Sensor B Circuit Intermittent</item>
@@ -16879,14 +16879,14 @@
         <item>Secondary AIR System Circuit Conditions</item>
         <item>Secondary Air System Solenoid Control Circuit Conditions</item>
         <item>Secondary Air Injection System Switching Valve A Circuit Open</item>
-        <item>Secondary AIR Switching Valve 'A' Circuit Open Conditions</item>
+        <item>Secondary AIR Switching Valve A Circuit Open Conditions</item>
         <item>Secondary Air Injection System Switching Valve A Circuit Shorted</item>
-        <item>Secondary AIR Switching Valve 'A' Circuit Shorted Conditions</item>
+        <item>Secondary AIR Switching Valve A Circuit Shorted Conditions</item>
         <item>Secondary Air Injection System Switching Valve B Circuit</item>
         <item>Secondary Air Injection System Switching Valve B Circuit Open</item>
-        <item>Secondary AIR Switching Valve 'B' Circuit Open Conditions</item>
+        <item>Secondary AIR Switching Valve B Circuit Open Conditions</item>
         <item>Secondary Air Injection System Switching Valve B Circuit Shorted</item>
-        <item>Secondary AIR Switching Valve 'B' Circuit Shorted Conditions</item>
+        <item>Secondary AIR Switching Valve B Circuit Shorted Conditions</item>
         <item>Secondary Air Injection System Control A Circuit</item>
         <item>Secondary Air Pump Relay Control Conditions</item>
         <item>Secondary Air Injection System Control B Circuit</item>
@@ -17320,10 +17320,10 @@
         <item>Generator Control Circuit</item>
         <item>Generator Performance Conditions</item>
         <item>Generator Lamp/L Terminal Circuit</item>
-        <item>Generator 'L' Terminal Circuit Conditions</item>
+        <item>Generator L Terminal Circuit Conditions</item>
         <item>Generator Field/F Terminal Circuit</item>
         <item>Generator Field Not Switching Properly Conditions</item>
-        <item>Generator 'F' Terminal Circuit Conditions</item>
+        <item>Generator F Terminal Circuit Conditions</item>
         <item>Generator Lamp Control Circuit</item>
         <item>Fuel Cap Lamp Control Circuit</item>
         <item>Generator Field/F Terminal Circuit Low</item>
@@ -19484,7 +19484,7 @@
         <item>Injector Control Circuit Intermittent Conditions</item>
         <item>Throttle position (TP) sensor 2 - voltage low</item>
         <item>Throttle position (TP) sensor 2 - voltage low</item>
-        <item>TP Sensor 'B' Out of Self-Test Range Conditions</item>
+        <item>TP Sensor B Out of Self-Test Range Conditions</item>
         <item>Throttle position (TP) sensor 2 - voltage high</item>
         <item>Throttle position (TP) sensor 2 - voltage high</item>
         <item>Injector 1 - short to ground</item>
@@ -20009,7 +20009,7 @@
         <item>Ignition coil/amplifier, cylinder 8 - short to positive</item>
         <item>ICM CMP Pulse To 4X Reference Pulse Comparison</item>
         <item>Ignition coil/amplifier, cylinder 8 - short to ground</item>
-        <item>Variable Cam Timing Solenoid 'A' Circuit Conditions</item>
+        <item>Variable Cam Timing Solenoid A Circuit Conditions</item>
         <item>EBTCM DTC Detected, Rough Road Data Unusable</item>
         <item>Engine control module (ECM)/ABS control module, rough road signal - communication fault</item>
         <item>ECM to ABS communication - unusable signal</item>
@@ -20466,7 +20466,7 @@
         <item>Exhaust gas recirculation (EGR) valve - circuit 4 malfunction</item>
         <item>Exhaust gas recirculation (EGR) valve coil 4 - short/open circuit</item>
         <item>Fuel pump relay - circuit malfunction</item>
-        <item>Alternator 'FR' Terminal Circuit Conditions</item>
+        <item>Alternator FR Terminal Circuit Conditions</item>
         <item>VSS or POSM (Intermittent) Circuit Conditions</item>
         <item>Starter Signal Circuit</item>
         <item>Vehicle speed signal - malfunction</item>
@@ -21101,9 +21101,9 @@
         <item>Engine control module (ECM) - RAM stack</item>
         <item>CAN data bus, SRS - no signal</item>
         <item>CAN data bus, electronic CE - no signal</item>
-        <item>Generator 'L' Terminal Circuit Conditions</item>
+        <item>Generator L Terminal Circuit Conditions</item>
         <item>CAN data bus, electronic CE - no signal</item>
-        <item>Generator 'F' Terminal Circuit Conditions</item>
+        <item>Generator F Terminal Circuit Conditions</item>
         <item><![CDATA[Accelerator pedal position (APP) sensor &#189; - range/performance problem]]></item>
         <item>TCM Analog To Digital Converter Conditions</item>
         <item>Sensor supply voltage - circuit 2 malfunction</item>
@@ -21113,7 +21113,7 @@
         <item>Engine control module (ECM) - internal fault</item>
         <item>Engine control module (ECM) - defective</item>
         <item>PCM Trouble Codes Available in Another Module Conditions</item>
-        <item>Output Driver Module 'A' Error Conditions</item>
+        <item>Output Driver Module A Error Conditions</item>
         <item>Engine control module (ECM), output driver - internal fault</item>
         <item>Engine control module, output driver 1 - supply voltage high</item>
         <item>Engine control relay - voltage low/high</item>
@@ -21233,12 +21233,12 @@
         <item>Injector 4 - current circuit</item>
         <item>Engine control module (ECM) cooling fan - circuit malfunction</item>
         <item>Injector 4 - current circuit</item>
-        <item>Quad Driver Module 'C' Fault Detected Conditions</item>
+        <item>Quad Driver Module C Fault Detected Conditions</item>
         <item>Ignition power stage B - circuit malfunction</item>
         <item>Engine control module (ECM) cooling fan - circuit low</item>
         <item>Throttle actuator limp home relay - open circuit/short to ground</item>
         <item>AT to ECM signal - no signal</item>
-        <item>Quad Driver Module 'C' Fault Detected Conditions</item>
+        <item>Quad Driver Module C Fault Detected Conditions</item>
         <item>Engine control module (ECM) cooling fan - circuit high</item>
         <item>Throttle actuator limp home relay - short to positive</item>
         <item>AT to ECM signal - signal failure</item>
@@ -21554,9 +21554,9 @@
         <item>Shift control solenoid - malfunction</item>
         <item>Shift control solenoid - circuit malfunction</item>
         <item>Internal Mode Switch - No Start (4T65 - E Transmission)</item>
-        <item>Internal Mode Switch Circuit 'A' Low (4T80-E Transmission)</item>
-        <item>Internal Mode Switch Circuit 'B' Low (4T80-E Transmission)</item>
-        <item>Internal Mode Switch Circuit 'P' Low (4T80-E Transmission)</item>
+        <item>Internal Mode Switch Circuit A Low (4T80-E Transmission)</item>
+        <item>Internal Mode Switch Circuit B Low (4T80-E Transmission)</item>
+        <item>Internal Mode Switch Circuit P Low (4T80-E Transmission)</item>
         <item>Internal Mode Switch - Invalid Range (4T80-E Transmission)</item>
         <item>Internal Mode Switch - Invalid Range (4T65-E Transmission)</item>
         <item>AT - kick-down switch always ON</item>
