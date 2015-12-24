@@ -1,5 +1,6 @@
 package com.github.pires.obd.reader.activity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
@@ -34,6 +35,7 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.pires.obd.commands.ObdCommand;
 import com.github.pires.obd.commands.SpeedCommand;
@@ -89,6 +91,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
     private static final int NO_GPS_SUPPORT = 9;
     private static final int TRIPS_LIST = 10;
     private static final int SAVE_TRIP_NOT_AVAILABLE = 11;
+    private static final int REQUEST_ENABLE_BT = 1234;
     private static boolean bluetoothDefaultIsEnable = false;
 
     static {
@@ -491,7 +494,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
         endTrip();
 
         releaseWakeLockIfHeld();
-final String devemail = prefs.getString(ConfigActivity.DEV_EMAIL_KEY,null);
+        final String devemail = prefs.getString(ConfigActivity.DEV_EMAIL_KEY,null);
         if (devemail != null) {
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override
@@ -531,7 +534,9 @@ final String devemail = prefs.getString(ConfigActivity.DEV_EMAIL_KEY,null);
                 build.setMessage(getString(R.string.text_no_bluetooth_id));
                 return build.create();
             case BLUETOOTH_DISABLED:
-                build.setMessage(getString(R.string.text_bluetooth_disabled));
+                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+//                build.setMessage(getString(R.string.text_bluetooth_disabled));
                 return build.create();
             case NO_ORIENTATION_SENSOR:
                 build.setMessage(getString(R.string.text_no_orientation_sensor));
@@ -657,6 +662,18 @@ final String devemail = prefs.getString(ConfigActivity.DEV_EMAIL_KEY,null);
             case GpsStatus.GPS_EVENT_SATELLITE_STATUS:
                 break;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_ENABLE_BT) {
+            if (resultCode == Activity.RESULT_OK) {
+                btStatusTextView.setText(getString(R.string.status_bluetooth_connected));
+            } else {
+                Toast.makeText(this, "Bluetooth not enabled", Toast.LENGTH_LONG).show();
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private synchronized void gpsStart() {
