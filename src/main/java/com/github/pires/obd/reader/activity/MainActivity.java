@@ -536,7 +536,6 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
             case BLUETOOTH_DISABLED:
                 Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-//                build.setMessage(getString(R.string.text_bluetooth_disabled));
                 return build.create();
             case NO_ORIENTATION_SENSOR:
                 build.setMessage(getString(R.string.text_no_orientation_sensor));
@@ -670,7 +669,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
             if (resultCode == Activity.RESULT_OK) {
                 btStatusTextView.setText(getString(R.string.status_bluetooth_connected));
             } else {
-                Toast.makeText(this, "Bluetooth not enabled", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.text_bluetooth_disabled, Toast.LENGTH_LONG).show();
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
