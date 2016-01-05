@@ -393,7 +393,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
 
         preRequisites = btAdapter != null && btAdapter.isEnabled();
         if (!preRequisites && prefs.getBoolean(ConfigActivity.ENABLE_BT_KEY, false)) {
-            preRequisites = btAdapter.enable();
+            preRequisites = btAdapter != null && btAdapter.enable();
         }
 
         gpsInit();
