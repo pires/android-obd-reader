@@ -56,6 +56,7 @@ import com.github.pires.obd.reader.trips.TripLog;
 import com.github.pires.obd.reader.trips.TripRecord;
 import com.google.inject.Inject;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -478,10 +479,14 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
             long mils = System.currentTimeMillis();
             SimpleDateFormat sdf = new SimpleDateFormat("_dd_MM_yyyy_HH_mm_ss");
 
-            myCSVWriter = new LogCSVWriter("Log" + sdf.format(new Date(mils)).toString() + ".csv",
-                    prefs.getString(ConfigActivity.DIRECTORY_FULL_LOGGING_KEY,
-                            getString(R.string.default_dirname_full_logging))
-            );
+            try {
+                myCSVWriter = new LogCSVWriter("Log" + sdf.format(new Date(mils)).toString() + ".csv",
+                        prefs.getString(ConfigActivity.DIRECTORY_FULL_LOGGING_KEY,
+                                getString(R.string.default_dirname_full_logging))
+                );
+            } catch (FileNotFoundException | RuntimeException e) {
+                Log.e(TAG, "Can't enable logging to file.", e);
+            }
         }
     }
 

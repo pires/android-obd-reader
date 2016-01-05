@@ -13,10 +13,6 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Map;
 
-/**
- * Created by Max Christ on 14.07.15.
- */
-
 public class LogCSVWriter {
 
     private static final String TAG = LogCSVWriter.class.getName();
@@ -35,32 +31,24 @@ public class LogCSVWriter {
             "FUEL_PRESSURE", "SPEED", "Short Term Fuel Trim Bank 2",
             "Short Term Fuel Trim Bank 1", "ENGINE_RUNTIME", "THROTTLE_POS", "DTC_NUMBER",
             "TROUBLE_CODES", "TIMING_ADVANCE", "EQUIV_RATIO"};
-    private static String dir;
     private boolean isFirstLine;
     private BufferedWriter buf;
 
-    public LogCSVWriter(String filename, String dirname) {
+    public LogCSVWriter(String filename, String dirname) throws FileNotFoundException, RuntimeException {
 
         File sdCard = Environment.getExternalStorageDirectory();
         File dir = new File(sdCard.getAbsolutePath() + File.separator + dirname);
-        dir.mkdirs();
-
-        Log.d(TAG, "Path is " + sdCard.getAbsolutePath() + File.separator + dirname);
-
-        File file = new File(dir, filename);
-        FileOutputStream fos = null;
-
-        try {
-            fos = new FileOutputStream(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        if (dir.mkdirs()) {
+            Log.d(TAG, "Path is " + sdCard.getAbsolutePath() + File.separator + dirname);
+            File file = new File(dir, filename);
+            FileOutputStream fos = new FileOutputStream(file);
+            OutputStreamWriter osw = new OutputStreamWriter(fos);
+            this.buf = new BufferedWriter(osw);
+            this.isFirstLine = true;
+            Log.d(TAG, "Constructed the LogCSVWriter");
+        } else {
+            throw new RuntimeException("Can't create LogCSVWriter directories.");
         }
-
-        OutputStreamWriter osw = new OutputStreamWriter(fos);
-        this.buf = new BufferedWriter(osw);
-        this.isFirstLine = true;
-
-        Log.d(TAG, "Constructed the LogCSVWriter");
 
     }
 
@@ -75,7 +63,7 @@ public class LogCSVWriter {
     }
 
     public void writeLineCSV(ObdReading reading) {
-        String crl = new String();
+        String crl;
 
         if (isFirstLine) {
             crl = HEADER_CSV + reading.toString();
