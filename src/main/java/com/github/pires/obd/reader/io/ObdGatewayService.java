@@ -7,14 +7,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Binder;
 import android.os.Build;
 import android.os.Environment;
-import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.github.pires.obd.commands.ObdCommand;
 import com.github.pires.obd.commands.protocol.EchoOffCommand;
 import com.github.pires.obd.commands.protocol.LineFeedOffCommand;
 import com.github.pires.obd.commands.protocol.ObdResetCommand;
@@ -26,15 +23,11 @@ import com.github.pires.obd.exceptions.UnsupportedCommandException;
 import com.github.pires.obd.reader.R;
 import com.github.pires.obd.reader.activity.ConfigActivity;
 import com.github.pires.obd.reader.activity.MainActivity;
-import com.github.pires.obd.reader.io.BluetoothManager;
 import com.github.pires.obd.reader.io.ObdCommandJob.ObdCommandJobState;
 import com.google.inject.Inject;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.UUID;
 
 /**
  * This service is primarily responsible for establishing and maintaining a
@@ -47,13 +40,11 @@ import java.util.UUID;
 public class ObdGatewayService extends AbstractGatewayService {
 
     private static final String TAG = ObdGatewayService.class.getName();
-    private final IBinder binder = new ObdGatewayServiceBinder();
     @Inject
     SharedPreferences prefs;
 
     private BluetoothDevice dev = null;
     private BluetoothSocket sock = null;
-    private BluetoothSocket sockFallback = null;
 
     public void startService() throws IOException {
         Log.d(TAG, "Starting service..");
@@ -109,14 +100,6 @@ public class ObdGatewayService extends AbstractGatewayService {
             }
             showNotification(getString(R.string.notification_action), getString(R.string.service_started), R.drawable.ic_btcar, true, true, false);
         }
-
-     /*
-     * TODO clean
-     *
-     * Get more preferences
-     */
-        ArrayList<ObdCommand> cmds = ConfigActivity.getObdCommands(prefs);
-
     }
 
     /**
@@ -130,11 +113,11 @@ public class ObdGatewayService extends AbstractGatewayService {
         Log.d(TAG, "Starting OBD connection..");
         isRunning = true;
         try {
-        	sock = BluetoothManager.connect(dev);
+            sock = BluetoothManager.connect(dev);
         } catch (Exception e2) {
-        	Log.e(TAG, "There was an error while establishing Bluetooth connection. Stopping app..", e2);
-        	stopService();
-        	throw new IOException();
+            Log.e(TAG, "There was an error while establishing Bluetooth connection. Stopping app..", e2);
+            stopService();
+            throw new IOException();
         }
 
         // Let's configure the connection.
@@ -239,7 +222,7 @@ public class ObdGatewayService extends AbstractGatewayService {
         Log.d(TAG, "Stopping service..");
 
         notificationManager.cancel(NOTIFICATION_ID);
-        jobsQueue.removeAll(jobsQueue); // TODO is this safe?
+        jobsQueue.clear();
         isRunning = false;
 
         if (sock != null)
@@ -258,18 +241,13 @@ public class ObdGatewayService extends AbstractGatewayService {
         return isRunning;
     }
 
-    public class ObdGatewayServiceBinder extends Binder {
-        public ObdGatewayService getService() {
-            return ObdGatewayService.this;
-        }
-    }
     public static void saveLogcatToFile(Context context, String devemail) {
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
         emailIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                emailIntent.setType("text/plain");
+        emailIntent.setType("text/plain");
         emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{devemail});
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "OBD2 Reader Debug Logs");
-        
+
         StringBuilder sb = new StringBuilder();
         sb.append("\nManufacturer: ").append(Build.MANUFACTURER);
         sb.append("\nModel: ").append(Build.MODEL);

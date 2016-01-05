@@ -109,7 +109,6 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
     private TripLog triplog;
     private TripRecord currentTrip;
 
-    private Context context;
     @InjectView(R.id.compass_text)
     private TextView compass;
     private final SensorEventListener orientListener = new SensorEventListener() {
@@ -331,10 +330,8 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
         else
             showDialog(NO_ORIENTATION_SENSOR);
 
-
-        context = this.getApplicationContext();
         // create a log instance for use by this application
-        triplog = TripLog.getInstance(context);
+        triplog = TripLog.getInstance(this.getApplicationContext());
     }
 
     @Override
@@ -419,11 +416,6 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
         return true;
     }
 
-    // private void staticCommand() {
-    // Intent commandIntent = new Intent(this, ObdReaderCommandActivity.class);
-    // startActivity(commandIntent);
-    // }
-
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case START_LIVE_DATA:
@@ -441,9 +433,6 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
             case TRIPS_LIST:
                 startActivity(new Intent(this, TripListActivity.class));
                 return true;
-            // case COMMAND_ACTIVITY:
-            // staticCommand();
-            // return true;
         }
         return false;
     }
@@ -499,7 +488,8 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
         endTrip();
 
         releaseWakeLockIfHeld();
-        final String devemail = prefs.getString(ConfigActivity.DEV_EMAIL_KEY,null);
+
+        final String devemail = prefs.getString(ConfigActivity.DEV_EMAIL_KEY, null);
         if (devemail != null) {
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override
@@ -684,7 +674,6 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
         if (!mGpsIsStarted && mLocProvider != null && mLocService != null && mLocService.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             mLocService.requestLocationUpdates(mLocProvider.getName(), getGpsUpdatePeriod(prefs), getGpsDistanceUpdatePeriod(prefs), this);
             mGpsIsStarted = true;
-        } else if (mGpsIsStarted && mLocProvider != null && mLocService != null) {
         } else {
             gpsStatusTextView.setText(getString(R.string.status_gps_no_support));
         }
