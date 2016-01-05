@@ -196,7 +196,12 @@ public class ObdGatewayService extends AbstractGatewayService {
                 if (job.getState().equals(ObdCommandJobState.NEW)) {
                     Log.d(TAG, "Job state is NEW. Run it..");
                     job.setState(ObdCommandJobState.RUNNING);
-                    job.getCommand().run(sock.getInputStream(), sock.getOutputStream());
+                    if (sock.isConnected()) {
+                        job.getCommand().run(sock.getInputStream(), sock.getOutputStream());
+                    } else {
+                        job.setState(ObdCommandJobState.EXECUTION_ERROR);
+                        Log.e(TAG, "Can't run command on a closed socket.");
+                    }
                 } else
                     // log not new job
                     Log.e(TAG,
