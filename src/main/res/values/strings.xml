@@ -104,6 +104,6 @@
     <string name="pref_dirname_title">Directory name</string>
     <string name="pref_dirname_summary">Name of the directory where to save the files</string>
     <string name="pref_dev_email_title">Developer Email</string>
-    <string name="pref_dev_email_summary">Logs will be email to the address</string>
+    <string name="pref_dev_email_summary">Logs will be emailed to this address</string>
     <string name="text_noerrors">There were no errors found.!</string>
 </resources>

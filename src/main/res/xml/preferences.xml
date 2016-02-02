@@ -105,7 +105,7 @@
             android:summary="@string/pref_reader_config_summary"
             android:title="@string/pref_reader_config_title" />
         <EditTextPreference
-            android:defaultValue=""
+            android:defaultValue="pjpires@gmail.com"
             android:dialogTitle="@string/pref_dev_email_title"
             android:key="dev_email"
             android:summary="@string/pref_dev_email_summary"
@@ -115,14 +115,14 @@
         <PreferenceScreen
             android:key="obd_commands_screen"
             android:summary="@string/title_pref_commands_summary"
-            android:title="@string/title_pref_commands_title"></PreferenceScreen>
+            android:title="@string/title_pref_commands_title"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/title_pref_full_logging">
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="enable_full_logging"
             android:summary="@string/pref_enable_full_logging_summary"
-            android:title="@string/pref_enable_full_logging_title"></CheckBoxPreference>
+            android:title="@string/pref_enable_full_logging_title"/>
         <EditTextPreference
             android:defaultValue="@string/default_dirname_full_logging"
             android:dialogTitle="@string/pref_dirname_dialogTitle"
