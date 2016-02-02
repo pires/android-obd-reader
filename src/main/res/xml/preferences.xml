@@ -105,7 +105,7 @@
             android:summary="@string/pref_reader_config_summary"
             android:title="@string/pref_reader_config_title" />
         <EditTextPreference
-            android:defaultValue="pjpires@gmail.com"
+            android:defaultValue=""
             android:dialogTitle="@string/pref_dev_email_title"
             android:key="dev_email"
             android:summary="@string/pref_dev_email_summary"
