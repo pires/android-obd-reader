@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Android OBD-II Reader</string>
+    <string name="app_name" translatable="false">OBD-II Reader</string>
     <string name="action_settings">Settings</string>
     <string name="action_clear_codes">Clear Codes</string>
     <string name="notification_action">Tap to open OBD-Reader</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppBaseTheme" parent="android:Theme.Material.Light">
+    <style name="AppBaseTheme" parent="android:Theme.Material.Light.DarkActionBar">
 
         <!--    color for the app bar -->
         <item name="android:colorPrimary">@color/primary</item>
