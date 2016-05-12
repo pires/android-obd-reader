@@ -42,7 +42,7 @@ android {
 
 dependencies {
     compile 'com.android.support:appcompat-v7:22.1.1'
-    compile 'com.github.pires:obd-java-api:1.0-RC14'
+    compile 'com.github.pires:obd-java-api:1.0-RC16'
     compile 'org.roboguice:roboguice:3.+'
     provided 'org.roboguice:roboblender:3.+'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
