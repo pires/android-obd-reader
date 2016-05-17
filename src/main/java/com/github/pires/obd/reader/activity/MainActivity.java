@@ -195,7 +195,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
                     Map<String, String> temp = new HashMap<String, String>();
                     temp.putAll(commandResult);
                     ObdReading reading = new ObdReading(lat, lon, alt, System.currentTimeMillis(), vin, temp);
-                    myCSVWriter.writeLineCSV(reading);
+                    if(reading != null) myCSVWriter.writeLineCSV(reading);
                 }
                 commandResult.clear();
             }
