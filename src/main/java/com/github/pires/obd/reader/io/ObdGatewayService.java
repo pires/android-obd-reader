@@ -123,6 +123,10 @@ public class ObdGatewayService extends AbstractGatewayService {
         // Let's configure the connection.
         Log.d(TAG, "Queueing jobs for connection configuration..");
         queueJob(new ObdCommandJob(new ObdResetCommand()));
+        
+        //Below is to give the adapter enough time to reset before sending the commands, otherwise the first startup commands could be ignored.
+        try { Thread.sleep(500); } catch (InterruptedException e) { e.printStackTrace(); }
+        
         queueJob(new ObdCommandJob(new EchoOffCommand()));
 
     /*
