@@ -35,10 +35,10 @@ public class LogCSVWriter {
     private BufferedWriter buf;
 
     public LogCSVWriter(String filename, String dirname) throws FileNotFoundException, RuntimeException {
-
-        File sdCard = Environment.getExternalStorageDirectory();
-        File dir = new File(sdCard.getAbsolutePath() + File.separator + dirname);
-        if (dir.mkdirs()) {
+        try{
+            File sdCard = Environment.getExternalStorageDirectory();
+            File dir = new File(sdCard.getAbsolutePath() + File.separator + dirname);
+            if (!dir.exists()) dir.mkdirs();
             Log.d(TAG, "Path is " + sdCard.getAbsolutePath() + File.separator + dirname);
             File file = new File(dir, filename);
             FileOutputStream fos = new FileOutputStream(file);
@@ -46,10 +46,10 @@ public class LogCSVWriter {
             this.buf = new BufferedWriter(osw);
             this.isFirstLine = true;
             Log.d(TAG, "Constructed the LogCSVWriter");
-        } else {
-            throw new RuntimeException("Can't create LogCSVWriter directories.");
         }
-
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void closeLogCSVWriter() {
