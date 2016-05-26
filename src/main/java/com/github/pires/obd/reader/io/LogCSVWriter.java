@@ -48,7 +48,7 @@ public class LogCSVWriter {
             Log.d(TAG, "Constructed the LogCSVWriter");
         }
         catch (Exception e) {
-            Log.e(TAG,"LogCSVWriter constructor failed");
+            Log.e(TAG, "LogCSVWriter constructor failed");
         }
     }
 
