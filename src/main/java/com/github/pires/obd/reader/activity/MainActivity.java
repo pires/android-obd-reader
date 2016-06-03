@@ -489,8 +489,8 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
 
         releaseWakeLockIfHeld();
 
-        final String devemail = prefs.getString(ConfigActivity.DEV_EMAIL_KEY, null);
-        if (devemail != null) {
+        final String devemail = prefs.getString(ConfigActivity.DEV_EMAIL_KEY, null).trim();
+        if (devemail != null && !devemail.isEmpty()) {
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
