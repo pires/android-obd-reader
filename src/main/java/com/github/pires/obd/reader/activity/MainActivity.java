@@ -262,14 +262,15 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
 
         if (job.getState().equals(ObdCommandJob.ObdCommandJobState.EXECUTION_ERROR)) {
             cmdResult = job.getCommand().getResult();
-            if (cmdResult != null) {
+            if (cmdResult != null && isServiceBound) {
                 obdStatusTextView.setText(cmdResult.toLowerCase());
             }
         } else if (job.getState().equals(ObdCommandJob.ObdCommandJobState.NOT_SUPPORTED)) {
             cmdResult = getString(R.string.status_obd_no_support);
         } else {
             cmdResult = job.getCommand().getFormattedResult();
-            obdStatusTextView.setText(getString(R.string.status_obd_data));
+            if(isServiceBound)
+                obdStatusTextView.setText(getString(R.string.status_obd_data));
         }
 
         if (vv.findViewWithTag(cmdID) != null) {
