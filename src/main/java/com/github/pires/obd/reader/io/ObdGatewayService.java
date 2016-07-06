@@ -200,6 +200,14 @@ public class ObdGatewayService extends AbstractGatewayService {
                     job.setState(ObdCommandJobState.NOT_SUPPORTED);
                 }
                 Log.d(TAG, "Command not supported. -> " + u.getMessage());
+            } catch (IOException io) {
+                if (job != null) {
+                    if(io.getMessage().contains("Broken pipe"))
+                        job.setState(ObdCommandJobState.BROKEN_PIPE);
+                    else
+                        job.setState(ObdCommandJobState.EXECUTION_ERROR);
+                }
+                Log.e(TAG, "IO error. -> " + io.getMessage());
             } catch (Exception e) {
                 if (job != null) {
                     job.setState(ObdCommandJobState.EXECUTION_ERROR);
