@@ -265,6 +265,9 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
             if (cmdResult != null && isServiceBound) {
                 obdStatusTextView.setText(cmdResult.toLowerCase());
             }
+        } else if (job.getState().equals(ObdCommandJob.ObdCommandJobState.BROKEN_PIPE)) {
+            if (isServiceBound)
+                stopLiveData();
         } else if (job.getState().equals(ObdCommandJob.ObdCommandJobState.NOT_SUPPORTED)) {
             cmdResult = getString(R.string.status_obd_no_support);
         } else {
@@ -333,6 +336,8 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
 
         // create a log instance for use by this application
         triplog = TripLog.getInstance(this.getApplicationContext());
+        
+        obdStatusTextView.setText(getString(R.string.status_obd_disconnected));
     }
 
     @Override
