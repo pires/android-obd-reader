@@ -3,6 +3,8 @@ android-obd-reader
 
 ![logo](/src/main/res/drawable-xxhdpi/ic_btcar.png)
 
+[![CircleCI](https://circleci.com/gh/pires/android-obd-reader.svg?style=svg)](https://circleci.com/gh/pires/android-obd-reader)
+
 Android OBD-II reader designed to connect with Bluetooth Elm327 OBD reader.
 
 ![screenshot](/Screenshot.png)
