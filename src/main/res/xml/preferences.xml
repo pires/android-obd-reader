@@ -126,7 +126,7 @@
         <EditTextPreference
             android:defaultValue="@string/default_dirname_full_logging"
             android:dialogTitle="@string/pref_dirname_dialogTitle"
-            android:key="dirname_full_logging"
+            android:key="directory_full_logging"
             android:summary="@string/pref_dirname_summary"
             android:title="@string/pref_dirname_title" />
     </PreferenceCategory>
