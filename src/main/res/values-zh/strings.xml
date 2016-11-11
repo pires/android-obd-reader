@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Android OBD-II Reader</string>
     <string name="action_settings">设置</string>
     <string name="action_clear_codes">清理代码</string>
     <string name="notification_action">点击打开 Android OBD-II Reader</string>
@@ -22,17 +21,13 @@
     <string name="menu_stop_live_data">停止实时数据</string>
     <string name="menu_settings">设置</string>
     <string name="menu_get_dtc">获取 DTC 信息</string>
-    <string name="text_gps" translatable="false">GPS</string>
-    <string name="text_obd" translatable="false">OBD</string>
     <string name="text_bluetooth" translatable="false">蓝牙</string>
     <string name="text_orientation_default" translatable="false">北</string>
     <string name="text_zero" translatable="false">0</string>
-    <string name="text_consumption_default" translatable="false">0l/100km</string>
     <string name="text_runtime_default" translatable="false">00:00:00</string>
     <string name="title_pref_obd">OBD 设置</string>
     <string name="title_pref_commands">OBD 指令</string>
     <string name="title_pref_bluetooth" translatable="false">蓝牙</string>
-    <string name="title_pref_gps" translatable="false">GPS</string>
     <string name="text_no_bluetooth_id">对不起, 您的设备不支持蓝牙</string>
     <string name="text_bluetooth_disabled">您的蓝牙还没有打开. 请打卡它 (使用模拟服务)</string>
     <string name="text_bluetooth_nodevice">没有蓝牙设备可选</string>

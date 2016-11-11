@@ -28,7 +28,6 @@ public abstract class AbstractGatewayService extends RoboService {
     protected NotificationManager notificationManager;
     protected Context ctx;
     protected boolean isRunning = false;
-    protected boolean isQueueRunning = false;
     protected Long queueCounter = 0L;
     protected BlockingQueue<ObdCommandJob> jobsQueue = new LinkedBlockingQueue<>();
     // Run the executeQueue in a different thread to lighten the UI thread

@@ -1,17 +1,17 @@
 android-obd-reader
 ========================
 
-![logo](/src/main/res/drawable-xxhdpi/ic_btcar.png)
+[![CircleCI](https://circleci.com/gh/pires/android-obd-reader.svg?style=svg)](https://circleci.com/gh/pires/android-obd-reader)
 
 Android OBD-II reader designed to connect with Bluetooth Elm327 OBD reader.
 
 ![screenshot](/Screenshot.png)
 
-The latest releasse can be downloaded from [f-droid](https://f-droid.org/repository/browse/?fdid=com.github.pires.obd.reader)
+The latest release can be found [here](https://github.com/pires/android-obd-reader/releases/).
 
 ## Prerequisites ##
-- JDK 7
-- Android Studio 1.3.0 or newer
+- JDK 8
+- Android Studio 1.5.x or newer
 - Android SDK (API 22, Build tools 23.0.1)
 - [OBD Java API](https://github.com/pires/obd-java-api/) (already included)
 
@@ -48,6 +48,14 @@ AT H0
 AT SP 0
 ```
 
+One may need to turn off echo and headers depending on the dongle in use:
+```
+AT E0 - Turn echo off. Characters sent to ElmScan are not retransmitted back to the host computer.
+AT E1 - Turn echo on. This is the default state, characters are echoed back to the host computer.
+AT H0 - Turn headers off. This is the default state, header information and CRC byte are omitted.
+AT H1 - Turn headers on. Header information and CRC byte are displayed.
+```
+
 ## Building with custom `obd-java-api`
 
 This project depends on a [pure-Java OBD library](https://github.com/pires/obd-java-api/). For testing with a custom version of it, do the following:
@@ -67,7 +75,7 @@ apply plugin: 'java'
 * Edit `main build.gradle` and change:
 
 ```
-compile 'com.github.pires:obd-java-api:1.0-RC10'`
+compile 'com.github.pires:obd-java-api:1.0-RC14'`
 ```
 
 to

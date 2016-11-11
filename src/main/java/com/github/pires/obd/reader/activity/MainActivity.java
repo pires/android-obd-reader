@@ -1,5 +1,6 @@
 package com.github.pires.obd.reader.activity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
@@ -34,6 +35,7 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.pires.obd.commands.ObdCommand;
 import com.github.pires.obd.commands.SpeedCommand;
@@ -54,6 +56,7 @@ import com.github.pires.obd.reader.trips.TripLog;
 import com.github.pires.obd.reader.trips.TripRecord;
 import com.google.inject.Inject;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -89,6 +92,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
     private static final int NO_GPS_SUPPORT = 9;
     private static final int TRIPS_LIST = 10;
     private static final int SAVE_TRIP_NOT_AVAILABLE = 11;
+    private static final int REQUEST_ENABLE_BT = 1234;
     private static boolean bluetoothDefaultIsEnable = false;
 
     static {
@@ -105,7 +109,6 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
     private TripLog triplog;
     private TripRecord currentTrip;
 
-    private Context context;
     @InjectView(R.id.compass_text)
     private TextView compass;
     private final SensorEventListener orientListener = new SensorEventListener() {
@@ -192,7 +195,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
                     Map<String, String> temp = new HashMap<String, String>();
                     temp.putAll(commandResult);
                     ObdReading reading = new ObdReading(lat, lon, alt, System.currentTimeMillis(), vin, temp);
-                    myCSVWriter.writeLineCSV(reading);
+                    if(reading != null) myCSVWriter.writeLineCSV(reading);
                 }
                 commandResult.clear();
             }
@@ -259,14 +262,18 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
 
         if (job.getState().equals(ObdCommandJob.ObdCommandJobState.EXECUTION_ERROR)) {
             cmdResult = job.getCommand().getResult();
-            if (cmdResult != null) {
+            if (cmdResult != null && isServiceBound) {
                 obdStatusTextView.setText(cmdResult.toLowerCase());
             }
+        } else if (job.getState().equals(ObdCommandJob.ObdCommandJobState.BROKEN_PIPE)) {
+            if (isServiceBound)
+                stopLiveData();
         } else if (job.getState().equals(ObdCommandJob.ObdCommandJobState.NOT_SUPPORTED)) {
             cmdResult = getString(R.string.status_obd_no_support);
         } else {
             cmdResult = job.getCommand().getFormattedResult();
-            obdStatusTextView.setText(getString(R.string.status_obd_data));
+            if(isServiceBound)
+                obdStatusTextView.setText(getString(R.string.status_obd_data));
         }
 
         if (vv.findViewWithTag(cmdID) != null) {
@@ -327,10 +334,10 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
         else
             showDialog(NO_ORIENTATION_SENSOR);
 
-
-        context = this.getApplicationContext();
         // create a log instance for use by this application
-        triplog = TripLog.getInstance(context);
+        triplog = TripLog.getInstance(this.getApplicationContext());
+        
+        obdStatusTextView.setText(getString(R.string.status_obd_disconnected));
     }
 
     @Override
@@ -389,7 +396,7 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
 
         preRequisites = btAdapter != null && btAdapter.isEnabled();
         if (!preRequisites && prefs.getBoolean(ConfigActivity.ENABLE_BT_KEY, false)) {
-            preRequisites = btAdapter.enable();
+            preRequisites = btAdapter != null && btAdapter.enable();
         }
 
         gpsInit();
@@ -415,11 +422,6 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
         return true;
     }
 
-    // private void staticCommand() {
-    // Intent commandIntent = new Intent(this, ObdReaderCommandActivity.class);
-    // startActivity(commandIntent);
-    // }
-
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case START_LIVE_DATA:
@@ -437,9 +439,6 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
             case TRIPS_LIST:
                 startActivity(new Intent(this, TripListActivity.class));
                 return true;
-            // case COMMAND_ACTIVITY:
-            // staticCommand();
-            // return true;
         }
         return false;
     }
@@ -475,10 +474,14 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
             long mils = System.currentTimeMillis();
             SimpleDateFormat sdf = new SimpleDateFormat("_dd_MM_yyyy_HH_mm_ss");
 
-            myCSVWriter = new LogCSVWriter("Log" + sdf.format(new Date(mils)).toString() + ".csv",
-                    prefs.getString(ConfigActivity.DIRECTORY_FULL_LOGGING_KEY,
-                            getString(R.string.default_dirname_full_logging))
-            );
+            try {
+                myCSVWriter = new LogCSVWriter("Log" + sdf.format(new Date(mils)).toString() + ".csv",
+                        prefs.getString(ConfigActivity.DIRECTORY_FULL_LOGGING_KEY,
+                                getString(R.string.default_dirname_full_logging))
+                );
+            } catch (FileNotFoundException | RuntimeException e) {
+                Log.e(TAG, "Can't enable logging to file.", e);
+            }
         }
     }
 
@@ -491,8 +494,9 @@ public class MainActivity extends RoboActivity implements ObdProgressListener, L
         endTrip();
 
         releaseWakeLockIfHeld();
-final String devemail = prefs.getString(ConfigActivity.DEV_EMAIL_KEY,null);
-        if (devemail != null) {
+
+        final String devemail = prefs.getString(ConfigActivity.DEV_EMAIL_KEY, null);
+        if (devemail != null && !devemail.isEmpty()) {
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -531,7 +535,8 @@ final String devemail = prefs.getString(ConfigActivity.DEV_EMAIL_KEY,null);
                 build.setMessage(getString(R.string.text_no_bluetooth_id));
                 return build.create();
             case BLUETOOTH_DISABLED:
-                build.setMessage(getString(R.string.text_bluetooth_disabled));
+                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
                 return build.create();
             case NO_ORIENTATION_SENSOR:
                 build.setMessage(getString(R.string.text_no_orientation_sensor));
@@ -659,11 +664,22 @@ final String devemail = prefs.getString(ConfigActivity.DEV_EMAIL_KEY,null);
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_ENABLE_BT) {
+            if (resultCode == Activity.RESULT_OK) {
+                btStatusTextView.setText(getString(R.string.status_bluetooth_connected));
+            } else {
+                Toast.makeText(this, R.string.text_bluetooth_disabled, Toast.LENGTH_LONG).show();
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     private synchronized void gpsStart() {
         if (!mGpsIsStarted && mLocProvider != null && mLocService != null && mLocService.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             mLocService.requestLocationUpdates(mLocProvider.getName(), getGpsUpdatePeriod(prefs), getGpsDistanceUpdatePeriod(prefs), this);
             mGpsIsStarted = true;
-        } else if (mGpsIsStarted && mLocProvider != null && mLocService != null) {
         } else {
             gpsStatusTextView.setText(getString(R.string.status_gps_no_support));
         }

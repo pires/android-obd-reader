@@ -2,7 +2,6 @@ package com.github.pires.obd.reader.io;
 
 import android.util.Log;
 
-
 import com.github.pires.obd.commands.protocol.EchoOffCommand;
 import com.github.pires.obd.commands.protocol.LineFeedOffCommand;
 import com.github.pires.obd.commands.protocol.ObdResetCommand;
@@ -112,7 +111,7 @@ public class MockObdGatewayService extends AbstractGatewayService {
         Log.d(TAG, "Stopping service..");
 
         notificationManager.cancel(NOTIFICATION_ID);
-        jobsQueue.removeAll(jobsQueue); // TODO is this safe?
+        jobsQueue.clear();
         isRunning = false;
 
         // kill service

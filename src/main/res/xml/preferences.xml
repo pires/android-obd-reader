@@ -115,14 +115,14 @@
         <PreferenceScreen
             android:key="obd_commands_screen"
             android:summary="@string/title_pref_commands_summary"
-            android:title="@string/title_pref_commands_title"></PreferenceScreen>
+            android:title="@string/title_pref_commands_title"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/title_pref_full_logging">
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="enable_full_logging"
             android:summary="@string/pref_enable_full_logging_summary"
-            android:title="@string/pref_enable_full_logging_title"></CheckBoxPreference>
+            android:title="@string/pref_enable_full_logging_title"/>
         <EditTextPreference
             android:defaultValue="@string/default_dirname_full_logging"
             android:dialogTitle="@string/pref_dirname_dialogTitle"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Android OBD-II Reader</string>
+    <string name="app_name" translatable="false">OBD-II Reader</string>
     <string name="action_settings">Settings</string>
     <string name="action_clear_codes">Clear Codes</string>
     <string name="notification_action">Tap to open OBD-Reader</string>
@@ -104,5 +104,6 @@
     <string name="pref_dirname_title">Directory name</string>
     <string name="pref_dirname_summary">Name of the directory where to save the files</string>
     <string name="pref_dev_email_title">Developer Email</string>
-    <string name="pref_dev_email_summary">Logs will be email to the address</string>
+    <string name="pref_dev_email_summary">Logs will be emailed to this address</string>
+    <string name="text_noerrors">There were no errors found.!</string>
 </resources>
