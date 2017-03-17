@@ -1,6 +1,18 @@
 android-obd-reader
 ========================
 
+## NOTICE
+
+**I am no longer involved in any way with OBD and related activities, so don't expect my feedback on issues, pull-requests and most of all, email.**
+
+I can't even remember when I first picked this project from Brice Lambi (the original author). But one thing I'm sure, it was a time my interests changed quite frequently and I'd contribute simultaneously to totally unrelated projects. But for some reason this project stuck with me the longest.
+
+Initially, it was more of an Android hack (sorry, Brice!). With time, I've redesigned the code and split it into two: [a Java API library](https://github.com/pires/obd-java-api/) that could run anywhere the JVM ran without concerning about which transport protocol one would use (because it just asks for one `InputStream/OutputStream` pair) and, after learning about Android development, a revamped Android app.
+
+I know, the UI sucks, but I've never had the eye for UI/UX, I'll admit!
+
+Years went by and a few contributors jumped in with amazing, smart features and fixes. To those fine people, **Thank you**! This is your _baby_, too.
+
 [![CircleCI](https://circleci.com/gh/pires/android-obd-reader.svg?style=svg)](https://circleci.com/gh/pires/android-obd-reader)
 
 Android OBD-II reader designed to connect with Bluetooth Elm327 OBD reader.
