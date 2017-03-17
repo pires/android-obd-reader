@@ -13,6 +13,9 @@ I know, the UI sucks, but I've never had the eye for UI/UX, I'll admit!
 
 Years went by and a few contributors jumped in with amazing, smart features and fixes. To those fine people, **Thank you**! This is your _baby_, too.
 
+Now, it's time to say goodbye.
+Pires
+
 [![CircleCI](https://circleci.com/gh/pires/android-obd-reader.svg?style=svg)](https://circleci.com/gh/pires/android-obd-reader)
 
 Android OBD-II reader designed to connect with Bluetooth Elm327 OBD reader.
