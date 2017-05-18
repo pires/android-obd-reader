@@ -22,7 +22,7 @@ import java.util.Map;
 public class ObdReading {
     private double latitude, longitude, altitude;
     private long timestamp;
-    private String vehicleid; // vehicle id
+    private String vin; // vehicle id
     private Map<String, String> readings;
 
     public ObdReading() {
@@ -30,12 +30,12 @@ public class ObdReading {
     }
 
     public ObdReading(double latitude, double longitude, double altitude, long timestamp,
-                      String vehicleid, Map<String, String> readings) {
+                      String vin, Map<String, String> readings) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.altitude = altitude;
         this.timestamp = timestamp;
-        this.vehicleid = vehicleid;
+        this.vin = vin;
         this.readings = readings;
     }
 
@@ -72,11 +72,11 @@ public class ObdReading {
     }
 
     public String getVin() {
-        return vehicleid;
+        return vin;
     }
 
     public void setVin(String vehicleid) {
-        this.vehicleid = vehicleid;
+        this.vin = vehicleid;
     }
 
     public Map<String, String> getReadings() {
@@ -92,7 +92,7 @@ public class ObdReading {
         return "lat:" + latitude + ";" +
                 "long:" + longitude + ";" +
                 "alt:" + altitude + ";" +
-                "vehicleid:" + vehicleid + ";" +
+                "vin:" + vin + ";" +
                 "readings:" + readings.toString().substring(10).replace("}", "").replace(",", ";");
     }
 
